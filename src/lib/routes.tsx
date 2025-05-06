@@ -1,6 +1,8 @@
 import { Dashboard } from "@/pages/dashboard";
 import { createBrowserRouter } from "react-router-dom";
 
+import LoginPage from "@/pages/login/loginPage";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -34,7 +36,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <div>Login</div>,
+    element: <LoginPage />,
     errorElement: <div>Error</div>,
   },
 ]);
