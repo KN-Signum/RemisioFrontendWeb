@@ -16,7 +16,6 @@ const LoginPage = () => {
         setError(undefined);
 
         try {
-            await fakeLoginApi(email, password);
             navigate('/dashboard');
         } catch (err) {
             setError(t('login.failed'));
@@ -26,7 +25,7 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="min-h-screen flex">
+        <div className="min-h-screen flex bg-white">
             <SplitImage />
 
             <div className="flex flex-col justify-center w-full lg:w-1/2 p-8">
@@ -34,8 +33,8 @@ const LoginPage = () => {
                     <Logo />
                 </div>
                 <div className="max-w-md mx-auto w-full">
-                    <h2 className="text-3xl font-bold mb-2">{t('login.welcome')}</h2>
-                    <p className="mb-6 text-gray-500">{t('login.subtitle')}</p>
+                    <h2 className="text-3xl font-bold mb-2 text-primary-accent">{t('login.welcome')}</h2>
+                    <p className="mb-6 text-gray-500 text-primary-accent">{t('login.subtitle')}</p>
 
                     <LoginForm onSubmit={handleLogin} isLoading={loading} error={error} />
                 </div>
@@ -45,14 +44,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-// Mock API
-async function fakeLoginApi(email: string, password: string) {
-    return new Promise<void>((resolve, reject) => {
-        setTimeout(() => {
-            email === 'test@example.com' && password === 'password'
-                ? resolve()
-                : reject(new Error('Invalid credentials'));
-        }, 1000);
-    });
-}

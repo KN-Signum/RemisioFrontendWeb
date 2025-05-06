@@ -21,10 +21,11 @@ export const InputField: React.FC<InputFieldProps> = ({
 }) => {
   return (
     <div className="grid gap-1">
-      <Label htmlFor={id} className="ml-1">
+      <Label htmlFor={id} className="ml-1 text-primary-accent" >
         {label}
       </Label>
       <Input
+        className="text-primary-accent"
         id={id}
         type={type}
         placeholder={placeholder}
