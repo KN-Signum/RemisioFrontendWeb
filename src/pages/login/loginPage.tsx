@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { LoginForm } from '../../features/auth/components/LoginForm';
-import { Logo } from '../../features/auth/components/logo';
+import { Logo } from '../../features/auth/components/Logo';
 import { SplitImage } from '../../features/auth/components/SplitImage';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
