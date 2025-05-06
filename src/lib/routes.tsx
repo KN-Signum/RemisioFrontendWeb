@@ -1,3 +1,4 @@
+import { Dashboard } from "@/pages/dashboard";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -13,7 +14,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <div>Dashboard</div>,
+    element: <Dashboard />,
     errorElement: <div>Error</div>,
   },
   {
