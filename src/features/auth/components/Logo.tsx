@@ -4,9 +4,9 @@ export const Logo = () => {
             <img
                 src="/logo.svg"
                 alt="Logo"
-                className="h-16 w-16 rounded-full object-cover"
+                className="h-16 w-16 object-cover"
             />
-            <div className="text-3xl font-bold"> GastroApp </div>
+            <div className="text-primary-accent text-3xl font-bold color"> GastroApp </div>
         </div>
     );
 }

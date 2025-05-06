@@ -45,7 +45,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading, error
                 className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded"
                 disabled={isLoading}
             >
-                {isLoading ? t('login.loading') ?? '...' : t('login.login')}
+                {isLoading ? (
+                    <span className="flex gap-1">
+                        <span className="w-1.5 h-1.5 bg-white rounded-full animate-dot-flash [animation-delay:0s]" />
+                        <span className="w-1.5 h-1.5 bg-white rounded-full animate-dot-flash [animation-delay:0.2s]" />
+                        <span className="w-1.5 h-1.5 bg-white rounded-full animate-dot-flash [animation-delay:0.4s]" />
+                    </span>
+                ) : (
+                    t('login.login')
+                )}
             </button>
         </form>
     );

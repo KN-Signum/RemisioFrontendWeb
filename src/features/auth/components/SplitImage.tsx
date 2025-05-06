@@ -11,8 +11,8 @@ export const SplitImage = () => {
                 className="absolute inset-0 h-full w-full object-fit opacity-80"
             />
             <div className="relative z-10 flex flex-col justify-end items-start p-12 text-black">
-                <h1 className="text-4xl font-bold">{t('login.split_screen_title')}</h1>
-                <p className="mt-4">
+                <h1 className="text-4xl font-bold text-primary-accent">{t('login.split_screen_title')}</h1>
+                <p className="mt-4 text-primary-accent">
                     {t('login.split_screen_subtitle')}
                 </p>
             </div>
