@@ -12,7 +12,7 @@ const Layout = ({ children }: Props) => {
       <div className="flex flex-row h-full mb-4">
         <Sidebar />
         <div
-          className={`flex-1 2xl:px-30 xl:px-15 pt-15 mb-10 overflow-visible h-max`}
+          className={`flex-1 2xl:px-4 xl:px-15 mb-10 overflow-visible h-max`}
         >
           {children}
         </div>

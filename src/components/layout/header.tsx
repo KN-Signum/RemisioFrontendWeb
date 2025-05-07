@@ -5,7 +5,7 @@ import { BiWorld } from "react-icons/bi";
 export const Header = () => {
   return (
     <header>
-      <div className="flex w-full mt-4 mb-10 gap-14 h-12">
+      <div className="flex w-full mt-4 mb-5 gap-14 h-12">
         <div className="flex gap-3 items-center ml-4">
           <div className="flex items-center justify-centerrounded-full">
             <img src="/logo.svg" alt="Logo" className="size-16" />
@@ -14,7 +14,7 @@ export const Header = () => {
             GastroApp
           </span>
         </div>
-        <div className="flex justify-between w-full mr-4 items-center px-12 bg-foreground text-2xl text-primary-accent rounded-sm">
+        <div className="flex justify-between w-full mr-4 items-center px-12 bg-foreground text-2xl text-primary-accent rounded-sm shadow-2xl">
           <span className="font-bold">Welcome John</span>
           <div className="flex gap-20 items-center">
             <AiOutlineSetting />

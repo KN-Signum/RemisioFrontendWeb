@@ -2,6 +2,7 @@ import { Dashboard } from "@/pages/dashboard";
 import { createBrowserRouter } from "react-router-dom";
 
 import LoginPage from "@/pages/login/loginPage";
+import PatientsPage from "@/pages/patients/patientsPage";
 
 export const router = createBrowserRouter([
   {
@@ -11,7 +12,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/patients",
-    element: <div>Patients</div>,
+    element: <div><PatientsPage /></div>,
     errorElement: <div>Error</div>,
   },
   {

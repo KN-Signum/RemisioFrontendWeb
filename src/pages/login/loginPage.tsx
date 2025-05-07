@@ -25,21 +25,24 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="min-h-screen flex bg-white">
-            <SplitImage />
+        <div className="min-h-screen bg-background p-8">
+            <div className="h-[calc(100vh-4rem)] flex bg-white rounded-xl shadow-2xl overflow-hidden">
+                <SplitImage />
 
-            <div className="flex flex-col justify-center w-full lg:w-1/2 p-8">
-                <div className="absolute top-0 right-0 w-1/2 flex justify-center p-8">
-                    <Logo />
-                </div>
-                <div className="max-w-md mx-auto w-full">
-                    <h2 className="text-3xl font-bold mb-2 text-primary-accent">{t('login.welcome')}</h2>
-                    <p className="mb-6 text-gray-500 text-primary-accent">{t('login.subtitle')}</p>
+                <div className="flex flex-col justify-center w-full lg:w-1/2 p-8">
+                    <div className="absolute top-10 right-0 w-1/2 flex justify-center p-8">
+                        <Logo />
+                    </div>
+                    <div className="max-w-md mx-auto w-full">
+                        <h2 className="text-3xl font-bold mb-2 text-primary-accent">{t('login.welcome')}</h2>
+                        <p className="mb-6 text-gray-500 text-primary-accent">{t('login.subtitle')}</p>
 
-                    <LoginForm onSubmit={handleLogin} isLoading={loading} error={error} />
+                        <LoginForm onSubmit={handleLogin} isLoading={loading} error={error} />
+                    </div>
                 </div>
             </div>
         </div>
+
     );
 };
 
