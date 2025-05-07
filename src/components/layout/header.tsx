@@ -5,8 +5,8 @@ import { BiWorld } from "react-icons/bi";
 export const Header = () => {
   return (
     <header>
-      <div className="flex w-full mt-4 mb-5 gap-14 h-12">
-        <div className="flex gap-3 items-center ml-4">
+      <div className="flex w-full mt-4 mb-5 gap-8 h-12">
+        <div className="flex gap-3 items-center ml-6">
           <div className="flex items-center justify-centerrounded-full">
             <img src="/logo.svg" alt="Logo" className="size-16" />
           </div>
