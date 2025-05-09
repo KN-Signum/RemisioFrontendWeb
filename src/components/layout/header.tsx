@@ -1,28 +1,22 @@
-import { AiOutlineSetting } from "react-icons/ai";
-import { BsFillPersonFill } from "react-icons/bs";
-import { BiWorld } from "react-icons/bi";
-import { useTranslation } from "react-i18next";
+import { AiOutlineSetting } from 'react-icons/ai';
+import { BsFillPersonFill } from 'react-icons/bs';
+import { BiWorld } from 'react-icons/bi';
 
 export const Header = () => {
-  const { t } = useTranslation();
-
   return (
     <header>
-      <div className="flex pl-10 pr-2 w-full mt-4 mb-5 gap-14 h-12">
-        <div className="flex items-center">
-          <div className="flex gap-2 items-center justify-center">
-            <img src="/logo.svg" alt="Logo" className="size-12" />
-            <span className="text-3xl font-bold text-primary-accent">
-              GastroApp
-            </span>
-          </div>
+      <div className="mt-4 mb-3 flex w-full gap-14 pr-2 pl-10">
+        <div className="flex items-center justify-center gap-2">
+          <img src="/logo.svg" alt="Logo" className="size-12" />
+          <span className="text-primary-accent text-3xl font-bold">
+            GastroApp
+          </span>
         </div>
-        <div className="flex justify-between w-full items-center px-12 bg-foreground text-2xl text-primary-accent rounded-sm">
-          <span className="font-bold">{t("navbar.welcome")} John</span>
-          <div className="flex gap-20 items-center">
-            <AiOutlineSetting />
-            <BsFillPersonFill />
-            <BiWorld />
+        <div className="bg-foreground text-primary-accent flex h-14 w-full items-center justify-end rounded-sm px-2 py-1 text-2xl">
+          <div className="mr-6 flex h-14 w-[16%] items-center justify-between">
+            <AiOutlineSetting className="size-8" />
+            <BsFillPersonFill className="size-8" />
+            <BiWorld className="size-8" />
           </div>
         </div>
       </div>

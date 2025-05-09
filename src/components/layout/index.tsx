@@ -1,5 +1,5 @@
-import { Header } from "./header";
-import { Sidebar } from "./sidebar";
+import { Header } from './header';
+import { Sidebar } from './sidebar';
 
 type Props = {
   children: React.ReactNode;
@@ -7,11 +7,11 @@ type Props = {
 
 const Layout = ({ children }: Props) => {
   return (
-    <div className="flex flex-col bg-background h-screen">
+    <div className="bg-background flex h-screen flex-col">
       <Header />
-      <div className="flex flex-row h-full overflow-hidden mb-2">
+      <div className="mb-2 flex h-full flex-row overflow-hidden">
         <Sidebar />
-        <div className={`flex-1 px-2 h-full max-h-full overflow-auto`}>
+        <div className="h-full max-h-full flex-1 overflow-auto px-2">
           {children}
         </div>
       </div>
