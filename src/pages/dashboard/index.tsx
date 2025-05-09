@@ -2,6 +2,7 @@ import Layout from '@/components/layout';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import { FiFilePlus, FiFlag } from 'react-icons/fi';
 import { BsPeople } from 'react-icons/bs';
+import { cn } from '@/lib/utils';
 
 import { useTranslation } from 'react-i18next';
 
@@ -56,13 +57,15 @@ const ItemCard = (props: ItemCardProps) => {
   );
 };
 
+const borderClasses = 'flex w-full border-2 border-white/50 rounded-sm py-2';
+
 export const Dashboard = () => {
   const { t } = useTranslation();
 
   return (
     <Layout>
-      <div className="h-full w-full flex-col">
-        <div className="flex w-full gap-10 border px-4 py-2">
+      <div className="flex h-full w-full flex-col gap-1">
+        <div className={cn(borderClasses, 'gap-10 px-4')}>
           <ItemCard
             title={t('dashboard.cards.surveys.title')}
             number={44}
@@ -91,7 +94,13 @@ export const Dashboard = () => {
             }}
           />
         </div>
-        <div className="flex w-full px-4 py-2"></div>
+        <div className={cn(borderClasses, 'h-180 gap-3 px-1.5')}>
+          <div className="bg-primary w-[65%]">TABLE</div>
+          <div className="bg-primary w-[35%]">CALENDAR</div>
+        </div>
+        <div className={cn(borderClasses, 'h-full px-1.5')}>
+          <div className="bg-primary w-full">GRAFIK</div>
+        </div>
       </div>
     </Layout>
   );
