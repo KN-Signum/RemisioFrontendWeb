@@ -33,7 +33,7 @@ export const Sidebar = () => {
   const { t } = useTranslation();
 
   return (
-    <aside className="bg-primary/85 shadow-primary-accent ml-4 flex h-full w-30 flex-col items-center justify-around rounded-sm shadow-sm">
+    <aside className="bg-primary/22 border-primary-accent/60 shadow-primary-accent ml-4 flex h-full w-30 flex-col items-center justify-around rounded-sm border shadow-sm">
       <SidebarItem
         title={t('sidebar.dashboard')}
         icon={<AiOutlineDashboard className={iconSize} />}

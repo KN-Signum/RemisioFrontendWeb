@@ -12,7 +12,7 @@ export const Header = () => {
             GastroApp
           </span>
         </div>
-        <div className="bg-foreground text-primary-accent flex h-14 w-full items-center justify-end rounded-sm px-2 py-1 text-2xl">
+        <div className="bg-foreground border-primary-accent/60 shadow-primary-accent text-primary-accent flex h-14 w-full items-center justify-end rounded-sm border px-2 py-1 text-2xl shadow-xs">
           <div className="mr-6 flex h-14 w-[16%] items-center justify-between">
             <AiOutlineSetting className="size-8" />
             <BsFillPersonFill className="size-8" />
