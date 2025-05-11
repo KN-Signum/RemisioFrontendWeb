@@ -3,8 +3,12 @@ import { FaArrowRightLong } from 'react-icons/fa6';
 import { FiFilePlus, FiFlag } from 'react-icons/fi';
 import { BsPeople } from 'react-icons/bs';
 import { cn } from '@/lib/utils';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import plLocale from '@fullcalendar/core/locales/pl';
 
 import { useTranslation } from 'react-i18next';
+import { CalendarStyle } from './calendar-style';
 
 type ItemCardProps = {
   title: string;
@@ -35,7 +39,7 @@ const ItemCardChart = () => {
 
 const ItemCard = (props: ItemCardProps) => {
   return (
-    <div className="bg-foreground text-primary-accent flex h-40 flex-1 flex-col gap-2 p-4">
+    <div className="bg-foreground text-primary-accent flex h-45 flex-1 flex-col gap-2 p-4">
       <div className="flex items-center justify-between">
         <div className="flex gap-2">
           {props.icon}
@@ -64,7 +68,7 @@ export const Dashboard = () => {
 
   return (
     <Layout>
-      <div className="flex h-full w-full flex-col gap-1">
+      <div className="flex w-full flex-col gap-1 overflow-y-visible">
         <div className={cn(borderClasses, 'gap-10 px-4')}>
           <ItemCard
             title={t('dashboard.cards.surveys.title')}
@@ -94,14 +98,29 @@ export const Dashboard = () => {
             }}
           />
         </div>
-        <div className={cn(borderClasses, 'h-180 gap-3 px-1.5')}>
+        <div className={cn(borderClasses, 'h-100 gap-3 px-1.5')}>
           <div className="bg-primary w-[65%]">TABLE</div>
-          <div className="bg-primary w-[35%]">CALENDAR</div>
+          <div className="from-secondary w-[35%] rounded-sm bg-gradient-to-b from-20% to-transparent to-20% text-xs">
+            <FullCalendar
+              plugins={[dayGridPlugin]}
+              initialView="dayGridMonth"
+              firstDay={1}
+              height={'100%'}
+              locale={plLocale}
+              timeZone="pl"
+              headerToolbar={{
+                left: 'prev',
+                center: 'title',
+                right: 'next',
+              }}
+            />
+          </div>
         </div>
-        <div className={cn(borderClasses, 'h-full px-1.5')}>
+        <div className={cn(borderClasses, 'h-60 px-1.5')}>
           <div className="bg-primary w-full">GRAFIK</div>
         </div>
       </div>
+      <CalendarStyle />
     </Layout>
   );
 };
