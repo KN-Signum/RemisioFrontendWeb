@@ -1,25 +1,22 @@
-import { AiOutlineSetting } from "react-icons/ai";
-import { BsFillPersonFill } from "react-icons/bs";
-import { BiWorld } from "react-icons/bi";
+import { AiOutlineSetting } from 'react-icons/ai';
+import { BsFillPersonFill } from 'react-icons/bs';
+import { BiWorld } from 'react-icons/bi';
 
 export const Header = () => {
   return (
     <header>
-      <div className="flex w-full mt-4 mb-5 gap-8 h-12">
-        <div className="flex gap-3 items-center ml-6">
-          <div className="flex items-center justify-centerrounded-full">
-            <img src="/logo.svg" alt="Logo" className="size-16" />
-          </div>
-          <span className="text-3xl font-bold text-primary-accent">
+      <div className="mt-4 mb-1.5 flex w-full gap-14 pr-2 pl-10">
+        <div className="flex items-center justify-center gap-2">
+          <img src="/logo.svg" alt="Logo" className="size-12" />
+          <span className="text-primary-accent text-3xl font-bold">
             GastroApp
           </span>
         </div>
-        <div className="flex justify-between w-full mr-4 items-center px-12 bg-foreground text-2xl text-primary-accent rounded-sm shadow-2xl">
-          <span className="font-bold">Welcome John</span>
-          <div className="flex gap-20 items-center">
-            <AiOutlineSetting />
-            <BsFillPersonFill />
-            <BiWorld />
+        <div className="bg-foreground border-primary-accent/60 shadow-primary-accent text-primary-accent flex h-14 w-full items-center justify-end rounded-sm border px-2 py-1 text-2xl shadow-xs">
+          <div className="mr-6 flex h-14 w-[16%] items-center justify-between">
+            <AiOutlineSetting className="size-8" />
+            <BsFillPersonFill className="size-8" />
+            <BiWorld className="size-8" />
           </div>
         </div>
       </div>

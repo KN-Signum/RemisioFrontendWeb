@@ -41,18 +41,20 @@
     "english": "English",
     "polish": "Polish"
   },
-  "cards": {
-    "surveys": {
-      "title": "Surveys",
-      "subtitle": "new surveys this week"
-    },
-    "patients": {
-      "title": "Patients",
-      "subtitle": "number of patients"
-    },
-    "state-of-emergency": {
-      "title": "State of emergency",
-      "subtitle": "patients in state of emergency"
+  "dashboard": {
+    "cards": {
+      "surveys": {
+        "title": "Surveys",
+        "subtitle": "new surveys this week"
+      },
+      "patients": {
+        "title": "Patients",
+        "subtitle": "number of patients"
+      },
+      "state-of-emergency": {
+        "title": "States of emergency",
+        "subtitle": "patients in state of emergency"
+      }
     }
   },
   "drug": {
@@ -133,25 +135,11 @@
       "November",
       "December"
     ],
-    "weekdays": [
-      "Sun",
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat"
-    ],
+    "weekdays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     "today": "Today"
   },
   "grid": {
-    "weekdays": [
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri"
-    ]
+    "weekdays": ["Mon", "Tue", "Wed", "Thu", "Fri"]
   },
   "appointment": {
     "create": "Create appointment",

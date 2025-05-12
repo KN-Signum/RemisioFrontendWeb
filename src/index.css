@@ -1,6 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-@import "tailwindcss";
-@import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -10,9 +10,9 @@
   --primary-accent: oklch(0.29 0.0656 238.47);
   --secondary: oklch(0.55 0.1317 317.93);
   --secondary-accent: oklch(0.75 0.0817 345.53);
+  --secondary-accent-25: oklch(0.75 0.0817 345.53 / 0.25);
   --background: oklch(0.88 0 0);
   --foreground: oklch(0.96 0 0);
-
 }
 
 .dark {
@@ -20,9 +20,9 @@
   --primary-accent: oklch(0.71 0.0656 238.47);
   --secondary: oklch(0.45 0.1317 317.93);
   --secondary-accent: oklch(0.25 0.0817 345.53);
+  --secondary-accent-25: oklch(0.25 0.0817 345.53 / 0.85);
   --background: oklch(0.12 0 0);
   --foreground: oklch(0.04 0 0);
-
 }
 
 @theme inline {
@@ -34,6 +34,7 @@
   --color-primary-accent: var(--primary-accent);
   --color-secondary: var(--secondary);
   --color-secondary-accent: var(--secondary-accent);
+  --color-secondary-accent-25: var(--secondary-accent-25);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 }

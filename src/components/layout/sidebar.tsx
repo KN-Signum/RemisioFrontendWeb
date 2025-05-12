@@ -1,27 +1,64 @@
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import {
+  AiOutlineDashboard,
+  AiOutlineSetting,
+  AiOutlineCalendar,
+  AiOutlineQuestionCircle,
+} from 'react-icons/ai';
+import { BsPeople } from 'react-icons/bs';
 
-interface SidebarItemProps {
-  icon: string;
-  label: string;
-}
+type SidebarItemProps = {
+  title: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+};
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ icon, label }) => (
-  <div className="flex flex-col items-center justify-center gap-1 cursor-pointer p-2 hover rounded-md">
-    <span className="material-icons text-xl text-primary-accent">{icon}</span>
-    <span className="text-xs text-primary-accent">{label}</span>
-  </div>
-);
+const iconSize = 'size-8';
+
+const SidebarItem = (props: SidebarItemProps) => {
+  return (
+    <div
+      className="text-primary-accent flex w-[80%] cursor-pointer flex-col items-center rounded-sm pt-0.5 hover:bg-white/10"
+      onClick={props.onClick}
+    >
+      {props.icon}
+      <span>{props.title}</span>
+    </div>
+  );
+};
 
 export const Sidebar = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col ml-4 items-center justify-around gap-4 bg-primary/60 w-35 h-full py-30  rounded-sm">
-      <SidebarItem icon="dashboard" label={t("sidebar.dashboard")} />
-      <SidebarItem icon="people" label={t("sidebar.patients")} />
-      <SidebarItem icon="calendar_today" label={t("sidebar.calendar")} />
-      <SidebarItem icon="help_outline" label={t("sidebar.help")} />
-      <SidebarItem icon="settings" label={t("sidebar.settings")} />
-    </div>
+    <aside className="bg-primary/22 border-primary-accent/60 shadow-primary-accent ml-4 flex h-full w-30 flex-col items-center justify-around rounded-sm border shadow-sm">
+      <SidebarItem
+        title={t('sidebar.dashboard')}
+        icon={<AiOutlineDashboard className={iconSize} />}
+        onClick={() => navigate('/dashboard')}
+      />
+      <SidebarItem
+        title={t('sidebar.patients')}
+        icon={<BsPeople className={iconSize} />}
+        onClick={() => navigate('/patients')}
+      />
+      <SidebarItem
+        title={t('sidebar.calendar')}
+        icon={<AiOutlineCalendar className={iconSize} />}
+        onClick={() => navigate('/calendar')}
+      />
+      <SidebarItem
+        title={t('sidebar.help')}
+        icon={<AiOutlineQuestionCircle className={iconSize} />}
+        onClick={() => navigate('/help')}
+      />
+      <SidebarItem
+        title={t('sidebar.settings')}
+        icon={<AiOutlineSetting className={iconSize} />}
+        onClick={() => navigate('/settings')}
+      />
+    </aside>
   );
 };
