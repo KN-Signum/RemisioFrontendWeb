@@ -1,6 +1,6 @@
 import { mockPatients } from "@/assets/mock_data/patients";
 import Layout from "@/components/layout";
-import { SearchBar } from "@/features/patient/components/searchBar";
+import { SearchBar } from "@/features/patient/components/SearchBar";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { BiWorld } from "react-icons/bi";
