@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import LoginPage from "@/pages/login/loginPage";
 import PatientsPage from "@/pages/patients/patientsPage";
+import PatientDetailsPage from "@/pages/patients/patientDetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,11 @@ export const router = createBrowserRouter([
   {
     path: "/patients",
     element: <div><PatientsPage /></div>,
+    errorElement: <div>Error</div>,
+  },
+  {
+    path: "/patients/:id",
+    element: <div><PatientDetailsPage /></div>,
     errorElement: <div>Error</div>,
   },
   {
