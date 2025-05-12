@@ -1,13 +1,14 @@
 import { CreatePatientDto } from "@/features/patient/types/PatientDto";
 
-
 export interface ExtendedPatientDto extends CreatePatientDto {
+    id: number;
     score: number;
     hospital: string;
 }
 
 export const mockPatients: ExtendedPatientDto[] = [
     {
+        id: 1,
         name: "John Doe",
         email: "john.doe@example.com",
         phone_number: "+1234567890",
@@ -19,6 +20,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "St. Mary's Hospital",
     },
     {
+        id: 2,
         name: "Jane Smith",
         email: "jane.smith@example.com",
         phone_number: "+1987654321",
@@ -30,6 +32,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Central Clinic",
     },
     {
+        id: 3,
         name: "Michael Johnson",
         email: "michael.johnson@example.com",
         phone_number: "+1123456789",
@@ -41,6 +44,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "City General Hospital",
     },
     {
+        id: 4,
         name: "Emily Davis",
         email: "emily.davis@example.com",
         phone_number: "+1098765432",
@@ -52,6 +56,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Sunrise Medical Center",
     },
     {
+        id: 5,
         name: "Robert Brown",
         email: "robert.brown@example.com",
         phone_number: "+1222333444",
@@ -63,6 +68,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Northview Hospital",
     },
     {
+        id: 6,
         name: "Sophia Taylor",
         email: "sophia.taylor@example.com",
         phone_number: "+1333444555",
@@ -74,6 +80,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "West End Clinic",
     },
     {
+        id: 7,
         name: "James Wilson",
         email: "james.wilson@example.com",
         phone_number: "+1444555666",
@@ -85,6 +92,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "City General Hospital",
     },
     {
+        id: 8,
         name: "Olivia Martinez",
         email: "olivia.martinez@example.com",
         phone_number: "+1555666777",
@@ -96,6 +104,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Sunrise Medical Center",
     },
     {
+        id: 9,
         name: "David Lopez",
         email: "david.lopez@example.com",
         phone_number: "+1666777888",
@@ -107,6 +116,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Northview Hospital",
     },
     {
+        id: 10,
         name: "Isabella Anderson",
         email: "isabella.anderson@example.com",
         phone_number: "+1777888999",
@@ -118,6 +128,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "St. Mary's Hospital",
     },
     {
+        id: 11,
         name: "John Doe",
         email: "john.doe@example.com",
         phone_number: "+1234567890",
@@ -129,6 +140,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "St. Mary's Hospital",
     },
     {
+        id: 12,
         name: "Jane Smith",
         email: "jane.smith@example.com",
         phone_number: "+1987654321",
@@ -140,6 +152,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Central Clinic",
     },
     {
+        id: 13,
         name: "Michael Johnson",
         email: "michael.johnson@example.com",
         phone_number: "+1123456789",
@@ -151,6 +164,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "City General Hospital",
     },
     {
+        id: 14,
         name: "Emily Davis",
         email: "emily.davis@example.com",
         phone_number: "+1098765432",
@@ -162,6 +176,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Sunrise Medical Center",
     },
     {
+        id: 15,
         name: "Robert Brown",
         email: "robert.brown@example.com",
         phone_number: "+1222333444",
@@ -173,6 +188,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Northview Hospital",
     },
     {
+        id: 16,
         name: "Sophia Taylor",
         email: "sophia.taylor@example.com",
         phone_number: "+1333444555",
@@ -184,6 +200,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "West End Clinic",
     },
     {
+        id: 17,
         name: "James Wilson",
         email: "james.wilson@example.com",
         phone_number: "+1444555666",
@@ -195,6 +212,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "City General Hospital",
     },
     {
+        id: 18,
         name: "Olivia Martinez",
         email: "olivia.martinez@example.com",
         phone_number: "+1555666777",
@@ -206,6 +224,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Sunrise Medical Center",
     },
     {
+        id: 19,
         name: "David Lopez",
         email: "david.lopez@example.com",
         phone_number: "+1666777888",
@@ -217,6 +236,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Northview Hospital",
     },
     {
+        id: 20,
         name: "John Doe",
         email: "john.doe@example.com",
         phone_number: "+1234567890",
@@ -228,6 +248,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "St. Mary's Hospital",
     },
     {
+        id: 21,
         name: "Jane Smith",
         email: "jane.smith@example.com",
         phone_number: "+1987654321",
@@ -239,6 +260,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Central Clinic",
     },
     {
+        id: 22,
         name: "Michael Johnson",
         email: "michael.johnson@example.com",
         phone_number: "+1123456789",
@@ -250,6 +272,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "City General Hospital",
     },
     {
+        id: 23,
         name: "Emily Davis",
         email: "emily.davis@example.com",
         phone_number: "+1098765432",
@@ -261,6 +284,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Sunrise Medical Center",
     },
     {
+        id: 24,
         name: "Robert Brown",
         email: "robert.brown@example.com",
         phone_number: "+1222333444",
@@ -272,6 +296,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Northview Hospital",
     },
     {
+        id: 25,
         name: "Sophia Taylor",
         email: "sophia.taylor@example.com",
         phone_number: "+1333444555",
@@ -283,6 +308,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "West End Clinic",
     },
     {
+        id: 26,
         name: "James Wilson",
         email: "james.wilson@example.com",
         phone_number: "+1444555666",
@@ -294,6 +320,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "City General Hospital",
     },
     {
+        id: 27,
         name: "Olivia Martinez",
         email: "olivia.martinez@example.com",
         phone_number: "+1555666777",
@@ -305,6 +332,7 @@ export const mockPatients: ExtendedPatientDto[] = [
         hospital: "Sunrise Medical Center",
     },
     {
+        id: 28,
         name: "David Lopez",
         email: "david.lopez@example.com",
         phone_number: "+1666777888",

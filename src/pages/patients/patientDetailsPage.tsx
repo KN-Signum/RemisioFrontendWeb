@@ -1,24 +1,58 @@
+import { useParams } from "react-router-dom";
+import { mockPatients } from "@/assets/mock_data/patients";
 import Layout from "@/components/layout";
-import { useTranslation } from "react-i18next";
+import { BiPhone } from "react-icons/bi";
 
-const PatientDetailsPage = (
+const PatientDetailsPage = () => {
+    const { id } = useParams();
+    const patient = mockPatients.find((p) => p.id === parseInt(id || "", 10));
 
-) => {
-    const { t } = useTranslation();
+    if (!patient) {
+        return (
+            <Layout>
+                <div className="flex items-center justify-center h-full text-red-500">
+                    Patient not found.
+                </div>
+            </Layout>
+        );
+    }
 
     return (
         <Layout>
-            <div className="flex flex-col w-full h-full bg-white rounded-sm shadow-2xl overflow-hidden p-8">
-                <div className="mb-6 flex justify-center">
-                    <h1 className="text-2xl font-bold">{t("patientDetails.title")}</h1>
+            <div className="p-4 grid grid-cols-1 lg:grid-cols-2 gap-4 h-full bg-white rounded-l">
+
+                {/* Kafelek z danymi pacjenta */}
+                <div className="bg-primary-accent/10 border border-gray-300 rounded-lg p-6 flex flex-col gap-4">
+                    <h2 className="text-2xl font-bold text-primary">{patient.name}</h2>
+
+                    <div className="flex items-center gap-2">
+                        <BiPhone className="text-primary-accent" size={20} />
+                        <span className="text-primary-accent">{patient.phone_number}</span>
+                    </div>
+
+                    <div className="border-l-2 border-primary-accent mt-4 pl-4">
+                        <div className="text-sm text-gray-600">
+                            <p>Hospital: {patient.hospital}</p>
+                            <p>Score: {patient.score}%</p>
+                            <p>Age: {patient.age} years</p>
+                            <p>Weight: {patient.weight} kg</p>
+                            <p>Height: {patient.height} cm</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="flex-1 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
-                    {/* Patient details content goes here */}
+                {/* Kafelek z testami diagnostycznymi */}
+                <div className="bg-primary-accent/10 border border-gray-300 rounded-lg p-6">
+                    <h2 className="text-2xl font-bold text-primary">Testy diagnostyczne</h2>
+                </div>
+
+                {/* Kafelek poniżej */}
+                <div className="bg-primary-accent/10 border border-gray-300 rounded-lg p-6 lg:col-span-2">
+                    <h2 className="text-2xl font-bold text-primary">Dodatkowe informacje</h2>
                 </div>
             </div>
         </Layout>
-    )
+    );
 };
 
 export default PatientDetailsPage;
