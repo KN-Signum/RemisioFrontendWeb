@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { CalendarStyle } from './calendar-style';
 import { ItemCard } from './item-card';
 import { useNavigate } from 'react-router-dom';
+import { PatientsTable } from './patients-table';
 
 const borderClasses = 'flex w-full border-2 border-white/50 rounded-sm py-2';
 
@@ -50,12 +51,12 @@ export const Dashboard = () => {
           />
         </div>
         <div className={cn(borderClasses, 'h-100 gap-3 px-1.5')}>
-          <div className="bg-primary w-[65%]">TABLE</div>
+          <PatientsTable />
           <div
             onClick={() => {
               navigate('/calendar');
             }}
-            className="from-secondary hover:ring-secondary w-[35%] rounded-sm bg-gradient-to-b from-20% to-transparent to-20% text-xs hover:cursor-pointer hover:opacity-60 hover:ring-2"
+            className="from-secondary hover:ring-secondary w-[35%] rounded-xs bg-gradient-to-b from-20% to-transparent to-20% text-xs hover:cursor-pointer hover:opacity-60 hover:ring-2"
           >
             <FullCalendar
               plugins={[dayGridPlugin]}

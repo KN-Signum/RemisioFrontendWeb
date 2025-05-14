@@ -55,6 +55,15 @@
         "title": "States of emergency",
         "subtitle": "patients in state of emergency"
       }
+    }, 
+    "table": {
+      "full_name": "Full name",
+      "mayo_state": "State of mayo",
+      "last_visit": "Last visit",
+      "drugs": "Taken medicaments",
+      "male": "Male",
+      "female": "Female",
+      "years": "years"
     }
   },
   "drug": {

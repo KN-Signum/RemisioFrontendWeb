@@ -11,7 +11,7 @@ type ItemCardProps = {
 
 export const ItemCard = (props: ItemCardProps) => {
   return (
-    <div className="bg-foreground text-primary-accent flex h-45 flex-1 flex-col gap-2 p-4">
+    <div className="bg-foreground text-primary-accent flex h-45 flex-1 flex-col gap-2 rounded-xs p-4">
       <div className="flex items-center justify-between">
         <div className="flex gap-2">
           {props.icon}

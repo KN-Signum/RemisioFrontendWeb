@@ -41,18 +41,29 @@
     "english": "Angielski",
     "polish": "Polski"
   },
-  "cards": {
-    "surveys": {
-      "title": "Ankiety",
-      "subtitle": "nowych ankiet w tym tygodniu"
-    },
-    "patients": {
-      "title": "Pacjenci",
-      "subtitle": "liczba pacjentów"
-    },
-    "state-of-emergency": {
-      "title": "Stany alarmowe",
-      "subtitle": "pacjentów w stanie alarmowym"
+  "dashboard": {
+    "cards": {
+      "surveys": {
+        "title": "Ankiety",
+        "subtitle": "nowych ankiet w tym tygodniu"
+      },
+      "patients": {
+        "title": "Pacjenci",
+        "subtitle": "liczba pacjentów"
+      },
+      "state-of-emergency": {
+        "title": "Stany alarmowe",
+        "subtitle": "pacjentów w stanie alarmowym"
+      }
+    }, 
+    "table": {
+      "full_name": "Imię i nazwisko",
+      "mayo_state": "Stan mayo",
+      "last_visit": "Ostatnia wizyta",
+      "drugs": "Przyjmowane leki",
+      "male": "Mężczyzna",
+      "female": "Kobieta",
+      "years": "lat"
     }
   },
   "drug": {
