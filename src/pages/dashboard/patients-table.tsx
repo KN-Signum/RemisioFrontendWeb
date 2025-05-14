@@ -26,16 +26,16 @@ const PatientName = (props: PatientNameProps) => {
 
 const TableRow = () => {
   return (
-    <tr className="bg-foreground overflow-auto">
-      <td className="py-2 pl-4">
+    <div className="bg-foreground flex gap-2 overflow-auto px-4 py-3">
+      <div className="flex-1">
         <PatientName name="Jan Kowalski" male={true} age={10} />
-      </td>
-      <td>Wyleczony</td>
-      <td>11.05.2025</td>
-      <td className="py-2 pr-4">
+      </div>
+      <div className="flex-1">Wyleczony</div>
+      <div className="flex-1">11.05.2025</div>
+      <div className="flex-2">
         Lek XLekLek XLekLek XLekLek XLekLek XLekLek XLek Lek XLekLek XLek
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 };
 
@@ -43,24 +43,22 @@ export const PatientsTable = () => {
   const { t } = useTranslation();
   return (
     <div className="max-h-full w-[65%] overflow-y-scroll rounded-xs">
-      <table className="w-full table-fixed">
-        <thead className="bg-secondary text-left text-sm font-bold text-white/80">
-          <th className="py-3 pl-4">{t('dashboard.table.full_name')}</th>
-          <th>{t('dashboard.table.mayo_state')}</th>
-          <th>{t('dashboard.table.last_visit')}</th>
-          <th className="py-3 pr-4">{t('dashboard.table.drugs')}</th>
-        </thead>
-        <tbody className="text-primary-accent text-sm">
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-        </tbody>
-      </table>
+      <div className="bg-secondary flex items-center gap-2 px-4 py-3 text-left text-sm font-bold text-white/80">
+        <div className="flex-1">{t('dashboard.table.full_name')}</div>
+        <div className="flex-1">{t('dashboard.table.mayo_state')}</div>
+        <div className="flex-1">{t('dashboard.table.last_visit')}</div>
+        <div className="flex-2">{t('dashboard.table.drugs')}</div>
+      </div>
+      <div className="text-primary-accent text-sm">
+        <TableRow />
+        <TableRow />
+        <TableRow />
+        <TableRow />
+        <TableRow />
+        <TableRow />
+        <TableRow />
+        <TableRow />
+      </div>
     </div>
   );
 };
