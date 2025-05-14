@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import plLocale from '@fullcalendar/core/locales/pl';
+import enLocale from '@fullcalendar/core/locales/en-gb';
 
 import { useTranslation } from 'react-i18next';
 import { CalendarStyle } from './calendar-style';
@@ -63,7 +64,7 @@ export const Dashboard = () => {
               initialView="dayGridMonth"
               firstDay={1}
               height={'100%'}
-              locale={plLocale}
+              locale={t('language') === 'pl' ? plLocale : enLocale}
               timeZone="pl"
               headerToolbar={{
                 left: 'prev',

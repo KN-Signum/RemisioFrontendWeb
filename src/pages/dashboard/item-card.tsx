@@ -19,11 +19,11 @@ export const ItemCard = (props: ItemCardProps) => {
         </div>
         <FaArrowRightLong className="hover:bg-primary-accent/10 size-8 rounded-full p-1 hover:cursor-pointer" />
       </div>
-      <hr className="bg-primary-accent h-0.5" />
-      <div className="mt-1 flex h-full gap-2">
+      <hr className="bg-primary-accent w h-0.5" />
+      <div className="mt-2 flex h-full gap-2">
         <div className="flex flex-col justify-between">
-          <span className="text-xl font-bold">{props.number}</span>
-          <span className="text-primary-accent line-clamp-2 w-25 text-xs">
+          <span className="text-4xl">{props.number}</span>
+          <span className="text-primary-accent line-clamp-2 w-29 text-sm">
             {props.subtitle}
           </span>
         </div>
