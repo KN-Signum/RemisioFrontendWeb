@@ -34,7 +34,7 @@ export const Sidebar = () => {
 
   return (
     <aside
-      className="bg-primary/22 border-primary-accent/60 ml-4 flex h-full w-30 flex-col items-center justify-around rounded-sm border"
+      className="bg-primary/22 border-primary-accent/60 ml-2 flex h-full w-23 flex-col items-center justify-around rounded-sm border"
       style={{
         boxShadow: '0.05rem 0.03rem 3px var(--color-primary-accent)',
       }}
