@@ -5,7 +5,7 @@ export const ItemCardChart = () => {
     (value) => ((value + hModifier) / (Math.max(...data) + hModifier)) * 5,
   );
   return (
-    <div className="flex h-full w-full items-end gap-1">
+    <div className="flex h-full w-full items-end gap-2.5">
       {normalizedData.map((value, index) => (
         <div
           key={index}

@@ -11,7 +11,7 @@ const Layout = ({ children }: Props) => {
       <Header />
       <div className="mb-2 flex h-full flex-row overflow-hidden">
         <Sidebar />
-        <div className="h-full max-h-full flex-1 overflow-auto px-2">
+        <div className="h-full max-h-full flex-1 overflow-auto pr-2 pl-4">
           {children}
         </div>
       </div>

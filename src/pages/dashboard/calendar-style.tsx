@@ -82,6 +82,18 @@ export const CalendarStyle = () => {
       .fc .fc-daygrid-view {
         overflow: hidden !important;
       }
+
+      .fc-toolbar {
+        background-color: var(--color-secondary) !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 1.2rem !important;
+        border-top-left-radius: calc(var(--radius) - 4px) !important;
+        border-top-right-radius: calc(var(--radius) - 4px) !important;
+        }
+
+      thead {
+        background-color: var(--color-secondary) !important;
+      }
     `}</style>
   );
 };

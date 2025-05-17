@@ -13,7 +13,8 @@ import { ItemCard } from './item-card';
 import { useNavigate } from 'react-router-dom';
 import { PatientsTable } from './patients-table';
 
-const borderClasses = 'flex w-full border-2 border-white/50 rounded-sm py-2';
+const borderClasses =
+  'flex w-full bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
 
 export const Dashboard = () => {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ export const Dashboard = () => {
 
   return (
     <Layout>
-      <div className="flex w-full flex-col gap-1 overflow-y-visible">
+      <div className="flex w-full flex-col gap-2.5 overflow-y-visible">
         <div className={cn(borderClasses, 'gap-10 px-4')}>
           <ItemCard
             title={t('dashboard.cards.surveys.title')}
@@ -57,7 +58,7 @@ export const Dashboard = () => {
             onClick={() => {
               navigate('/calendar');
             }}
-            className="from-secondary hover:ring-secondary w-[35%] rounded-xs bg-gradient-to-b from-20% to-transparent to-20% text-xs hover:cursor-pointer hover:opacity-60 hover:ring-2"
+            className="hover:ring-secondary w-[35%] rounded-xs text-xs hover:cursor-pointer hover:opacity-60 hover:ring-2"
           >
             <FullCalendar
               plugins={[dayGridPlugin]}

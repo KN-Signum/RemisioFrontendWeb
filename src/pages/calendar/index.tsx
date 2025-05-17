@@ -7,8 +7,8 @@ import { CalendarStyle } from './calendar-style';
 export const Calendar = () => {
   return (
     <Layout>
-      <div className="h-full w-full rounded-sm border-2 border-white/50 p-4">
-        <div className="from-secondary h-full w-full rounded-sm bg-gradient-to-b to-transparent xl:from-16% xl:to-16% 2xl:from-13% 2xl:to-13%">
+      <div className="bg-foreground border-primary-accent/60 shadow-primary-accent h-full w-full rounded-sm border-2 px-4 py-2 shadow-xs">
+        <div className="from-secondary h-full w-full rounded-sm">
           <FullCalendar
             plugins={[dayGridPlugin]}
             initialView="dayGridMonth"
