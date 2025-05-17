@@ -51,6 +51,7 @@ export const CalendarStyle = () => {
 
       .fc .fc-toolbar-title {
         text-transform: capitalize !important;
+        margin-top: 0.5rem !important;
       }
 
       /* Style for fonts color */
@@ -86,7 +87,7 @@ export const CalendarStyle = () => {
       .fc-toolbar {
         background-color: var(--color-secondary) !important;
         margin-bottom: 0 !important;
-        padding-bottom: 1.2rem !important;
+        padding-bottom: 0.7rem !important;
         border-top-left-radius: calc(var(--radius) - 4px) !important;
         border-top-right-radius: calc(var(--radius) - 4px) !important;
         }

@@ -58,7 +58,7 @@ export const Dashboard = () => {
             onClick={() => {
               navigate('/calendar');
             }}
-            className="hover:ring-secondary w-[35%] rounded-xs text-xs hover:cursor-pointer hover:opacity-60 hover:ring-2"
+            className="hover:ring-secondary w-[35%] rounded-xs text-xs hover:cursor-pointer hover:opacity-60"
           >
             <FullCalendar
               plugins={[dayGridPlugin]}
@@ -68,9 +68,9 @@ export const Dashboard = () => {
               locale={t('language') === 'pl' ? plLocale : enLocale}
               timeZone="pl"
               headerToolbar={{
-                left: 'prev',
+                left: '',
                 center: 'title',
-                right: 'next',
+                right: '',
               }}
             />
           </div>
