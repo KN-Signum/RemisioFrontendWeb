@@ -2,6 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Dashboard } from '@/pages/dashboard';
 import { Calendar } from '@/pages/calendar';
 import LoginPage from '@/pages/login/loginPage';
+import PatientsPage from "@/pages/patients/patientsPage";
+import PatientDetailsPage from "@/pages/patients/patientDetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -10,8 +12,13 @@ export const router = createBrowserRouter([
     errorElement: <div>Error</div>,
   },
   {
-    path: '/patients',
-    element: <div>Patients</div>,
+    path: "/patients",
+    element: <div><PatientsPage /></div>,
+    errorElement: <div>Error</div>,
+  },
+  {
+    path: "/patients/:id",
+    element: <div><PatientDetailsPage /></div>,
     errorElement: <div>Error</div>,
   },
   {
