@@ -21,14 +21,14 @@ const PatientsPage = () => {
             <div className="flex flex-col w-full h-full bg-white rounded-sm shadow-2xl overflow-hidden p-8">
 
                 {/* --- SearchBar + IconButton ------------------------------------ */}
-                <div className="mb-6 flex items-center justify-center">
+                <div className="mb-6 flex items-center justify-center gap-4">
                     <SearchBar placeholder="Search patients..." onSearch={handleSearch} />
 
                     <Dialog.Root open={open} onOpenChange={setOpen}>
                         <Dialog.Trigger asChild>
                             <button
                                 aria-label="Add patient"
-                                className="rounded-full bg-primary-accent p-3 text-white shadow-lg hover:bg-primary-accent/80 transition"
+                                className="rounded-full bg-primary-accent p-3 text-white shadow-lg hover:bg-primary-accent/80 transition cursor-pointer"
                             >
                                 <BiPlus className="text-2xl" />
                             </button>
