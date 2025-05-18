@@ -25,6 +25,15 @@
   --foreground: oklch(0.04 0 0);
 }
 
+.apexcharts-tooltip,
+.apexcharts-tooltip-title,
+.apexcharts-tooltip-text {
+  color: #003049;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+}
+
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

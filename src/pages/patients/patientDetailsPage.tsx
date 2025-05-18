@@ -1,14 +1,19 @@
 import { useParams } from "react-router-dom";
 import { mockPatients } from "@/assets/mock_data/patients";
 import Layout from "@/components/layout";
-import { BiPhone } from "react-icons/bi";
+import { PatientInfoCard } from "@/features/patient/components/details/PatientInfoCard";
+import { DiagnosticTestsGrid } from "@/features/patient/components/details/DiagnosticTestGrid";
+import { ScoreTimelineChart } from "@/features/patient/components/details/ScoreTimeLineChart";
+import { useMemo } from "react";
 import { cn } from "@/lib/utils";
+
+const borderClasses = "flex w-full border-2 border-white/50 rounded-sm py-2";
 
 const PatientDetailsPage = () => {
     const { id } = useParams();
     const patient = mockPatients.find((p) => p.id === parseInt(id || "", 10));
 
-    if (!patient) {
+    if (!patient)
         return (
             <Layout>
                 <div className="flex items-center justify-center h-full text-red-500">
@@ -16,73 +21,42 @@ const PatientDetailsPage = () => {
                 </div>
             </Layout>
         );
-    }
 
-    const borderClasses = "flex w-full border-2 border-white/50 rounded-sm py-2";
+    /* --- mock score --- */
+    const scoreHistory = useMemo(() => {
+        return Array.from({ length: 8 }).map((_, w) => {
+            const d = new Date();
+            d.setDate(d.getDate() + w * 7);
+            return {
+                week: d.toISOString().split("T")[0],
+                score: Math.max(0, Math.min(100, patient.score + (Math.random() * 10 - 5))),
+            };
+        });
+    }, [patient.score]);
+
+    /* --- mock tests --- */
+    const tests = Array.from({ length: 12 }).map((_, i) => ({
+        name: `Test ${i + 1}`,
+        value: `${(Math.random() * 100).toFixed(1)} mg/dL`,
+    }));
 
     return (
         <Layout>
             <div className="flex w-full flex-col gap-1 overflow-y-visible" style={{ height: "100vh" }}>
+                {/* top */}
                 <div className={cn(borderClasses, "h-[40vh] gap-3 px-1.5")}>
-
-                    <div className="bg-white w-[35%] p-4 rounded-sm shadow-md flex gap-3 overflow-y-auto">
-                        <div className="bg-primary-accent text-white px-4 py-2 rounded-lg text-sm flex items-top justify-center min-w-[100px]">
-                            {patient.name}
-                        </div>
-
-                        <div className="flex-1 flex flex-col gap-2">
-                            <div className="flex items-center">
-                                <BiPhone className="text-primary-accent" />
-                                <span className="text-primary-accent font-semibold text-lg">{patient.phone_number}</span>
-                            </div>
-
-                            <div className="border-l-2 border-primary-accent pl-3 flex flex-col gap-1 text-sm text-primary-accent">
-                                <p>Hospital: {patient.hospital}</p>
-                                <p>Score: {patient.score}%</p>
-                                <p>Age: {patient.age} years</p>
-                                <p>Weight: {patient.weight} kg</p>
-                                <p>Height: {patient.height} cm</p>
-                                <p>Diagnosis: Crohn's Disease</p>
-                                <p>Smoking Status: Non-smoker</p>
-                                <p>Last Visit: 2025-05-10</p>
-                                <p>Next Appointment: 2025-06-15</p>
-                                <p>Allergies: None reported</p>
-                                <p>Medications: Prednisone, Azathioprine</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="bg-white w-[65%] p-4 rounded-sm shadow-md overflow-y-auto">
-                        <h2 className="text-lg font-bold text-primary mb-2">Testy diagnostyczne</h2>
-                        <div className="grid grid-cols-3 gap-2">
-                            {Array(12).fill(0).map((_, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-primary-accent/10 p-2 rounded-md shadow-sm flex justify-between"
-                                >
-                                    <span className="text-gray-700 text-xs">Test {index + 1}</span>
-                                    <span className="font-semibold text-primary-accent text-xs">
-                                        {Math.random().toFixed(2)} mg/dL
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    <PatientInfoCard patient={patient} />
+                    <DiagnosticTestsGrid tests={tests} />
                 </div>
 
+                {/* bottom */}
                 <div className={cn(borderClasses, "h-[50.5vh] px-1.5")}>
-                    <div className="bg-white w-full p-4 rounded-sm shadow-md">
-                        <h2 className="text-lg font-bold text-primary mb-2">Oś czasu pacjenta</h2>
-                        <div className="flex flex-col gap-2 overflow-y-auto">
-                            {Array(4).fill(0).map((_, index) => (
-                                <div key={index} className="flex items-center gap-4">
-                                    <span className="text-sm text-primary-accent w-[100px]">2025-05-0{index + 1}</span>
-                                    <div className="bg-primary-accent/10 p-2 rounded-md flex-1">
-                                        Event {index + 1}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                    <div className="bg-white w-full p-8 rounded-sm shadow-md flex flex-col">
+                        <h2 className="text-lg font-bold text-primary mb-4">Zmiana score w ostatnich 8 tygodniach</h2>
+                        <ScoreTimelineChart
+                            weeks={scoreHistory.map((p) => p.week)}
+                            scores={scoreHistory.map((p) => p.score)}
+                        />
                     </div>
                 </div>
             </div>

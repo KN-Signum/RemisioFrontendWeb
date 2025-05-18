@@ -76,6 +76,19 @@
       "doses_left_positive": "Dawki pozostałe muszą być liczbą dodatnią"
     }
   },
+  "patients": {
+    "form": {
+      "name": "Imię i nazwisko",
+      "email": "Email",
+      "phone": "Numer telefonu",
+      "password": "Hasło",
+      "weight": "Waga (kg)",
+      "height": "Wzrost (cm)",
+      "age": "Wiek",
+      "create": "Zatwierdź pacjenta"
+    },
+    "new": "Nowy pacjent"
+  },
   "patient": {
     "add": "Dodaj pacjenta",
     "assign": "Przypisz pacjenta",

@@ -93,6 +93,19 @@
       "age_required": "Age is required"
     }
   },
+  "patients": {
+    "form": {
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone number",
+      "password": "Password",
+      "weight": "Weight (kg)",
+      "height": "Height (cm)",
+      "age": "Age",
+      "create": "Create patient"
+    },
+    "new": "New patient"
+  },
   "patient-list": {
     "full_name": "Full name",
     "mayo_stance": "Mayo stance",
@@ -135,11 +148,25 @@
       "November",
       "December"
     ],
-    "weekdays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "weekdays": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
     "today": "Today"
   },
   "grid": {
-    "weekdays": ["Mon", "Tue", "Wed", "Thu", "Fri"]
+    "weekdays": [
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri"
+    ]
   },
   "appointment": {
     "create": "Create appointment",
