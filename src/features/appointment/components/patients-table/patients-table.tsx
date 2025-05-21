@@ -32,9 +32,7 @@ const TableRow = () => {
       </div>
       <div className="flex-1">Wyleczony</div>
       <div className="flex-1">11.05.2025</div>
-      <div className="flex-2">
-        Lek X
-      </div>
+      <div className="flex-2">Lek X</div>
     </div>
   );
 };
@@ -42,7 +40,7 @@ const TableRow = () => {
 export const PatientsTable = () => {
   const { t } = useTranslation();
   return (
-    <div className="max-h-full w-[65%] overflow-y-scroll rounded-xs">
+    <div className="max-h-full w-full overflow-y-scroll rounded-xs">
       <div className="bg-secondary flex items-center gap-2 px-4 py-3 text-left text-sm font-bold text-white/80">
         <div className="flex-1">{t('dashboard.table.full_name')}</div>
         <div className="flex-1">{t('dashboard.table.mayo_state')}</div>

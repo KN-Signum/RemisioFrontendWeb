@@ -1,4 +1,4 @@
-export const CalendarStyle = () => {
+export const CalendarStyleDashboard = () => {
   return (
     <style>{`
       /* Style for calendar cells */
