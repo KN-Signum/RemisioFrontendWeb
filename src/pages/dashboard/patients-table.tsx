@@ -33,7 +33,7 @@ const TableRow = () => {
       <div className="flex-1">Wyleczony</div>
       <div className="flex-1">11.05.2025</div>
       <div className="flex-2">
-        Lek XLekLek XLekLek XLekLek XLekLek XLekLek XLek Lek XLekLek XLek
+        Lek X
       </div>
     </div>
   );

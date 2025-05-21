@@ -10,11 +10,11 @@ export const Header = () => {
           <img
             src="/logo.svg"
             alt="Logo"
-            className="size-14"
-            style={{ transform: 'scaleX(1.65)' }}
+            className="size-18"
+            style={{ transform: 'scaleX(1)' }}
           />
         </div>
-        <div className="bg-foreground border-primary-accent/60 shadow-primary-accent text-primary-accent flex h-14 w-full items-center justify-end rounded-sm border px-2 py-1 text-2xl shadow-xs">
+        <div className="bg-foreground border-primary-accent/60 shadow-primary-accent text-primary-accent flex h-16 w-full items-center justify-end rounded-sm border px-2 py-1 text-2xl shadow-xs">
           <div className="mr-6 flex h-14 w-[16%] items-center justify-between">
             <AiOutlineSetting className="size-8" />
             <BsFillPersonFill className="size-8" />
