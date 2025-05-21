@@ -1,25 +1,56 @@
-import { mockPatients } from '@/testing/test-data/patients';
-import Layout from '@/components/layout';
-import { SearchBar } from '@/features/patient/components/SearchBar';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Layout from "@/components/layout";
+import { SearchBar } from "@/features/patient/components/SearchBar";
+import { NewPatientForm, PatientPayload } from "@/features/patient/components/NewPatientForm";
+import { createPatient } from "@/features/patient/api/create-patient";
 
-import * as Dialog from '@radix-ui/react-dialog';
-import { BiPlus } from 'react-icons/bi';
-import { NewPatientForm } from '@/features/patient/components/NewPatientForm';
+import * as Dialog from "@radix-ui/react-dialog";
+import { BiPlus } from "react-icons/bi";
+import { toast } from "react-hot-toast";
+
+import { mockPatients } from "@/testing/test-data/patients";
 
 const PatientsPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [open, setOpen] = useState(false);
+
+  const [patients, setPatients] = useState([...mockPatients]);
+
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState<string>();
+
   const navigate = useNavigate();
 
   const handleSearch = (q: string) => setSearchQuery(q);
   const handlePatientClick = (id: number) => navigate(`/patients/${id}`);
 
+  const handleFormSubmit = async (data: PatientPayload) => {
+    setFormLoading(true);
+    setFormError(undefined);
+
+    try {
+      const res = await createPatient(data);
+      toast.success(res.content);
+
+      const newPatient = {
+        id: Date.now(),
+        ...data,
+        score: 0,
+      };
+      setPatients((prev) => [newPatient, ...prev]);
+
+      setOpen(false);
+    } catch (err: any) {
+      setFormError(err.message);
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
   return (
     <Layout>
       <div className="flex h-full w-full flex-col overflow-hidden rounded-sm bg-white p-8 shadow-2xl">
-        {/* --- SearchBar + IconButton ------------------------------------ */}
         <div className="mb-6 flex items-center justify-center gap-4">
           <SearchBar placeholder="Search patients..." onSearch={handleSearch} />
 
@@ -41,10 +72,9 @@ const PatientsPage = () => {
                 </Dialog.Title>
 
                 <NewPatientForm
-                  onSubmit={(data) => {
-                    console.log('send to API', data);
-                    setOpen(false);
-                  }}
+                  onSubmit={handleFormSubmit}
+                  isLoading={formLoading}
+                  error={formError}
                 />
 
                 <Dialog.Close asChild>
@@ -61,9 +91,9 @@ const PatientsPage = () => {
         </div>
 
         <div className="grid flex-1 grid-cols-1 gap-4 overflow-y-auto p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {mockPatients
+          {patients
             .filter((p) =>
-              p.name.toLowerCase().includes(searchQuery.toLowerCase()),
+              p.name.toLowerCase().includes(searchQuery.toLowerCase())
             )
             .map((patient) => (
               <div
