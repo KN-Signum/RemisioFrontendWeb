@@ -1,41 +1,35 @@
-import { apiClient } from "@/lib/api-client";
-import Cookies from "universal-cookie";
+import { useMutation } from '@tanstack/react-query';
+import { apiClient } from '@/lib/api-client';
+import Cookies from 'universal-cookie';
+import { LoginRequestDto, LoginResponse } from '../types';
 
 const cookies = new Cookies();
 
-type LoginResponse = {
-    id: string;
-    email: string;
-    role: string;
-    access_token: string;
-    refresh_token: string;
+export const login = (
+  creditentials: LoginRequestDto,
+): Promise<{
+  data: LoginResponse;
+}> => {
+  return apiClient.post('/login/', creditentials);
 };
 
-export const loginUser = async (
-    credentials: { email: string; password: string }
-): Promise<LoginResponse> => {
-    console.log("[loginUser] sending →", credentials.email);
-
-    try {
-        const data = await apiClient.post<LoginResponse>("/login/", credentials);
-
-        console.log("[loginUser] data →", data);
-        console.log("[loginUser] access_token →", data.data.access_token);
-
-        const { access_token, refresh_token } = data.data;
-
-        if (!access_token || !refresh_token) {
-            console.warn("[loginUser] missing tokens →", data);
-            throw new Error("Back-end nie zwrócił tokenów");
-        }
-
-        cookies.set("access_token", access_token, { path: "/", sameSite: "lax" });
-        cookies.set("refresh_token", refresh_token, { path: "/", sameSite: "lax" });
-
-        return data.data;
-    } catch (error: any) {
-        console.error("[loginUser] error →", error);
-        throw new Error(error?.message || "Login failed");
-    }
+type UseLoginOptions = {
+  onSuccess?: (data: LoginResponse) => void;
 };
 
+export const useLogin = ({ onSuccess }: UseLoginOptions = {}) => {
+  const { mutate: submit, isPending: isLoading } = useMutation({
+    mutationFn: login,
+    onSuccess: ({ data }) => {
+      // Changed destructuring from { response } to { data }
+      cookies.set('access_token', data.access_token);
+      cookies.set('refresh_token', data.refresh_token);
+      onSuccess?.(data);
+    },
+    onError: (error) => {
+      console.error('Login error:', error);
+      // Handle error (e.g., show a notification)
+    },
+  });
+  return { submit, isLoading };
+};

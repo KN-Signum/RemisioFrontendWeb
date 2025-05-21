@@ -12,3 +12,11 @@ export interface GetMeResponseDto {
   specialization: string;
   role: string;
 }
+
+export interface LoginResponse {
+  id: string;
+  email: string;
+  role: string;
+  access_token: string;
+  refresh_token: string;
+}
