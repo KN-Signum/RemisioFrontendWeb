@@ -1,47 +1,42 @@
-import { apiClient } from "@/lib/api-client";
+import { apiClient } from '@/lib/api-client';
+import { CreatePatientDto, GetPatientDto } from '../types';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '@/lib/react-query';
 
-export type CreatePatientPayload = {
-    name: string;
-    email: string;
-    phone_number: string;
-    password: string;
-    weight: number;
-    height: number;
-    age: number;
-    hospital: string;
+export const createPatient = (
+  createPatientDto: CreatePatientDto,
+): Promise<{
+  data: GetPatientDto;
+}> => {
+  console.log('Creating patient:', createPatientDto);
+  return apiClient.post('/api/create_patient', createPatientDto);
 };
 
-export type CreatePatientResponse = {
-    status: number;
-    content: string;
+type UseCreatePatientrOptions = {
+  onSuccess?: (data: GetPatientDto) => void;
 };
 
-export const createPatient = async (
-    payload: CreatePatientPayload
-): Promise<CreatePatientResponse> => {
-    console.log("[createPatient] sending →", payload);
+export const useCreatePatient = ({
+  onSuccess,
+}: UseCreatePatientrOptions = {}) => {
+  const { mutate: create, isPending: isLoading } = useMutation({
+    mutationFn: createPatient,
+    onMutate: (data) => {
+      console.log('Creating patient:', data);
+      // Optionally, you can show a loading state or a notification here
+    },
+    onSuccess: (result) => {
+      const patient = result.data;
+      queryClient.setQueryData(['patients'], (oldData: GetPatientDto[]) =>
+        oldData ? [...oldData, patient] : oldData,
+      );
+      onSuccess?.(patient);
+    },
+    onError: (error) => {
+      console.error('Error creating patient:', error);
+      // Handle error (e.g., show a notification)
+    },
+  });
 
-    try {
-        const response = await apiClient.post<CreatePatientResponse>(
-            "/api/create_patient",
-            payload
-        );
-
-        if (response.status !== 201) {
-            throw new Error(
-                `Unexpected HTTP status ${response.status} while creating patient`
-            );
-        }
-
-        console.log("[createPatient] success ←", response.data);
-        return response.data;
-    } catch (error: any) {
-        const message =
-            error.response?.data?.content ||
-            error.response?.data?.message ||
-            error.message;
-
-        console.error("[createPatient] error ←", message);
-        throw new Error(message);
-    }
+  return { create, isLoading };
 };

@@ -2,17 +2,18 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout';
 import { SearchBar } from '@/features/patient/components/SearchBar';
-import {
-  NewPatientForm,
-  PatientPayload,
-} from '@/features/patient/components/NewPatientForm';
+import { NewPatientForm } from '@/features/patient/components/NewPatientForm';
 // import { createPatient } from '@/features/patient/api/create-patient';
 
 import * as Dialog from '@radix-ui/react-dialog';
 import { BiPlus } from 'react-icons/bi';
 // import { toast } from 'react-hot-toast';
 
-import { usePatients } from '@/features/patient';
+import {
+  CreatePatientDto,
+  useCreatePatient,
+  usePatients,
+} from '@/features/patient';
 import { PatientCard } from '@/features/patient/components/patient-card';
 
 const PatientsPage = () => {
@@ -20,20 +21,18 @@ const PatientsPage = () => {
   const [open, setOpen] = useState(false);
 
   const { data: patients, isLoading: patientsLoading } = usePatients();
-  console.log('Patients', patients);
-
-  const [formLoading, setFormLoading] = useState(false);
-  const [formError, setFormError] = useState<string>();
+  const onSuccess = () => {
+    setOpen(false);
+  };
+  const createPatient = useCreatePatient({ onSuccess });
 
   const navigate = useNavigate();
 
   const handleSearch = (q: string) => setSearchQuery(q);
   const handlePatientClick = (id: string) => navigate(`/patients/${id}`);
 
-  const handleFormSubmit = async (data: PatientPayload) => {
-    setFormLoading(true);
-    setFormError(undefined);
-    console.log('Form data', data);
+  const handleFormSubmit = async (data: CreatePatientDto) => {
+    createPatient.create(data);
   };
 
   if (patientsLoading) {
@@ -71,8 +70,8 @@ const PatientsPage = () => {
 
                 <NewPatientForm
                   onSubmit={handleFormSubmit}
-                  isLoading={formLoading}
-                  error={formError}
+                  isLoading={createPatient.isLoading}
+                  error={undefined}
                 />
 
                 <Dialog.Close asChild>
@@ -95,6 +94,7 @@ const PatientsPage = () => {
             )
             .map((patient) => (
               <PatientCard
+                key={patient.id}
                 patient={patient}
                 onClick={() => handlePatientClick(patient.id)}
               />
