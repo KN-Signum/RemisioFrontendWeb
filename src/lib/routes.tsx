@@ -2,24 +2,32 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Dashboard } from '@/pages/dashboard';
 import { Calendar } from '@/pages/calendar';
 import LoginPage from '@/pages/login/loginPage';
-import PatientsPage from "@/pages/patients/patientsPage";
-import PatientDetailsPage from "@/pages/patients/patientDetailsPage";
+import PatientsPage from '@/pages/patients/patientsPage';
+import PatientDetailsPage from '@/pages/patients/patientDetailsPage';
 import LandingPage from '@/pages/landing-page/landingPage';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>Home</div>,
+    element: <LandingPage />,
     errorElement: <div>Error</div>,
   },
   {
-    path: "/patients",
-    element: <div><PatientsPage /></div>,
+    path: '/patients',
+    element: (
+      <div>
+        <PatientsPage />
+      </div>
+    ),
     errorElement: <div>Error</div>,
   },
   {
-    path: "/patients/:id",
-    element: <div><PatientDetailsPage /></div>,
+    path: '/patients/:id',
+    element: (
+      <div>
+        <PatientDetailsPage />
+      </div>
+    ),
     errorElement: <div>Error</div>,
   },
   {
@@ -49,6 +57,10 @@ export const router = createBrowserRouter([
   },
   {
     path: '/landing-page',
-    element: <div><LandingPage /></div>
-  }
+    element: (
+      <div>
+        <LandingPage />
+      </div>
+    ),
+  },
 ]);
