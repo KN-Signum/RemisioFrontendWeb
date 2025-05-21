@@ -3,7 +3,8 @@
   "landing-page": {
     "title": "GastroApp",
     "subtitle": "Zaloguj się, by przejść dalej.",
-    "cta": "Zaloguj się"
+    "cta": "Zaloguj się",
+    "download": "Pobierz aplikację dla:"
   },
   "login": {
     "welcome": "Witamy ponownie",

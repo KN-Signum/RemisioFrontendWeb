@@ -1,66 +1,96 @@
-import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
-export const LandingPage = () => (
-  <div className="bg-background flex min-h-screen items-center justify-center p-6">
-    <div className="border-primary-accent/50 bg-primary/60 flex w-full max-w-5xl flex-col items-center gap-10 rounded-lg border-2 py-10">
-      {/* górny rząd logotypów + przycisk logowania */}
-      <div className="flex w-full items-center justify-between px-10">
-        <div className="flex items-center gap-8">
-          <img
-            src="/logos/skn_gastro.svg"
-            alt="SKN Gastroenterologii"
-            className="h-20"
-          />
-          <img src="/logos/signum.png" alt="SIGNUM" className="h-16" />
-        </div>
+interface CardProps {
+  href: string;
+  src: string;
+  alt: string;
+  name: string;
+}
 
-        {/* przycisk logowania wyrzucony na prawo */}
-        <Link
-          to="/login"
-          className="bg-primary-accent hover:bg-primary/80 rounded-lg px-8 py-2 font-semibold text-white shadow transition"
-        >
-          Zaloguj&nbsp;się
-        </Link>
+const Card = (props: CardProps) => {
+  const { href, src, alt, name } = props;
+  return (
+    <a href={href}>
+      <div
+        className="bg-foreground/40 border-primary-accent/60 flex flex-col items-center gap-2 rounded-sm border hover:cursor-pointer hover:opacity-80 xl:p-10 2xl:p-15"
+        style={{
+          boxShadow: '0.1rem 0.07rem 3px var(--color-primary-accent)',
+        }}
+      >
+        <img src={src} alt={alt} className="xl:size-25 2xl:size-35" />
+        <span className="text-primary-accent text-center text-2xl font-bold">
+          {name}
+        </span>
       </div>
+    </a>
+  );
+};
 
-      {/* ikona aplikacji */}
-      <img
-        src="/app_icon.png"
-        alt="GastroApp icon"
-        className="h-42 rounded-xl"
-      />
+export const LandingPage = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
-      {/* nagłówek */}
-      <h2 className="text-primary-accent text-2xl font-bold">
-        Pobierz aplikację dla:
-      </h2>
-
-      {/* kafelki Android & iOS */}
-      <div className="grid grid-cols-2 gap-10">
-        <a
-          href="https://play.google.com"
-          target="_blank"
-          rel="noreferrer"
-          className="border-primary/40 flex flex-col items-center gap-4 rounded-lg border bg-white/30 px-14 py-10 transition hover:scale-105 hover:shadow-lg"
-        >
-          <img src="/logos/android.png" alt="Android" className="h-24" />
-          <span className="text-primary-accent text-xl font-semibold">
-            Android
+  return (
+    <div className="bg-background h-screen px-50 py-8">
+      <div
+        className="bg-primary/40 text-primary-accent border-primary-accent/60 flex h-full w-full flex-col rounded-sm border px-20 py-6"
+        style={{
+          boxShadow: '0.1rem 0.07rem 3px var(--color-primary-accent)',
+        }}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex gap-10">
+            <img
+              src="/logos/skn_gastro.svg"
+              alt="SKN Gastroenterologii"
+              className="xl:size-25 2xl:size-30"
+              style={{
+                scale: '1.4',
+              }}
+            />
+            <img
+              src="/logos/signum.png"
+              alt="SIGNUM"
+              className="xl:h-20 xl:w-50 2xl:h-30 2xl:w-70"
+            />
+          </div>
+          <div
+            className="bg-primary-accent h-fit rounded-md px-12 py-3 hover:cursor-pointer hover:opacity-80"
+            onClick={() => navigate('/login')}
+          >
+            <span className="text-foreground text-xl font-bold">
+              {t('landing-page.cta')}
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center gap-6 xl:mt-1 2xl:mt-6">
+          <img
+            src="/app_icon.png"
+            alt="GastroApp icon"
+            className="xl:size-50 2xl:size-60"
+          />
+          <span className="text-primary-accent text-3xl font-bold">
+            {t('landing-page.download')}
           </span>
-        </a>
-
-        <a
-          href="https://apps.apple.com"
-          target="_blank"
-          rel="noreferrer"
-          className="border-primary/40 flex flex-col items-center gap-4 rounded-lg border bg-white/30 px-14 py-10 transition hover:scale-105 hover:shadow-lg"
-        >
-          <img src="/logos/apple.png" alt="iOS" className="h-24" />
-          <span className="text-primary-accent text-xl font-semibold">IOS</span>
-        </a>
+        </div>
+        <div className="mt-12 flex items-center justify-center gap-30">
+          <Card
+            href="https://play.google.com"
+            src="/logos/android.png"
+            alt="Android"
+            name="Android"
+          />
+          <Card
+            href="https://apps.apple.com"
+            src="/logos/apple.png"
+            alt="iOS"
+            name="iOS"
+          />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default LandingPage;
