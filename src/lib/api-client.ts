@@ -1,14 +1,14 @@
-import Axios from "axios";
-import Cookies from "universal-cookie";
+import { API_URL } from '@/config/constants';
+import Axios from 'axios';
+import Cookies from 'universal-cookie';
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 const cookies = new Cookies();
 
 export const apiClient = Axios.create({
   baseURL: API_URL,
   headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${cookies.get("access_token")}`,
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${cookies.get('access_token')}`,
   },
 });
 
@@ -22,5 +22,5 @@ apiClient.interceptors.response.use(
     console.error(message);
 
     return Promise.reject(error);
-  }
+  },
 );
