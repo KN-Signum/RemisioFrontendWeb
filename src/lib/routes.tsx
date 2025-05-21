@@ -4,6 +4,7 @@ import { Calendar } from '@/pages/calendar';
 import LoginPage from '@/pages/login/loginPage';
 import PatientsPage from "@/pages/patients/patientsPage";
 import PatientDetailsPage from "@/pages/patients/patientDetailsPage";
+import LandingPage from '@/pages/landing-page/landingPage';
 
 export const router = createBrowserRouter([
   {
@@ -46,4 +47,8 @@ export const router = createBrowserRouter([
     element: <LoginPage />,
     errorElement: <div>Error</div>,
   },
+  {
+    path: '/landing-page',
+    element: <div><LandingPage /></div>
+  }
 ]);
