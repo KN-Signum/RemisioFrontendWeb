@@ -14,14 +14,28 @@ type LoginResponse = {
 export const loginUser = async (
     credentials: { email: string; password: string }
 ): Promise<LoginResponse> => {
+    console.log("[loginUser] sending →", credentials.email);
+
     try {
-        const response = await apiClient.post<LoginResponse>("/login/", credentials);
+        const data = await apiClient.post<LoginResponse>("/login/", credentials);
 
-        cookies.set("access_token", response.data.access_token, { path: "/" });
-        cookies.set("refresh_token", response.data.refresh_token, { path: "/" });
+        console.log("[loginUser] data →", data);
+        console.log("[loginUser] access_token →", data.data.access_token);
 
-        return response.data;
+        const { access_token, refresh_token } = data.data;
+
+        if (!access_token || !refresh_token) {
+            console.warn("[loginUser] missing tokens →", data);
+            throw new Error("Back-end nie zwrócił tokenów");
+        }
+
+        cookies.set("access_token", access_token, { path: "/", sameSite: "lax" });
+        cookies.set("refresh_token", refresh_token, { path: "/", sameSite: "lax" });
+
+        return data.data;
     } catch (error: any) {
-        throw new Error(error.response?.data?.message || "Login failed");
+        console.error("[loginUser] error →", error);
+        throw new Error(error?.message || "Login failed");
     }
 };
+

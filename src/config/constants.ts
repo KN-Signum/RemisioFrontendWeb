@@ -1,5 +1,5 @@
 export const API_URL =
-  import.meta.env.VITE_PUBLIC_API_URL ?? 'http://localhost:5000';
+  import.meta.env.VITE_PUBLIC_API_URL ?? 'http://127.0.0.1:8000';
 
 export const API_MOCKING = import.meta.env.VITE_PUBLIC_API_MOCKING === 'true';
 
