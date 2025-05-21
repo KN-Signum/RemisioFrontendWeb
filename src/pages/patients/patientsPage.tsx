@@ -1,21 +1,26 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Layout from "@/components/layout";
-import { SearchBar } from "@/features/patient/components/SearchBar";
-import { NewPatientForm, PatientPayload } from "@/features/patient/components/NewPatientForm";
-import { createPatient } from "@/features/patient/api/create-patient";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Layout from '@/components/layout';
+import { SearchBar } from '@/features/patient/components/SearchBar';
+import {
+  NewPatientForm,
+  PatientPayload,
+} from '@/features/patient/components/NewPatientForm';
+// import { createPatient } from '@/features/patient/api/create-patient';
 
-import * as Dialog from "@radix-ui/react-dialog";
-import { BiPlus } from "react-icons/bi";
-import { toast } from "react-hot-toast";
+import * as Dialog from '@radix-ui/react-dialog';
+import { BiPlus } from 'react-icons/bi';
+// import { toast } from 'react-hot-toast';
 
-import { mockPatients } from "@/testing/test-data/patients";
+import { usePatients } from '@/features/patient';
+import { PatientCard } from '@/features/patient/components/patient-card';
 
 const PatientsPage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [open, setOpen] = useState(false);
 
-  const [patients, setPatients] = useState([...mockPatients]);
+  const { data: patients, isLoading: patientsLoading } = usePatients();
+  console.log('Patients', patients);
 
   const [formLoading, setFormLoading] = useState(false);
   const [formError, setFormError] = useState<string>();
@@ -23,30 +28,23 @@ const PatientsPage = () => {
   const navigate = useNavigate();
 
   const handleSearch = (q: string) => setSearchQuery(q);
-  const handlePatientClick = (id: number) => navigate(`/patients/${id}`);
+  const handlePatientClick = (id: string) => navigate(`/patients/${id}`);
 
   const handleFormSubmit = async (data: PatientPayload) => {
     setFormLoading(true);
     setFormError(undefined);
-
-    try {
-      const res = await createPatient(data);
-      toast.success(res.content);
-
-      const newPatient = {
-        id: Date.now(),
-        ...data,
-        score: 0,
-      };
-      setPatients((prev) => [newPatient, ...prev]);
-
-      setOpen(false);
-    } catch (err: any) {
-      setFormError(err.message);
-    } finally {
-      setFormLoading(false);
-    }
+    console.log('Form data', data);
   };
+
+  if (patientsLoading) {
+    return (
+      <Layout>
+        <div className="flex h-full w-full items-center justify-center">
+          <p className="text-gray-500">Loading...</p>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -90,41 +88,16 @@ const PatientsPage = () => {
           </Dialog.Root>
         </div>
 
-        <div className="grid flex-1 grid-cols-1 gap-4 overflow-y-auto p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 overflow-y-auto p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {patients
             .filter((p) =>
-              p.name.toLowerCase().includes(searchQuery.toLowerCase())
+              p.name.toLowerCase().includes(searchQuery.toLowerCase()),
             )
             .map((patient) => (
-              <div
-                key={patient.id}
+              <PatientCard
+                patient={patient}
                 onClick={() => handlePatientClick(patient.id)}
-                className="bg-primary-accent/10 flex cursor-pointer flex-col gap-2 rounded-lg border border-gray-300 p-4 transition-transform duration-200 hover:scale-105 hover:shadow-lg"
-              >
-                <h3 className="text-primary-accent line-clamp-1 text-lg font-semibold">
-                  {patient.name}
-                </h3>
-                <div className="text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <span className="material-icons text-primary-accent">
-                      location_on
-                    </span>
-                    {patient.hospital}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="material-icons text-primary-accent">
-                      medication
-                    </span>
-                    Crohn
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="material-icons text-primary-accent">
-                      bar_chart
-                    </span>
-                    {patient.score}%
-                  </div>
-                </div>
-              </div>
+              />
             ))}
         </div>
       </div>

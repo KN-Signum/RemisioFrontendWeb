@@ -1,4 +1,6 @@
 // api
+export * from './api/create-patient';
+export * from './api/get-all-patients';
 
 // components
 export * from './components/NewPatientForm';
