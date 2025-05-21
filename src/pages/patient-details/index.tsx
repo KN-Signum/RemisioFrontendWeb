@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { mockPatients } from '@/testing/test-data/patients';
 import Layout from '@/components/layout';
-import { PatientInfoCard } from '@/features/patient/components/details/PatientInfoCard';
-import { DiagnosticTestsGrid } from '@/features/patient/components/details/DiagnosticTestGrid';
-import { ScoreTimelineChart } from '@/features/patient/components/details/ScoreTimeLineChart';
+import { PatientInfoCard } from '@/features/patient/components/details/patient-info-card';
+import { DiagnosticTestsGrid } from '@/features/patient/components/details/diagnostic-test-grid';
+import { ScoreTimelineChart } from '@/features/patient/components/details/score-time-line-chart';
 import { useMemo } from 'react';
 import { cn } from '@/lib/utils';
 

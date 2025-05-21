@@ -3,12 +3,10 @@ import { FiFilePlus, FiFlag } from 'react-icons/fi';
 import { BsPeople } from 'react-icons/bs';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
-import {
-  CalendarDashboard,
-  PatientsTable,
-  ItemCard,
-} from '@/features/appointment';
+import { CalendarDashboard, useGetVisits } from '@/features/visits';
 import { useNavigate } from 'react-router-dom';
+import { Loading } from '@/components/ui/loading';
+import { ItemCard, PatientsTable } from '@/features/patient';
 
 const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
@@ -16,6 +14,7 @@ const borderClasses =
 export const Dashboard = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { data: visits, isLoading } = useGetVisits();
 
   return (
     <Layout>
@@ -54,7 +53,13 @@ export const Dashboard = () => {
             <PatientsTable />
           </div>
           <div className={cn(borderClasses, 'h-full w-[35%] px-1.5')}>
-            <CalendarDashboard />
+            <div className="bg-primary w-full">
+              {isLoading ? (
+                <Loading size={100} />
+              ) : (
+                <CalendarDashboard visits={visits} />
+              )}
+            </div>
           </div>
         </div>
         <div className={cn(borderClasses, 'h-60 w-full px-1.5')}>

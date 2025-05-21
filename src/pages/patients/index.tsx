@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout';
-import { SearchBar } from '@/features/patient/components/SearchBar';
-import { NewPatientForm } from '@/features/patient/components/NewPatientForm';
+import { SearchBar } from '@/features/patient/components/search-bar';
+import { NewPatientForm } from '@/features/patient/components/new-patient-form';
 // import { createPatient } from '@/features/patient/api/create-patient';
 
 import * as Dialog from '@radix-ui/react-dialog';
