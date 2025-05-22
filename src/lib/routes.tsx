@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Dashboard } from '@/pages/dashboard';
-import { Calendar } from '@/pages/calendar';
+import { CalendarPage } from '@/pages/calendar';
 import LoginPage from '@/pages/login';
 import PatientsPage from '@/pages/patients';
 import PatientDetailsPage from '@/pages/patient-details';
@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/calendar',
-        element: <Calendar />,
+        element: <CalendarPage />,
         errorElement: <div>Error</div>,
       },
     ],

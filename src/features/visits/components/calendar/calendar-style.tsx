@@ -8,9 +8,23 @@ export const CalendarStyle = () => {
       }
       /* Style for buttons */
       .fc .fc-button {
+        background-color: var(--color-secondary-accent) !important;
+        opacity: 0.75 !important;
         font-weight: 500 !important;
-        border-radius: 20px;
+        border-radius: var(--radius) !important;
         border: none;
+        padding: 0.5rem 3rem !important;
+      }
+
+      /* Style for today, month, week button */
+      .fc-timeGridWeek-button {
+        margin-left: 1rem !important;
+        margin-right: 1rem !important;
+      }
+
+      .fc-today-button {
+        margin-left: 1rem !important;
+        margin-right: 5rem !important;
       }
 
       .fc .fc-button:hover {
@@ -18,8 +32,7 @@ export const CalendarStyle = () => {
       }
 
       .fc .fc-button.fc-button-active {
-        background-color: var(--chakra-colors-secondary) !important;
-        color: var(--chakra-colors-black) !important;
+        opacity: 1 !important;
         box-shadow: 1px 4px 4px 0px rgba(0, 0, 0, 0.35) !important;
       }
 
