@@ -9,7 +9,8 @@ export interface GetVisitDto {
 
 export interface CreateVisitDto {
   name: string;
-  time_start: string;
-  time_end: string;
+  patient_id: string;
+  time_start: Date;
+  time_end: Date;
   additional_info: string;
 }

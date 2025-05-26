@@ -136,60 +136,20 @@
     "age_not_empty": "Wiek nie może być pusty"
   },
   "calendar": {
-    "months": [
-      "Styczeń",
-      "Luty",
-      "Marzec",
-      "Kwiecień",
-      "Maj",
-      "Czerwiec",
-      "Lipiec",
-      "Sierpień",
-      "Wrzesień",
-      "Październik",
-      "Listopad",
-      "Grudzień"
-    ],
-    "weekdays": [
-      "Nie",
-      "Pon",
-      "Wt",
-      "Śr",
-      "Czw",
-      "Pt",
-      "Sob"
-    ],
-    "today": "Dzisiaj"
-  },
-  "grid": {
-    "weekdays": [
-      "Pon",
-      "Wt",
-      "Śr",
-      "Czw",
-      "Pt"
-    ]
-  },
-  "appointment": {
-    "title": "Wizyta",
-    "create": "Utwórz wizytę",
-    "date": "Data wizyty",
-    "name": "Nazwa wizyty",
-    "time_start": "Godzina rozpoczęcia",
-    "time_end": "Godzina zakończenia",
-    "patient": "Pacjent",
-    "choose_patient": "Proszę wybrać pacjenta",
-    "additional_info": "Dodatkowe informacje",
-    "submit": "Zatwierdź",
-    "submit_success": "Wizyta zapisana pomyślnie",
-    "submit_error": "Błąd podczas zapisywania wizyty",
-    "errors": {
-      "date_required": "Data jest wymagana",
-      "time_required": "Godzina jest wymagana",
-      "name_required": "Nazwa jest wymagana",
-      "patient_required": "Pacjent jest wymagany",
-      "time_end_required": "Czas zakończenia jest wymagany",
-      "time_start_required": "Czas rozpoczęcia jest wymagany"
+      "new_visit": {
+      "title": "Nowa wizyta",
+      "visit_name": "Nazwa wizyty",
+      "choose_patient": "Wybierz pacjenta",
+      "additional_info": "Dodatkowy opis",
+      "submit": "Zatwierdź",
+      "errors": {
+        "name_required": "Nazwa jest wymagana",
+        "patient_required": "Pacjent jest wymagany",
+        "start_time_required": "Wymagana godzina rozpoczęcia",
+        "end_time_required": "Wymagana godzina zakończenia",
+        "invalid_time_range": "Godzina rozpoczęcia musi być wcześniejsza niż godzina zakończenia",
+        "past_date": "Data nie może być z przeszłości"
+      }
     }
   }
 }

@@ -72,6 +72,15 @@ export const CalendarStyle = () => {
         color: var(--color-primary-accent) !important;
       }
 
+      .fc-daygrid-day-frame:hover {
+        background-color: var(--color-secondary-accent-25) !important;
+        cursor: pointer !important;
+      } 
+
+      .fc-timegrid-slot:hover {
+        cursor: pointer !important;
+      }
+
       /* Style for background color */
       .fc .fc-view-harness {
         overflow: hidden;
@@ -92,7 +101,7 @@ export const CalendarStyle = () => {
       }
 
       /* remove scrollbar */
-      .fc .fc-daygrid-view {
+      .fc-daygrid-view {
         overflow: hidden !important;
       }
 

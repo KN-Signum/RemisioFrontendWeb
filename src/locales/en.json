@@ -145,57 +145,20 @@
     "age_not_empty": "Age cannot be empty"
   },
   "calendar": {
-    "months": [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
-    ],
-    "weekdays": [
-      "Sun",
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat"
-    ],
-    "today": "Today"
-  },
-  "grid": {
-    "weekdays": [
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri"
-    ]
-  },
-  "appointment": {
-    "create": "Create appointment",
-    "date": "Date",
-    "name": "Name of appointment",
-    "time_start": "Start time",
-    "time_end": "End time",
-    "patient": "Patient",
-    "choose_patient": "Choose a patient",
-    "additional_info": "Additional info",
-    "submit": "Submit",
-    "errors": {
-      "date_required": "Date is required",
-      "time_required": "Time is required",
-      "name_required": "Name is required",
-      "patient_required": "Patient is required",
-      "time_end_required": "End time is required",
-      "time_start_required": "Start time is required"
+    "new_visit": {
+      "title": "New visit",
+      "visit_name": "Visit name",
+      "choose_patient": "Choose a patient",
+      "additional_info": "Additional description",
+      "submit": "Submit",
+      "errors": {
+        "name_required": "Name is required",
+        "patient_required": "Patient is required",
+        "start_time_required": "Start time is required",
+        "end_time_required": "End time is required",
+        "invalid_time_range": "Start time must be before end time",
+        "past_date": "The date cannot be in the past"
+      }
     }
   }
 }
