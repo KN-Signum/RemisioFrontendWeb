@@ -1,6 +1,6 @@
-import * as React from "react";
-import { Label } from "@radix-ui/react-label";
-import { Input } from "@/components/ui/input";
+import * as React from 'react';
+import { Label } from '@radix-ui/react-label';
+import { Input } from '@/components/ui/input';
 
 interface InputFieldProps {
   id: string;
@@ -14,14 +14,14 @@ interface InputFieldProps {
 export const InputField: React.FC<InputFieldProps> = ({
   id,
   label,
-  type = "text",
+  type = 'text',
   placeholder,
   value,
   onChange,
 }) => {
   return (
     <div className="grid gap-1">
-      <Label htmlFor={id} className="ml-1 text-primary-accent" >
+      <Label htmlFor={id} className="text-primary-accent ml-1">
         {label}
       </Label>
       <Input

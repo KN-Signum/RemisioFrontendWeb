@@ -57,7 +57,7 @@
         "title": "Stany alarmowe",
         "subtitle": "pacjentów w stanie alarmowym"
       }
-    }, 
+    },
     "table": {
       "full_name": "Imię i nazwisko",
       "mayo_state": "Stan mayo",
@@ -136,7 +136,7 @@
     "age_not_empty": "Wiek nie może być pusty"
   },
   "calendar": {
-      "new_visit": {
+    "new_visit": {
       "title": "Nowa wizyta",
       "visit_name": "Nazwa wizyty",
       "choose_patient": "Wybierz pacjenta",
