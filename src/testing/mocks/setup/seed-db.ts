@@ -1,4 +1,4 @@
-import { mockVisits } from '@/testing/test-data/visits';
+import { mockVisits } from '@/testing/mocks/setup/test-data/visits';
 import { db } from './db';
 
 export const seedDb = () => {
