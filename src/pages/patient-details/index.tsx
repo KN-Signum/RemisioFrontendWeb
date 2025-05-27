@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { mockPatients } from '@/testing/test-data/patients';
+import { mockPatients } from '@/testing/mocks/setup/test-data/patients';
 import Layout from '@/components/layout';
 import { PatientInfoCard } from '@/features/patient/components/details/patient-info-card';
 import { DiagnosticTestsGrid } from '@/features/patient/components/details/diagnostic-test-grid';

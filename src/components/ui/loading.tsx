@@ -1,17 +1,18 @@
 export interface LoadingProps {
   size?: number;
+  color?: string;
 }
 
 export const Loading = (props: LoadingProps) => {
-  const { size } = props;
+  const { size, color } = props;
   return (
-    <div className="align-center bg-foreground flex h-full w-full items-center justify-center">
+    <div className="align-center flex h-full w-full items-center justify-center bg-transparent hover:cursor-auto">
       <svg
         className="animate-spin"
-        width={size}
-        height={size}
+        width={size || 23}
+        height={size || 23}
         viewBox="0 0 50 50"
-        style={{ margin: 'auto', display: 'block', shapeRendering: 'auto' }}
+        style={{ display: 'block', shapeRendering: 'auto' }}
       >
         <circle
           cx="25"
@@ -19,7 +20,7 @@ export const Loading = (props: LoadingProps) => {
           r="20"
           fill="none"
           strokeWidth="5"
-          stroke="var(--secondary)"
+          stroke={color ? `var(--${color})` : 'var(--secondary)'}
           strokeLinecap="round"
         >
           <animate

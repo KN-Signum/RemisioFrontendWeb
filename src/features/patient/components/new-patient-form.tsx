@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { InputField } from '@/components/ui/input-field';
 import { useTranslation } from 'react-i18next';
 import { CreatePatientDto } from '../types';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   onSubmit: (payload: CreatePatientDto) => void;
@@ -103,9 +104,9 @@ export const NewPatientForm: React.FC<Props> = ({
         onChange={handleChange('hospital')}
       />
 
-      <button
+      <Button
         type="submit"
-        className="bg-primary-accent hover:bg-primary-accent/90 mt-2 w-full rounded-xl py-2 text-white"
+        className="bg-primary-accent mt-2 rounded-xl text-center"
         disabled={isLoading}
       >
         {isLoading ? (
@@ -117,7 +118,7 @@ export const NewPatientForm: React.FC<Props> = ({
         ) : (
           t('patients.form.create')
         )}
-      </button>
+      </Button>
     </form>
   );
 };

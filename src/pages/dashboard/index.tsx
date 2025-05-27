@@ -53,7 +53,7 @@ export const Dashboard = () => {
             <PatientsTable />
           </div>
           <div className={cn(borderClasses, 'h-full w-[35%] px-1.5')}>
-            <div className="bg-primary w-full">
+            <div className="w-full">
               {isLoading ? (
                 <Loading size={100} />
               ) : (

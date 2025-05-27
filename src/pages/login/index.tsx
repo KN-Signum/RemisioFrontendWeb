@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { InputField } from '@/components/ui/input-field';
 import { useLogin } from '@/features/auth/api/login';
+import { Button } from '@/components/ui/button';
 
 const initialValue: LoginRequestDto = {
   email: '',
@@ -80,36 +81,14 @@ const LoginPage = () => {
                   })
                 }
               />
-              {login.isLoading ? (
-                <div className="bg-secondary-accent flex h-8 w-full items-center justify-center gap-2 rounded-sm">
-                  <div
-                    className="bg-secondary size-2 animate-bounce rounded-full"
-                    style={{ animationDelay: '0s' }}
-                  ></div>
-                  <div
-                    className="bg-secondary size-2 animate-bounce rounded-full"
-                    style={{ animationDelay: '0.2s' }}
-                  ></div>
-                  <div
-                    className="bg-secondary size-2 animate-bounce rounded-full"
-                    style={{ animationDelay: '0.4s' }}
-                  ></div>
-                </div>
-              ) : (
-                <button
-                  className="hover:opacity-80"
-                  type="submit"
-                  style={{
-                    backgroundColor: 'var(--secondary)',
-                    borderRadius: 'calc(var(--radius) - 4px)',
-                    padding: '0.3rem 0rem',
-                  }}
-                >
-                  <span className="text-foreground font-bold">
-                    {t('login.login')}
-                  </span>
-                </button>
-              )}
+
+              <Button
+                className="font-bold"
+                type="submit"
+                isLoading={login.isLoading}
+              >
+                {t('login.login')}
+              </Button>
             </form>
           </div>
           <div />

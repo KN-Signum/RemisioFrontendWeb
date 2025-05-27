@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -55,14 +56,12 @@ export const LandingPage = () => {
               className="xl:h-20 xl:w-50 2xl:h-30 2xl:w-70"
             />
           </div>
-          <div
-            className="bg-primary-accent h-fit rounded-md px-12 py-3 hover:cursor-pointer hover:opacity-80"
+          <Button
+            className="bg-primary-accent px-12 py-3 text-xl font-bold"
             onClick={() => navigate('/login')}
           >
-            <span className="text-foreground text-xl font-bold">
-              {t('landing-page.cta')}
-            </span>
-          </div>
+            {t('landing-page.cta')}
+          </Button>
         </div>
         <div className="flex flex-col items-center justify-center gap-6 xl:mt-1 2xl:mt-6">
           <img

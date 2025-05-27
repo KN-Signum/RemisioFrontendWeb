@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { BsDash } from 'react-icons/bs';
 import { useCreateVisit } from '../../api/create-visit';
+import { Button } from '@/components/ui/button';
 
 export interface NewVisitDialogProps {
   onClose: () => void;
@@ -53,9 +54,6 @@ export const NewVisitDialog = (props: NewVisitDialogProps) => {
     }
     if (formData.timeStart >= formData.timeEnd) {
       newErrors.push(t('calendar.new_visit.errors.invalid_time_range'));
-    }
-    if (formData.date < new Date()) {
-      newErrors.push(t('calendar.new_visit.errors.past_date'));
     }
     return newErrors;
   };
@@ -230,11 +228,13 @@ export const NewVisitDialog = (props: NewVisitDialogProps) => {
                 </div>
               </div>
               <div className="mt-3 flex justify-end">
-                <div className="bg-secondary text-foreground rounded-sm px-8 py-2 text-lg font-semibold hover:opacity-80">
-                  <button type="submit" onClick={handleSubmit}>
-                    {t('calendar.new_visit.submit')}
-                  </button>
-                </div>
+                <Button
+                  type="submit"
+                  onClick={handleSubmit}
+                  isLoading={createVisit.isPending}
+                >
+                  {t('calendar.new_visit.submit')}
+                </Button>
               </div>
             </form>
           </div>
