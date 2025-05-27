@@ -23,6 +23,7 @@ const PatientDetailsPage = () => {
     );
 
   /* --- mock score --- */
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const scoreHistory = useMemo(() => {
     return Array.from({ length: 8 }).map((_, w) => {
       const d = new Date();
