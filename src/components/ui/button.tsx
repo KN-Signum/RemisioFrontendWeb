@@ -23,7 +23,7 @@ function Button({
       )}
     >
       <button type={type} {...props} disabled={isLoading}>
-        {isLoading ? <Loading color="foreground" /> : children}
+        {isLoading ? <Loading color="foreground" /> : children
       </button>
     </div>
   );
