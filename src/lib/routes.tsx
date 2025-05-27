@@ -13,20 +13,12 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/patients',
-        element: (
-          <div>
-            <PatientsPage />
-          </div>
-        ),
+        element: <PatientsPage />,
         errorElement: <div>Error</div>,
       },
       {
         path: '/patients/:id',
-        element: (
-          <div>
-            <PatientDetailsPage />
-          </div>
-        ),
+        element: <PatientDetailsPage />,
         errorElement: <div>Error</div>,
       },
       {
