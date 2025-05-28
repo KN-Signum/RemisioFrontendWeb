@@ -6,6 +6,7 @@ import { queryClient } from '@/lib/react-query';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '@/lib/i18n';
 import { API_MOCKING } from '@/config/constants';
+import { Notifications } from '@/components/ui/notifications';
 
 // Only load MSWWrapper if mocks are enabled
 const MSWWrapper = API_MOCKING
@@ -41,6 +42,7 @@ const App = () => {
   const content = (
     <QueryClientProvider client={queryClient}>
       {devtools}
+      <Notifications />
       {pageContent}
     </QueryClientProvider>
   );

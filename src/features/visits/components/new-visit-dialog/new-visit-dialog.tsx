@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { BsDash } from 'react-icons/bs';
 import { useCreateVisit } from '../../api/create-visit';
 import { Button } from '@/components/ui/button';
+import { useNotifications } from '@/stores/notifications';
 
 export interface NewVisitDialogProps {
   onClose: () => void;
@@ -24,6 +25,7 @@ interface NewVisitFormData {
 
 export const NewVisitDialog = (props: NewVisitDialogProps) => {
   const { t } = useTranslation();
+  const { showNotification } = useNotifications();
   const timeStartRef = useRef<HTMLInputElement>(null);
   const timeEndRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
@@ -59,8 +61,13 @@ export const NewVisitDialog = (props: NewVisitDialogProps) => {
   };
 
   const onSuccess = () => {
+    showNotification({
+      type: 'success',
+      title: t('notifications.type.success'),
+      duration: 5000,
+      message: t('notifications.messages.visit_created'),
+    });
     props.onClose();
-    console.log('Visit created successfully');
   };
 
   const createVisit = useCreateVisit({ onSuccess });

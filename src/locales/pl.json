@@ -24,11 +24,17 @@
     "split_screen_title": "Spersonalizowana opieka nad pacjentami z IBD zaczyna się tutaj",
     "split_screen_subtitle": "Wspieraj swoich pacjentów dzięki analizie w czasie rzeczywistym i inteligentnym narzędziom monitorowania"
   },
-  "notify": {
-    "success": "Sukces",
-    "error": "Błąd",
-    "warning": "Ostrzeżenie",
-    "info": "Informacja"
+  "notifications": {
+    "type": {
+      "success": "Sukces",
+      "error": "Błąd",
+      "warning": "Ostrzeżenie",
+      "info": "Informacja"
+    },
+    "messages": {
+      "patient_added": "Pacjent został dodany pomyślnie",
+      "visit_created": "Wizyta została utworzona pomyślnie"
+    }
   },
   "sidebar": {
     "dashboard": "Dashboard",

@@ -24,11 +24,17 @@
     "split_screen_title": "Personalized IBD care starts here",
     "split_screen_subtitle": "Support your patients with real-time insights and smart monitoring tools"
   },
-  "notify": {
-    "success": "Success",
-    "error": "Error",
-    "warning": "Warning",
-    "info": "Info"
+  "notifications": {
+    "type": {
+      "success": "Success",
+      "error": "Error",
+      "warning": "Warning",
+      "info": "Info"
+    },
+    "messages": {
+      "patient_added": "Patient added successfully",
+      "visit_created": "Visit created successfully"
+    }
   },
   "sidebar": {
     "dashboard": "Dashboard",

@@ -15,13 +15,23 @@ import {
   usePatients,
 } from '@/features/patient';
 import { PatientCard } from '@/features/patient/components/patient-card';
+import { useNotifications } from '@/stores/notifications';
+import { useTranslation } from 'react-i18next';
 
 const PatientsPage = () => {
+  const { t } = useTranslation();
+  const { showNotification } = useNotifications();
   const [searchQuery, setSearchQuery] = useState('');
   const [open, setOpen] = useState(false);
 
   const { data: patients, isLoading: patientsLoading } = usePatients();
   const onSuccess = () => {
+    showNotification({
+      type: 'success',
+      title: t('notifications.type.success'),
+      duration: 5000,
+      message: t('notifications.messages.patient_added'),
+    });
     setOpen(false);
   };
   const createPatient = useCreatePatient({ onSuccess });
