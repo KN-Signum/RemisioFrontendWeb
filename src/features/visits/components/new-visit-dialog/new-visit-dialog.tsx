@@ -1,5 +1,5 @@
 import { Input } from '@/components/ui/input';
-import { formatDateDisplay } from '@/lib/utils';
+import { formatDateDisplay } from '@/utils/format-date-display';
 import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';

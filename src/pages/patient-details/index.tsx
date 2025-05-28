@@ -5,7 +5,7 @@ import { PatientInfoCard } from '@/features/patient/components/details/patient-i
 import { DiagnosticTestsGrid } from '@/features/patient/components/details/diagnostic-test-grid';
 import { ScoreTimelineChart } from '@/features/patient/components/details/score-time-line-chart';
 import { useMemo } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const borderClasses = 'flex w-full border-2 border-white/50 rounded-sm py-2';
 
