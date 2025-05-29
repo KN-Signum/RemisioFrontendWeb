@@ -11,7 +11,7 @@ const borderClasses = 'flex w-full border-2 border-white/50 rounded-sm py-2';
 
 const PatientDetailsPage = () => {
   const { id } = useParams();
-  const patient = mockPatients.find((p) => p.id === parseInt(id || '', 10));
+  const patient = mockPatients.find((p) => p.id === id);
 
   if (!patient)
     return (

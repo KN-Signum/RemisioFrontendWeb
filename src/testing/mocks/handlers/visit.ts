@@ -8,9 +8,9 @@ const addTwoHours = (dateString: Date): string => {
   return new Date(date.getTime() + 2 * 3600000).toISOString();
 };
 
-const getVisits = http.get(`${API_URL}/api/view_user_visits`, () => {
+const getAllVisits = http.get(`${API_URL}/api/view_user_visits`, () => {
   // filter all visits by doctor_id to be "1"
-  const doctorId = '1';
+  const doctorId = 'd001';
   const visits = db.visit
     .getAll()
     .filter((visit) => visit.doctor_id === doctorId);
@@ -55,4 +55,4 @@ const addVisit = http.post(
   },
 );
 
-export const handlers = [getVisits, addVisit];
+export const handlers = [getAllVisits, addVisit];
