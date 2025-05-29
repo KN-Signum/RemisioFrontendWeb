@@ -7,8 +7,14 @@ import enLocale from '@fullcalendar/core/locales/en-gb';
 import { useTranslation } from 'react-i18next';
 import { GetVisitDto, NewVisitDialog } from '../..';
 import { CalendarStyle } from '.';
-import { DateSelectArg, DatesSetArg } from '@fullcalendar/core/index.js';
+import {
+  DateSelectArg,
+  DatesSetArg,
+  EventClickArg,
+  EventMountArg,
+} from '@fullcalendar/core/index.js';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export interface CalendarProps {
   visits: GetVisitDto[];
@@ -16,6 +22,7 @@ export interface CalendarProps {
 
 export const Calendar = (props: CalendarProps) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [currentView, setCurrentView] = useState('dayGridMonth');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(null);
@@ -28,6 +35,8 @@ export const Calendar = (props: CalendarProps) => {
     start: visit.time_start,
     end: visit.time_end,
     id: visit.id,
+    patientId: visit.patient_id,
+    additionalInfo: visit.additional_info,
     draggable: false,
   }));
 
@@ -50,6 +59,18 @@ export const Calendar = (props: CalendarProps) => {
     }
   };
 
+  const handleEventDidMount = (info: EventMountArg) => {
+    const additionalInfo = info.event.extendedProps.additionalInfo;
+    if (additionalInfo) {
+      info.el.setAttribute('title', additionalInfo);
+    }
+  };
+
+  const handleEventClick = (eventClickInfo: EventClickArg) => {
+    const patientId = eventClickInfo.event.extendedProps.patientId;
+    navigate(`/patients/${patientId}`);
+  };
+
   return (
     <div className="from-secondary h-full w-full rounded-sm">
       <FullCalendar
@@ -68,6 +89,8 @@ export const Calendar = (props: CalendarProps) => {
         dateClick={handleDateClick}
         select={handleDateSelect}
         datesSet={handleDatesSet}
+        eventClick={handleEventClick}
+        eventDidMount={handleEventDidMount}
         selectable={currentView === 'timeGridWeek'}
       />
       <CalendarStyle />

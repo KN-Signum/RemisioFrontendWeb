@@ -116,6 +116,10 @@ export const CalendarStyle = () => {
       thead {
         background-color: var(--color-secondary) !important;
       }
+
+      .fc-event:hover {
+        cursor: help !important;
+      }
     `}</style>
   );
 };
