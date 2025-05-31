@@ -27,6 +27,16 @@ const models = {
     time_end: String, // ISO timestamp
     additional_info: String,
   },
+  drug: {
+    id: primaryKey(String),
+    name: String,
+    patientId: String,
+    dosage: String,
+    dateFrom: String,
+    dateTo: String,
+    additionalInfo: String,
+    times: Array,
+  },
 };
 
 export const db = factory(models);
