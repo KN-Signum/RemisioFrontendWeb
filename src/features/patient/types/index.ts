@@ -9,6 +9,16 @@ export interface GetFullPatientDto {
   phone_number: string;
 }
 
+export interface SimpleTablePatientDto {
+  id: string;
+  name: string;
+  disease: string;
+  state: string;
+  last_visit: string;
+  drugs: string;
+  // alert: boolean; TODO: add alert field when something important happens
+}
+
 export interface CreatePatientDto {
   name: string;
   email: string;

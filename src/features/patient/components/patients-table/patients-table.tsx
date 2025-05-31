@@ -1,61 +1,80 @@
 import { useTranslation } from 'react-i18next';
 import { IoPersonOutline } from 'react-icons/io5';
+import { SimpleTablePatientDto } from '../../types';
+import { useTablePatients } from '../../api/get-table-patients';
 
 type PatientNameProps = {
   name: string;
-  male: boolean;
-  age: number;
 };
 
 const PatientName = (props: PatientNameProps) => {
-  const { t } = useTranslation();
-  const { name, male, age } = props;
+  const { name } = props;
+
   return (
     <div className="flex w-full items-center gap-2">
       <IoPersonOutline className="bg-secondary-accent/30 size-8 rounded-full p-0.5" />
       <div className="flex flex-col">
         <span className="line-clamp-1">{name}</span>
-        <span className="text-primary-accent/50 -mt-0.5 line-clamp-1 text-xs">
-          {male ? t('dashboard.table.male') : t('dashboard.table.female')},{' '}
-          {age} {t('dashboard.table.years')}
-        </span>
       </div>
     </div>
   );
 };
 
-const TableRow = () => {
+// Function to get state color based on patient state
+const getStateColor = (state: string): string => {
+  switch (state.toLowerCase()) {
+    case 'remission':
+      return 'text-green-600';
+    case 'mild':
+      return 'text-yellow-600';
+    case 'moderate':
+      return 'text-orange-600';
+    case 'severe':
+      return 'text-red-600';
+    default:
+      return '';
+  }
+};
+
+const TableRow = ({ patient }: { patient: SimpleTablePatientDto }) => {
+  const stateColor = getStateColor(patient.state);
+
   return (
-    <div className="bg-foreground flex gap-2 overflow-auto px-4 py-3">
+    <div className="bg-foreground flex cursor-pointer gap-2 overflow-auto px-4 py-3 hover:bg-gray-100">
       <div className="flex-1">
-        <PatientName name="Jan Kowalski" male={true} age={10} />
+        <PatientName name={patient.name} />
       </div>
-      <div className="flex-1">Wyleczony</div>
-      <div className="flex-1">11.05.2025</div>
-      <div className="flex-2">Lek X</div>
+      <div className="flex-1">{patient.disease}</div>
+      <div className="flex-1">
+        <span className={stateColor}>{patient.state}</span>
+      </div>
+      <div className="flex-1">{patient.last_visit}</div>
+      <div className="flex-2">{patient.drugs}</div>
     </div>
   );
 };
 
 export const PatientsTable = () => {
   const { t } = useTranslation();
+  const { data: patients, isLoading } = useTablePatients();
+
+  if (isLoading) {
+    return <div className="p-4">Loading patients...</div>;
+  }
+
   return (
     <div className="max-h-full w-full overflow-y-scroll rounded-xs">
       <div className="bg-secondary flex items-center gap-2 px-4 py-3 text-left text-sm font-bold text-white/80">
         <div className="flex-1">{t('dashboard.table.full_name')}</div>
-        <div className="flex-1">{t('dashboard.table.mayo_state')}</div>
+        <div className="flex-1">{t('dashboard.table.disease')}</div>
+        <div className="flex-1">{t('dashboard.table.state')}</div>
         <div className="flex-1">{t('dashboard.table.last_visit')}</div>
         <div className="flex-2">{t('dashboard.table.drugs')}</div>
       </div>
       <div className="text-primary-accent text-sm">
-        <TableRow />
-        <TableRow />
-        <TableRow />
-        <TableRow />
-        <TableRow />
-        <TableRow />
-        <TableRow />
-        <TableRow />
+        {patients.map((patient) => (
+          <TableRow key={patient.id} patient={patient} />
+        ))}
       </div>
     </div>
   );
