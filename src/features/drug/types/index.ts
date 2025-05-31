@@ -1,9 +1,8 @@
-export interface CreateDrugDto {
+export interface DrugDto {
   name: string;
   dosage: string;
   dateFrom: string;
   dateTo: string;
   additionalInfo: string;
-  doses_taken: number;
-  doses_left: number;
+  times: string[];
 }
