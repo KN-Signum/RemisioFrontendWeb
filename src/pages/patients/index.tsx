@@ -25,6 +25,19 @@ const PatientsPage = () => {
   const [open, setOpen] = useState(false);
 
   const { data: patients, isLoading: patientsLoading } = usePatients();
+
+  // Debug: Log patients data to see what's coming from the API
+  console.log('All patients:', patients);
+
+  // Log each patient's disease_type to see the actual values
+  if (patients && patients.length > 0) {
+    console.log('Patient disease types:');
+    patients.forEach((patient) => {
+      console.log(
+        `${patient.name}: ${patient.disease_type} (type: ${typeof patient.disease_type})`,
+      );
+    });
+  }
   const onSuccess = () => {
     showNotification({
       type: 'success',
@@ -97,18 +110,89 @@ const PatientsPage = () => {
           </Dialog.Root>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 overflow-y-auto p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {patients
-            .filter((p) =>
-              p.name.toLowerCase().includes(searchQuery.toLowerCase()),
-            )
-            .map((patient) => (
-              <PatientCard
-                key={patient.id}
-                patient={patient}
-                onClick={() => handlePatientClick(patient.id)}
-              />
-            ))}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          {/* kolumna 1 – wrzucamy UC */}
+          <div className="flex flex-col gap-4">
+            <h2 className="text-primary mb-2 text-lg font-semibold">
+              Ulcerative Colitis Patients
+            </h2>
+            {(() => {
+              // Filter patients with ulcerative_colitis disease type
+              const ucPatients = patients.filter((patient) => {
+                const matchesSearch = patient.name
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase());
+                const isUC =
+                  String(patient.disease_type).toLowerCase() ===
+                  'ulcerative_colitis';
+
+                console.log(
+                  `${patient.name} - Search match: ${matchesSearch}, Is UC: ${isUC}, disease_type: ${patient.disease_type}`,
+                );
+
+                return matchesSearch && isUC;
+              });
+
+              console.log('UC Patients count:', ucPatients.length);
+
+              if (ucPatients.length === 0) {
+                return (
+                  <p className="text-gray-500">
+                    No ulcerative colitis patients found
+                  </p>
+                );
+              }
+
+              return ucPatients.map((patient) => (
+                <PatientCard
+                  key={patient.id}
+                  patient={patient}
+                  onClick={() => handlePatientClick(patient.id)}
+                />
+              ));
+            })()}
+          </div>
+
+          {/* kolumna 2 – wrzucamy Crohna */}
+          <div className="flex flex-col gap-4">
+            <h2 className="text-primary mb-2 text-lg font-semibold">
+              Crohn's Disease Patients
+            </h2>
+            {(() => {
+              // Filter patients with crohn disease type
+              const crohnPatients = patients.filter((patient) => {
+                const matchesSearch = patient.name
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase());
+                const isCrohn =
+                  String(patient.disease_type).toLowerCase() === 'crohn';
+
+                console.log(
+                  `${patient.name} - Search match: ${matchesSearch}, Is Crohn: ${isCrohn}, disease_type: ${patient.disease_type}`,
+                );
+
+                return matchesSearch && isCrohn;
+              });
+
+              console.log('Crohn Patients count:', crohnPatients.length);
+
+              if (crohnPatients.length === 0) {
+                return (
+                  <p className="text-gray-500">
+                    No Crohn's disease patients found
+                  </p>
+                );
+              }
+
+              return crohnPatients.map((patient) => (
+                <PatientCard
+                  key={patient.id}
+                  patient={patient}
+                  onClick={() => handlePatientClick(patient.id)}
+                />
+              ));
+            })()}
+          </div>
         </div>
       </div>
     </Layout>

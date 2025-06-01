@@ -33,4 +33,8 @@ export interface CreatePatientDto {
 export interface GetPatientDto {
   id: string;
   name: string;
+  disease_type: string;
+  state: string;
+  age: number;
+  score: number;
 }
