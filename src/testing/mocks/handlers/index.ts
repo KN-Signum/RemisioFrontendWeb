@@ -3,6 +3,7 @@ import { handlers as patientHandlers } from './patient';
 import { handlers as visitHandlers } from './visit';
 import { handlers as authHandlers } from './auth';
 import { handlers as drugHandlers } from './drug';
+import { handlers as labSampleHandlers } from './diagnostic_tests';
 
 export const handlers = [
   ...appHealthHandlers,
@@ -10,4 +11,5 @@ export const handlers = [
   ...patientHandlers,
   ...visitHandlers,
   ...drugHandlers,
+  ...labSampleHandlers,
 ];

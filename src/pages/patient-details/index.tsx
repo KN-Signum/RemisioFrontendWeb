@@ -6,11 +6,17 @@ import { DiagnosticTestsGrid } from '@/features/patient/components/details/diagn
 import { ScoreTimelineChart } from '@/features/patient/components/details/score-time-line-chart';
 import { useMemo } from 'react';
 import { cn } from '@/utils/cn';
+import { usePatientLabSamples } from '@/features/diagnostic_tests/api/get-patient-lab-samples';
 
 const borderClasses = 'flex w-full border-2 border-white/50 rounded-sm py-2';
 
 const PatientDetailsPage = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
+  const {
+    data: labData,
+    isLoading: testsLoading,
+    error: testsError,
+  } = usePatientLabSamples(id ?? '');
   const patient = mockPatients.find((p) => p.id === id);
 
   if (!patient)
@@ -22,8 +28,23 @@ const PatientDetailsPage = () => {
       </Layout>
     );
 
-  /* --- mock score --- */
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  // mock diagnostic tests data
+  const tests = useMemo(() => {
+    if (!labData) return [];
+
+    return labData.analytes
+      .filter((a) => a.samples.length > 0)
+      .map((hist) => {
+        const latest = hist.samples.at(-1)!;
+
+        return {
+          name: hist.analyte.replace(/_/g, ' ').toUpperCase(),
+          value: `${latest.value} ${latest.unit}`,
+        };
+      });
+  }, [labData]);
+
+  // mock score
   const scoreHistory = useMemo(() => {
     return Array.from({ length: 8 }).map((_, w) => {
       const d = new Date();
@@ -38,12 +59,6 @@ const PatientDetailsPage = () => {
     });
   }, [patient.score]);
 
-  /* --- mock tests --- */
-  const tests = Array.from({ length: 12 }).map((_, i) => ({
-    name: `Test ${i + 1}`,
-    value: `${(Math.random() * 100).toFixed(1)} mg/dL`,
-  }));
-
   return (
     <Layout>
       <div
@@ -53,7 +68,12 @@ const PatientDetailsPage = () => {
         {/* top */}
         <div className={cn(borderClasses, 'h-[40vh] gap-3 px-1.5')}>
           <PatientInfoCard patient={patient} />
-          <DiagnosticTestsGrid tests={tests} />
+
+          {testsError ? (
+            <div className="text-red-500">Failed to load tests</div>
+          ) : (
+            <DiagnosticTestsGrid tests={tests} />
+          )}
         </div>
 
         {/* bottom */}

@@ -37,6 +37,14 @@ const models = {
     additionalInfo: String,
     times: Array<string>,
   },
+  labSample: {
+    id: primaryKey(String),
+    patientId: String,
+    analyte: String,
+    value: Number,
+    unit: String,
+    measuredAt: String,
+  },
 };
 
 export const db = factory(models);
