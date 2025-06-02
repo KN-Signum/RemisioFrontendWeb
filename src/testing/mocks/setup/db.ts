@@ -35,7 +35,7 @@ const models = {
     dateFrom: String,
     dateTo: String,
     additionalInfo: String,
-    times: Array,
+    times: Array<string>,
   },
 };
 
