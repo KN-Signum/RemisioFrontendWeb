@@ -10,7 +10,6 @@ const models = {
     weight: Number,
     height: Number,
     age: Number, // replaced date_of_birth with age
-    score: Number,
     smoking: String,
     gender: String, // 'male' | 'female' | 'other'
     disease_type: String, // 'crohn' | 'ulcerative_colitis'
@@ -58,6 +57,16 @@ const models = {
     plcr: Number,
     ob: Number,
     test_notes: String,
+    created_at: String,
+    updated_at: String,
+  },
+
+  patientScore: {
+    id: primaryKey(String),
+    patient_id: String,
+    score_date: String,
+    score: Number,
+    notes: String,
     created_at: String,
     updated_at: String,
   },

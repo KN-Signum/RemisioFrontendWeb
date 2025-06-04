@@ -4,6 +4,7 @@ import { handlers as visitHandlers } from './visit';
 import { handlers as authHandlers } from './auth';
 import { handlers as drugHandlers } from './drug';
 import { handlers as labSampleHandlers } from './diagnostic_tests';
+import { handlers as patientScoreHandlers } from './patient_score';
 
 export const handlers = [
   ...appHealthHandlers,
@@ -12,4 +13,5 @@ export const handlers = [
   ...visitHandlers,
   ...drugHandlers,
   ...labSampleHandlers,
+  ...patientScoreHandlers,
 ];
