@@ -9,9 +9,11 @@ const Layout = ({ children }: Props) => {
   return (
     <div className="bg-background flex h-screen flex-col">
       <Header />
-      <div className="mb-2 flex h-full flex-row overflow-hidden">
-        <Sidebar />
-        <div className="h-full max-h-full flex-1 overflow-auto pr-2 pl-4">
+      <div className="flex h-full flex-row overflow-hidden pt-3.5 pb-2">
+        <div className="sticky pb-1">
+          <Sidebar />
+        </div>
+        <div className="h-full max-h-full flex-1 overflow-auto pr-2 pb-1 pl-4">
           {children}
         </div>
       </div>
