@@ -15,42 +15,54 @@ export type Analyte =
     | 'leukocytes'
     | 'ob'
 
-export interface GetPatientLabSamplesDto {
-    patient_id: string;
-    samples: LabSampleDto[];
-    analytes: AnalyteHistoryDto[];
-}
+// Diagnostic test types
 
-
-export interface LabSampleDto<U extends string = string> {
+export interface DiagnosticTestDto {
     id: string;
-    patientId: string;
-    analyte: Analyte;
-    value: number;
-    unit: U;
-    measuredAt: string;
+    patient_id: string;
+    test_date: string;
+    cea?: number;
+    ldl?: number;
+    hbe_positive?: boolean;
+    parasite_feces_positive?: boolean;
+    calprotectin_feces?: number;
+    creatinine_serum?: number;
+    glucose_urine?: number;
+    bacteria_urine_count?: number;
+    erythrocytes?: number;
+    hemoglobin?: number;
+    mch?: number;
+    hct?: number;
+    leukocytes?: number;
+    plcr?: number;
+    ob?: number;
+    test_notes?: string;
+    created_at: string;
+    updated_at: string;
 }
 
-export interface AnalyteHistoryDto<U extends string = string> {
-    analyte: Analyte;
-    samples: {
-        id: string;
-        value: number;
-        unit: U;
-        measuredAt: string;
-    }[];
+export interface CreateDiagnosticTestDto {
+    patient_id: string;
+    test_date: string;
+    cea?: number;
+    ldl?: number;
+    hbe_positive?: boolean;
+    parasite_feces_positive?: boolean;
+    calprotectin_feces?: number;
+    creatinine_serum?: number;
+    glucose_urine?: number;
+    bacteria_urine_count?: number;
+    erythrocytes?: number;
+    hemoglobin?: number;
+    mch?: number;
+    hct?: number;
+    leukocytes?: number;
+    plcr?: number;
+    ob?: number;
+    test_notes?: string;
 }
 
-export interface LabSamplesPageDto {
-    items: LabSampleDto[];
-    total: number;
-}
-
-export interface CreateLabSampleDto {
-    patientId: string;
-    analyte: Analyte;
-    value: number;
-    unit: string;
-    measuredAt: string;
-    batchId?: string;
+export interface GetPatientDiagnosticTestsDto {
+    patient_id: string;
+    tests: DiagnosticTestDto[];
 }

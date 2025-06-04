@@ -1,5 +1,6 @@
 // api
-export * from './api/get-patient-lab-samples';
+export * from './api/create-diagnostic-test';
+export * from './api/get-patient-diagnostic-tests';
 
 // components
 
