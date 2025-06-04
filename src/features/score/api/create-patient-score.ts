@@ -1,5 +1,6 @@
 import { apiClient } from '@/lib/api-client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '@/lib/react-query';
 import { CreatePatientScoreDto } from '../types';
 
 export const createPatientScore = async (
@@ -13,14 +14,23 @@ export const createPatientScore = async (
     return response.content;
 };
 
-export const useCreatePatientScore = () => {
-    const queryClient = useQueryClient();
+type UseCreatePatientScoreOptions = {
+    onSuccess?: (data: { id: string }) => void;
+};
 
-    return useMutation({
+export const useCreatePatientScore = ({ onSuccess }: UseCreatePatientScoreOptions = {}) => {
+    const { mutate: create, isPending } = useMutation({
         mutationFn: createPatientScore,
-        onSuccess: () => {
+        onSuccess: (result) => {
             queryClient.invalidateQueries({ queryKey: ['patient-scores'] });
             queryClient.invalidateQueries({ queryKey: ['patients'] });
+            onSuccess?.(result);
+        },
+        onError: (error) => {
+            console.error('Error creating patient score:', error);
+            // Handle error (e.g., show a notification)
         },
     });
+
+    return { create, isPending };
 };
