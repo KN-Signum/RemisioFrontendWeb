@@ -66,7 +66,8 @@
     },
     "table": {
       "full_name": "Imię i nazwisko",
-      "mayo_state": "Stan mayo",
+      "state": "Stan",
+      "disease": "Choroba",
       "last_visit": "Ostatnia wizyta",
       "drugs": "Przyjmowane leki",
       "male": "Mężczyzna",

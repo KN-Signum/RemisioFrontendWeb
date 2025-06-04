@@ -24,7 +24,7 @@ export const PatientCard = (props: PatientCardProps) => {
         </div>
         <div className="flex items-center gap-2">
           <span className="material-icons text-primary-accent">medication</span>
-          Crohn
+          {patient.disease_type}
         </div>
         <div className="flex items-center gap-2">
           <span className="material-icons text-primary-accent">bar_chart</span>

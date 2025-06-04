@@ -66,8 +66,9 @@
     },
     "table": {
       "full_name": "Full name",
-      "mayo_state": "State of mayo",
+      "state": "State",
       "last_visit": "Last visit",
+      "disease": "Disease",
       "drugs": "Taken medicaments",
       "male": "Male",
       "female": "Female",
