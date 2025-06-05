@@ -5,8 +5,6 @@ interface Props {
 
 export const DiagnosticTestsGrid: React.FC<Props> = ({ tests, loading }) => (
   <div className="w-[65%] overflow-y-auto rounded-sm bg-white p-4 shadow-md">
-    <h2 className="text-primary mb-2 text-lg font-bold">Testy diagnostyczne</h2>
-
     {loading ? (
       <div className="text-gray-500">Loading tests…</div>
     ) : tests.length === 0 ? (

@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { IoPersonOutline } from 'react-icons/io5';
 import { SimpleTablePatientDto } from '../../types';
 import { useTablePatients } from '../../api/get-table-patients';
+import { useNavigate } from 'react-router-dom';
 
 type PatientNameProps = {
   name: string;
@@ -38,9 +39,17 @@ const getStateColor = (state: string): string => {
 
 const TableRow = ({ patient }: { patient: SimpleTablePatientDto }) => {
   const stateColor = getStateColor(patient.state);
+  const navigate = useNavigate();
+
+  const handleRowClick = () => {
+    navigate(`/patients/${patient.id}`);
+  };
 
   return (
-    <div className="bg-foreground flex cursor-pointer gap-2 overflow-auto px-4 py-3 hover:bg-gray-100">
+    <div
+      className="bg-foreground flex cursor-pointer gap-2 overflow-auto px-4 py-3 hover:bg-gray-100"
+      onClick={handleRowClick}
+    >
       <div className="flex-1">
         <PatientName name={patient.name} />
       </div>

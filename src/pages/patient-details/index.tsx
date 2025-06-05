@@ -125,9 +125,6 @@ const PatientDetailsPage = () => {
                 {/* bottom */}
                 <div className={cn(borderClasses, 'h-[50.5vh] px-1.5')}>
                     <div className="flex w-full flex-col rounded-sm bg-white p-8 shadow-md">
-                        <h2 className="text-primary mb-4 text-lg font-bold">
-                            Historia wyników pacjenta
-                        </h2>
                         {scoresError ? (
                             <div className="text-red-500">Failed to load patient scores</div>
                         ) : scoresLoading ? (
