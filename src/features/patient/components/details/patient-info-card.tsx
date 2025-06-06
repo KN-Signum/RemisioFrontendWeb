@@ -2,21 +2,23 @@ import {
   BiBandAid,
   BiBody,
   BiClinic,
-  BiFirstAid,
   BiHealth,
   BiPhone,
   BiPulse,
   BiRestaurant,
   BiTimeFive,
 } from 'react-icons/bi';
+import { SurveyHistoryDialog } from '@/features/survey';
 
 interface Props {
   patient: {
+    id: string;
     name: string;
     hospital: string;
     phone_number: string;
     age: number;
     weight: number;
+    disease_type: string;
   };
 }
 
@@ -42,7 +44,7 @@ export const PatientInfoCard: React.FC<Props> = ({ patient }) => (
           <BiBody className="text-xl" /> {patient.weight} kg
         </li>
         <li className="flex items-center gap-2">
-          <BiHealth className="text-xl" /> Crohn
+          <BiHealth className="text-xl" /> {patient.disease_type === 'crohn' ? 'Crohn' : 'Ulcerative Colitis'}
         </li>
       </ul>
     </div>
@@ -57,18 +59,29 @@ export const PatientInfoCard: React.FC<Props> = ({ patient }) => (
 
       <div className="grid grid-cols-2 gap-3">
         {[
-          { Icon: BiPulse },
-          { Icon: BiRestaurant },
-          { Icon: BiBandAid },
-          { Icon: BiFirstAid },
-        ].map(({ Icon }, idx) => (
-          <button
+          { Icon: BiPulse, action: () => { } },
+          { Icon: BiRestaurant, action: () => { } },
+          { Icon: BiBandAid, action: () => { } },
+        ].map(({ Icon, action }, idx) => (
+          <div
             key={idx}
-            className="bg-secondary hover:bg-primary-accent/80 flex items-center justify-center rounded-lg p-4 transition"
+            className="bg-secondary hover:bg-primary-accent/80 flex items-center justify-center rounded-lg p-4 transition cursor-pointer"
+            onClick={action}
           >
             <Icon className="text-3xl text-white" />
-          </button>
+          </div>
         ))}
+
+        {/* Survey History Button */}
+        <div
+          className="bg-secondary hover:bg-primary-accent/80 flex items-center justify-center rounded-lg p-4 transition cursor-pointer"
+        >
+          <SurveyHistoryDialog
+            patientId={patient.id}
+            diseaseType={patient.disease_type as 'crohn' | 'ulcerative_colitis'}
+            iconOnly={true}
+          />
+        </div>
       </div>
     </div>
   </div>

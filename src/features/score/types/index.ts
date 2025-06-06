@@ -1,5 +1,3 @@
-// Patient score types
-
 export interface PatientScoreDto {
     id: string;
     patient_id: string;

@@ -158,5 +158,38 @@
         "past_date": "Data nie może być z przeszłości"
       }
     }
+  },
+  "survey": {
+    "history": {
+      "view_surveys": "Zobacz ankiety",
+      "crohn_title": "Historia ankiet choroby Leśniowskiego-Crohna",
+      "uc_title": "Historia ankiet wrzodziejącego zapalenia jelita grubego",
+      "no_surveys": "Brak dostępnych ankiet dla tego pacjenta"
+    },
+    "total_score": "Wynik całkowity",
+    "notes": "Notatki",
+    "category": {
+      "remission": "Remisja",
+      "mild": "Łagodny",
+      "moderate": "Umiarkowany",
+      "severe": "Ciężki"
+    },
+    "crohn": {
+      "abdominal_pain": "Ból brzucha",
+      "stools": "Stolce",
+      "general_wellbeing": "Ogólne samopoczucie",
+      "extraintestinal_manifestations": "Objawy pozajelitowe",
+      "abdominal_mass": "Masa brzuszna",
+      "hematocrit": "Hematokryt",
+      "weight_loss": "Utrata wagi"
+    },
+    "uc": {
+      "stool_frequency": "Częstotliwość wypróżnień",
+      "rectal_bleeding": "Krwawienie z odbytu",
+      "physician_global": "Ogólna ocena lekarza"
+    }
+  },
+  "common": {
+    "close": "Zamknij"
   }
 }

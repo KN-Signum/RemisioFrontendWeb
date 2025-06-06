@@ -167,5 +167,38 @@
         "past_date": "The date cannot be in the past"
       }
     }
+  },
+  "survey": {
+    "history": {
+      "view_surveys": "View Surveys",
+      "crohn_title": "Crohn's Disease Survey History",
+      "uc_title": "Ulcerative Colitis Survey History",
+      "no_surveys": "No surveys available for this patient"
+    },
+    "total_score": "Total Score",
+    "notes": "Notes",
+    "category": {
+      "remission": "Remission",
+      "mild": "Mild",
+      "moderate": "Moderate",
+      "severe": "Severe"
+    },
+    "crohn": {
+      "abdominal_pain": "Abdominal Pain",
+      "stools": "Stools",
+      "general_wellbeing": "General Wellbeing",
+      "extraintestinal_manifestations": "Extraintestinal Manifestations",
+      "abdominal_mass": "Abdominal Mass",
+      "hematocrit": "Hematocrit",
+      "weight_loss": "Weight Loss"
+    },
+    "uc": {
+      "stool_frequency": "Stool Frequency",
+      "rectal_bleeding": "Rectal Bleeding",
+      "physician_global": "Physician Global Assessment"
+    }
+  },
+  "common": {
+    "close": "Close"
   }
 }
