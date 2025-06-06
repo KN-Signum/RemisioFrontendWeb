@@ -97,6 +97,24 @@ const PatientDetailsPage = () => {
     return generateScoreHistory(patient?.score);
   }, [patient?.score]);
 
+  // Compute age from date_of_birth
+  const patientWithAge = useMemo(
+    () => ({
+      name: patient!.name,
+      disease_type: patient!.disease_type,
+      score: patient!.score,
+      email: patient!.email,
+      phone_number: patient!.phone_number,
+      weight: patient!.weight,
+      height: patient!.height,
+      hospital: patient!.hospital,
+      age:
+        new Date().getFullYear() -
+        new Date(patient!.date_of_birth).getFullYear(),
+    }),
+    [patient],
+  );
+
   if (!patient) {
     return (
       <Layout>
@@ -115,8 +133,7 @@ const PatientDetailsPage = () => {
       >
         {/* top */}
         <div className={cn(borderClasses, 'h-[40vh] gap-3 px-1.5')}>
-          <PatientInfoCard patient={patient} />
-
+          <PatientInfoCard patient={patientWithAge} />
           {testsError ? (
             <div className="text-red-500">Failed to load tests</div>
           ) : (

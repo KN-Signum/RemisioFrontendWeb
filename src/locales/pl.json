@@ -97,17 +97,41 @@
     }
   },
   "patients": {
-    "form": {
-      "name": "Imię i nazwisko",
-      "email": "Email",
-      "phone": "Numer telefonu",
-      "password": "Hasło",
-      "weight": "Waga (kg)",
-      "height": "Wzrost (cm)",
-      "age": "Wiek",
-      "create": "Zatwierdź pacjenta"
-    },
-    "new": "Nowy pacjent"
+    "new-patient": {
+      "title": "Nowy pacjent",
+      "form": {
+        "first_name": "Imię",
+        "last_name": "Nazwisko",
+        "email": "Email",
+        "phone": "Numer telefonu",
+        "password": "Hasło",
+        "weight": "Waga (kg)",
+        "height": "Wzrost (cm)",
+        "date_of_birth": "Data urodzenia",
+        "hospital": "Szpital",
+        "errors": {
+          "name_required": "Imie jest wymagana",
+          "surname_required": "Nazwisko jest wymagane",
+          "email_required": "Email jest wymagany",
+          "email_invalid": "Nieprawidłowy email",
+          "phone_required": "Numer telefonu jest wymagany",
+          "phone_invalid": "Telefon musi zawierać 10 cyfr.",
+          "password_required": "Hasło jest wymagane",
+          "password_length": "Hasło musi mieć co najmniej 8 znaków",
+          "password_uppercase": "Hasło musi zawierać przynajmniej jedną wielką literę",
+          "password_lowercase": "Hasło musi zawierać przynajmniej jedną małą literę",
+          "password_number": "Hasło musi zawierać przynajmniej jedną cyfrę",
+          "password_special": "Hasło musi zawierać przynajmniej jeden znak specjalny",
+          "height_required": "Wzrost jest wymagany",
+          "height_invalid": "Wzrost musi być dodatnią liczbą",
+          "weight_required": "Waga jest wymagana",
+          "weight_invalid": "Waga musi być dodatnią liczbą",
+          "date_of_birth_required": "Data urodzenia jest wymagana",
+          "date_of_birth_invalid": "Nieprawidłowa data urodzenia",
+          "hospital_required": "Szpital jest wymagany"
+        }
+      }
+    }
   },
   "patient": {
     "add": "Dodaj pacjenta",
