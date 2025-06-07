@@ -4,15 +4,15 @@ import { db } from '..';
 
 // Get meals by patient ID
 const getMealsByPatientId = http.get(
-    `${API_URL}/api/meals/:patientId`,
-    ({ params }) => {
-        const { patientId } = params;
-        const meals = db.meal
-            .getAll()
-            .filter((meal) => meal.patient_id === patientId);
+  `${API_URL}/api/meals/:patientId`,
+  ({ params }) => {
+    const { patientId } = params;
+    const meals = db.meal
+      .getAll()
+      .filter((meal) => meal.patient_id === patientId);
 
-        return HttpResponse.json({ status: 200, content: meals });
-    },
+    return HttpResponse.json({ status: 200, content: meals });
+  },
 );
 
 export const handlers = [getMealsByPatientId];

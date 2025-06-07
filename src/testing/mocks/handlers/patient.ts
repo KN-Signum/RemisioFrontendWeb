@@ -39,7 +39,10 @@ const getTablePatients = http.get(`${API_URL}/api/get_patients_table`, () => {
       const patientScores = db.patientScore
         .getAll()
         .filter((score) => score.patient_id === patient.id)
-        .sort((a, b) => new Date(b.score_date).getTime() - new Date(a.score_date).getTime());
+        .sort(
+          (a, b) =>
+            new Date(b.score_date).getTime() - new Date(a.score_date).getTime(),
+        );
 
       // Use the latest score or default to 0 if no scores exist
       const latestScore = patientScores.length > 0 ? patientScores[0].score : 0;

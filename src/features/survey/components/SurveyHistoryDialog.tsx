@@ -9,176 +9,264 @@ import { usePatientCrohnSurveys } from '../api/crohn-survey-api';
 import { usePatientUcSurveys } from '../api/uc-survey-api';
 
 interface SurveyHistoryDialogProps {
-    patientId: string;
-    diseaseType: 'crohn' | 'ulcerative_colitis';
-    iconOnly?: boolean;
-    className?: string;
+  patientId: string;
+  diseaseType: 'crohn' | 'ulcerative_colitis';
+  iconOnly?: boolean;
+  className?: string;
 }
 
-export const SurveyHistoryDialog = ({ patientId, diseaseType, iconOnly = false, className = '' }: SurveyHistoryDialogProps) => {
-    const { t } = useTranslation();
-    const [isOpen, setIsOpen] = useState(false);
+export const SurveyHistoryDialog = ({
+  patientId,
+  diseaseType,
+  iconOnly = false,
+  className = '',
+}: SurveyHistoryDialogProps) => {
+  const { t } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
 
-    // Fetch surveys based on disease type
-    const { data: crohnSurveys, isLoading: isLoadingCrohn } = usePatientCrohnSurveys(
-        diseaseType === 'crohn' ? patientId : ''
-    );
+  // Fetch surveys based on disease type
+  const { data: crohnSurveys, isLoading: isLoadingCrohn } =
+    usePatientCrohnSurveys(diseaseType === 'crohn' ? patientId : '');
 
-    const { data: ucSurveys, isLoading: isLoadingUc } = usePatientUcSurveys(
-        diseaseType === 'ulcerative_colitis' ? patientId : ''
-    );
+  const { data: ucSurveys, isLoading: isLoadingUc } = usePatientUcSurveys(
+    diseaseType === 'ulcerative_colitis' ? patientId : '',
+  );
 
-    const isLoading = diseaseType === 'crohn' ? isLoadingCrohn : isLoadingUc;
+  const isLoading = diseaseType === 'crohn' ? isLoadingCrohn : isLoadingUc;
 
-    // Get the appropriate surveys based on disease type
-    const surveys = diseaseType === 'crohn'
-        ? crohnSurveys?.surveys || []
-        : ucSurveys?.surveys || [];
+  // Get the appropriate surveys based on disease type
+  const surveys =
+    diseaseType === 'crohn'
+      ? crohnSurveys?.surveys || []
+      : ucSurveys?.surveys || [];
 
-    const openDialog = () => setIsOpen(true);
-    const closeDialog = () => setIsOpen(false);
+  const openDialog = () => setIsOpen(true);
+  const closeDialog = () => setIsOpen(false);
 
-    // Helper function to get category color class
-    const getCategoryColorClass = (category: SurveyCategory): string => {
-        switch (category) {
-            case 'remission':
-                return 'text-green-500';
-            case 'mild':
-                return 'text-yellow-500';
-            case 'moderate':
-                return 'text-orange-500';
-            case 'severe':
-                return 'text-red-500';
-            default:
-                return 'text-gray-500';
-        }
-    };
+  // Helper function to get category color class
+  const getCategoryColorClass = (category: SurveyCategory): string => {
+    switch (category) {
+      case 'remission':
+        return 'text-green-500';
+      case 'mild':
+        return 'text-yellow-500';
+      case 'moderate':
+        return 'text-orange-500';
+      case 'severe':
+        return 'text-red-500';
+      default:
+        return 'text-gray-500';
+    }
+  };
 
-    // Render survey details based on disease type
-    const renderSurveyDetails = (survey: CrohnSurveyDto | UcSurveyDto) => {
-        if (diseaseType === 'crohn') {
-            const crohnSurvey = survey as CrohnSurveyDto;
-            return (
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div>
-                        <p><span className="font-semibold">{t('survey.crohn.abdominal_pain', 'Abdominal Pain')}:</span> {crohnSurvey.abdominal_pain}</p>
-                        <p><span className="font-semibold">{t('survey.crohn.stools', 'Stools')}:</span> {crohnSurvey.stools}</p>
-                        <p><span className="font-semibold">{t('survey.crohn.general_wellbeing', 'General Wellbeing')}:</span> {crohnSurvey.general_wellbeing}</p>
-                        <p><span className="font-semibold">{t('survey.crohn.extraintestinal_manifestations', 'Extraintestinal Manifestations')}:</span> {crohnSurvey.extraintestinal_manifestations}</p>
-                    </div>
-                    <div>
-                        <p><span className="font-semibold">{t('survey.crohn.abdominal_mass', 'Abdominal Mass')}:</span> {crohnSurvey.abdominal_mass}</p>
-                        <p><span className="font-semibold">{t('survey.crohn.hematocrit', 'Hematocrit')}:</span> {crohnSurvey.hematocrit}</p>
-                        <p><span className="font-semibold">{t('survey.crohn.weight_loss', 'Weight Loss')}:</span> {crohnSurvey.weight_loss}</p>
-                    </div>
-                </div>
-            );
-        } else {
-            const ucSurvey = survey as UcSurveyDto;
-            return (
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div>
-                        <p><span className="font-semibold">{t('survey.uc.stool_frequency', 'Stool Frequency')}:</span> {ucSurvey.stool_frequency}</p>
-                        <p><span className="font-semibold">{t('survey.uc.rectal_bleeding', 'Rectal Bleeding')}:</span> {ucSurvey.rectal_bleeding}</p>
-                    </div>
-                    <div>
-                        <p><span className="font-semibold">{t('survey.uc.physician_global', 'Physician Global Assessment')}:</span> {ucSurvey.physician_global}</p>
-                    </div>
-                </div>
-            );
-        }
-    };
+  // Render survey details based on disease type
+  const renderSurveyDetails = (survey: CrohnSurveyDto | UcSurveyDto) => {
+    if (diseaseType === 'crohn') {
+      const crohnSurvey = survey as CrohnSurveyDto;
+      return (
+        <div className="grid grid-cols-2 gap-2 text-sm">
+          <div>
+            <p>
+              <span className="font-semibold">
+                {t('survey.crohn.abdominal_pain', 'Abdominal Pain')}:
+              </span>{' '}
+              {crohnSurvey.abdominal_pain}
+            </p>
+            <p>
+              <span className="font-semibold">
+                {t('survey.crohn.stools', 'Stools')}:
+              </span>{' '}
+              {crohnSurvey.stools}
+            </p>
+            <p>
+              <span className="font-semibold">
+                {t('survey.crohn.general_wellbeing', 'General Wellbeing')}:
+              </span>{' '}
+              {crohnSurvey.general_wellbeing}
+            </p>
+            <p>
+              <span className="font-semibold">
+                {t(
+                  'survey.crohn.extraintestinal_manifestations',
+                  'Extraintestinal Manifestations',
+                )}
+                :
+              </span>{' '}
+              {crohnSurvey.extraintestinal_manifestations}
+            </p>
+          </div>
+          <div>
+            <p>
+              <span className="font-semibold">
+                {t('survey.crohn.abdominal_mass', 'Abdominal Mass')}:
+              </span>{' '}
+              {crohnSurvey.abdominal_mass}
+            </p>
+            <p>
+              <span className="font-semibold">
+                {t('survey.crohn.hematocrit', 'Hematocrit')}:
+              </span>{' '}
+              {crohnSurvey.hematocrit}
+            </p>
+            <p>
+              <span className="font-semibold">
+                {t('survey.crohn.weight_loss', 'Weight Loss')}:
+              </span>{' '}
+              {crohnSurvey.weight_loss}
+            </p>
+          </div>
+        </div>
+      );
+    } else {
+      const ucSurvey = survey as UcSurveyDto;
+      return (
+        <div className="grid grid-cols-2 gap-2 text-sm">
+          <div>
+            <p>
+              <span className="font-semibold">
+                {t('survey.uc.stool_frequency', 'Stool Frequency')}:
+              </span>{' '}
+              {ucSurvey.stool_frequency}
+            </p>
+            <p>
+              <span className="font-semibold">
+                {t('survey.uc.rectal_bleeding', 'Rectal Bleeding')}:
+              </span>{' '}
+              {ucSurvey.rectal_bleeding}
+            </p>
+          </div>
+          <div>
+            <p>
+              <span className="font-semibold">
+                {t('survey.uc.physician_global', 'Physician Global Assessment')}
+                :
+              </span>{' '}
+              {ucSurvey.physician_global}
+            </p>
+          </div>
+        </div>
+      );
+    }
+  };
 
-    return (
-        <>
-            {iconOnly ? (
-                <div onClick={openDialog} className={`flex items-center justify-center w-full h-full cursor-pointer ${className}`}>
-                    <BiFirstAid className="text-3xl text-white" />
-                </div>
-            ) : (
-                <Button
-                    onClick={openDialog}
-                    className="flex items-center gap-2 bg-transparent border border-secondary hover:bg-secondary/10"
-                >
-                    <BiFirstAid className="text-xl" />
-                    {t('survey.history.view_surveys', 'View Surveys')}
-                </Button>
-            )}
+  return (
+    <>
+      {iconOnly ? (
+        <div
+          onClick={openDialog}
+          className={`flex h-full w-full cursor-pointer items-center justify-center ${className}`}
+        >
+          <BiFirstAid className="text-3xl text-white" />
+        </div>
+      ) : (
+        <Button
+          onClick={openDialog}
+          className="border-secondary hover:bg-secondary/10 flex items-center gap-2 border bg-transparent"
+        >
+          <BiFirstAid className="text-xl" />
+          {t('survey.history.view_surveys', 'View Surveys')}
+        </Button>
+      )}
 
-            {isOpen && createPortal(
+      {isOpen &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[9998] flex items-center justify-center backdrop-blur-xs"
+            onClick={closeDialog}
+          >
+            <div
+              className="bg-foreground/90 flex h-fit max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6"
+              onClick={(e) => e.stopPropagation()} // prevents clicks inside the dialog from bubbling to the backdrop
+            >
+              <div className="flex w-full items-center justify-between">
+                <div className="size-8"></div>
+                <span className="text-2xl font-bold">
+                  {diseaseType === 'crohn'
+                    ? t(
+                        'survey.history.crohn_title',
+                        "Crohn's Disease Survey History",
+                      )
+                    : t(
+                        'survey.history.uc_title',
+                        'Ulcerative Colitis Survey History',
+                      )}
+                </span>
                 <div
-                    className="fixed inset-0 z-[9998] flex items-center justify-center backdrop-blur-xs"
-                    onClick={closeDialog}
+                  className="hover:bg-foreground flex size-8 items-center justify-center rounded-full text-3xl font-bold hover:cursor-pointer"
+                  onClick={closeDialog}
                 >
-                    <div
-                        className="bg-foreground/90 flex h-fit max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6"
-                        onClick={(e) => e.stopPropagation()} // prevents clicks inside the dialog from bubbling to the backdrop
-                    >
-                        <div className="flex w-full items-center justify-between">
-                            <div className="size-8"></div>
-                            <span className="text-2xl font-bold">
-                                {diseaseType === 'crohn'
-                                    ? t('survey.history.crohn_title', "Crohn's Disease Survey History")
-                                    : t('survey.history.uc_title', "Ulcerative Colitis Survey History")}
+                  &times;
+                </div>
+              </div>
+
+              <div className="mt-4 flex-1 overflow-y-auto">
+                {isLoading ? (
+                  <div className="flex h-40 items-center justify-center">
+                    <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-white"></div>
+                  </div>
+                ) : surveys.length === 0 ? (
+                  <div className="flex h-40 items-center justify-center">
+                    <p className="text-lg">
+                      {t(
+                        'survey.history.no_surveys',
+                        'No surveys available for this patient',
+                      )}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-4">
+                    {surveys.map((survey) => (
+                      <div
+                        key={survey.id}
+                        className="bg-background/10 rounded-sm p-4"
+                      >
+                        <div className="mb-2 flex items-center justify-between">
+                          <h3 className="text-lg font-semibold">
+                            {formatDateDisplay(new Date(survey.survey_date))}
+                          </h3>
+                          <div className="flex items-center gap-2">
+                            <span className="font-semibold">
+                              {t('survey.total_score', 'Total Score')}:
                             </span>
-                            <div
-                                className="hover:bg-foreground flex size-8 items-center justify-center rounded-full text-3xl font-bold hover:cursor-pointer"
-                                onClick={closeDialog}
+                            <span>{survey.total_score}</span>
+                            <span
+                              className={`ml-2 font-bold ${getCategoryColorClass(survey.category)}`}
                             >
-                                &times;
-                            </div>
+                              {t(
+                                `survey.category.${survey.category}`,
+                                survey.category,
+                              )}
+                            </span>
+                          </div>
                         </div>
 
-                        <div className="mt-4 flex-1 overflow-y-auto">
-                            {isLoading ? (
-                                <div className="flex h-40 items-center justify-center">
-                                    <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-t-2 border-white"></div>
-                                </div>
-                            ) : surveys.length === 0 ? (
-                                <div className="flex h-40 items-center justify-center">
-                                    <p className="text-lg">{t('survey.history.no_surveys', 'No surveys available for this patient')}</p>
-                                </div>
-                            ) : (
-                                <div className="flex flex-col gap-4">
-                                    {surveys.map((survey) => (
-                                        <div key={survey.id} className="rounded-sm bg-background/10 p-4">
-                                            <div className="mb-2 flex items-center justify-between">
-                                                <h3 className="text-lg font-semibold">
-                                                    {formatDateDisplay(new Date(survey.survey_date))}
-                                                </h3>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="font-semibold">{t('survey.total_score', 'Total Score')}:</span>
-                                                    <span>{survey.total_score}</span>
-                                                    <span className={`ml-2 font-bold ${getCategoryColorClass(survey.category)}`}>
-                                                        {t(`survey.category.${survey.category}`, survey.category)}
-                                                    </span>
-                                                </div>
-                                            </div>
+                        {renderSurveyDetails(survey)}
 
-                                            {renderSurveyDetails(survey)}
+                        {survey.notes && (
+                          <div className="mt-2 border-t border-gray-600 pt-2">
+                            <p className="text-sm">
+                              <span className="font-semibold">
+                                {t('survey.notes', 'Notes')}:
+                              </span>{' '}
+                              {survey.notes}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
-                                            {survey.notes && (
-                                                <div className="mt-2 border-t border-gray-600 pt-2">
-                                                    <p className="text-sm">
-                                                        <span className="font-semibold">{t('survey.notes', 'Notes')}:</span> {survey.notes}
-                                                    </p>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="mt-4 flex justify-end">
-                            <Button onClick={closeDialog}>
-                                {t('common.close', 'Close')}
-                            </Button>
-                        </div>
-                    </div>
-                </div>,
-                document.body
-            )}
-        </>
-    );
+              <div className="mt-4 flex justify-end">
+                <Button onClick={closeDialog}>
+                  {t('common.close', 'Close')}
+                </Button>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )}
+    </>
+  );
 };

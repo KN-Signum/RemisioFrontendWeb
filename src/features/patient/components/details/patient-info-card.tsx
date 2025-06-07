@@ -3,7 +3,6 @@ import {
   BiClinic,
   BiHealth,
   BiPhone,
-  BiRestaurant,
   BiTimeFive,
 } from 'react-icons/bi';
 import { SurveyHistoryDialog } from '@/features/survey';
@@ -45,7 +44,8 @@ export const PatientInfoCard: React.FC<Props> = ({ patient }) => (
           <BiBody className="text-xl" /> {patient.weight} kg
         </li>
         <li className="flex items-center gap-2">
-          <BiHealth className="text-xl" /> {patient.disease_type === 'crohn' ? 'Crohn' : 'Ulcerative Colitis'}
+          <BiHealth className="text-xl" />{' '}
+          {patient.disease_type === 'crohn' ? 'Crohn' : 'Ulcerative Colitis'}
         </li>
       </ul>
     </div>
@@ -61,26 +61,17 @@ export const PatientInfoCard: React.FC<Props> = ({ patient }) => (
       <div className="grid grid-cols-2 gap-3">
         {/* Symptom History Button */}
         <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
-          <SymptomHistoryDialog
-            patientId={patient.id}
-            iconOnly={true}
-          />
+          <SymptomHistoryDialog patientId={patient.id} iconOnly={true} />
         </div>
 
         {/* Drug History Button */}
         <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
-          <DrugHistoryDialog
-            patientId={patient.id}
-            iconOnly={true}
-          />
+          <DrugHistoryDialog patientId={patient.id} iconOnly={true} />
         </div>
 
         {/* Meal History Button */}
         <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
-          <MealHistoryDialog
-            patientId={patient.id}
-            iconOnly={true}
-          />
+          <MealHistoryDialog patientId={patient.id} iconOnly={true} />
         </div>
 
         {/* Survey History Button */}

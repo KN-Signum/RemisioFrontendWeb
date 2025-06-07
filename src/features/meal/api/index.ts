@@ -6,18 +6,20 @@ import { MealDto } from '../types';
  * @param patientId - ID of the patient
  * @returns Promise with array of meal data
  */
-export const getMealsByPatientId = async (patientId: string): Promise<MealDto[]> => {
-    try {
-        const response = await fetch(`${API_URL}/api/meals/${patientId}`);
+export const getMealsByPatientId = async (
+  patientId: string,
+): Promise<MealDto[]> => {
+  try {
+    const response = await fetch(`${API_URL}/api/meals/${patientId}`);
 
-        if (!response.ok) {
-            throw new Error(`Error fetching meals: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data.content;
-    } catch (error) {
-        console.error('Failed to fetch meals:', error);
-        throw error;
+    if (!response.ok) {
+      throw new Error(`Error fetching meals: ${response.status}`);
     }
+
+    const data = await response.json();
+    return data.content;
+  } catch (error) {
+    console.error('Failed to fetch meals:', error);
+    throw error;
+  }
 };

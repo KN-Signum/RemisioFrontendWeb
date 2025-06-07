@@ -7,7 +7,7 @@ import {
   mockCrohnSurveys,
   mockUcSurveys,
   mockSymptoms,
-  mockMeals
+  mockMeals,
 } from '@/testing/mocks/setup/test-data';
 import { db } from './db';
 

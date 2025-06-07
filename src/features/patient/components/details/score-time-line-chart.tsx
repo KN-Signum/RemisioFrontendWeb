@@ -21,7 +21,7 @@ export const ScoreTimelineChart: React.FC<Props> = ({
   weeks,
   scores,
   analyteData,
-  colors: initialColors = { scoreColor: '#6b46c1', analyteColor: '#e53e3e' }
+  colors: initialColors = { scoreColor: '#6b46c1', analyteColor: '#e53e3e' },
 }) => {
   const [timeRange, setTimeRange] = useState<TimeRange>('all');
   const [colors, setColors] = useState(initialColors);
@@ -33,11 +33,13 @@ export const ScoreTimelineChart: React.FC<Props> = ({
       return {
         filteredWeeks: weeks,
         filteredScores: scores,
-        filteredAnalyteData: analyteData ? {
-          ...analyteData,
-          dates: analyteData.dates,
-          values: analyteData.values
-        } : undefined
+        filteredAnalyteData: analyteData
+          ? {
+              ...analyteData,
+              dates: analyteData.dates,
+              values: analyteData.values,
+            }
+          : undefined,
       };
     }
 
@@ -53,32 +55,36 @@ export const ScoreTimelineChart: React.FC<Props> = ({
     const cutoffTime = cutoffDate.getTime();
 
     // Filter data points that are newer than the cutoff date
-    const filteredData = weeks.map((week, index) => ({
-      week,
-      score: scores[index],
-      date: new Date(week).getTime()
-    })).filter(item => item.date >= cutoffTime);
+    const filteredData = weeks
+      .map((week, index) => ({
+        week,
+        score: scores[index],
+        date: new Date(week).getTime(),
+      }))
+      .filter((item) => item.date >= cutoffTime);
 
     // Filter analyte data if available
     let filteredAnalyteData = undefined;
     if (analyteData) {
-      const filteredAnalytePoints = analyteData.dates.map((date, index) => ({
-        date,
-        value: analyteData.values[index],
-        timestamp: new Date(date).getTime()
-      })).filter(item => item.timestamp >= cutoffTime);
+      const filteredAnalytePoints = analyteData.dates
+        .map((date, index) => ({
+          date,
+          value: analyteData.values[index],
+          timestamp: new Date(date).getTime(),
+        }))
+        .filter((item) => item.timestamp >= cutoffTime);
 
       filteredAnalyteData = {
         name: analyteData.name,
-        dates: filteredAnalytePoints.map(item => item.date),
-        values: filteredAnalytePoints.map(item => item.value)
+        dates: filteredAnalytePoints.map((item) => item.date),
+        values: filteredAnalytePoints.map((item) => item.value),
       };
     }
 
     return {
-      filteredWeeks: filteredData.map(item => item.week),
-      filteredScores: filteredData.map(item => item.score),
-      filteredAnalyteData
+      filteredWeeks: filteredData.map((item) => item.week),
+      filteredScores: filteredData.map((item) => item.score),
+      filteredAnalyteData,
     };
   }, [weeks, scores, analyteData, timeRange]);
 
@@ -112,33 +118,36 @@ export const ScoreTimelineChart: React.FC<Props> = ({
     <div className="relative h-full">
       <div className="absolute top-0 right-0 z-10 flex flex-col items-end gap-2">
         {/* Time range selector */}
-        <div className="inline-flex rounded-md gap-1">
+        <div className="inline-flex gap-1 rounded-md">
           <button
             type="button"
-            className={`px-3 py-1 text-xs font-medium rounded-l-md ${timeRange === 'month'
-              ? 'bg-secondary-accent text-white'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+            className={`rounded-l-md px-3 py-1 text-xs font-medium ${
+              timeRange === 'month'
+                ? 'bg-secondary-accent text-white'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
             onClick={() => setTimeRange('month')}
           >
             Month
           </button>
           <button
             type="button"
-            className={`px-3 py-1 text-xs font-medium ${timeRange === 'year'
-              ? 'bg-secondary-accent text-white'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+            className={`px-3 py-1 text-xs font-medium ${
+              timeRange === 'year'
+                ? 'bg-secondary-accent text-white'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
             onClick={() => setTimeRange('year')}
           >
             Year
           </button>
           <button
             type="button"
-            className={`px-3 py-1 text-xs font-medium rounded-r-md ${timeRange === 'all'
-              ? 'bg-secondary-accent text-white'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+            className={`rounded-r-md px-3 py-1 text-xs font-medium ${
+              timeRange === 'all'
+                ? 'bg-secondary-accent text-white'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
             onClick={() => setTimeRange('all')}
           >
             All
@@ -149,33 +158,47 @@ export const ScoreTimelineChart: React.FC<Props> = ({
         <div>
           <button
             type="button"
-            className="px-3 py-1 text-xs font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-md flex items-center gap-1"
+            className="flex items-center gap-1 rounded-md bg-gray-200 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-300"
             onClick={() => setShowColorPicker(!showColorPicker)}
           >
-            <span>{analyteData ? "Customize Colors" : "Customize Score Color"}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <span>
+              {analyteData ? 'Customize Colors' : 'Customize Score Color'}
+            </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <circle cx="12" cy="12" r="10"></circle>
               <path d="M12 8v8"></path>
-              <path d={showColorPicker ? "M8 12h8" : ""}></path>
+              <path d={showColorPicker ? 'M8 12h8' : ''}></path>
             </svg>
           </button>
 
           {/* Color picker panel */}
           {showColorPicker && (
-            <div className="mt-2 p-3 bg-white shadow-lg rounded-md border border-gray-200">
+            <div className="mt-2 rounded-md border border-gray-200 bg-white p-3 shadow-lg">
               <div className="mb-3">
-                <label className="block text-xs font-medium text-gray-700 mb-1">
+                <label className="mb-1 block text-xs font-medium text-gray-700">
                   Score Color
                 </label>
                 <div className="flex items-center gap-2">
                   <div
-                    className="w-6 h-6 rounded-full border border-gray-300"
+                    className="h-6 w-6 rounded-full border border-gray-300"
                     style={{ backgroundColor: colors.scoreColor }}
                   ></div>
                   <input
                     type="color"
                     value={colors.scoreColor}
-                    onChange={(e) => setColors({ ...colors, scoreColor: e.target.value })}
+                    onChange={(e) =>
+                      setColors({ ...colors, scoreColor: e.target.value })
+                    }
                     className="w-full"
                   />
                 </div>
@@ -183,18 +206,20 @@ export const ScoreTimelineChart: React.FC<Props> = ({
 
               {analyteData && (
                 <div className="mb-3">
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                  <label className="mb-1 block text-xs font-medium text-gray-700">
                     {analyteData.name} Color
                   </label>
                   <div className="flex items-center gap-2">
                     <div
-                      className="w-6 h-6 rounded-full border border-gray-300"
+                      className="h-6 w-6 rounded-full border border-gray-300"
                       style={{ backgroundColor: colors.analyteColor }}
                     ></div>
                     <input
                       type="color"
                       value={colors.analyteColor}
-                      onChange={(e) => setColors({ ...colors, analyteColor: e.target.value })}
+                      onChange={(e) =>
+                        setColors({ ...colors, analyteColor: e.target.value })
+                      }
                       className="w-full"
                     />
                   </div>
@@ -204,8 +229,10 @@ export const ScoreTimelineChart: React.FC<Props> = ({
               {/* Reset button */}
               <button
                 type="button"
-                className="w-full px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-md"
-                onClick={() => setColors({ scoreColor: '#6b46c1', analyteColor: '#e53e3e' })}
+                className="w-full rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-200"
+                onClick={() =>
+                  setColors({ scoreColor: '#6b46c1', analyteColor: '#e53e3e' })
+                }
               >
                 Reset to Default Colors
               </button>
@@ -220,11 +247,15 @@ export const ScoreTimelineChart: React.FC<Props> = ({
         width="100%"
         series={[
           { name: 'Score', data: filteredScores },
-          ...(filteredAnalyteData ? [{
-            name: filteredAnalyteData.name,
-            data: filteredAnalyteData.values,
-            type: 'line'
-          }] : [])
+          ...(filteredAnalyteData
+            ? [
+                {
+                  name: filteredAnalyteData.name,
+                  data: filteredAnalyteData.values,
+                  type: 'line',
+                },
+              ]
+            : []),
         ]}
         options={{
           chart: {
@@ -237,11 +268,13 @@ export const ScoreTimelineChart: React.FC<Props> = ({
           markers: { size: 4 },
           colors: [colors.scoreColor, colors.analyteColor],
           xaxis: {
-            categories: filteredAnalyteData ?
-              [...new Set([...filteredWeeks, ...filteredAnalyteData.dates])].sort() :
-              filteredWeeks,
+            categories: filteredAnalyteData
+              ? [
+                  ...new Set([...filteredWeeks, ...filteredAnalyteData.dates]),
+                ].sort()
+              : filteredWeeks,
             labels: { rotate: -45 },
-            type: 'datetime'
+            type: 'datetime',
           },
           yaxis: [
             {
@@ -251,30 +284,39 @@ export const ScoreTimelineChart: React.FC<Props> = ({
               labels: { formatter: (v: number) => `${v}` },
               title: { text: 'Score' },
             },
-            ...(filteredAnalyteData ? [{
-              opposite: true,
-              min: 0,
-              max: filteredAnalyteData.values.length > 0 ?
-                Math.max(...filteredAnalyteData.values) * 1.2 : 10,
-              title: {
-                text: filteredAnalyteData.name.toUpperCase(),
-                style: { color: colors.analyteColor }
-              },
-              labels: {
-                style: { colors: colors.analyteColor },
-                formatter: (v: number) => `${v}`
-              }
-            }] : [])
+            ...(filteredAnalyteData
+              ? [
+                  {
+                    opposite: true,
+                    min: 0,
+                    max:
+                      filteredAnalyteData.values.length > 0
+                        ? Math.max(...filteredAnalyteData.values) * 1.2
+                        : 10,
+                    title: {
+                      text: filteredAnalyteData.name.toUpperCase(),
+                      style: { color: colors.analyteColor },
+                    },
+                    labels: {
+                      style: { colors: colors.analyteColor },
+                      formatter: (v: number) => `${v}`,
+                    },
+                  },
+                ]
+              : []),
           ],
           tooltip: {
             shared: true,
             intersect: false,
-            y: { formatter: (v: number) => `${v}` }
+            y: { formatter: (v: number) => `${v}` },
           },
           grid: { strokeDashArray: 4 },
           legend: { show: true },
           responsive: [
-            { breakpoint: 640, options: { xaxis: { labels: { rotate: -90 } } } },
+            {
+              breakpoint: 640,
+              options: { xaxis: { labels: { rotate: -90 } } },
+            },
           ],
         }}
       />
