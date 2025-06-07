@@ -9,7 +9,8 @@ const models = {
     phone_number: String,
     weight: Number,
     height: Number,
-    age: Number, // replaced date_of_birth with age
+    date_of_birth: String,
+    score: Number,
     smoking: String,
     gender: String, // 'male' | 'female' | 'other'
     disease_type: String, // 'crohn' | 'ulcerative_colitis'

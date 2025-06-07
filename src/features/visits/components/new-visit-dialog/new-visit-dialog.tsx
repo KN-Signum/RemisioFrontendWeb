@@ -1,5 +1,3 @@
-import { Input } from '@/components/ui/input';
-import { formatDateDisplay } from '@/utils/format-date-display';
 import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +5,10 @@ import { BsDash } from 'react-icons/bs';
 import { useCreateVisit } from '../../api/create-visit';
 import { Button } from '@/components/ui/button';
 import { useNotifications } from '@/stores/notifications';
+import { FormInput } from '@/components/ui/form-input';
+import { FormDateInput } from '@/components/ui/form-date-input';
+import { NewVisitForm } from './new-visit-form';
+import { validateFields } from './validate-fields';
 
 export interface NewVisitDialogProps {
   onClose: () => void;
@@ -14,22 +16,12 @@ export interface NewVisitDialogProps {
   endDate: Date;
 }
 
-interface NewVisitFormData {
-  name: string;
-  patientId: string;
-  timeStart: string;
-  timeEnd: string;
-  date: Date;
-  additionalInfo?: string;
-}
-
 export const NewVisitDialog = (props: NewVisitDialogProps) => {
   const { t } = useTranslation();
   const { showNotification } = useNotifications();
   const timeStartRef = useRef<HTMLInputElement>(null);
   const timeEndRef = useRef<HTMLInputElement>(null);
-  const dateRef = useRef<HTMLInputElement>(null);
-  const [formData, setFormData] = useState<NewVisitFormData>({
+  const [formData, setFormData] = useState<NewVisitForm>({
     name: '',
     patientId: '',
     timeStart: props.startDate.toISOString().substring(11, 16),
@@ -39,26 +31,6 @@ export const NewVisitDialog = (props: NewVisitDialogProps) => {
   });
 
   const [errors, setErrors] = useState<string[]>([]);
-
-  const validateFields = () => {
-    const newErrors: string[] = [];
-    if (!formData.name) {
-      newErrors.push(t('calendar.new_visit.errors.name_required'));
-    }
-    if (!formData.patientId) {
-      newErrors.push(t('calendar.new_visit.errors.patient_required'));
-    }
-    if (!formData.timeStart) {
-      newErrors.push(t('calendar.new_visit.errors.start_time_required'));
-    }
-    if (!formData.timeEnd) {
-      newErrors.push(t('calendar.new_visit.errors.end_time_required'));
-    }
-    if (formData.timeStart >= formData.timeEnd) {
-      newErrors.push(t('calendar.new_visit.errors.invalid_time_range'));
-    }
-    return newErrors;
-  };
 
   const onSuccess = () => {
     showNotification({
@@ -74,7 +46,7 @@ export const NewVisitDialog = (props: NewVisitDialogProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const validationErrors = validateFields();
+    const validationErrors = validateFields(formData);
     if (validationErrors.length > 0) {
       setErrors(validationErrors);
       return;
@@ -89,7 +61,7 @@ export const NewVisitDialog = (props: NewVisitDialogProps) => {
       time_end: new Date(
         `${formData.date.toISOString().substring(0, 10)}T${formData.timeEnd}`,
       ),
-      additional_info: formData.additionalInfo || '',
+      additional_info: formData.additionalInfo,
     });
   };
 
@@ -101,7 +73,7 @@ export const NewVisitDialog = (props: NewVisitDialogProps) => {
           onClick={props.onClose}
         >
           <div
-            className="bg-foreground/90 flex h-fit flex-col items-center rounded-sm px-10 pt-6 pb-10"
+            className="bg-foreground/90 text-primary-accent flex h-fit flex-col items-center rounded-sm px-10 pt-6 pb-10"
             onClick={(e) => e.stopPropagation()} // prevents clicks inside the dialog from bubbling to the backdrop
           >
             <div className="flex w-100 items-center justify-between">
@@ -119,36 +91,30 @@ export const NewVisitDialog = (props: NewVisitDialogProps) => {
             <form>
               <div className="mt-10 flex h-full w-full flex-col items-center gap-4 text-lg">
                 <span className="text-md -my-4 text-red-500">{errors[0]}</span>
-                <div className="h-12 w-full rounded-sm px-2 ring-1 focus-within:ring-3">
-                  <Input
-                    type="text"
-                    name="visitName"
-                    placeholder={t('calendar.new_visit.visit_name')}
-                    className="h-full focus-visible:ring-0"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        name: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className="h-12 w-full rounded-sm px-2 ring-1 focus-within:ring-3">
-                  <Input
-                    type="text"
-                    name="patientName"
-                    placeholder={t('calendar.new_visit.choose_patient')}
-                    className="h-full focus-visible:ring-0"
-                    value={formData.patientId}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        patientId: e.target.value,
-                      })
-                    }
-                  />
-                </div>
+                <FormInput
+                  type="text"
+                  name="visitName"
+                  placeholder={t('calendar.new_visit.visit_name')}
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      name: e.target.value,
+                    })
+                  }
+                />
+                <FormInput
+                  type="text"
+                  name="patientName"
+                  placeholder={t('calendar.new_visit.choose_patient')}
+                  value={formData.patientId}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      patientId: e.target.value,
+                    })
+                  }
+                />
                 <div className="flex items-center gap-3">
                   <div
                     onClick={() =>
@@ -201,36 +167,29 @@ export const NewVisitDialog = (props: NewVisitDialogProps) => {
                       {formData.timeEnd}
                     </span>
                   </div>
-                  <div
-                    onClick={() =>
-                      dateRef.current?.showPicker
-                        ? dateRef.current.showPicker()
-                        : dateRef.current?.click()
+                  <FormDateInput
+                    className="w-40"
+                    name="date"
+                    value={formData.date}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        date: new Date(e.target.value),
+                      })
                     }
-                    className="relative flex h-12 w-40 cursor-pointer rounded-sm ring-1"
-                  >
-                    <input
-                      ref={dateRef}
-                      type="date"
-                      name="date"
-                      className="absolute inset-0 size-0"
-                      value={formData.date.toISOString().substring(0, 10)}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          date: new Date(e.target.value),
-                        })
-                      }
-                    />
-                    <span className="z-1 flex w-full items-center justify-center">
-                      {formatDateDisplay(formData.date)}
-                    </span>
-                  </div>
+                  />
                 </div>
                 <div className="h-fit w-full rounded-sm px-2 ring-1 focus-within:ring-3">
                   <textarea
                     placeholder={t('calendar.new_visit.additional_info')}
                     className="h-24 w-full text-start focus:outline-none"
+                    value={formData.additionalInfo}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        additionalInfo: e.target.value,
+                      })
+                    }
                   />
                 </div>
               </div>

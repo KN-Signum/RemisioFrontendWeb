@@ -20,13 +20,14 @@ export interface SimpleTablePatientDto {
 }
 
 export interface CreatePatientDto {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phone_number: string;
   password: string;
   weight: number;
   height: number;
-  age: number;
+  date_of_birth: Date;
   hospital: string;
 }
 

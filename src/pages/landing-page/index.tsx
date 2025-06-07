@@ -14,12 +14,12 @@ const Card = (props: CardProps) => {
   return (
     <a href={href}>
       <div
-        className="bg-foreground/40 border-primary-accent/60 flex flex-col items-center gap-2 rounded-sm border hover:cursor-pointer hover:opacity-80 xl:p-10 2xl:p-15"
+        className="bg-foreground/40 border-primary-accent/60 flex flex-col items-center gap-2 rounded-sm border hover:cursor-pointer hover:opacity-80 xl:p-7 2xl:p-15"
         style={{
           boxShadow: '0.1rem 0.07rem 3px var(--color-primary-accent)',
         }}
       >
-        <img src={src} alt={alt} className="xl:size-25 2xl:size-35" />
+        <img src={src} alt={alt} className="xl:size-20 2xl:size-35" />
         <span className="text-primary-accent text-center text-2xl font-bold">
           {name}
         </span>
@@ -67,7 +67,7 @@ export const LandingPage = () => {
           <img
             src="/app_icon.png"
             alt="GastroApp icon"
-            className="xl:size-50 2xl:size-60"
+            className="xl:size-35 2xl:size-60"
           />
           <span className="text-primary-accent text-3xl font-bold">
             {t('landing-page.download')}

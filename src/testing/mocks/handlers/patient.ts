@@ -7,7 +7,26 @@ const getAllPatients = http.get(`${API_URL}/api/get_all_patients`, () => {
   const doctorId = 'd001';
   const patients = db.patient
     .getAll()
-    .filter((patient) => patient.doctor_id === doctorId);
+    .filter((patient) => patient.doctor_id === doctorId)
+    .map((patient) => ({
+      id: patient.id,
+      name: patient.name,
+      disease_type: patient.disease_type,
+      age:
+        new Date().getFullYear() -
+        new Date(patient.date_of_birth).getFullYear(),
+      score: patient.score,
+      email: patient.email,
+      phone_number: patient.phone_number,
+      state: getPatientState(patient.score, patient.disease_type),
+      weight: patient.weight,
+      height: patient.height,
+      hospital: patient.hospital,
+      notes_about_patient: patient.notes_about_patient,
+      updated_at: new Date(patient.updated_at).toLocaleDateString(),
+    }));
+
+  // Map patients to the desired format
 
   return HttpResponse.json({ status: 200, content: patients });
 });
