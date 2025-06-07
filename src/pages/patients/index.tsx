@@ -1,12 +1,11 @@
 import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout';
 
 import { SearchBar, usePatients } from '@/features/patient';
-import { PatientCard } from '@/features/patient/components/patient-card';
+import { FaCaretRight, FaCaretLeft } from 'react-icons/fa';
+import { SmallPatientsTable } from '@/features/patient/components/small-patients-table/small-patients-table';
 
 const PatientsPage = () => {
-  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
 
   const { data: patients, isLoading: patientsLoading } = usePatients();
@@ -39,7 +38,6 @@ const PatientsPage = () => {
   }, [patients, searchQuery]);
 
   const handleSearch = (q: string) => setSearchQuery(q);
-  const handlePatientClick = (id: string) => navigate(`/patients/${id}`);
 
   if (patientsLoading) {
     return (
@@ -53,57 +51,17 @@ const PatientsPage = () => {
 
   return (
     <Layout>
-      <div className="bg-foreground border-primary-accent/60 shadow-primary-accent w-full overflow-y-visible rounded-sm border-2 px-4 pt-6 pb-4 shadow-xs">
+      <div className="bg-foreground border-primary-accent/60 shadow-primary-accent h-full w-full overflow-hidden rounded-sm border-2 px-4 pt-6 pb-4 shadow-xs">
         <div className="mb-4 flex items-center justify-center gap-4">
           <SearchBar placeholder="Search patients..." onSearch={handleSearch} />
-          {/* 
-          <BiPlus
-            className="bg-primary-accent hover:bg-primary-accent/80 cursor-pointer rounded-full text-2xl text-white shadow-lg transition"
-            onClick={() => setIsDialogOpen(true)}
-          />
-          */}
         </div>
-
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {/* Column 1 – Ulcerative Colitis Patients */}
-          <div className="flex flex-col gap-4">
-            <span className="text-primary mb-2 text-lg font-semibold">
-              Ulcerative Colitis Patients
-            </span>
-            {ucPatients.length === 0 ? (
-              <span className="text-gray-500">
-                No ulcerative colitis patients found
-              </span>
-            ) : (
-              ucPatients.map((patient) => (
-                <PatientCard
-                  key={patient.id}
-                  patient={patient}
-                  onClick={() => handlePatientClick(patient.id)}
-                />
-              ))
-            )}
+        <div className="flex h-full gap-1">
+          <SmallPatientsTable patients={ucPatients} diesese="Mayo" />
+          <div className="flex w-5 flex-col justify-center gap-2 align-middle">
+            <FaCaretLeft className="bg-secondary h-10 w-full px-1" />
+            <FaCaretRight className="bg-secondary h-10 w-full px-1" />
           </div>
-
-          {/* Column 2 – Crohn's Disease Patients */}
-          <div className="flex flex-col gap-4">
-            <span className="text-primary mb-2 text-lg font-semibold">
-              Crohn's Disease Patients
-            </span>
-            {crohnPatients.length === 0 ? (
-              <span className="text-gray-500">
-                No Crohn's disease patients found
-              </span>
-            ) : (
-              crohnPatients.map((patient) => (
-                <PatientCard
-                  key={patient.id}
-                  patient={patient}
-                  onClick={() => handlePatientClick(patient.id)}
-                />
-              ))
-            )}
-          </div>
+          <SmallPatientsTable patients={crohnPatients} diesese="Cron" />
         </div>
       </div>
     </Layout>

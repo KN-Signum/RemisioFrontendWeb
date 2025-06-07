@@ -54,7 +54,7 @@ const TableRow = ({ patient }: { patient: SimpleTablePatientDto }) => {
   );
 };
 
-export const PatientsTable = () => {
+export const DashboardPatientsTable = () => {
   const { t } = useTranslation();
   const { data: patients, isLoading } = useTablePatients();
 

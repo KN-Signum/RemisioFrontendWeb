@@ -317,7 +317,7 @@ export const mockPatients = [
     hospital: 'Eastview Clinic',
     notes_about_patient: 'Active lifestyle.',
     updated_at: '2025-05-19T10:50:00Z',
-    doctor_id: 'd003',
+    doctor_id: 'd001',
     email: 'emily.hansen@example.com',
     phone_number: '123-456-7808',
     date_of_birth: '1996-05-19',

@@ -175,6 +175,15 @@
     "height_not_empty": "Height cannot be empty",
     "age_not_empty": "Age cannot be empty"
   },
+  "patients-tables": {
+    "full_name": "Full name",
+    "age": "Age",
+    "state": "State",
+    "surveys": "Surveys",
+    "drugs": "Drugs",
+    "diet": "Diet",
+    "no_patients": "No patients found"
+  },
   "calendar": {
     "new_visit": {
       "title": "New visit",

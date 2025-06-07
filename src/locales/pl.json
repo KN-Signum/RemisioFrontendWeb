@@ -166,6 +166,15 @@
     "height_not_empty": "Wzrost nie może być pusty",
     "age_not_empty": "Wiek nie może być pusty"
   },
+  "patients-tables": {
+    "full_name": "Imię i nazwisko",
+    "age": "Wiek",
+    "state": "Status",
+    "surveys": "Ankiety",
+    "drugs": "Leki",
+    "diet": "Dieta",
+    "no_patients": "Brak pacjentów do wyświetlenia"
+  },
   "calendar": {
     "new_visit": {
       "title": "Nowa wizyta",

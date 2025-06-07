@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { BiSearch, BiX, BiFilterAlt } from 'react-icons/bi';
+import { BiSearch, BiX } from 'react-icons/bi';
 
 interface SearchBarProps {
   placeholder?: string;
@@ -32,13 +32,9 @@ export const SearchBar = ({
   };
 
   return (
-    <div className="bg-primary-accent/10 flex w-full max-w-4xl items-center rounded-lg px-2 shadow-sm">
-      <button className="text-primary-accent p-2">
-        <BiFilterAlt className="text-xl" />
-      </button>
-
+    <div className="bg-foreground border-primary-accent/60 shadow-primary-accent flex w-full max-w-4xl items-center rounded-sm border px-2 shadow-xs">
       <input
-        className="text-primary-accent flex-1 bg-transparent px-3 py-2 placeholder-gray-500 outline-none"
+        className="text-primary-accent flex-1 bg-transparent px-3 py-2 outline-none"
         value={query}
         placeholder={placeholder}
         onChange={(e) => setQuery(e.target.value)}
@@ -48,7 +44,7 @@ export const SearchBar = ({
       {query && (
         <button
           onClick={() => setQuery('')}
-          className="text-primary-accent/70 p-2"
+          className="text-primary-accent/70 hover:text-primary-accent rounded-max p-2 hover:cursor-pointer"
           aria-label="Clear"
         >
           <BiX className="text-xl" />
