@@ -106,6 +106,17 @@ const models = {
     created_at: String,
     updated_at: String,
   },
+
+  // Symptoms
+  symptom: {
+    id: primaryKey(String),
+    patient_id: String,
+    symptom_type: String,
+    duration: String,
+    pain_level: String,
+    symptom_description: String,
+    created_at: String, // ISO timestamp
+  },
 };
 
 export const db = factory(models);

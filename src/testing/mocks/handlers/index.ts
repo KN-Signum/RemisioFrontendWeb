@@ -6,6 +6,7 @@ import { handlers as drugHandlers } from './drug';
 import { handlers as labSampleHandlers } from './diagnostic_tests';
 import { handlers as patientScoreHandlers } from './patient_score';
 import { handlers as surveyHandlers } from './survey';
+import { handlers as symptomHandlers } from './symptom';
 
 export const handlers = [
   ...appHealthHandlers,
@@ -16,4 +17,5 @@ export const handlers = [
   ...labSampleHandlers,
   ...patientScoreHandlers,
   ...surveyHandlers,
+  ...symptomHandlers,
 ];
