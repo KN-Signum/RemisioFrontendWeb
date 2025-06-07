@@ -200,5 +200,29 @@
   },
   "common": {
     "close": "Close"
+  },
+  "symptoms": {
+    "history": {
+      "title": "Symptoms History",
+      "view_symptoms": "View Symptoms History",
+      "no_symptoms": "No symptoms recorded"
+    },
+    "type": "Type",
+    "duration": "Duration",
+    "pain_level": "Pain Level",
+    "description": "Description"
+  },
+  "drug": {
+    "history": {
+      "title": "Medications History",
+      "view_drugs": "View Medications",
+      "no_drugs": "No medications recorded"
+    },
+    "name": "Name",
+    "dosage": "Dosage",
+    "dateFrom": "Start Date",
+    "dateTo": "End Date",
+    "times": "Schedule",
+    "additionalInfo": "Notes"
   }
 }

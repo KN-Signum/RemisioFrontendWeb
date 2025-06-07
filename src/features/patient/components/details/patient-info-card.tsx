@@ -1,14 +1,14 @@
 import {
-  BiBandAid,
   BiBody,
   BiClinic,
   BiHealth,
   BiPhone,
-  BiPulse,
   BiRestaurant,
   BiTimeFive,
 } from 'react-icons/bi';
 import { SurveyHistoryDialog } from '@/features/survey';
+import { SymptomHistoryDialog } from '@/features/symptoms';
+import { DrugHistoryDialog } from '@/features/drug';
 
 interface Props {
   patient: {
@@ -58,24 +58,31 @@ export const PatientInfoCard: React.FC<Props> = ({ patient }) => (
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        {[
-          { Icon: BiPulse, action: () => { } },
-          { Icon: BiRestaurant, action: () => { } },
-          { Icon: BiBandAid, action: () => { } },
-        ].map(({ Icon, action }, idx) => (
-          <div
-            key={idx}
-            className="bg-secondary hover:bg-primary-accent/80 flex items-center justify-center rounded-lg p-4 transition cursor-pointer"
-            onClick={action}
-          >
-            <Icon className="text-3xl text-white" />
-          </div>
-        ))}
+        {/* Symptom History Button */}
+        <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
+          <SymptomHistoryDialog
+            patientId={patient.id}
+            iconOnly={true}
+          />
+        </div>
 
-        {/* Survey History Button */}
+        {/* Drug History Button */}
+        <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
+          <DrugHistoryDialog
+            patientId={patient.id}
+            iconOnly={true}
+          />
+        </div>
+
+        {/* Placeholder button for future functionality */}
         <div
           className="bg-secondary hover:bg-primary-accent/80 flex items-center justify-center rounded-lg p-4 transition cursor-pointer"
         >
+          <BiRestaurant className="text-3xl text-white" />
+        </div>
+
+        {/* Survey History Button */}
+        <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
           <SurveyHistoryDialog
             patientId={patient.id}
             diseaseType={patient.disease_type as 'crohn' | 'ulcerative_colitis'}

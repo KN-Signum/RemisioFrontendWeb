@@ -12,9 +12,10 @@ interface SurveyHistoryDialogProps {
     patientId: string;
     diseaseType: 'crohn' | 'ulcerative_colitis';
     iconOnly?: boolean;
+    className?: string;
 }
 
-export const SurveyHistoryDialog = ({ patientId, diseaseType, iconOnly = false }: SurveyHistoryDialogProps) => {
+export const SurveyHistoryDialog = ({ patientId, diseaseType, iconOnly = false, className = '' }: SurveyHistoryDialogProps) => {
     const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
 
@@ -60,15 +61,15 @@ export const SurveyHistoryDialog = ({ patientId, diseaseType, iconOnly = false }
             return (
                 <div className="grid grid-cols-2 gap-2 text-sm">
                     <div>
-                        <p><span className="font-semibold">{t('survey.crohn.abdominal_pain')}:</span> {crohnSurvey.abdominal_pain}</p>
-                        <p><span className="font-semibold">{t('survey.crohn.stools')}:</span> {crohnSurvey.stools}</p>
-                        <p><span className="font-semibold">{t('survey.crohn.general_wellbeing')}:</span> {crohnSurvey.general_wellbeing}</p>
-                        <p><span className="font-semibold">{t('survey.crohn.extraintestinal_manifestations')}:</span> {crohnSurvey.extraintestinal_manifestations}</p>
+                        <p><span className="font-semibold">{t('survey.crohn.abdominal_pain', 'Abdominal Pain')}:</span> {crohnSurvey.abdominal_pain}</p>
+                        <p><span className="font-semibold">{t('survey.crohn.stools', 'Stools')}:</span> {crohnSurvey.stools}</p>
+                        <p><span className="font-semibold">{t('survey.crohn.general_wellbeing', 'General Wellbeing')}:</span> {crohnSurvey.general_wellbeing}</p>
+                        <p><span className="font-semibold">{t('survey.crohn.extraintestinal_manifestations', 'Extraintestinal Manifestations')}:</span> {crohnSurvey.extraintestinal_manifestations}</p>
                     </div>
                     <div>
-                        <p><span className="font-semibold">{t('survey.crohn.abdominal_mass')}:</span> {crohnSurvey.abdominal_mass}</p>
-                        <p><span className="font-semibold">{t('survey.crohn.hematocrit')}:</span> {crohnSurvey.hematocrit}</p>
-                        <p><span className="font-semibold">{t('survey.crohn.weight_loss')}:</span> {crohnSurvey.weight_loss}</p>
+                        <p><span className="font-semibold">{t('survey.crohn.abdominal_mass', 'Abdominal Mass')}:</span> {crohnSurvey.abdominal_mass}</p>
+                        <p><span className="font-semibold">{t('survey.crohn.hematocrit', 'Hematocrit')}:</span> {crohnSurvey.hematocrit}</p>
+                        <p><span className="font-semibold">{t('survey.crohn.weight_loss', 'Weight Loss')}:</span> {crohnSurvey.weight_loss}</p>
                     </div>
                 </div>
             );
@@ -77,11 +78,11 @@ export const SurveyHistoryDialog = ({ patientId, diseaseType, iconOnly = false }
             return (
                 <div className="grid grid-cols-2 gap-2 text-sm">
                     <div>
-                        <p><span className="font-semibold">{t('survey.uc.stool_frequency')}:</span> {ucSurvey.stool_frequency}</p>
-                        <p><span className="font-semibold">{t('survey.uc.rectal_bleeding')}:</span> {ucSurvey.rectal_bleeding}</p>
+                        <p><span className="font-semibold">{t('survey.uc.stool_frequency', 'Stool Frequency')}:</span> {ucSurvey.stool_frequency}</p>
+                        <p><span className="font-semibold">{t('survey.uc.rectal_bleeding', 'Rectal Bleeding')}:</span> {ucSurvey.rectal_bleeding}</p>
                     </div>
                     <div>
-                        <p><span className="font-semibold">{t('survey.uc.physician_global')}:</span> {ucSurvey.physician_global}</p>
+                        <p><span className="font-semibold">{t('survey.uc.physician_global', 'Physician Global Assessment')}:</span> {ucSurvey.physician_global}</p>
                     </div>
                 </div>
             );
@@ -91,14 +92,16 @@ export const SurveyHistoryDialog = ({ patientId, diseaseType, iconOnly = false }
     return (
         <>
             {iconOnly ? (
-                <BiFirstAid className="text-3xl text-white cursor-pointer" onClick={openDialog} />
+                <div onClick={openDialog} className={`flex items-center justify-center w-full h-full cursor-pointer ${className}`}>
+                    <BiFirstAid className="text-3xl text-white" />
+                </div>
             ) : (
                 <Button
                     onClick={openDialog}
                     className="flex items-center gap-2 bg-transparent border border-secondary hover:bg-secondary/10"
                 >
                     <BiFirstAid className="text-xl" />
-                    {t('survey.history.view_surveys')}
+                    {t('survey.history.view_surveys', 'View Surveys')}
                 </Button>
             )}
 
@@ -115,8 +118,8 @@ export const SurveyHistoryDialog = ({ patientId, diseaseType, iconOnly = false }
                             <div className="size-8"></div>
                             <span className="text-2xl font-bold">
                                 {diseaseType === 'crohn'
-                                    ? t('survey.history.crohn_title')
-                                    : t('survey.history.uc_title')}
+                                    ? t('survey.history.crohn_title', "Crohn's Disease Survey History")
+                                    : t('survey.history.uc_title', "Ulcerative Colitis Survey History")}
                             </span>
                             <div
                                 className="hover:bg-foreground flex size-8 items-center justify-center rounded-full text-3xl font-bold hover:cursor-pointer"
@@ -133,7 +136,7 @@ export const SurveyHistoryDialog = ({ patientId, diseaseType, iconOnly = false }
                                 </div>
                             ) : surveys.length === 0 ? (
                                 <div className="flex h-40 items-center justify-center">
-                                    <p className="text-lg">{t('survey.history.no_surveys')}</p>
+                                    <p className="text-lg">{t('survey.history.no_surveys', 'No surveys available for this patient')}</p>
                                 </div>
                             ) : (
                                 <div className="flex flex-col gap-4">
@@ -144,10 +147,10 @@ export const SurveyHistoryDialog = ({ patientId, diseaseType, iconOnly = false }
                                                     {formatDateDisplay(new Date(survey.survey_date))}
                                                 </h3>
                                                 <div className="flex items-center gap-2">
-                                                    <span className="font-semibold">{t('survey.total_score')}:</span>
+                                                    <span className="font-semibold">{t('survey.total_score', 'Total Score')}:</span>
                                                     <span>{survey.total_score}</span>
                                                     <span className={`ml-2 font-bold ${getCategoryColorClass(survey.category)}`}>
-                                                        {t(`survey.category.${survey.category}`)}
+                                                        {t(`survey.category.${survey.category}`, survey.category)}
                                                     </span>
                                                 </div>
                                             </div>
@@ -157,7 +160,7 @@ export const SurveyHistoryDialog = ({ patientId, diseaseType, iconOnly = false }
                                             {survey.notes && (
                                                 <div className="mt-2 border-t border-gray-600 pt-2">
                                                     <p className="text-sm">
-                                                        <span className="font-semibold">{t('survey.notes')}:</span> {survey.notes}
+                                                        <span className="font-semibold">{t('survey.notes', 'Notes')}:</span> {survey.notes}
                                                     </p>
                                                 </div>
                                             )}
@@ -169,7 +172,7 @@ export const SurveyHistoryDialog = ({ patientId, diseaseType, iconOnly = false }
 
                         <div className="mt-4 flex justify-end">
                             <Button onClick={closeDialog}>
-                                {t('common.close')}
+                                {t('common.close', 'Close')}
                             </Button>
                         </div>
                     </div>

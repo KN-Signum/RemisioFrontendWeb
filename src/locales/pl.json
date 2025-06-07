@@ -191,5 +191,29 @@
   },
   "common": {
     "close": "Zamknij"
+  },
+  "symptoms": {
+    "history": {
+      "title": "Historia objawów",
+      "view_symptoms": "Zobacz historię objawów",
+      "no_symptoms": "Brak zarejestrowanych objawów"
+    },
+    "type": "Typ",
+    "duration": "Czas trwania",
+    "pain_level": "Poziom bólu",
+    "description": "Opis"
+  },
+  "drug": {
+    "history": {
+      "title": "Historia leków",
+      "view_drugs": "Zobacz leki",
+      "no_drugs": "Brak zarejestrowanych leków"
+    },
+    "name": "Nazwa",
+    "dosage": "Dawkowanie",
+    "dateFrom": "Data rozpoczęcia",
+    "dateTo": "Data zakończenia",
+    "times": "Harmonogram",
+    "additionalInfo": "Uwagi"
   }
 }
