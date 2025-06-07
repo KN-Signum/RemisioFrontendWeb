@@ -224,5 +224,16 @@
     "dateTo": "End Date",
     "times": "Schedule",
     "additionalInfo": "Notes"
+  },
+  "meal": {
+    "history": {
+      "title": "Meal History",
+      "view_meals": "View Meal History",
+      "no_meals": "No meals recorded"
+    },
+    "meal_name": "Meal",
+    "meal_date": "Date",
+    "ontology": "Categories",
+    "notes": "Notes"
   }
 }

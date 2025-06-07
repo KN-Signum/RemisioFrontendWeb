@@ -9,6 +9,7 @@ import {
 import { SurveyHistoryDialog } from '@/features/survey';
 import { SymptomHistoryDialog } from '@/features/symptoms';
 import { DrugHistoryDialog } from '@/features/drug';
+import { MealHistoryDialog } from '@/features/meal';
 
 interface Props {
   patient: {
@@ -74,11 +75,12 @@ export const PatientInfoCard: React.FC<Props> = ({ patient }) => (
           />
         </div>
 
-        {/* Placeholder button for future functionality */}
-        <div
-          className="bg-secondary hover:bg-primary-accent/80 flex items-center justify-center rounded-lg p-4 transition cursor-pointer"
-        >
-          <BiRestaurant className="text-3xl text-white" />
+        {/* Meal History Button */}
+        <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
+          <MealHistoryDialog
+            patientId={patient.id}
+            iconOnly={true}
+          />
         </div>
 
         {/* Survey History Button */}

@@ -6,7 +6,8 @@ import {
   mockPatientScores,
   mockCrohnSurveys,
   mockUcSurveys,
-  mockSymptoms
+  mockSymptoms,
+  mockMeals
 } from '@/testing/mocks/setup/test-data';
 import { db } from './db';
 
@@ -20,4 +21,5 @@ export const seedDb = () => {
   mockSymptoms.forEach((symptom) => db.symptom.create(symptom));
   mockCrohnSurveys.forEach((survey) => db.crohnSurvey.create(survey));
   mockUcSurveys.forEach((survey) => db.ucSurvey.create(survey));
+  mockMeals.forEach((meal) => db.meal.create(meal));
 };

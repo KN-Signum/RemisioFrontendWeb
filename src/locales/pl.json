@@ -215,5 +215,16 @@
     "dateTo": "Data zakończenia",
     "times": "Harmonogram",
     "additionalInfo": "Uwagi"
+  },
+  "meal": {
+    "history": {
+      "title": "Historia posiłków",
+      "view_meals": "Zobacz historię posiłków",
+      "no_meals": "Brak zarejestrowanych posiłków"
+    },
+    "meal_name": "Posiłek",
+    "meal_date": "Data",
+    "ontology": "Kategorie",
+    "notes": "Uwagi"
   }
 }

@@ -7,6 +7,7 @@ import { handlers as labSampleHandlers } from './diagnostic_tests';
 import { handlers as patientScoreHandlers } from './patient_score';
 import { handlers as surveyHandlers } from './survey';
 import { handlers as symptomHandlers } from './symptom';
+import { handlers as mealHandlers } from './meal';
 
 export const handlers = [
   ...appHealthHandlers,
@@ -18,4 +19,5 @@ export const handlers = [
   ...patientScoreHandlers,
   ...surveyHandlers,
   ...symptomHandlers,
+  ...mealHandlers,
 ];

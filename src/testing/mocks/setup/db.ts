@@ -37,6 +37,17 @@ const models = {
     times: Array<string>,
   },
 
+  meal: {
+    id: primaryKey(String),
+    patient_id: String,
+    meal_name: String,
+    meal_date: String,
+    image_url: String,
+    ontology: String,
+    meal_notes: String,
+    created_at: String,
+  },
+
   diagnosticTest: {
     id: primaryKey(String),
     patient_id: String,
