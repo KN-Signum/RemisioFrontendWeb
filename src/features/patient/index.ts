@@ -10,6 +10,8 @@ export * from './components/details/score-time-line-chart';
 export * from './components/dashboard-patients-table';
 export * from './components/item-card';
 export * from './components/new-patient-dialog';
+export * from './components/small-patients-table';
+export * from './components/big-patients-table';
 
 // types
 export * from './types/index';

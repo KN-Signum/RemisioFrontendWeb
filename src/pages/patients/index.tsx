@@ -1,14 +1,18 @@
 import { useState, useMemo } from 'react';
 import Layout from '@/components/layout';
 
-import { SearchBar, usePatients } from '@/features/patient';
+import {
+  SearchBar,
+  usePatients,
+  SmallPatientsTable,
+  BigPatientsTable,
+} from '@/features/patient';
 import { FaCaretRight, FaCaretLeft } from 'react-icons/fa';
-import { SmallPatientsTable } from '@/features/patient/components/small-patients-table/small-patients-table';
 
 const PatientsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
-
   const { data: patients, isLoading: patientsLoading } = usePatients();
+  const [view, setView] = useState<'both' | 'uc' | 'crohn'>('both');
 
   const ucPatients = useMemo(() => {
     return patients.filter((patient) => {
@@ -56,12 +60,44 @@ const PatientsPage = () => {
           <SearchBar placeholder="Search patients..." onSearch={handleSearch} />
         </div>
         <div className="flex h-full gap-1">
-          <SmallPatientsTable patients={ucPatients} diesese="Mayo" />
-          <div className="flex w-5 flex-col justify-center gap-2 align-middle">
-            <FaCaretLeft className="bg-secondary h-10 w-full px-1" />
-            <FaCaretRight className="bg-secondary h-10 w-full px-1" />
+          {view === 'both' && (
+            <SmallPatientsTable patients={ucPatients} diesese="Mayo" />
+          )}
+          {view === 'uc' && (
+            <BigPatientsTable patients={ucPatients} diesese="Mayo" />
+          )}
+          <div className="justify-top mt-3 flex w-5 flex-col gap-2">
+            {view !== 'uc' && (
+              <FaCaretLeft
+                className="bg-secondary h-8 w-full rounded-xl pr-1 hover:cursor-pointer hover:opacity-70"
+                onClick={() => {
+                  if (view === 'both') {
+                    setView('uc');
+                  } else {
+                    setView('both');
+                  }
+                }}
+              />
+            )}
+            {view !== 'crohn' && (
+              <FaCaretRight
+                className="bg-secondary h-8 w-full rounded-xl pl-1 hover:cursor-pointer hover:opacity-70"
+                onClick={() => {
+                  if (view === 'both') {
+                    setView('crohn');
+                  } else {
+                    setView('both');
+                  }
+                }}
+              />
+            )}
           </div>
-          <SmallPatientsTable patients={crohnPatients} diesese="Cron" />
+          {view === 'both' && (
+            <SmallPatientsTable patients={crohnPatients} diesese="CDAI" />
+          )}
+          {view === 'crohn' && (
+            <BigPatientsTable patients={crohnPatients} diesese="CDAI" />
+          )}
         </div>
       </div>
     </Layout>
