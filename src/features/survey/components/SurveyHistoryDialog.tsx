@@ -5,8 +5,8 @@ import { BiFirstAid } from 'react-icons/bi';
 import { Button } from '@/components/ui/button';
 import { formatDateDisplay } from '@/utils/format-date-display';
 import { CrohnSurveyDto, SurveyCategory, UcSurveyDto } from '../types';
-import { usePatientCrohnSurveys } from '../api/crohn-survey-api';
-import { usePatientUcSurveys } from '../api/uc-survey-api';
+import { usePatientCrohnSurveys } from '../api/get-all-crohn-surveys';
+import { usePatientUcSurveys } from '../api/get-all-uc-surveys';
 
 interface SurveyHistoryDialogProps {
   patientId: string;

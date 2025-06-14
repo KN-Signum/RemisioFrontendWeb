@@ -2,8 +2,8 @@
 export * from './types';
 
 // Export API functions
-export * from './api/crohn-survey-api';
-export * from './api/uc-survey-api';
+export * from './api/get-latest-crohn-survey';
+export * from './api/get-latest-uc-survey';
 
 // Export components
 export * from './components';
