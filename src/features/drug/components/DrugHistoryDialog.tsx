@@ -41,10 +41,10 @@ export const DrugHistoryDialog = ({
   // Sort drugs by dateFrom, most recent first
   const sortedDrugs = drugs
     ? [...drugs].sort((a, b) => {
-        const dateA = new Date(a.dateFrom).getTime();
-        const dateB = new Date(b.dateFrom).getTime();
-        return dateB - dateA;
-      })
+      const dateA = new Date(a.dateFrom).getTime();
+      const dateB = new Date(b.dateFrom).getTime();
+      return dateB - dateA;
+    })
     : [];
 
   return (
@@ -78,7 +78,7 @@ export const DrugHistoryDialog = ({
             >
               <div className="flex w-full items-center justify-between">
                 <div className="size-8"></div>
-                <span className="text-2xl font-bold">
+                <span className="text-2xl font-bold text-primary-accent">
                   {t('drug.history.title', 'Medications History')}
                 </span>
                 <div
@@ -96,7 +96,7 @@ export const DrugHistoryDialog = ({
                   </div>
                 ) : !sortedDrugs.length ? (
                   <div className="flex h-40 items-center justify-center">
-                    <p className="text-lg">
+                    <p className="text-lg text-primary-accent">
                       {t('drug.history.no_drugs', 'No medications recorded')}
                     </p>
                   </div>
@@ -108,36 +108,36 @@ export const DrugHistoryDialog = ({
                         className="bg-background/10 rounded-sm p-4"
                       >
                         <div className="mb-2 flex items-center justify-between">
-                          <h3 className="text-lg font-semibold">{drug.name}</h3>
+                          <h3 className="text-lg font-semibold text-primary-accent">{drug.name}</h3>
                           <div className="flex items-center gap-2">
-                            <span className="font-semibold">
+                            <span className="font-semibold text-primary-accent">
                               {t('drug.dosage', 'Dosage')}:
                             </span>
-                            <span>{drug.dosage}</span>
+                            <span className="text-primary-accent">{drug.dosage}</span>
                           </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-2 text-sm">
                           <div>
                             <p>
-                              <span className="font-semibold">
+                              <span className="font-semibold text-primary-accent">
                                 {t('drug.dateFrom', 'Start Date')}:
                               </span>{' '}
-                              {formatDate(drug.dateFrom)}
+                              <span className="text-primary-accent">{formatDate(drug.dateFrom)}</span>
                             </p>
                             <p>
-                              <span className="font-semibold">
+                              <span className="font-semibold text-primary-accent">
                                 {t('drug.dateTo', 'End Date')}:
                               </span>{' '}
-                              {formatDate(drug.dateTo)}
+                              <span className="text-primary-accent">{formatDate(drug.dateTo)}</span>
                             </p>
                           </div>
                           <div>
                             <p>
-                              <span className="font-semibold">
+                              <span className="font-semibold text-primary-accent">
                                 {t('drug.times', 'Schedule')}:
                               </span>{' '}
-                              {drug.times.join(', ')}
+                              <span className="text-primary-accent">{drug.times.join(', ')}</span>
                             </p>
                           </div>
                         </div>
@@ -145,10 +145,10 @@ export const DrugHistoryDialog = ({
                         {drug.additionalInfo && (
                           <div className="mt-2 border-t border-gray-600 pt-2">
                             <p className="text-sm">
-                              <span className="font-semibold">
+                              <span className="font-semibold text-primary-accent">
                                 {t('drug.additionalInfo', 'Notes')}:
                               </span>{' '}
-                              {drug.additionalInfo}
+                              <span className="text-primary-accent">{drug.additionalInfo}</span>
                             </p>
                           </div>
                         )}
@@ -158,7 +158,7 @@ export const DrugHistoryDialog = ({
                 )}
               </div>
 
-              <div className="mt-4 flex justify-end">
+              <div className="mt-4 flex justify-end text-primary-accent">
                 <Button onClick={closeDialog}>
                   {t('common.close', 'Close')}
                 </Button>

@@ -67,52 +67,52 @@ export const SurveyHistoryDialog = ({
         <div className="grid grid-cols-2 gap-2 text-sm">
           <div>
             <p>
-              <span className="font-semibold">
+              <span className="font-semibold text-primary-accent">
                 {t('survey.crohn.abdominal_pain', 'Abdominal Pain')}:
               </span>{' '}
-              {crohnSurvey.abdominal_pain}
+              <span className="text-primary-accent">{crohnSurvey.abdominal_pain}</span>
             </p>
             <p>
-              <span className="font-semibold">
+              <span className="font-semibold text-primary-accent">
                 {t('survey.crohn.stools', 'Stools')}:
               </span>{' '}
-              {crohnSurvey.stools}
+              <span className="text-primary-accent">{crohnSurvey.stools}</span>
             </p>
             <p>
-              <span className="font-semibold">
+              <span className="font-semibold text-primary-accent">
                 {t('survey.crohn.general_wellbeing', 'General Wellbeing')}:
               </span>{' '}
-              {crohnSurvey.general_wellbeing}
+              <span className="text-primary-accent">{crohnSurvey.general_wellbeing}</span>
             </p>
             <p>
-              <span className="font-semibold">
+              <span className="font-semibold text-primary-accent">
                 {t(
                   'survey.crohn.extraintestinal_manifestations',
                   'Extraintestinal Manifestations',
                 )}
                 :
               </span>{' '}
-              {crohnSurvey.extraintestinal_manifestations}
+              <span className="text-primary-accent">{crohnSurvey.extraintestinal_manifestations}</span>
             </p>
           </div>
           <div>
             <p>
-              <span className="font-semibold">
+              <span className="font-semibold text-primary-accent">
                 {t('survey.crohn.abdominal_mass', 'Abdominal Mass')}:
               </span>{' '}
-              {crohnSurvey.abdominal_mass}
+              <span className="text-primary-accent">{crohnSurvey.abdominal_mass}</span>
             </p>
             <p>
-              <span className="font-semibold">
+              <span className="font-semibold text-primary-accent">
                 {t('survey.crohn.hematocrit', 'Hematocrit')}:
               </span>{' '}
-              {crohnSurvey.hematocrit}
+              <span className="text-primary-accent">{crohnSurvey.hematocrit}</span>
             </p>
             <p>
-              <span className="font-semibold">
+              <span className="font-semibold text-primary-accent">
                 {t('survey.crohn.weight_loss', 'Weight Loss')}:
               </span>{' '}
-              {crohnSurvey.weight_loss}
+              <span className="text-primary-accent">{crohnSurvey.weight_loss}</span>
             </p>
           </div>
         </div>
@@ -123,25 +123,25 @@ export const SurveyHistoryDialog = ({
         <div className="grid grid-cols-2 gap-2 text-sm">
           <div>
             <p>
-              <span className="font-semibold">
+              <span className="font-semibold text-primary-accent">
                 {t('survey.uc.stool_frequency', 'Stool Frequency')}:
               </span>{' '}
-              {ucSurvey.stool_frequency}
+              <span className="text-primary-accent">{ucSurvey.stool_frequency}</span>
             </p>
             <p>
-              <span className="font-semibold">
+              <span className="font-semibold text-primary-accent">
                 {t('survey.uc.rectal_bleeding', 'Rectal Bleeding')}:
               </span>{' '}
-              {ucSurvey.rectal_bleeding}
+              <span className="text-primary-accent">{ucSurvey.rectal_bleeding}</span>
             </p>
           </div>
           <div>
             <p>
-              <span className="font-semibold">
+              <span className="font-semibold text-primary-accent">
                 {t('survey.uc.physician_global', 'Physician Global Assessment')}
                 :
               </span>{' '}
-              {ucSurvey.physician_global}
+              <span className="text-primary-accent">{ucSurvey.physician_global}</span>
             </p>
           </div>
         </div>
@@ -163,7 +163,7 @@ export const SurveyHistoryDialog = ({
           onClick={openDialog}
           className="border-secondary hover:bg-secondary/10 flex items-center gap-2 border bg-transparent"
         >
-          <BiFirstAid className="text-xl" />
+          <BiFirstAid className="text-xl text-primary-accent" />
           {t('survey.history.view_surveys', 'View Surveys')}
         </Button>
       )}
@@ -180,16 +180,16 @@ export const SurveyHistoryDialog = ({
             >
               <div className="flex w-full items-center justify-between">
                 <div className="size-8"></div>
-                <span className="text-2xl font-bold">
+                <span className="text-2xl font-bold text-primary-accent">
                   {diseaseType === 'crohn'
                     ? t(
-                        'survey.history.crohn_title',
-                        "Crohn's Disease Survey History",
-                      )
+                      'survey.history.crohn_title',
+                      "Crohn's Disease Survey History",
+                    )
                     : t(
-                        'survey.history.uc_title',
-                        'Ulcerative Colitis Survey History',
-                      )}
+                      'survey.history.uc_title',
+                      'Ulcerative Colitis Survey History',
+                    )}
                 </span>
                 <div
                   className="hover:bg-foreground flex size-8 items-center justify-center rounded-full text-3xl font-bold hover:cursor-pointer"
@@ -206,7 +206,7 @@ export const SurveyHistoryDialog = ({
                   </div>
                 ) : surveys.length === 0 ? (
                   <div className="flex h-40 items-center justify-center">
-                    <p className="text-lg">
+                    <p className="text-lg text-primary-accent">
                       {t(
                         'survey.history.no_surveys',
                         'No surveys available for this patient',
@@ -221,14 +221,14 @@ export const SurveyHistoryDialog = ({
                         className="bg-background/10 rounded-sm p-4"
                       >
                         <div className="mb-2 flex items-center justify-between">
-                          <h3 className="text-lg font-semibold">
+                          <h3 className="text-lg font-semibold text-primary-accent">
                             {formatDateDisplay(new Date(survey.survey_date))}
                           </h3>
                           <div className="flex items-center gap-2">
-                            <span className="font-semibold">
+                            <span className="font-semibold text-primary-accent">
                               {t('survey.total_score', 'Total Score')}:
                             </span>
-                            <span>{survey.total_score}</span>
+                            <span className="text-primary-accent">{survey.total_score}</span>
                             <span
                               className={`ml-2 font-bold ${getCategoryColorClass(survey.category)}`}
                             >
@@ -245,10 +245,10 @@ export const SurveyHistoryDialog = ({
                         {survey.notes && (
                           <div className="mt-2 border-t border-gray-600 pt-2">
                             <p className="text-sm">
-                              <span className="font-semibold">
+                              <span className="font-semibold text-primary-accent">
                                 {t('survey.notes', 'Notes')}:
                               </span>{' '}
-                              {survey.notes}
+                              <span className="text-primary-accent">{survey.notes}</span>
                             </p>
                           </div>
                         )}

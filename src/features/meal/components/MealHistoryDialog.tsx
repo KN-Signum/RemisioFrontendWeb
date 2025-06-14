@@ -41,10 +41,10 @@ export const MealHistoryDialog = ({
   // Sort meals by date, newest first
   const sortedMeals = meals
     ? [...meals].sort((a, b) => {
-        const dateA = new Date(a.meal_date).getTime();
-        const dateB = new Date(b.meal_date).getTime();
-        return dateB - dateA;
-      })
+      const dateA = new Date(a.meal_date).getTime();
+      const dateB = new Date(b.meal_date).getTime();
+      return dateB - dateA;
+    })
     : [];
 
   // Group meals by date
@@ -71,7 +71,7 @@ export const MealHistoryDialog = ({
           onClick={openDialog}
           className="border-secondary hover:bg-secondary/10 flex items-center gap-2 border bg-transparent"
         >
-          <BiRestaurant className="text-xl" />
+          <BiRestaurant className="text-xl text-primary-accent" />
           {t('meal.history.view_meals', 'View Meal History')}
         </Button>
       )}
@@ -88,7 +88,7 @@ export const MealHistoryDialog = ({
             >
               <div className="flex w-full items-center justify-between">
                 <div className="size-8"></div>
-                <span className="text-2xl font-bold">
+                <span className="text-2xl font-bold text-primary-accent">
                   {t('meal.history.title', 'Meal History')}
                 </span>
                 <div
@@ -106,7 +106,7 @@ export const MealHistoryDialog = ({
                   </div>
                 ) : !sortedMeals.length ? (
                   <div className="flex h-40 items-center justify-center">
-                    <p className="text-lg">
+                    <p className="text-lg text-primary-accent">
                       {t('meal.history.no_meals', 'No meals recorded')}
                     </p>
                   </div>
@@ -114,17 +114,17 @@ export const MealHistoryDialog = ({
                   <div className="flex flex-col gap-4">
                     {Object.keys(groupedMeals).map((date) => (
                       <div key={date} className="mb-4">
-                        <h3 className="mb-2 text-lg font-bold">{date}</h3>
+                        <h3 className="mb-2 text-lg font-bold text-primary-accent">{date}</h3>
                         {groupedMeals[date].map((meal) => (
                           <div
                             key={meal.id}
                             className="bg-background/10 mb-3 rounded-sm p-4"
                           >
                             <div className="mb-2 flex items-center justify-between">
-                              <h4 className="text-lg font-semibold">
+                              <h4 className="text-lg font-semibold text-primary-accent">
                                 {meal.meal_name}
                               </h4>
-                              <span className="text-sm font-medium">
+                              <span className="text-sm font-medium text-primary-accent">
                                 {formatTime(meal.meal_date)}
                               </span>
                             </div>
@@ -143,7 +143,7 @@ export const MealHistoryDialog = ({
                             )}
 
                             {meal.ontology && (
-                              <div className="mb-2 flex flex-wrap gap-1">
+                              <div className="mb-2 flex flex-wrap gap-1 text-primary-accent">
                                 {meal.ontology.split(',').map((tag, idx) => (
                                   <span
                                     key={idx}
@@ -158,7 +158,7 @@ export const MealHistoryDialog = ({
                             {meal.meal_notes && (
                               <div className="mt-2 border-t border-gray-600 pt-2">
                                 <p className="text-sm">
-                                  <span className="font-semibold">
+                                  <span className="font-semibold text-primary-accent">
                                     {t('meal.notes', 'Notes')}:
                                   </span>{' '}
                                   {meal.meal_notes}

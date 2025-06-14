@@ -54,10 +54,10 @@ export const SymptomHistoryDialog = ({
   // Sort symptoms by creation date, newest first
   const sortedSymptoms = symptoms
     ? [...symptoms].sort((a, b) => {
-        const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
-        const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
-        return dateB - dateA;
-      })
+      const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+      const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+      return dateB - dateA;
+    })
     : [];
 
   return (
@@ -74,7 +74,7 @@ export const SymptomHistoryDialog = ({
           onClick={openDialog}
           className="border-secondary hover:bg-secondary/10 flex items-center gap-2 border bg-transparent"
         >
-          <BiPulse className="text-xl" />
+          <BiPulse className="text-xl text-primary-accent" />
           {t('symptoms.history.view_symptoms', 'View Symptoms History')}
         </Button>
       )}
@@ -125,15 +125,17 @@ export const SymptomHistoryDialog = ({
                       >
                         <div className="mb-2 flex items-center justify-between">
                           <h3 className="text-lg font-semibold">
-                            {symptom.created_at
-                              ? formatDateDisplay(new Date(symptom.created_at))
-                              : 'Unknown date'}
+                            <span className="text-primary-accent">
+                              {symptom.created_at
+                                ? formatDateDisplay(new Date(symptom.created_at))
+                                : 'Unknown date'}
+                            </span>
                           </h3>
                           <div className="flex items-center gap-2">
-                            <span className="font-semibold">
+                            <span className="font-semibold text-primary-accent">
                               {t('symptoms.type', 'Type')}:
                             </span>
-                            <span>{symptom.symptom_type}</span>
+                            <span className="text-primary-accent">{symptom.symptom_type}</span>
                             <span
                               className={`ml-2 font-bold ${getPainLevelColorClass(symptom.pain_level)}`}
                             >
@@ -145,18 +147,18 @@ export const SymptomHistoryDialog = ({
                         <div className="grid grid-cols-2 gap-2 text-sm">
                           <div>
                             <p>
-                              <span className="font-semibold">
+                              <span className="font-semibold text-primary-accent">
                                 {t('symptoms.duration', 'Duration')}:
                               </span>{' '}
-                              {symptom.duration}
+                              <span className="text-primary-accent">{symptom.duration}</span>
                             </p>
                           </div>
                           <div>
                             <p>
-                              <span className="font-semibold">
+                              <span className="font-semibold text-primary-accent">
                                 {t('symptoms.pain_level', 'Pain Level')}:
                               </span>{' '}
-                              {symptom.pain_level}
+                              <span className="text-primary-accent">{symptom.pain_level}</span>
                             </p>
                           </div>
                         </div>
@@ -164,10 +166,10 @@ export const SymptomHistoryDialog = ({
                         {symptom.symptom_description && (
                           <div className="mt-2 border-t border-gray-600 pt-2">
                             <p className="text-sm">
-                              <span className="font-semibold">
+                              <span className="font-semibold text-primary-accent">
                                 {t('symptoms.description', 'Description')}:
                               </span>{' '}
-                              {symptom.symptom_description}
+                              <span className="text-primary-accent">{symptom.symptom_description}</span>
                             </p>
                           </div>
                         )}
