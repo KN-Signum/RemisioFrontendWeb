@@ -6,7 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { CalendarDashboard, useGetVisits } from '@/features/visits';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from '@/components/ui/loading';
-import { ItemCard, DashboardPatientsTable } from '@/features/patient';
+import {
+  ItemCard,
+  DashboardPatientsTable,
+  useGetPatients,
+} from '@/features/patient';
 
 const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
@@ -15,6 +19,7 @@ export const Dashboard = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: visits, isLoading } = useGetVisits();
+  const { data: patients, isLoading: patientsLoading } = useGetPatients();
 
   return (
     <Layout>
@@ -50,7 +55,13 @@ export const Dashboard = () => {
         </div>
         <div className={'flex h-100 w-full gap-3'}>
           <div className={cn(borderClasses, 'h-full w-[65%] px-1.5')}>
-            <DashboardPatientsTable />
+            <div className="w-full">
+              {patientsLoading ? (
+                <Loading size={100} />
+              ) : (
+                <DashboardPatientsTable patients={patients} />
+              )}
+            </div>
           </div>
           <div className={cn(borderClasses, 'h-full w-[35%] px-1.5')}>
             <div className="w-full">

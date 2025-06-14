@@ -1,5 +1,16 @@
 {
   "language": "en",
+  "general": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "update": "Update",
+    "confirm": "Confirm",
+    "none": "None"
+  },
   "landing-page": {
     "title": "GastroApp",
     "subtitle": "Please log in to perform actions.",
@@ -72,7 +83,8 @@
       "drugs": "Taken medicaments",
       "male": "Male",
       "female": "Female",
-      "years": "years"
+      "other": "Other",
+      "years": "y"
     }
   },
   "drug": {
@@ -182,6 +194,7 @@
     "surveys": "Surveys",
     "drugs": "Drugs",
     "diet": "Diet",
+    "weight": "Weight",
     "no_patients": "No patients found"
   },
   "calendar": {

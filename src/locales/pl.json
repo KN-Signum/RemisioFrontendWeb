@@ -1,5 +1,16 @@
 {
   "language": "pl",
+  "general": {
+    "loading": "Ładowanie...",
+    "error": "Wystąpił błąd",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "edit": "Edytuj",
+    "update": "Aktualizuj",
+    "confirm": "Potwierdź",
+    "none": "Brak"
+  },
   "landing-page": {
     "title": "GastroApp",
     "subtitle": "Zaloguj się, by przejść dalej.",
@@ -72,7 +83,8 @@
       "drugs": "Przyjmowane leki",
       "male": "Mężczyzna",
       "female": "Kobieta",
-      "years": "lat"
+      "other": "Inna",
+      "years": "l"
     }
   },
   "drug": {
@@ -173,6 +185,7 @@
     "surveys": "Ankiety",
     "drugs": "Leki",
     "diet": "Dieta",
+    "weight": "Waga",
     "no_patients": "Brak pacjentów do wyświetlenia"
   },
   "calendar": {

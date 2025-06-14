@@ -1,1 +1,1 @@
-export * from './patients-table';
+export * from './dashboard-patients-table';

@@ -5,10 +5,10 @@ import { GetPatientDto } from '../types';
 export const getPatients = async (): Promise<GetPatientDto[]> => {
   console.log('Fetching patients');
   const response = await apiClient.get('/api/get_all_patients');
-  return response.data.content;
+  return response.data;
 };
 
-export const usePatients = () => {
+export const useGetPatients = () => {
   const { data, isFetching, isFetched } = useQuery({
     queryKey: ['patients'],
     queryFn: () => getPatients(),

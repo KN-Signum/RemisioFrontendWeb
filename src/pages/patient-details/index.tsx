@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { mockPatients } from '@/testing/mocks/setup/test-data/patients';
 import Layout from '@/components/layout';
 import { PatientInfoCard } from '@/features/patient/components/details/patient-info-card';
 import { DiagnosticTestsGrid } from '@/features/patient/components/details/diagnostic-test-grid';
@@ -8,8 +7,14 @@ import { useMemo } from 'react';
 import { cn } from '@/utils/cn';
 import { usePatientDiagnosticTests } from '@/features/diagnostic_tests/api/get-patient-diagnostic-tests';
 import { DiagnosticTestDto } from '@/features/diagnostic_tests';
+import {
+  FullPatient,
+  useGetPatientDetails,
+  useGetPatients,
+} from '@/features/patient';
 
-const borderClasses = 'flex w-full border-2 border-white/50 rounded-sm py-2';
+const borderClasses =
+  'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
 
 // Helper function to process diagnostic tests data
 const processTestData = (
@@ -85,7 +90,20 @@ const PatientDetailsPage = () => {
     isLoading: testsLoading,
     error: testsError,
   } = usePatientDiagnosticTests(id ?? '');
-  const patient = mockPatients.find((p) => p.id === id);
+  const { data: patientDetail, isLoading: patientLoading } =
+    useGetPatientDetails(id ?? '');
+  const { data: patients, isLoading: patientsLoading } = useGetPatients();
+
+  // merge patientDetail with patient[id] into FullPatientDto
+  const patient = patients?.find((p) => p.id === patientDetail?.id);
+  const fullPatient: FullPatient | undefined = useMemo(() => {
+    if (!patient || !patientDetail) return undefined;
+
+    return {
+      ...patient,
+      ...patientDetail,
+    };
+  }, [patient, patientDetail]);
 
   // Process diagnostic tests data - always call useMemo unconditionally
   const tests = useMemo(() => {
@@ -94,28 +112,20 @@ const PatientDetailsPage = () => {
 
   // Generate score history - always call useMemo unconditionally
   const scoreHistory = useMemo(() => {
-    return generateScoreHistory(patient?.score);
-  }, [patient?.score]);
+    return generateScoreHistory(fullPatient?.score);
+  }, [fullPatient?.score]);
 
-  // Compute age from date_of_birth
-  const patientWithAge = useMemo(
-    () => ({
-      name: patient!.name,
-      disease_type: patient!.disease_type,
-      score: patient!.score,
-      email: patient!.email,
-      phone_number: patient!.phone_number,
-      weight: patient!.weight,
-      height: patient!.height,
-      hospital: patient!.hospital,
-      age:
-        new Date().getFullYear() -
-        new Date(patient!.date_of_birth).getFullYear(),
-    }),
-    [patient],
-  );
+  if (patientsLoading || patientLoading) {
+    return (
+      <Layout>
+        <div className="flex h-full items-center justify-center text-gray-500">
+          Loading patient details...
+        </div>
+      </Layout>
+    );
+  }
 
-  if (!patient) {
+  if (!fullPatient) {
     return (
       <Layout>
         <div className="flex h-full items-center justify-center text-red-500">
@@ -133,7 +143,13 @@ const PatientDetailsPage = () => {
       >
         {/* top */}
         <div className={cn(borderClasses, 'h-[40vh] gap-3 px-1.5')}>
-          <PatientInfoCard patient={patientWithAge} />
+          <PatientInfoCard
+            name={fullPatient.full_name}
+            phone_number={fullPatient.phone}
+            age={fullPatient.age}
+            hospital={fullPatient.hospital}
+            weight={fullPatient.weight}
+          />
           {testsError ? (
             <div className="text-red-500">Failed to load tests</div>
           ) : (
@@ -143,10 +159,10 @@ const PatientDetailsPage = () => {
 
         {/* bottom */}
         <div className={cn(borderClasses, 'h-[50.5vh] px-1.5')}>
-          <div className="flex w-full flex-col rounded-sm bg-white p-8 shadow-md">
-            <h2 className="text-primary mb-4 text-lg font-bold">
+          <div className="flex w-full flex-col rounded-sm p-8 shadow-md">
+            <span className="text-primary mb-4 text-lg font-bold">
               Zmiana score w ostatnich 8 tygodniach
-            </h2>
+            </span>
             <ScoreTimelineChart
               weeks={scoreHistory.map((p) => p.week)}
               scores={scoreHistory.map((p) => p.score)}

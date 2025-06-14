@@ -37,7 +37,7 @@ export const SmallPatientsTable = ({
                 <TableRow
                   key={patient.id}
                   id={patient.id}
-                  name={patient.name}
+                  name={patient.full_name}
                   age={patient.age}
                   state={patient.state}
                   score={patient.score}

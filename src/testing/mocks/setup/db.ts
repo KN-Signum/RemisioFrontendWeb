@@ -14,8 +14,12 @@ const models = {
     smoking: String,
     gender: String, // 'male' | 'female' | 'other'
     disease_type: String, // 'crohn' | 'ulcerative_colitis'
+    last_visit: String, // ISO timestamp
+    drugs: Array<string>,
+    surveys: Number,
+    diet: String,
     hospital: String,
-    notes_about_patient: String,
+    notes: String, // was `notes_about_patient`
     updated_at: String, // ISO timestamp
   },
   visit: {

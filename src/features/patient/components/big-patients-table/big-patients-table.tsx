@@ -26,7 +26,9 @@ export const BigPatientsTable = ({
         </div>
         <div className={`flex-4 ${paddings}`}>{t('patients-tables.drugs')}</div>
         <div className={`flex-2 ${paddings}`}>{t('patients-tables.diet')}</div>
-        <div className={`flex-1 ${paddings}`}>BMI</div>
+        <div className={`flex-1 ${paddings}`}>
+          {t('patients-tables.weight')}
+        </div>
       </div>
       <div className="text-primary-accent text-sm">
         {patients.length === 0 ? (
@@ -41,14 +43,14 @@ export const BigPatientsTable = ({
                 <BigTableRow
                   key={patient.id}
                   id={patient.id}
-                  name={patient.name}
+                  name={patient.full_name}
                   age={patient.age}
                   state={patient.state}
                   score={patient.score}
-                  surveys={30} // Placeholder for surveys count
-                  drugs={['ibuphrophen', 'stoperan', 'lorem', 'lipsum']} // Assuming drugs is an array
-                  diet="Gluten Free" // Placeholder for diet
-                  bmi={20} // Assuming bmi is a number
+                  surveys={patient.surveys}
+                  drugs={patient.drugs}
+                  diet={patient.diet}
+                  weight={patient.weight}
                   roundedBottom={isPreLast}
                 />
               );
