@@ -35,10 +35,10 @@ export const ScoreTimelineChart: React.FC<Props> = ({
         filteredScores: scores,
         filteredAnalyteData: analyteData
           ? {
-              ...analyteData,
-              dates: analyteData.dates,
-              values: analyteData.values,
-            }
+            ...analyteData,
+            dates: analyteData.dates,
+            values: analyteData.values,
+          }
           : undefined,
       };
     }
@@ -121,33 +121,30 @@ export const ScoreTimelineChart: React.FC<Props> = ({
         <div className="inline-flex gap-1 rounded-md">
           <button
             type="button"
-            className={`rounded-l-md px-3 py-1 text-xs font-medium ${
-              timeRange === 'month'
+            className={`rounded-l-md px-3 py-1 text-xs font-medium ${timeRange === 'month'
                 ? 'bg-secondary-accent text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
+              }`}
             onClick={() => setTimeRange('month')}
           >
             Month
           </button>
           <button
             type="button"
-            className={`px-3 py-1 text-xs font-medium ${
-              timeRange === 'year'
+            className={`px-3 py-1 text-xs font-medium ${timeRange === 'year'
                 ? 'bg-secondary-accent text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
+              }`}
             onClick={() => setTimeRange('year')}
           >
             Year
           </button>
           <button
             type="button"
-            className={`rounded-r-md px-3 py-1 text-xs font-medium ${
-              timeRange === 'all'
+            className={`rounded-r-md px-3 py-1 text-xs font-medium ${timeRange === 'all'
                 ? 'bg-secondary-accent text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
+              }`}
             onClick={() => setTimeRange('all')}
           >
             All
@@ -249,12 +246,12 @@ export const ScoreTimelineChart: React.FC<Props> = ({
           { name: 'Score', data: filteredScores },
           ...(filteredAnalyteData
             ? [
-                {
-                  name: filteredAnalyteData.name,
-                  data: filteredAnalyteData.values,
-                  type: 'line',
-                },
-              ]
+              {
+                name: filteredAnalyteData.name,
+                data: filteredAnalyteData.values,
+                type: 'line',
+              },
+            ]
             : []),
         ]}
         options={{
@@ -270,8 +267,8 @@ export const ScoreTimelineChart: React.FC<Props> = ({
           xaxis: {
             categories: filteredAnalyteData
               ? [
-                  ...new Set([...filteredWeeks, ...filteredAnalyteData.dates]),
-                ].sort()
+                ...new Set([...filteredWeeks, ...filteredAnalyteData.dates]),
+              ].sort()
               : filteredWeeks,
             labels: { rotate: -45 },
             type: 'datetime',
@@ -286,29 +283,29 @@ export const ScoreTimelineChart: React.FC<Props> = ({
             },
             ...(filteredAnalyteData
               ? [
-                  {
-                    opposite: true,
-                    min: 0,
-                    max:
-                      filteredAnalyteData.values.length > 0
-                        ? Math.max(...filteredAnalyteData.values) * 1.2
-                        : 10,
-                    title: {
-                      text: filteredAnalyteData.name.toUpperCase(),
-                      style: { color: colors.analyteColor },
-                    },
-                    labels: {
-                      style: { colors: colors.analyteColor },
-                      formatter: (v: number) => `${v}`,
-                    },
+                {
+                  opposite: true,
+                  min: 0,
+                  max:
+                    filteredAnalyteData.values.length > 0
+                      ? Math.max(...filteredAnalyteData.values) * 1.2
+                      : 10,
+                  title: {
+                    text: filteredAnalyteData.name.toUpperCase(),
+                    style: { color: colors.analyteColor },
                   },
-                ]
+                  labels: {
+                    style: { colors: colors.analyteColor },
+                    formatter: (v: number) => `${v}`,
+                  },
+                },
+              ]
               : []),
           ],
           tooltip: {
             shared: true,
             intersect: false,
-            y: { formatter: (v: number) => `${v}` },
+            y: { formatter: (v: number) => `${v.toFixed(1)}` },
           },
           grid: { strokeDashArray: 4 },
           legend: { show: true },
