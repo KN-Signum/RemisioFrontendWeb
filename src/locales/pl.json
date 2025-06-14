@@ -241,7 +241,8 @@
       "extraintestinal_manifestations": "Objawy pozajelitowe",
       "abdominal_mass": "Masa brzuszna",
       "hematocrit": "Hematokryt",
-      "weight": "Waga"
+      "weight": "Waga",
+      "antidiarrheal_use": "Leczenie przeciwbiegunkowe"
     },
     "uc": {
       "stool_frequency": "Częstotliwość wypróżnień",

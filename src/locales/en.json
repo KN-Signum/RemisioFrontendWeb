@@ -250,7 +250,8 @@
       "extraintestinal_manifestations": "Extraintestinal Manifestations",
       "abdominal_mass": "Abdominal Mass",
       "hematocrit": "Hematocrit",
-      "weight": "Weight"
+      "weight": "Weight",
+      "antidiarrheal_use": "Antidiarrheal treatment"
     },
     "uc": {
       "stool_frequency": "Stool Frequency",

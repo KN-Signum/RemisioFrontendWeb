@@ -20,22 +20,10 @@ export interface CrohnSurveyDto extends BaseSurveyDto {
   abdominal_pain: number; // 0-3
   stools: number; // 0-3
   general_wellbeing: number; // 0-4
+  antidiarrheal_use: boolean;
   extraintestinal_manifestations: number; // 0-9
   abdominal_mass: number; // 0-5
   hematocrit: number; // 0-4
-}
-
-export interface CreateCrohnSurveyDto {
-  patient_id: string;
-  survey_date: string;
-  abdominal_pain: number; // 0-3
-  stools: number; // 0-3
-  general_wellbeing: number; // 0-4
-  extraintestinal_manifestations: number; // 0-9
-  abdominal_mass: number; // 0-5
-  hematocrit: number; // 0-4
-  notes?: string;
-  weight: number; // 60-120
 }
 
 // Ulcerative Colitis Survey
@@ -44,15 +32,6 @@ export interface UcSurveyDto extends BaseSurveyDto {
   stool_frequency: number; // 0-3
   rectal_bleeding: number; // 0-3
   physician_global: number; // 0-3
-}
-
-export interface CreateUcSurveyDto {
-  patient_id: string;
-  survey_date: string;
-  stool_frequency: number; // 0-3
-  rectal_bleeding: number; // 0-3
-  physician_global: number; // 0-3
-  notes?: string;
 }
 
 // Response types

@@ -4,22 +4,33 @@ import { db } from '..';
 import { SurveyCategory } from '@/features/survey';
 
 export const calculateCrohnTotalScore = (
-  abdominalPain: number,
-  stools: number,
-  generalWellbeing: number,
+  liquidStools: number,
+  abdominalPainSum: number,
+  wellbeingSum: number,
   extraintestinalManifestations: number,
-  abdominalMass: number,
+  antidiarrhealUse: boolean,
+  abdominalMassScore: 0 | 2 | 5,
   hematocrit: number,
-  weight: number
+  idealWeightKg: number,
+  currentWeightKg: number,
+  isMale: boolean,
 ): number => {
+  const referenceHct = isMale ? 47 : 42;
+  const g = Math.max(0, referenceHct - hematocrit);
+  const weightDiffPct = Math.max(
+    0,
+    ((idealWeightKg - currentWeightKg) / idealWeightKg) * 100,
+  );
+
   return (
-    abdominalPain * 5 +
-    stools * 5 +
-    generalWellbeing * 7 +
-    extraintestinalManifestations +
-    abdominalMass * 5 +
-    10 * (47 - hematocrit) +
-    (((weight - 70) / 70) * 100) * 6
+    2 * liquidStools +
+    5 * abdominalPainSum +
+    7 * wellbeingSum +
+    20 * extraintestinalManifestations +
+    30 * (antidiarrhealUse ? 1 : 0) +
+    10 * abdominalMassScore +
+    6 * g +
+    weightDiffPct
   );
 };
 

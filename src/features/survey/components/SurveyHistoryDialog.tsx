@@ -8,13 +8,12 @@ import { CrohnSurveyDto, SurveyCategory, UcSurveyDto } from '../types';
 import { usePatientCrohnSurveys } from '../api/get-all-crohn-surveys';
 import { usePatientUcSurveys } from '../api/get-all-uc-surveys';
 import { DialogTrigger } from '@/features/patient/components/details/DialogTrigger';
+import { formatValue } from '@/lib/utils/format_value';
 
 interface SurveyHistoryDialogProps {
   patientId: string;
   diseaseType: 'crohn' | 'ulcerative_colitis';
-  /** Jeśli true – renderuj tylko kafelek-ikonę, bez tekstu */
   iconOnly?: boolean;
-  /** Dodatkowe klasy Tailwind do kafelka / przycisku */
   className?: string;
 }
 
@@ -109,6 +108,12 @@ export const SurveyHistoryDialog = ({
                 {t('survey.crohn.hematocrit', 'Hematocrit')}:
               </span>{' '}
               <span className="text-primary-accent">{s.hematocrit}</span>
+            </p>
+            <p>
+              <span className="font-semibold text-primary-accent">
+                {t('survey.crohn.antidiarrheal_use', 'Hematocrit')}:
+              </span>{' '}
+              <span className="text-primary-accent">{s.antidiarrheal_use}</span>
             </p>
             <p>
               <span className="font-semibold text-primary-accent">
@@ -231,7 +236,7 @@ export const SurveyHistoryDialog = ({
                               {t('survey.total_score', 'Total Score')}:
                             </span>
                             <span className="text-primary-accent">
-                              {survey.total_score}
+                              {formatValue(survey.total_score.toString())}
                             </span>
                             <span
                               className={`ml-2 font-bold ${getCategoryColorClass(
