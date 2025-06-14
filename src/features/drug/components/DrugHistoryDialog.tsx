@@ -5,7 +5,7 @@ import { BiBandAid } from 'react-icons/bi';
 import { Button } from '@/components/ui/button';
 import { DrugDto } from '../types';
 import { useQuery } from '@tanstack/react-query';
-import { getDrugsByPatientId } from '../api';
+import { getDrugsByPatientId } from '../api/get-all-patient-drugs';
 
 interface DrugHistoryDialogProps {
   patientId: string;

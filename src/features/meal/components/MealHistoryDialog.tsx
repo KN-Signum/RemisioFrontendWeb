@@ -5,7 +5,7 @@ import { BiRestaurant } from 'react-icons/bi';
 import { Button } from '@/components/ui/button';
 import { MealDto } from '../types';
 import { useQuery } from '@tanstack/react-query';
-import { getMealsByPatientId } from '../api';
+import { getMealsByPatientId } from '../api/get-all-patient-meals';
 
 interface MealHistoryDialogProps {
   patientId: string;
