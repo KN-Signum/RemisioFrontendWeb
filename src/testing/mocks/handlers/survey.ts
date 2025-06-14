@@ -13,13 +13,13 @@ export const calculateCrohnTotalScore = (
   weight: number
 ): number => {
   return (
-    abdominalPain * 7 +
-    stools * 2 +
+    abdominalPain * 5 +
+    stools * 5 +
     generalWellbeing * 7 +
     extraintestinalManifestations +
     abdominalMass * 5 +
-    hematocrit +
-    ((weight - 70 / 70) * 100) * 6
+    10 * (47 - hematocrit) +
+    (((weight - 70) / 70) * 100) * 6
   );
 };
 

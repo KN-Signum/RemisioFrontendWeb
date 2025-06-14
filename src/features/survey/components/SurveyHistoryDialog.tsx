@@ -7,11 +7,14 @@ import { formatDateDisplay } from '@/utils/format-date-display';
 import { CrohnSurveyDto, SurveyCategory, UcSurveyDto } from '../types';
 import { usePatientCrohnSurveys } from '../api/get-all-crohn-surveys';
 import { usePatientUcSurveys } from '../api/get-all-uc-surveys';
+import { DialogTrigger } from '@/features/patient/components/details/DialogTrigger';
 
 interface SurveyHistoryDialogProps {
   patientId: string;
   diseaseType: 'crohn' | 'ulcerative_colitis';
+  /** Jeśli true – renderuj tylko kafelek-ikonę, bez tekstu */
   iconOnly?: boolean;
+  /** Dodatkowe klasy Tailwind do kafelka / przycisku */
   className?: string;
 }
 
@@ -24,7 +27,7 @@ export const SurveyHistoryDialog = ({
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
-  // Fetch surveys based on disease type
+  /* ───── pobieranie danych ───── */
   const { data: crohnSurveys, isLoading: isLoadingCrohn } =
     usePatientCrohnSurveys(diseaseType === 'crohn' ? patientId : '');
 
@@ -33,8 +36,6 @@ export const SurveyHistoryDialog = ({
   );
 
   const isLoading = diseaseType === 'crohn' ? isLoadingCrohn : isLoadingUc;
-
-  // Get the appropriate surveys based on disease type
   const surveys =
     diseaseType === 'crohn'
       ? crohnSurveys?.surveys || []
@@ -43,7 +44,7 @@ export const SurveyHistoryDialog = ({
   const openDialog = () => setIsOpen(true);
   const closeDialog = () => setIsOpen(false);
 
-  // Helper function to get category color class
+  /* ───── pomocnicze ───── */
   const getCategoryColorClass = (category: SurveyCategory): string => {
     switch (category) {
       case 'remission':
@@ -59,10 +60,9 @@ export const SurveyHistoryDialog = ({
     }
   };
 
-  // Render survey details based on disease type
   const renderSurveyDetails = (survey: CrohnSurveyDto | UcSurveyDto) => {
     if (diseaseType === 'crohn') {
-      const crohnSurvey = survey as CrohnSurveyDto;
+      const s = survey as CrohnSurveyDto;
       return (
         <div className="grid grid-cols-2 gap-2 text-sm">
           <div>
@@ -70,19 +70,19 @@ export const SurveyHistoryDialog = ({
               <span className="font-semibold text-primary-accent">
                 {t('survey.crohn.abdominal_pain', 'Abdominal Pain')}:
               </span>{' '}
-              <span className="text-primary-accent">{crohnSurvey.abdominal_pain}</span>
+              <span className="text-primary-accent">{s.abdominal_pain}</span>
             </p>
             <p>
               <span className="font-semibold text-primary-accent">
                 {t('survey.crohn.stools', 'Stools')}:
               </span>{' '}
-              <span className="text-primary-accent">{crohnSurvey.stools}</span>
+              <span className="text-primary-accent">{s.stools}</span>
             </p>
             <p>
               <span className="font-semibold text-primary-accent">
                 {t('survey.crohn.general_wellbeing', 'General Wellbeing')}:
               </span>{' '}
-              <span className="text-primary-accent">{crohnSurvey.general_wellbeing}</span>
+              <span className="text-primary-accent">{s.general_wellbeing}</span>
             </p>
             <p>
               <span className="font-semibold text-primary-accent">
@@ -92,7 +92,9 @@ export const SurveyHistoryDialog = ({
                 )}
                 :
               </span>{' '}
-              <span className="text-primary-accent">{crohnSurvey.extraintestinal_manifestations}</span>
+              <span className="text-primary-accent">
+                {s.extraintestinal_manifestations}
+              </span>
             </p>
           </div>
           <div>
@@ -100,73 +102,71 @@ export const SurveyHistoryDialog = ({
               <span className="font-semibold text-primary-accent">
                 {t('survey.crohn.abdominal_mass', 'Abdominal Mass')}:
               </span>{' '}
-              <span className="text-primary-accent">{crohnSurvey.abdominal_mass}</span>
+              <span className="text-primary-accent">{s.abdominal_mass}</span>
             </p>
             <p>
               <span className="font-semibold text-primary-accent">
                 {t('survey.crohn.hematocrit', 'Hematocrit')}:
               </span>{' '}
-              <span className="text-primary-accent">{crohnSurvey.hematocrit}</span>
+              <span className="text-primary-accent">{s.hematocrit}</span>
             </p>
             <p>
               <span className="font-semibold text-primary-accent">
                 {t('survey.crohn.weight', 'Weight')}:
               </span>{' '}
-              <span className="text-primary-accent">{crohnSurvey.weight}</span>
-            </p>
-          </div>
-        </div>
-      );
-    } else {
-      const ucSurvey = survey as UcSurveyDto;
-      return (
-        <div className="grid grid-cols-2 gap-2 text-sm">
-          <div>
-            <p>
-              <span className="font-semibold text-primary-accent">
-                {t('survey.uc.stool_frequency', 'Stool Frequency')}:
-              </span>{' '}
-              <span className="text-primary-accent">{ucSurvey.stool_frequency}</span>
-            </p>
-            <p>
-              <span className="font-semibold text-primary-accent">
-                {t('survey.uc.rectal_bleeding', 'Rectal Bleeding')}:
-              </span>{' '}
-              <span className="text-primary-accent">{ucSurvey.rectal_bleeding}</span>
-            </p>
-          </div>
-          <div>
-            <p>
-              <span className="font-semibold text-primary-accent">
-                {t('survey.uc.physician_global', 'Physician Global Assessment')}
-                :
-              </span>{' '}
-              <span className="text-primary-accent">{ucSurvey.physician_global}</span>
+              <span className="text-primary-accent">{s.weight}</span>
             </p>
           </div>
         </div>
       );
     }
+
+    /* UC */
+    const s = survey as UcSurveyDto;
+    return (
+      <div className="grid grid-cols-2 gap-2 text-sm">
+        <div>
+          <p>
+            <span className="font-semibold text-primary-accent">
+              {t('survey.uc.stool_frequency', 'Stool Frequency')}:
+            </span>{' '}
+            <span className="text-primary-accent">{s.stool_frequency}</span>
+          </p>
+          <p>
+            <span className="font-semibold text-primary-accent">
+              {t('survey.uc.rectal_bleeding', 'Rectal Bleeding')}:
+            </span>{' '}
+            <span className="text-primary-accent">{s.rectal_bleeding}</span>
+          </p>
+        </div>
+        <div>
+          <p>
+            <span className="font-semibold text-primary-accent">
+              {t('survey.uc.physician_global', 'Physician Global Assessment')}:
+            </span>{' '}
+            <span className="text-primary-accent">{s.physician_global}</span>
+          </p>
+        </div>
+      </div>
+    );
   };
 
+  /* ───── JSX ───── */
   return (
     <>
-      {iconOnly ? (
-        <div
-          onClick={openDialog}
-          className={`flex h-full w-full cursor-pointer items-center justify-center ${className}`}
-        >
-          <BiFirstAid className="text-3xl text-white" />
-        </div>
-      ) : (
-        <Button
-          onClick={openDialog}
-          className="border-secondary hover:bg-secondary/10 flex items-center gap-2 border bg-transparent"
-        >
-          <BiFirstAid className="text-xl text-primary-accent" />
-          {t('survey.history.view_surveys', 'View Surveys')}
-        </Button>
-      )}
+      <DialogTrigger
+        onClick={openDialog}
+        icon={
+          iconOnly ? (
+            <BiFirstAid className="text-3xl text-white" />
+          ) : (
+            <BiFirstAid className="text-xl text-primary-accent" />
+          )
+        }
+        label={t('survey.history.view_surveys', 'View Surveys')}
+        iconOnly={iconOnly}
+        className={className}
+      />
 
       {isOpen &&
         createPortal(
@@ -175,11 +175,12 @@ export const SurveyHistoryDialog = ({
             onClick={closeDialog}
           >
             <div
-              className="bg-foreground/90 flex h-fit max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6"
-              onClick={(e) => e.stopPropagation()} // prevents clicks inside the dialog from bubbling to the backdrop
+              className="bg-foreground/90 flex max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6"
+              onClick={(e) => e.stopPropagation()}
             >
+              {/* header */}
               <div className="flex w-full items-center justify-between">
-                <div className="size-8"></div>
+                <div className="size-8" />
                 <span className="text-2xl font-bold text-primary-accent">
                   {diseaseType === 'crohn'
                     ? t(
@@ -199,10 +200,11 @@ export const SurveyHistoryDialog = ({
                 </div>
               </div>
 
+              {/* body */}
               <div className="mt-4 flex-1 overflow-y-auto">
                 {isLoading ? (
                   <div className="flex h-40 items-center justify-center">
-                    <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-white"></div>
+                    <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-white" />
                   </div>
                 ) : surveys.length === 0 ? (
                   <div className="flex h-40 items-center justify-center">
@@ -228,9 +230,13 @@ export const SurveyHistoryDialog = ({
                             <span className="font-semibold text-primary-accent">
                               {t('survey.total_score', 'Total Score')}:
                             </span>
-                            <span className="text-primary-accent">{survey.total_score}</span>
+                            <span className="text-primary-accent">
+                              {survey.total_score}
+                            </span>
                             <span
-                              className={`ml-2 font-bold ${getCategoryColorClass(survey.category)}`}
+                              className={`ml-2 font-bold ${getCategoryColorClass(
+                                survey.category,
+                              )}`}
                             >
                               {t(
                                 `survey.category.${survey.category}`,
@@ -248,7 +254,9 @@ export const SurveyHistoryDialog = ({
                               <span className="font-semibold text-primary-accent">
                                 {t('survey.notes', 'Notes')}:
                               </span>{' '}
-                              <span className="text-primary-accent">{survey.notes}</span>
+                              <span className="text-primary-accent">
+                                {survey.notes}
+                              </span>
                             </p>
                           </div>
                         )}
@@ -258,6 +266,7 @@ export const SurveyHistoryDialog = ({
                 )}
               </div>
 
+              {/* footer */}
               <div className="mt-4 flex justify-end">
                 <Button onClick={closeDialog}>
                   {t('common.close', 'Close')}

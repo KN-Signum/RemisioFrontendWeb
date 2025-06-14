@@ -332,8 +332,6 @@ const PatientDetailsPage = () => {
                                                 ? analyteHistories[selectedAnalyte]
                                                 : undefined
                                         }
-                                    // You can provide default colors here if needed
-                                    // colors={{ scoreColor: '#4299e1', analyteColor: '#f56565' }}
                                     />
                                 </div>
                             </div>
