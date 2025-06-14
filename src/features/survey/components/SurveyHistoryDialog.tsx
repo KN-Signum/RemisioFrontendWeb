@@ -111,9 +111,14 @@ export const SurveyHistoryDialog = ({
             </p>
             <p>
               <span className="font-semibold text-primary-accent">
-                {t('survey.crohn.antidiarrheal_use', 'Hematocrit')}:
+                {t('survey.crohn.antidiarrheal_use', 'Antidiarrheal Use')}:
               </span>{' '}
-              <span className="text-primary-accent">{s.antidiarrheal_use}</span>
+              <span className="text-primary-accent">
+                {t(
+                  s.antidiarrheal_use ? 'yes' : 'no',
+                  s.antidiarrheal_use ? 'Yes' : 'No',
+                )}
+              </span>
             </p>
             <p>
               <span className="font-semibold text-primary-accent">

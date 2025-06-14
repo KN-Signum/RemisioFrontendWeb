@@ -1,4 +1,6 @@
 {
+  "yes": "Tak",
+  "no": "Nie",
   "language": "pl",
   "analytes": {
     "cea": "CEA",
