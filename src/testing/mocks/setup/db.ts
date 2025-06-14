@@ -105,7 +105,7 @@ const models = {
     extraintestinal_manifestations: Number, // 0-9
     abdominal_mass: Number, // 0-5
     hematocrit: Number, // 0-4
-    weight_loss: Number, // 0-10
+    weight: Number, // 60-120
     total_score: Number,
     category: String, // 'remission' | 'mild' | 'moderate' | 'severe'
     notes: String,

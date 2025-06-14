@@ -1,48 +1,9 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import {
   UcSurveyDto,
-  CreateUcSurveyDto,
   GetPatientSurveysDto,
-  calculateUcCategory,
-  calculateUcTotalScore,
 } from '../types';
-
-/**
- * POST /patients/:id/surveys/uc
- * Creates a new UC survey for a patient
- */
-export const createUcSurvey = async (
-  data: CreateUcSurveyDto,
-): Promise<UcSurveyDto> => {
-  // Calculate total score and category before sending to API
-  const totalScore = calculateUcTotalScore(
-    data.stool_frequency,
-    data.rectal_bleeding,
-    data.physician_global,
-  );
-  const category = calculateUcCategory(totalScore);
-
-  // Send the complete data to the API
-  const response = await apiClient.post(
-    `/api/patients/${data.patient_id}/surveys/uc`,
-    {
-      ...data,
-      total_score: totalScore,
-      category,
-      survey_type: 'uc',
-    },
-  );
-
-  console.log('[API-CLIENT] ←', response.data);
-  return response.data.content;
-};
-
-export const useCreateUcSurvey = () => {
-  return useMutation({
-    mutationFn: createUcSurvey,
-  });
-};
 
 /**
  * GET /patients/:id/surveys/uc

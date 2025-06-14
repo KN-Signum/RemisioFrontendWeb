@@ -8,6 +8,7 @@ interface BaseSurveyDto {
   survey_date: string;
   total_score: number;
   category: SurveyCategory;
+  weight: number;
   notes?: string;
   created_at: string;
   updated_at?: string;
@@ -22,7 +23,6 @@ export interface CrohnSurveyDto extends BaseSurveyDto {
   extraintestinal_manifestations: number; // 0-9
   abdominal_mass: number; // 0-5
   hematocrit: number; // 0-4
-  weight_loss: number; // 0-10
 }
 
 export interface CreateCrohnSurveyDto {
@@ -34,8 +34,8 @@ export interface CreateCrohnSurveyDto {
   extraintestinal_manifestations: number; // 0-9
   abdominal_mass: number; // 0-5
   hematocrit: number; // 0-4
-  weight_loss: number; // 0-10
   notes?: string;
+  weight: number; // 60-120
 }
 
 // Ulcerative Colitis Survey
@@ -61,46 +61,3 @@ export interface GetPatientSurveysDto<T extends BaseSurveyDto> {
   surveys: T[];
 }
 
-// Helper functions for Crohn's Disease scoring
-export const calculateCrohnTotalScore = (
-  abdominalPain: number,
-  stools: number,
-  generalWellbeing: number,
-  extraintestinalManifestations: number,
-  abdominalMass: number,
-  hematocrit: number,
-  weightLoss: number,
-): number => {
-  return (
-    abdominalPain * 7 +
-    stools * 2 +
-    generalWellbeing * 7 +
-    extraintestinalManifestations +
-    abdominalMass * 5 +
-    hematocrit +
-    weightLoss * 3
-  );
-};
-
-export const calculateCrohnCategory = (totalScore: number): SurveyCategory => {
-  if (totalScore < 150) return 'remission';
-  if (totalScore < 220) return 'mild';
-  if (totalScore < 450) return 'moderate';
-  return 'severe';
-};
-
-// Helper functions for UC scoring
-export const calculateUcTotalScore = (
-  stoolFrequency: number,
-  rectalBleeding: number,
-  physicianGlobal: number,
-): number => {
-  return stoolFrequency + rectalBleeding + physicianGlobal;
-};
-
-export const calculateUcCategory = (totalScore: number): SurveyCategory => {
-  if (totalScore <= 2) return 'remission';
-  if (totalScore <= 4) return 'mild';
-  if (totalScore <= 6) return 'moderate';
-  return 'severe';
-};

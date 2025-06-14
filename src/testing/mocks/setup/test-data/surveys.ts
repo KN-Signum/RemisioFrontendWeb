@@ -1,11 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { mockPatients } from './patients';
-import {
-  calculateCrohnCategory,
-  calculateCrohnTotalScore,
-  calculateUcCategory,
-  calculateUcTotalScore,
-} from '@/features/survey/types';
+import { calculateCrohnCategory, calculateCrohnTotalScore, calculateUcCategory, calculateUcTotalScore } from '../../handlers/survey';
 
 // Helper to generate a random date within the last year
 const getRandomDate = () => {
@@ -49,7 +44,7 @@ const generateSurveyData = () => {
         const extraintestinalManifestations = getRandomInt(0, 9);
         const abdominalMass = getRandomInt(0, 5);
         const hematocrit = getRandomInt(0, 4);
-        const weightLoss = getRandomInt(0, 10);
+        const weight = getRandomInt(60, 120);
 
         // Calculate total score
         const totalScore = calculateCrohnTotalScore(
@@ -59,7 +54,7 @@ const generateSurveyData = () => {
           extraintestinalManifestations,
           abdominalMass,
           hematocrit,
-          weightLoss,
+          weight,
         );
 
         // Determine category based on total score
@@ -76,7 +71,7 @@ const generateSurveyData = () => {
           extraintestinal_manifestations: extraintestinalManifestations,
           abdominal_mass: abdominalMass,
           hematocrit: hematocrit,
-          weight_loss: weightLoss,
+          weight: weight,
           total_score: totalScore,
           category: category,
           notes: `Auto-generated Crohn's survey #${i + 1}`,

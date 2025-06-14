@@ -110,9 +110,9 @@ export const SurveyHistoryDialog = ({
             </p>
             <p>
               <span className="font-semibold text-primary-accent">
-                {t('survey.crohn.weight_loss', 'Weight Loss')}:
+                {t('survey.crohn.weight', 'Weight')}:
               </span>{' '}
-              <span className="text-primary-accent">{crohnSurvey.weight_loss}</span>
+              <span className="text-primary-accent">{crohnSurvey.weight}</span>
             </p>
           </div>
         </div>
