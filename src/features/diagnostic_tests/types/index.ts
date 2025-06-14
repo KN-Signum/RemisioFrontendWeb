@@ -1,3 +1,7 @@
+/**
+ * Analyte type representing the different types of analytes that can be measured in diagnostic tests.
+ * The values correspond to keys in the i18n translation files under the "analytes" namespace.
+ */
 export type Analyte =
   | 'cea'
   | 'ldl'
@@ -9,7 +13,7 @@ export type Analyte =
   | 'bacteria_urine_count'
   | 'erythrocytes'
   | 'mch'
-  | 'pLcr'
+  | 'plcr'
   | 'hemoglobin'
   | 'hct'
   | 'leukocytes'
