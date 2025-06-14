@@ -13,7 +13,17 @@ export type Analyte =
   | 'hemoglobin'
   | 'hct'
   | 'leukocytes'
-  | 'ob';
+  | 'ob'
+  | 'ast'
+  | 'bilirubin'
+  | 'alkaline_phosphatase'
+  | 'basophils'
+  | 'erythroblasts'
+  | 'mchc'
+  | 'monocytes'
+  | 'mpv'
+  | 'neutrophils'
+  | 'potassium';
 
 // Diagnostic test types
 
@@ -36,6 +46,16 @@ export interface DiagnosticTestDto {
   leukocytes?: number;
   plcr?: number;
   ob?: number;
+  ast?: number;
+  bilirubin?: number;
+  alkaline_phosphatase?: number;
+  basophils?: number;
+  erythroblasts?: number;
+  mchc?: number;
+  monocytes?: number;
+  mpv?: number;
+  neutrophils?: number;
+  potassium?: number;
   test_notes?: string;
   created_at: string;
   updated_at: string;
@@ -59,6 +79,16 @@ export interface CreateDiagnosticTestDto {
   leukocytes?: number;
   plcr?: number;
   ob?: number;
+  ast?: number;
+  bilirubin?: number;
+  alkaline_phosphatase?: number;
+  basophils?: number;
+  erythroblasts?: number;
+  mchc?: number;
+  monocytes?: number;
+  mpv?: number;
+  neutrophils?: number;
+  potassium?: number;
   test_notes?: string;
 }
 

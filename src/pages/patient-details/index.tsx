@@ -86,8 +86,16 @@ const processTestData = (
                 else if (key === 'ldl') formattedValue = `${value} mg/dL`;
                 else if (key === 'calprotectin_feces') formattedValue = `${value} µg/g`;
                 else if (key === 'hemoglobin') formattedValue = `${value} g/dL`;
-                else if (key === 'hct') formattedValue = `${value} %`;
-                else if (key === 'leukocytes') formattedValue = `${value} 10^3/µL`;
+                else if (key === 'hct' || key === 'basophils' || key === 'neutrophils') formattedValue = `${value} %`;
+                else if (key === 'leukocytes' || key === 'monocytes') formattedValue = `${value} 10^3/µL`;
+                else if (key === 'erythrocytes') formattedValue = `${value} 10^6/µL`;
+                else if (key === 'erythroblasts') formattedValue = `${value} NRBC/100 WBC`;
+                else if (key === 'ast' || key === 'alkaline_phosphatase') formattedValue = `${value} U/L`;
+                else if (key === 'bilirubin') formattedValue = `${value} mg/dL`;
+                else if (key === 'mch') formattedValue = `${value} pg`;
+                else if (key === 'mchc') formattedValue = `${value} g/dL`;
+                else if (key === 'mpv') formattedValue = `${value} fL`;
+                else if (key === 'potassium') formattedValue = `${value} mmol/L`;
                 else formattedValue = value.toString();
             } else {
                 formattedValue = value.toString();
@@ -183,6 +191,18 @@ const PatientDetailsPage = () => {
             'ldl',
             'hct',
             'leukocytes',
+            'ast',
+            'bilirubin',
+            'alkaline_phosphatase',
+            'basophils',
+            'erythroblasts',
+            'erythrocytes',
+            'mch',
+            'mchc',
+            'monocytes',
+            'mpv',
+            'neutrophils',
+            'potassium',
         ];
         const result: Record<
             string,
@@ -207,6 +227,30 @@ const PatientDetailsPage = () => {
                 else if (analyteName === 'hct') displayName = 'HCT (%)';
                 else if (analyteName === 'leukocytes')
                     displayName = 'LEUKOCYTES (10^3/µL)';
+                else if (analyteName === 'ast')
+                    displayName = 'AST (U/L)';
+                else if (analyteName === 'bilirubin')
+                    displayName = 'BILIRUBIN (mg/dL)';
+                else if (analyteName === 'alkaline_phosphatase')
+                    displayName = 'ALKALINE PHOSPHATASE (U/L)';
+                else if (analyteName === 'basophils')
+                    displayName = 'BASOPHILS (%)';
+                else if (analyteName === 'erythroblasts')
+                    displayName = 'ERYTHROBLASTS (NRBC/100 WBC)';
+                else if (analyteName === 'erythrocytes')
+                    displayName = 'ERYTHROCYTES (10^6/µL)';
+                else if (analyteName === 'mch')
+                    displayName = 'MCH (pg)';
+                else if (analyteName === 'mchc')
+                    displayName = 'MCHC (g/dL)';
+                else if (analyteName === 'monocytes')
+                    displayName = 'MONOCYTES (10^3/µL)';
+                else if (analyteName === 'mpv')
+                    displayName = 'MPV (fL)';
+                else if (analyteName === 'neutrophils')
+                    displayName = 'NEUTROPHILS (%)';
+                else if (analyteName === 'potassium')
+                    displayName = 'POTASSIUM (mmol/L)';
 
                 result[analyteName] = {
                     name: displayName,
