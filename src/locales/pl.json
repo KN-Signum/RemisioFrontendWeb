@@ -1,4 +1,6 @@
 {
+  "yes": "Tak",
+  "no": "Nie",
   "language": "pl",
   "analytes": {
     "cea": "CEA",
@@ -254,7 +256,8 @@
       "extraintestinal_manifestations": "Objawy pozajelitowe",
       "abdominal_mass": "Masa brzuszna",
       "hematocrit": "Hematokryt",
-      "weight_loss": "Utrata wagi"
+      "weight": "Waga",
+      "antidiarrheal_use": "Leczenie przeciwbiegunkowe"
     },
     "uc": {
       "stool_frequency": "Częstotliwość wypróżnień",

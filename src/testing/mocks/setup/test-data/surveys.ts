@@ -1,68 +1,69 @@
 import { v4 as uuidv4 } from 'uuid';
 import { mockPatients } from './patients';
 import {
-  calculateCrohnCategory,
   calculateCrohnTotalScore,
+  calculateCrohnCategory,
   calculateUcCategory,
   calculateUcTotalScore,
-} from '@/features/survey/types';
+} from '../../handlers/survey';
+import { CrohnSurveyDto, UcSurveyDto } from '@/features/survey';
 
-// Helper to generate a random date within the last year
-const getRandomDate = () => {
+const getRandomDateIso = (): string => {
   const now = new Date();
   const oneYearAgo = new Date(now);
   oneYearAgo.setFullYear(now.getFullYear() - 1);
 
-  const randomTime =
-    oneYearAgo.getTime() +
-    Math.random() * (now.getTime() - oneYearAgo.getTime());
-  const randomDate = new Date(randomTime);
+  const t =
+    oneYearAgo.getTime() + Math.random() * (now.getTime() - oneYearAgo.getTime());
 
-  return randomDate.toISOString().split('T')[0];
+  return new Date(t).toISOString().split('T')[0];
 };
 
-// Helper to get a random integer between min and max (inclusive)
-const getRandomInt = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+const randInt = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
 
-// Generate mock survey data
+const pick = <T>(arr: readonly T[]): T => arr[randInt(0, arr.length - 1)];
+
 const generateSurveyData = () => {
-  const crohnSurveys = [];
-  const ucSurveys = [];
+  const crohnSurveys: CrohnSurveyDto[] = [];
+  const ucSurveys: UcSurveyDto[] = [];
 
-  // Process each patient
-  for (const patient of mockPatients) {
-    const patientId = patient.id;
-    const isDiseaseTypeCrohn = patient.disease_type === 'crohn';
+  for (const p of mockPatients) {
+    const isCrohn = p.disease_type === 'crohn';
+    const patientId = p.id;
 
-    // Generate 8 surveys per patient
+    const currentW = p.weight;
+    const idealW = currentW * (1 + randInt(5, 10) / 100);
+
     for (let i = 0; i < 8; i++) {
-      const surveyDate = getRandomDate();
+      const surveyDate = getRandomDateIso();
       const createdAt = new Date().toISOString();
 
-      if (isDiseaseTypeCrohn) {
-        // Generate Crohn's survey data
-        const abdominalPain = getRandomInt(0, 3);
-        const stools = getRandomInt(0, 3);
-        const generalWellbeing = getRandomInt(0, 4);
-        const extraintestinalManifestations = getRandomInt(0, 9);
-        const abdominalMass = getRandomInt(0, 5);
-        const hematocrit = getRandomInt(0, 4);
-        const weightLoss = getRandomInt(0, 10);
+      if (isCrohn) {
 
-        // Calculate total score
+        const liquidStools = randInt(0, 35);
+        const abdominalPainSum = randInt(0, 21);
+        const wellbeingSum = randInt(0, 28);
+
+        const extraintestinal = randInt(0, 7);
+        const antidiarrheal = Math.random() < 0.3;
+        const abdominalMass = pick([0, 2, 5] as const);
+        const hematocrit = randInt(35, 47);
+        const isMale = true;
+
         const totalScore = calculateCrohnTotalScore(
-          abdominalPain,
-          stools,
-          generalWellbeing,
-          extraintestinalManifestations,
+          liquidStools,
+          abdominalPainSum,
+          wellbeingSum,
+          extraintestinal,
+          antidiarrheal,
           abdominalMass,
           hematocrit,
-          weightLoss,
+          idealW,
+          currentW,
+          isMale
         );
 
-        // Determine category based on total score
         const category = calculateCrohnCategory(totalScore);
 
         crohnSurveys.push({
@@ -70,33 +71,34 @@ const generateSurveyData = () => {
           patient_id: patientId,
           survey_date: surveyDate,
           survey_type: 'crohn',
-          abdominal_pain: abdominalPain,
-          stools: stools,
-          general_wellbeing: generalWellbeing,
-          extraintestinal_manifestations: extraintestinalManifestations,
+
+          stools: liquidStools,
+          abdominal_pain: abdominalPainSum,
+          general_wellbeing: wellbeingSum,
+          extraintestinal_manifestations: extraintestinal,
+          antidiarrheal_use: antidiarrheal,
           abdominal_mass: abdominalMass,
-          hematocrit: hematocrit,
-          weight_loss: weightLoss,
+          hematocrit,
+          weight: currentW,
+
           total_score: totalScore,
-          category: category,
-          notes: `Auto-generated Crohn's survey #${i + 1}`,
+          category,
+
+          notes: `Auto-generated Crohn survey #${i + 1}`,
           created_at: createdAt,
           updated_at: createdAt,
         });
       } else {
-        // Generate UC survey data
-        const stoolFrequency = getRandomInt(0, 3);
-        const rectalBleeding = getRandomInt(0, 3);
-        const physicianGlobal = getRandomInt(0, 3);
 
-        // Calculate total score (0-9)
+        const stoolFrequency = randInt(0, 3);
+        const rectalBleeding = randInt(0, 3);
+        const physicianGlobal = randInt(0, 3);
+
         const totalScore = calculateUcTotalScore(
           stoolFrequency,
           rectalBleeding,
           physicianGlobal,
         );
-
-        // Determine category based on total score
         const category = calculateUcCategory(totalScore);
 
         ucSurveys.push({
@@ -104,28 +106,28 @@ const generateSurveyData = () => {
           patient_id: patientId,
           survey_date: surveyDate,
           survey_type: 'uc',
+
           stool_frequency: stoolFrequency,
           rectal_bleeding: rectalBleeding,
           physician_global: physicianGlobal,
+
           total_score: totalScore,
-          category: category,
+          category,
+
           notes: `Auto-generated UC survey #${i + 1}`,
           created_at: createdAt,
           updated_at: createdAt,
+          weight: currentW,
         });
       }
     }
   }
 
-  return {
-    crohnSurveys,
-    ucSurveys,
-  };
+  return { crohnSurveys, ucSurveys };
 };
 
-// Generate the survey data once
+
 const { crohnSurveys, ucSurveys } = generateSurveyData();
 
-// Export the generated data
 export const mockCrohnSurveys = crohnSurveys;
 export const mockUcSurveys = ucSurveys;

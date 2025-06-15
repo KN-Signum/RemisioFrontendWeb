@@ -1,137 +1,76 @@
 import { http, HttpResponse } from 'msw';
 import { API_URL } from '@/config/constants';
 import { db } from '..';
-import { v4 as uuidv4 } from 'uuid';
+import { SurveyCategory } from '@/features/survey';
 
-interface CrohnSurveyRequestData {
-  survey_date: string;
-  abdominal_pain: number;
-  stools: number;
-  general_wellbeing: number;
-  extraintestinal_manifestations: number;
-  abdominal_mass: number;
-  hematocrit: number;
-  weight_loss: number;
-  total_score: number;
-  category: string;
-  notes?: string;
-}
+export const calculateCrohnTotalScore = (
+  liquidStools: number,
+  abdominalPainSum: number,
+  wellbeingSum: number,
+  extraintestinalManifestations: number,
+  antidiarrhealUse: boolean,
+  abdominalMassScore: 0 | 2 | 5,
+  hematocrit: number,
+  idealWeightKg: number,
+  currentWeightKg: number,
+  isMale: boolean,
+): number => {
+  const referenceHct = isMale ? 47 : 42;
+  const g = Math.max(0, referenceHct - hematocrit);
+  const weightDiffPct = Math.max(
+    0,
+    ((idealWeightKg - currentWeightKg) / idealWeightKg) * 100,
+  );
 
-interface UcSurveyRequestData {
-  survey_date: string;
-  stool_frequency: number;
-  rectal_bleeding: number;
-  physician_global: number;
-  total_score: number;
-  category: string;
-  notes?: string;
-}
-import {
-  calculateCrohnCategory,
-  calculateCrohnTotalScore,
-  calculateUcCategory,
-  calculateUcTotalScore,
-} from '@/features/survey/types';
+  return (
+    2 * liquidStools +
+    5 * abdominalPainSum +
+    7 * wellbeingSum +
+    20 * extraintestinalManifestations +
+    30 * (antidiarrhealUse ? 1 : 0) +
+    10 * abdominalMassScore +
+    6 * g +
+    weightDiffPct
+  );
+};
 
-export const handlers = [
-  // ===== CROHN'S DISEASE SURVEY ENDPOINTS =====
+export const calculateCrohnCategory = (totalScore: number): SurveyCategory => {
+  if (totalScore < 150) return 'remission';
+  if (totalScore < 220) return 'mild';
+  if (totalScore < 450) return 'moderate';
+  return 'severe';
+};
 
-  // POST /api/patients/:id/surveys/crohn - Create a new Crohn's survey
-  http.post(
-    `${API_URL}/api/patients/:patientId/surveys/crohn`,
-    async ({ params, request }) => {
-      const { patientId } = params;
-      const data = (await request.json()) as CrohnSurveyRequestData;
+// Helper functions for UC scoring
+export const calculateUcTotalScore = (
+  stoolFrequency: number,
+  rectalBleeding: number,
+  physicianGlobal: number,
+): number => {
+  return stoolFrequency + rectalBleeding + physicianGlobal;
+};
 
-      // Validate patient exists
-      const patient = db.patient.findFirst({
-        where: {
-          id: {
-            equals: patientId as string,
-          },
-        },
-      });
+export const calculateUcCategory = (totalScore: number): SurveyCategory => {
+  if (totalScore <= 2) return 'remission';
+  if (totalScore <= 4) return 'mild';
+  if (totalScore <= 6) return 'moderate';
+  return 'severe';
+};
 
-      if (!patient) {
-        return HttpResponse.json(
-          {
-            message: 'Patient not found',
-            content: null,
-          },
-          { status: 404 },
-        );
-      }
 
-      // Calculate total score and category if not provided
-      const abdominalPain = data?.abdominal_pain ?? 0;
-      const stools = data?.stools ?? 0;
-      const generalWellbeing = data?.general_wellbeing ?? 0;
-      const extraintestinalManifestations =
-        data?.extraintestinal_manifestations ?? 0;
-      const abdominalMass = data?.abdominal_mass ?? 0;
-      const hematocrit = data?.hematocrit ?? 0;
-      const weightLoss = data?.weight_loss ?? 0;
+// ===== CROHN'S DISEASE SURVEY ENDPOINTS =====
 
-      const totalScore =
-        data?.total_score ??
-        calculateCrohnTotalScore(
-          abdominalPain,
-          stools,
-          generalWellbeing,
-          extraintestinalManifestations,
-          abdominalMass,
-          hematocrit,
-          weightLoss,
-        );
-
-      const category = data?.category ?? calculateCrohnCategory(totalScore);
-
-      // Create the survey
-      const now = new Date().toISOString();
-      const survey = db.crohnSurvey.create({
-        id: uuidv4(),
-        patient_id: patientId as string,
-        survey_date: data?.survey_date ?? now.split('T')[0],
-        survey_type: 'crohn',
-        abdominal_pain: abdominalPain,
-        stools: stools,
-        general_wellbeing: generalWellbeing,
-        extraintestinal_manifestations: extraintestinalManifestations,
-        abdominal_mass: abdominalMass,
-        hematocrit: hematocrit,
-        weight_loss: weightLoss,
-        total_score: totalScore,
-        category: category,
-        notes: data?.notes || '',
-        created_at: now,
-        updated_at: now,
-      });
-
-      return HttpResponse.json(
-        {
-          message: "Crohn's survey created successfully",
-          content: survey,
-        },
-        { status: 201 },
-      );
-    },
-  ),
-
-  // GET /api/patients/:id/surveys/crohn - Get all Crohn's surveys for a patient
-  http.get(`${API_URL}/api/patients/:patientId/surveys/crohn`, ({ params }) => {
+/** GET /api/patients/:patientId/surveys/crohn */
+const getAllCrohnSurveys = http.get(
+  `${API_URL}/api/patients/:patientId/surveys/crohn`,
+  ({ params }) => {
     const { patientId } = params;
 
-    // Get all surveys for the patient
     const surveys = db.crohnSurvey.findMany({
-      where: {
-        patient_id: {
-          equals: patientId as string,
-        },
-      },
+      where: { patient_id: { equals: patientId as string } },
     });
 
-    // Sort by date (newest first)
-    const sortedSurveys = [...surveys].sort(
+    const sorted = [...surveys].sort(
       (a, b) =>
         new Date(b.survey_date).getTime() - new Date(a.survey_date).getTime(),
     );
@@ -139,131 +78,55 @@ export const handlers = [
     return HttpResponse.json(
       {
         message: "Crohn's surveys retrieved successfully",
-        content: {
-          patient_id: patientId,
-          surveys: sortedSurveys,
-        },
+        content: { patient_id: patientId, surveys: sorted },
       },
       { status: 200 },
     );
-  }),
+  },
+);
 
-  // GET /api/patients/:id/surveys/crohn/latest - Get the latest Crohn's survey for a patient
-  http.get(
-    `${API_URL}/api/patients/:patientId/surveys/crohn/latest`,
-    ({ params }) => {
-      const { patientId } = params;
-
-      // Get all surveys for the patient
-      const surveys = db.crohnSurvey.findMany({
-        where: {
-          patient_id: {
-            equals: patientId as string,
-          },
-        },
-      });
-
-      // Sort by date (newest first) and get the first one
-      const sortedSurveys = [...surveys].sort(
-        (a, b) =>
-          new Date(b.survey_date).getTime() - new Date(a.survey_date).getTime(),
-      );
-
-      const latestSurvey = sortedSurveys.length > 0 ? sortedSurveys[0] : null;
-
-      return HttpResponse.json(
-        {
-          message: latestSurvey
-            ? "Latest Crohn's survey retrieved successfully"
-            : "No Crohn's surveys found for this patient",
-          content: latestSurvey,
-        },
-        { status: 200 },
-      );
-    },
-  ),
-
-  // ===== ULCERATIVE COLITIS SURVEY ENDPOINTS =====
-
-  // POST /api/patients/:id/surveys/uc - Create a new UC survey
-  http.post(
-    `${API_URL}/api/patients/:patientId/surveys/uc`,
-    async ({ params, request }) => {
-      const { patientId } = params;
-      const data = (await request.json()) as UcSurveyRequestData;
-
-      // Validate patient exists
-      const patient = db.patient.findFirst({
-        where: {
-          id: {
-            equals: patientId as string,
-          },
-        },
-      });
-
-      if (!patient) {
-        return HttpResponse.json(
-          {
-            message: 'Patient not found',
-            content: null,
-          },
-          { status: 404 },
-        );
-      }
-
-      // Calculate total score and category if not provided
-      const stoolFrequency = data?.stool_frequency ?? 0;
-      const rectalBleeding = data?.rectal_bleeding ?? 0;
-      const physicianGlobal = data?.physician_global ?? 0;
-
-      const totalScore =
-        data?.total_score ??
-        calculateUcTotalScore(stoolFrequency, rectalBleeding, physicianGlobal);
-
-      const category = data?.category ?? calculateUcCategory(totalScore);
-
-      // Create the survey
-      const now = new Date().toISOString();
-      const survey = db.ucSurvey.create({
-        id: uuidv4(),
-        patient_id: patientId as string,
-        survey_date: data?.survey_date ?? now.split('T')[0],
-        survey_type: 'uc',
-        stool_frequency: stoolFrequency,
-        rectal_bleeding: rectalBleeding,
-        physician_global: physicianGlobal,
-        total_score: totalScore,
-        category: category,
-        notes: data?.notes || '',
-        created_at: now,
-        updated_at: now,
-      });
-
-      return HttpResponse.json(
-        {
-          message: 'UC survey created successfully',
-          content: survey,
-        },
-        { status: 201 },
-      );
-    },
-  ),
-
-  // GET /api/patients/:id/surveys/uc - Get all UC surveys for a patient
-  http.get(`${API_URL}/api/patients/:patientId/surveys/uc`, ({ params }) => {
+/** GET /api/patients/:patientId/surveys/crohn/latest */
+const getLatestCrohnSurvey = http.get(
+  `${API_URL}/api/patients/:patientId/surveys/crohn/latest`,
+  ({ params }) => {
     const { patientId } = params;
 
-    // Get all surveys for the patient
-    const surveys = db.ucSurvey.findMany({
-      where: {
-        patient_id: {
-          equals: patientId as string,
-        },
-      },
+    const surveys = db.crohnSurvey.findMany({
+      where: { patient_id: { equals: patientId as string } },
     });
 
-    // Sort by date (newest first)
-    const sortedSurveys = [...surveys].sort(
+    const latest =
+      surveys.length === 0
+        ? null
+        : surveys.reduce((prev, cur) =>
+          new Date(cur.survey_date) > new Date(prev.survey_date) ? cur : prev,
+        );
+
+    return HttpResponse.json(
+      {
+        message: latest
+          ? "Latest Crohn's survey retrieved successfully"
+          : 'No Crohn surveys found for this patient',
+        content: latest,
+      },
+      { status: 200 },
+    );
+  },
+);
+
+// ===== Ulcerative Colitis SURVEY ENDPOINTS =====
+
+/** GET /api/patients/:patientId/surveys/uc */
+const getAllUcSurveys = http.get(
+  `${API_URL}/api/patients/:patientId/surveys/uc`,
+  ({ params }) => {
+    const { patientId } = params;
+
+    const surveys = db.ucSurvey.findMany({
+      where: { patient_id: { equals: patientId as string } },
+    });
+
+    const sorted = [...surveys].sort(
       (a, b) =>
         new Date(b.survey_date).getTime() - new Date(a.survey_date).getTime(),
     );
@@ -271,47 +134,44 @@ export const handlers = [
     return HttpResponse.json(
       {
         message: 'UC surveys retrieved successfully',
-        content: {
-          patient_id: patientId,
-          surveys: sortedSurveys,
-        },
+        content: { patient_id: patientId, surveys: sorted },
       },
       { status: 200 },
     );
-  }),
+  },
+);
 
-  // GET /api/patients/:id/surveys/uc/latest - Get the latest UC survey for a patient
-  http.get(
-    `${API_URL}/api/patients/:patientId/surveys/uc/latest`,
-    ({ params }) => {
-      const { patientId } = params;
+/** GET /api/patients/:patientId/surveys/uc/latest */
+const getLatestUcSurvey = http.get(
+  `${API_URL}/api/patients/:patientId/surveys/uc/latest`,
+  ({ params }) => {
+    const { patientId } = params;
 
-      // Get all surveys for the patient
-      const surveys = db.ucSurvey.findMany({
-        where: {
-          patient_id: {
-            equals: patientId as string,
-          },
-        },
-      });
+    const surveys = db.ucSurvey.findMany({
+      where: { patient_id: { equals: patientId as string } },
+    });
 
-      // Sort by date (newest first) and get the first one
-      const sortedSurveys = [...surveys].sort(
-        (a, b) =>
-          new Date(b.survey_date).getTime() - new Date(a.survey_date).getTime(),
-      );
+    const latest =
+      surveys.length === 0
+        ? null
+        : surveys.reduce((prev, cur) =>
+          new Date(cur.survey_date) > new Date(prev.survey_date) ? cur : prev,
+        );
 
-      const latestSurvey = sortedSurveys.length > 0 ? sortedSurveys[0] : null;
+    return HttpResponse.json(
+      {
+        message: latest
+          ? 'Latest UC survey retrieved successfully'
+          : 'No UC surveys found for this patient',
+        content: latest,
+      },
+      { status: 200 },
+    );
+  },
+);
 
-      return HttpResponse.json(
-        {
-          message: latestSurvey
-            ? 'Latest UC survey retrieved successfully'
-            : 'No UC surveys found for this patient',
-          content: latestSurvey,
-        },
-        { status: 200 },
-      );
-    },
-  ),
-];
+
+export const handlers = [getAllCrohnSurveys,
+  getLatestCrohnSurvey,
+  getAllUcSurveys,
+  getLatestUcSurvey,];

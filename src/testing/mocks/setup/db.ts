@@ -107,9 +107,10 @@ const models = {
     stools: Number, // 0-3
     general_wellbeing: Number, // 0-4
     extraintestinal_manifestations: Number, // 0-9
+    antidiarrheal_use: Boolean, // true or false
     abdominal_mass: Number, // 0-5
     hematocrit: Number, // 0-4
-    weight_loss: Number, // 0-10
+    weight: Number, // 60-120
     total_score: Number,
     category: String, // 'remission' | 'mild' | 'moderate' | 'severe'
     notes: String,

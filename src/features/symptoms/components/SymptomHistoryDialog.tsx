@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { formatDateDisplay } from '@/utils/format-date-display';
 import { SymptomDto } from '../types';
 import { useQuery } from '@tanstack/react-query';
-import { getSymptomsByPatientId } from '../api';
+import { getSymptomsByPatientId } from '../api/get-patient-symptoms';
 
 interface SymptomHistoryDialogProps {
   patientId: string;

@@ -4,11 +4,16 @@ import {
   BiHealth,
   BiPhone,
   BiTimeFive,
+  BiFirstAid,
 } from 'react-icons/bi';
-import { SurveyHistoryDialog } from '@/features/survey';
 import { SymptomHistoryDialog } from '@/features/symptoms';
 import { DrugHistoryDialog } from '@/features/drug';
 import { MealHistoryDialog } from '@/features/meal';
+
+import { Button } from '@/components/ui/button';
+
+import { useState } from 'react';
+import { CrohnSurveyHistoryDialog, UcSurveyHistoryDialog } from '@/features/survey';
 
 interface PatientInfoCardProps {
   id: string;
@@ -21,7 +26,13 @@ interface PatientInfoCardProps {
 }
 
 export const PatientInfoCard = (props: PatientInfoCardProps) => {
+  const [openSurvey, setOpenSurvey] = useState(false);
   const patient = props;
+  const SurveyDialog =
+    patient.disease_type === 'crohn'
+      ? CrohnSurveyHistoryDialog
+      : UcSurveyHistoryDialog;
+
   return (
     <div className="flex w-[35%] gap-4 overflow-y-auto rounded-sm bg-white p-4 shadow-md">
       {/* left column */}
@@ -59,33 +70,40 @@ export const PatientInfoCard = (props: PatientInfoCardProps) => {
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          {/* Symptom History Button */}
+          {/* Symptom History */}
           <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
-            <SymptomHistoryDialog patientId={patient.id} iconOnly={true} />
+            <SymptomHistoryDialog patientId={patient.id} iconOnly />
           </div>
 
-          {/* Drug History Button */}
+          {/* Drug History */}
           <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
-            <DrugHistoryDialog patientId={patient.id} iconOnly={true} />
+            <DrugHistoryDialog patientId={patient.id} iconOnly />
           </div>
 
-          {/* Meal History Button */}
+          {/* Meal History */}
           <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
-            <MealHistoryDialog patientId={patient.id} iconOnly={true} />
+            <MealHistoryDialog patientId={patient.id} iconOnly />
           </div>
 
-          {/* Survey History Button */}
+          {/* Survey History */}
           <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
-            <SurveyHistoryDialog
-              patientId={patient.id}
-              diseaseType={
-                patient.disease_type as 'crohn' | 'ulcerative_colitis'
-              }
-              iconOnly={true}
-            />
+            {/* Używamy Button + ikona */}
+            <Button
+              onClick={() => setOpenSurvey(true)}
+              className="flex h-full w-full items-center justify-center bg-transparent p-0"
+            >
+              <BiFirstAid className="text-3xl text-white" />
+            </Button>
           </div>
         </div>
       </div>
+
+      {/* właściwy dialog (Crohn lub UC) */}
+      <SurveyDialog
+        patientId={patient.id}
+        isOpen={openSurvey}
+        onClose={() => setOpenSurvey(false)}
+      />
     </div>
   );
 };

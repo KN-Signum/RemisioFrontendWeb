@@ -2,36 +2,8 @@ import { http, HttpResponse } from 'msw';
 import { API_URL } from '@/config/constants';
 import { db } from '..';
 import {
-    CreateDiagnosticTestDto,
     DiagnosticTestDto,
 } from '@/features/diagnostic_tests';
-import { v4 as uuidv4 } from 'uuid';
-
-// POST endpoint to create a diagnostic test
-export const createDiagnosticTest = http.post(
-    `${API_URL}/api/diagnostic_tests`,
-    async ({ request }) => {
-        const data = (await request.json()) as CreateDiagnosticTestDto;
-        console.log('[MSW] Create diagnostic test', data);
-
-        // Generate a new UUID for the test
-        const id = uuidv4();
-        const now = new Date().toISOString();
-
-        // Store the test in the database
-        db.diagnosticTest.create({
-            id,
-            ...data,
-            created_at: now,
-            updated_at: now,
-        });
-
-        return HttpResponse.json({
-            status: 201,
-            content: { id },
-        });
-    },
-);
 
 // GET endpoint to retrieve patient diagnostic tests
 export const getPatientDiagnosticTests = http.get(
@@ -120,4 +92,4 @@ export const getPatientDiagnosticTests = http.get(
     },
 );
 
-export const handlers = [createDiagnosticTest, getPatientDiagnosticTests];
+export const handlers = [getPatientDiagnosticTests];

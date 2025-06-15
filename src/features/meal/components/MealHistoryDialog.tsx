@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { BiRestaurant } from 'react-icons/bi';
 import { Button } from '@/components/ui/button';
 import { MealDto } from '../types';
-import { useQuery } from '@tanstack/react-query';
-import { getMealsByPatientId } from '../api';
+import { useMealsByPatientId } from '../api/get-all-patient-meals';
 
 interface MealHistoryDialogProps {
   patientId: string;
@@ -21,40 +20,24 @@ export const MealHistoryDialog = ({
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
-  // Fetch meals for this patient
-  const { data: meals, isLoading } = useQuery({
-    queryKey: ['meals', patientId],
-    queryFn: () => getMealsByPatientId(patientId),
-    // Only fetch when dialog is open to save unnecessary API calls
-    enabled: isOpen,
-  });
+  const { data: meals, isLoading } = useMealsByPatientId(
+    isOpen ? patientId : '',
+  );
 
   const openDialog = () => setIsOpen(true);
   const closeDialog = () => setIsOpen(false);
 
-  // Format time for display
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  };
+  const formatTime = (date: string) =>
+    new Date(date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-  // Sort meals by date, newest first
-  const sortedMeals = meals
-    ? [...meals].sort((a, b) => {
-      const dateA = new Date(a.meal_date).getTime();
-      const dateB = new Date(b.meal_date).getTime();
-      return dateB - dateA;
-    })
-    : [];
+  const sortedMeals = [...meals].sort(
+    (a, b) => new Date(b.meal_date).getTime() - new Date(a.meal_date).getTime(),
+  );
 
-  // Group meals by date
   const groupedMeals: Record<string, MealDto[]> = {};
-  sortedMeals.forEach((meal) => {
-    const dateKey = new Date(meal.meal_date).toLocaleDateString();
-    if (!groupedMeals[dateKey]) {
-      groupedMeals[dateKey] = [];
-    }
-    groupedMeals[dateKey].push(meal);
+  sortedMeals.forEach((m) => {
+    const key = new Date(m.meal_date).toLocaleDateString();
+    (groupedMeals[key] ??= []).push(m);
   });
 
   return (
@@ -83,11 +66,12 @@ export const MealHistoryDialog = ({
             onClick={closeDialog}
           >
             <div
-              className="bg-foreground/90 flex h-fit max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6"
-              onClick={(e) => e.stopPropagation()} // prevents clicks inside the dialog from bubbling to the backdrop
+              className="bg-foreground/90 flex max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6"
+              onClick={(e) => e.stopPropagation()}
             >
+              {/* header */}
               <div className="flex w-full items-center justify-between">
-                <div className="size-8"></div>
+                <div className="size-8" />
                 <span className="text-2xl font-bold text-primary-accent">
                   {t('meal.history.title', 'Meal History')}
                 </span>
@@ -99,12 +83,13 @@ export const MealHistoryDialog = ({
                 </div>
               </div>
 
+              {/* body */}
               <div className="mt-4 flex-1 overflow-y-auto">
                 {isLoading ? (
                   <div className="flex h-40 items-center justify-center">
-                    <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-white"></div>
+                    <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-white" />
                   </div>
-                ) : !sortedMeals.length ? (
+                ) : sortedMeals.length === 0 ? (
                   <div className="flex h-40 items-center justify-center">
                     <p className="text-lg text-primary-accent">
                       {t('meal.history.no_meals', 'No meals recorded')}
@@ -112,14 +97,11 @@ export const MealHistoryDialog = ({
                   </div>
                 ) : (
                   <div className="flex flex-col gap-4">
-                    {Object.keys(groupedMeals).map((date) => (
+                    {Object.entries(groupedMeals).map(([date, list]) => (
                       <div key={date} className="mb-4">
                         <h3 className="mb-2 text-lg font-bold text-primary-accent">{date}</h3>
-                        {groupedMeals[date].map((meal) => (
-                          <div
-                            key={meal.id}
-                            className="bg-background/10 mb-3 rounded-sm p-4"
-                          >
+                        {list.map((meal) => (
+                          <div key={meal.id} className="bg-background/10 mb-3 rounded-sm p-4">
                             <div className="mb-2 flex items-center justify-between">
                               <h4 className="text-lg font-semibold text-primary-accent">
                                 {meal.meal_name}
@@ -135,18 +117,16 @@ export const MealHistoryDialog = ({
                                   src={meal.image_url}
                                   alt={meal.meal_name}
                                   className="max-h-40 rounded-sm object-cover"
-                                  onError={(e) => {
-                                    e.currentTarget.style.display = 'none';
-                                  }}
+                                  onError={(e) => (e.currentTarget.style.display = 'none')}
                                 />
                               </div>
                             )}
 
                             {meal.ontology && (
                               <div className="mb-2 flex flex-wrap gap-1 text-primary-accent">
-                                {meal.ontology.split(',').map((tag, idx) => (
+                                {meal.ontology.split(',').map((tag) => (
                                   <span
-                                    key={idx}
+                                    key={tag}
                                     className="bg-secondary/30 inline-block rounded-full px-2 py-1 text-xs"
                                   >
                                     {tag.trim()}
@@ -173,10 +153,9 @@ export const MealHistoryDialog = ({
                 )}
               </div>
 
+              {/* footer */}
               <div className="mt-4 flex justify-end">
-                <Button onClick={closeDialog}>
-                  {t('common.close', 'Close')}
-                </Button>
+                <Button onClick={closeDialog}>{t('common.close', 'Close')}</Button>
               </div>
             </div>
           </div>,
