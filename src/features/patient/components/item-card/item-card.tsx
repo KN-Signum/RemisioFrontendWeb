@@ -12,7 +12,7 @@ type ItemCardProps = {
 export const ItemCard = (props: ItemCardProps) => {
   const { title, number, icon, subtitle, onClick } = props;
   return (
-    <div className="bg-primary/40 text-primary-accent border-primary-accent/60 flex h-45 flex-1 flex-col gap-2 rounded-xs border px-7 py-5">
+    <div className="bg-primary/40 text-primary-accent border-primary-accent/60 flex h-full flex-1 flex-col gap-2 rounded-xs border px-7 py-5">
       <div className="flex items-center justify-between">
         <div className="flex gap-2">
           {icon}

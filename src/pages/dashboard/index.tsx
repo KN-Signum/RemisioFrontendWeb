@@ -24,7 +24,7 @@ export const Dashboard = () => {
   return (
     <Layout>
       <div className="flex w-full flex-col gap-2.5 overflow-y-visible">
-        <div className={cn(borderClasses, 'w-full gap-10 px-4')}>
+        <div className={cn(borderClasses, 'h-63 w-full gap-10 px-4')}>
           <ItemCard
             title={t('dashboard.cards.surveys.title')}
             number={44}
@@ -72,9 +72,6 @@ export const Dashboard = () => {
               )}
             </div>
           </div>
-        </div>
-        <div className={cn(borderClasses, 'h-60 w-full px-1.5')}>
-          <div className="bg-primary w-full">GRAFIK</div>
         </div>
       </div>
     </Layout>
