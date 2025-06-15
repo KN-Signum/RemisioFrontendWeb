@@ -5,6 +5,9 @@ import {
   BiPhone,
   BiTimeFive,
   BiFirstAid,
+  BiPulse,
+  BiBandAid,
+  BiRestaurant,
 } from 'react-icons/bi';
 import { SymptomHistoryDialog } from '@/features/symptoms';
 import { DrugHistoryDialog } from '@/features/drug';
@@ -27,6 +30,9 @@ interface PatientInfoCardProps {
 
 export const PatientInfoCard = (props: PatientInfoCardProps) => {
   const [openSurvey, setOpenSurvey] = useState(false);
+  const [openSymptoms, setOpenSymptoms] = useState(false);
+  const [openDrugs, setOpenDrugs] = useState(false);
+  const [openMeals, setOpenMeals] = useState(false);
   const patient = props;
   const SurveyDialog =
     patient.disease_type === 'crohn'
@@ -70,31 +76,26 @@ export const PatientInfoCard = (props: PatientInfoCardProps) => {
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          {/* Symptom History */}
-          <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
-            <SymptomHistoryDialog patientId={patient.id} iconOnly />
-          </div>
-
-          {/* Drug History */}
-          <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
-            <DrugHistoryDialog patientId={patient.id} iconOnly />
-          </div>
-
-          {/* Meal History */}
-          <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
-            <MealHistoryDialog patientId={patient.id} iconOnly />
-          </div>
-
-          {/* Survey History */}
-          <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
-            {/* Używamy Button + ikona */}
-            <Button
-              onClick={() => setOpenSurvey(true)}
-              className="flex h-full w-full items-center justify-center bg-transparent p-0"
-            >
-              <BiFirstAid className="text-3xl text-white" />
-            </Button>
-          </div>
+          {/* Symptoms */}
+          <HistoryTile
+            icon={<BiPulse className="text-3xl text-white" />}
+            onClick={() => setOpenSymptoms(true)}
+          />
+          {/* Drugs */}
+          <HistoryTile
+            icon={<BiBandAid className="text-3xl text-white" />}
+            onClick={() => setOpenDrugs(true)}
+          />
+          {/* Meals */}
+          <HistoryTile
+            icon={<BiRestaurant className="text-3xl text-white" />}
+            onClick={() => setOpenMeals(true)}
+          />
+          {/* Surveys */}
+          <HistoryTile
+            icon={<BiFirstAid className="text-3xl text-white" />}
+            onClick={() => setOpenSurvey(true)}
+          />
         </div>
       </div>
 
@@ -104,6 +105,38 @@ export const PatientInfoCard = (props: PatientInfoCardProps) => {
         isOpen={openSurvey}
         onClose={() => setOpenSurvey(false)}
       />
+      <SymptomHistoryDialog
+        patientId={patient.id}
+        isOpen={openSymptoms}
+        onClose={() => setOpenSymptoms(false)}
+      />
+      <DrugHistoryDialog
+        patientId={patient.id}
+        isOpen={openDrugs}
+        onClose={() => setOpenDrugs(false)}
+      />
+      <MealHistoryDialog
+        patientId={patient.id}
+        isOpen={openMeals}
+        onClose={() => setOpenMeals(false)}
+      />
     </div>
   );
 };
+
+const HistoryTile = ({
+  icon,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  onClick: () => void;
+}) => (
+  <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
+    <Button
+      onClick={onClick}
+      className="flex h-full w-full items-center justify-center bg-transparent p-0"
+    >
+      {icon}
+    </Button>
+  </div>
+);

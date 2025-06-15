@@ -1,166 +1,139 @@
-import { useState } from 'react';
+// src/features/meal/components/MealHistoryDialog.tsx
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { BiRestaurant } from 'react-icons/bi';
 import { Button } from '@/components/ui/button';
-import { MealDto } from '../types';
 import { useMealsByPatientId } from '../api/get-all-patient-meals';
+import { MealDto } from '../types';
 
-interface MealHistoryDialogProps {
+interface Props {
   patientId: string;
-  iconOnly?: boolean;
-  className?: string;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export const MealHistoryDialog = ({
-  patientId,
-  iconOnly = false,
-  className = '',
-}: MealHistoryDialogProps) => {
+export const MealHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
   const { t } = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
+  const { data: meals, isLoading } = useMealsByPatientId(patientId);
 
-  const { data: meals, isLoading } = useMealsByPatientId(
-    isOpen ? patientId : '',
-  );
+  const formatTime = (d: string) =>
+    new Date(d).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-  const openDialog = () => setIsOpen(true);
-  const closeDialog = () => setIsOpen(false);
+  const sorted = (meals ?? [])
+    .slice()
+    .sort((a, b) => Date.parse(b.meal_date) - Date.parse(a.meal_date));
 
-  const formatTime = (date: string) =>
-    new Date(date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-  const sortedMeals = [...meals].sort(
-    (a, b) => new Date(b.meal_date).getTime() - new Date(a.meal_date).getTime(),
-  );
-
-  const groupedMeals: Record<string, MealDto[]> = {};
-  sortedMeals.forEach((m) => {
+  const grouped: Record<string, MealDto[]> = {};
+  sorted.forEach((m) => {
     const key = new Date(m.meal_date).toLocaleDateString();
-    (groupedMeals[key] ??= []).push(m);
+    (grouped[key] ??= []).push(m);
   });
 
-  return (
-    <>
-      {iconOnly ? (
-        <div
-          onClick={openDialog}
-          className={`flex h-full w-full cursor-pointer items-center justify-center ${className}`}
-        >
-          <BiRestaurant className="text-3xl text-white" />
-        </div>
-      ) : (
-        <Button
-          onClick={openDialog}
-          className="border-secondary hover:bg-secondary/10 flex items-center gap-2 border bg-transparent"
-        >
-          <BiRestaurant className="text-xl text-primary-accent" />
-          {t('meal.history.view_meals', 'View Meal History')}
-        </Button>
-      )}
+  if (!isOpen) return null;
 
-      {isOpen &&
-        createPortal(
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[9998] flex items-center justify-center backdrop-blur-xs"
+      onClick={onClose}
+    >
+      <div
+        className="bg-foreground/90 flex max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* header */}
+        <div className="flex w-full items-center justify-between">
+          <div className="size-8" />
+          <span className="text-2xl font-bold text-primary-accent">
+            {t('meal.history.title', 'Meal History')}
+          </span>
           <div
-            className="fixed inset-0 z-[9998] flex items-center justify-center backdrop-blur-xs"
-            onClick={closeDialog}
+            className="hover:bg-foreground flex size-8 items-center justify-center rounded-full text-3xl font-bold hover:cursor-pointer"
+            onClick={onClose}
           >
-            <div
-              className="bg-foreground/90 flex max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* header */}
-              <div className="flex w-full items-center justify-between">
-                <div className="size-8" />
-                <span className="text-2xl font-bold text-primary-accent">
-                  {t('meal.history.title', 'Meal History')}
-                </span>
-                <div
-                  className="hover:bg-foreground flex size-8 items-center justify-center rounded-full text-3xl font-bold hover:cursor-pointer"
-                  onClick={closeDialog}
-                >
-                  &times;
-                </div>
-              </div>
+            &times;
+          </div>
+        </div>
 
-              {/* body */}
-              <div className="mt-4 flex-1 overflow-y-auto">
-                {isLoading ? (
-                  <div className="flex h-40 items-center justify-center">
-                    <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-white" />
-                  </div>
-                ) : sortedMeals.length === 0 ? (
-                  <div className="flex h-40 items-center justify-center">
-                    <p className="text-lg text-primary-accent">
-                      {t('meal.history.no_meals', 'No meals recorded')}
-                    </p>
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-4">
-                    {Object.entries(groupedMeals).map(([date, list]) => (
-                      <div key={date} className="mb-4">
-                        <h3 className="mb-2 text-lg font-bold text-primary-accent">{date}</h3>
-                        {list.map((meal) => (
-                          <div key={meal.id} className="bg-background/10 mb-3 rounded-sm p-4">
-                            <div className="mb-2 flex items-center justify-between">
-                              <h4 className="text-lg font-semibold text-primary-accent">
-                                {meal.meal_name}
-                              </h4>
-                              <span className="text-sm font-medium text-primary-accent">
-                                {formatTime(meal.meal_date)}
-                              </span>
-                            </div>
-
-                            {meal.image_url && (
-                              <div className="mt-2 mb-3 flex justify-center">
-                                <img
-                                  src={meal.image_url}
-                                  alt={meal.meal_name}
-                                  className="max-h-40 rounded-sm object-cover"
-                                  onError={(e) => (e.currentTarget.style.display = 'none')}
-                                />
-                              </div>
-                            )}
-
-                            {meal.ontology && (
-                              <div className="mb-2 flex flex-wrap gap-1 text-primary-accent">
-                                {meal.ontology.split(',').map((tag) => (
-                                  <span
-                                    key={tag}
-                                    className="bg-secondary/30 inline-block rounded-full px-2 py-1 text-xs"
-                                  >
-                                    {tag.trim()}
-                                  </span>
-                                ))}
-                              </div>
-                            )}
-
-                            {meal.meal_notes && (
-                              <div className="mt-2 border-t border-gray-600 pt-2">
-                                <p className="text-sm">
-                                  <span className="font-semibold text-primary-accent">
-                                    {t('meal.notes', 'Notes')}:
-                                  </span>{' '}
-                                  {meal.meal_notes}
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        ))}
+        {/* body */}
+        <div className="mt-4 flex-1 overflow-y-auto">
+          {isLoading ? (
+            <Spinner />
+          ) : sorted.length === 0 ? (
+            <EmptyState msg={t('meal.history.no_meals')} />
+          ) : (
+            <div className="flex flex-col gap-4">
+              {Object.entries(grouped).map(([date, list]) => (
+                <div key={date} className="mb-4">
+                  <h3 className="mb-2 text-lg font-bold text-primary-accent">{date}</h3>
+                  {list.map((m) => (
+                    <div key={m.id} className="bg-background/10 mb-3 rounded-sm p-4">
+                      <div className="mb-2 flex items-center justify-between">
+                        <h4 className="text-lg font-semibold text-primary-accent">
+                          {m.meal_name}
+                        </h4>
+                        <span className="text-sm font-medium text-primary-accent">
+                          {formatTime(m.meal_date)}
+                        </span>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
 
-              {/* footer */}
-              <div className="mt-4 flex justify-end">
-                <Button onClick={closeDialog}>{t('common.close', 'Close')}</Button>
-              </div>
+                      {m.image_url && (
+                        <div className="mt-2 mb-3 flex justify-center">
+                          <img
+                            src={m.image_url}
+                            alt={m.meal_name}
+                            className="max-h-40 rounded-sm object-cover"
+                            onError={(e) => (e.currentTarget.style.display = 'none')}
+                          />
+                        </div>
+                      )}
+
+                      {m.ontology && (
+                        <div className="mb-2 flex flex-wrap gap-1 text-primary-accent">
+                          {m.ontology.split(',').map((tag) => (
+                            <span
+                              key={tag}
+                              className="bg-secondary/30 inline-block rounded-full px-2 py-1 text-xs"
+                            >
+                              {tag.trim()}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      {m.meal_notes && (
+                        <div className="mt-2 border-t border-gray-600 pt-2 text-sm">
+                          <span className="font-semibold">
+                            {t('meal.notes', 'Notes')}:
+                          </span>{' '}
+                          {m.meal_notes}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
-          </div>,
-          document.body,
-        )}
-    </>
+          )}
+        </div>
+
+        {/* footer */}
+        <div className="mt-4 flex justify-end">
+          <Button onClick={onClose}>{t('common.close', 'Close')}</Button>
+        </div>
+      </div>
+    </div>,
+    document.body,
   );
 };
+
+/* wspólne */
+const Spinner = () => (
+  <div className="flex h-40 items-center justify-center">
+    <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-white" />
+  </div>
+);
+
+const EmptyState = ({ msg }: { msg: string }) => (
+  <div className="flex h-40 items-center justify-center">
+    <p className="text-lg text-primary-accent">{msg}</p>
+  </div>
+);

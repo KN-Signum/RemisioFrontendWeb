@@ -6,6 +6,7 @@ export const getMealsByPatientId = async (patientId: string): Promise<MealDto[]>
   if (!patientId) throw new Error('patientId is required');
 
   const { data } = await apiClient.get(`/api/meals/${patientId}`);
+  console.log('[API-CLIENT] ← meals', data);
   return data.content as MealDto[];
 };
 

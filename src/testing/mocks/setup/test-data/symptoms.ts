@@ -9,7 +9,7 @@ function getFormattedDate(offsetDays: number): string {
 export const mockSymptoms: SymptomDto[] = [
   {
     id: 'symptom001',
-    patient_id: 'u001',
+    patient_id: 'p001',
     symptom_type: 'Abdominal Pain',
     duration: '2-3 hours',
     pain_level: 'Severe',
@@ -18,7 +18,7 @@ export const mockSymptoms: SymptomDto[] = [
   },
   {
     id: 'symptom002',
-    patient_id: 'u001',
+    patient_id: 'p001',
     symptom_type: 'Fatigue',
     duration: 'All day',
     pain_level: 'Moderate',
@@ -27,7 +27,7 @@ export const mockSymptoms: SymptomDto[] = [
   },
   {
     id: 'symptom003',
-    patient_id: 'u001',
+    patient_id: 'p001',
     symptom_type: 'Joint Pain',
     duration: '1-2 hours',
     pain_level: 'Mild',
@@ -36,7 +36,7 @@ export const mockSymptoms: SymptomDto[] = [
   },
   {
     id: 'symptom004',
-    patient_id: 'u002',
+    patient_id: 'p002',
     symptom_type: 'Diarrhea',
     duration: '4-5 hours',
     pain_level: 'Very Severe',
@@ -45,7 +45,7 @@ export const mockSymptoms: SymptomDto[] = [
   },
   {
     id: 'symptom005',
-    patient_id: 'u002',
+    patient_id: 'p002',
     symptom_type: 'Abdominal Cramping',
     duration: '1-2 hours',
     pain_level: 'Severe',
@@ -54,7 +54,7 @@ export const mockSymptoms: SymptomDto[] = [
   },
   {
     id: 'symptom006',
-    patient_id: 'u003',
+    patient_id: 'p003',
     symptom_type: 'Nausea',
     duration: '30 minutes',
     pain_level: 'Moderate',
@@ -63,7 +63,7 @@ export const mockSymptoms: SymptomDto[] = [
   },
   {
     id: 'symptom007',
-    patient_id: 'u003',
+    patient_id: 'p003',
     symptom_type: 'Fever',
     duration: '3-4 hours',
     pain_level: 'Mild',
@@ -72,7 +72,7 @@ export const mockSymptoms: SymptomDto[] = [
   },
   {
     id: 'symptom008',
-    patient_id: 'u004',
+    patient_id: 'p004',
     symptom_type: 'Weight Loss',
     duration: '1 week',
     pain_level: 'Moderate',
@@ -81,7 +81,7 @@ export const mockSymptoms: SymptomDto[] = [
   },
   {
     id: 'symptom009',
-    patient_id: 'u005',
+    patient_id: 'p005',
     symptom_type: 'Joint Pain',
     duration: 'All day',
     pain_level: 'Very Severe',
@@ -90,7 +90,7 @@ export const mockSymptoms: SymptomDto[] = [
   },
   {
     id: 'symptom010',
-    patient_id: 'u006',
+    patient_id: 'p006',
     symptom_type: 'Mouth Sores',
     duration: '3 days',
     pain_level: 'Moderate',

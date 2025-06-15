@@ -13,7 +13,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug001',
     name: 'Mesalazine',
-    patientId: 'u001',
+    patientId: 'p001',
     dosage: '500mg',
     dateFrom: getFormattedDate(-30),
     dateTo: getFormattedDate(60),
@@ -23,7 +23,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug002',
     name: 'Prednisone',
-    patientId: 'u001',
+    patientId: 'p001',
     dosage: '20mg',
     dateFrom: getFormattedDate(-15),
     dateTo: getFormattedDate(15),
@@ -33,7 +33,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug003',
     name: 'Azathioprine',
-    patientId: 'u002',
+    patientId: 'p002',
     dosage: '100mg',
     dateFrom: getFormattedDate(-60),
     dateTo: getFormattedDate(120),
@@ -43,7 +43,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug004',
     name: 'Infliximab',
-    patientId: 'u003',
+    patientId: 'p003',
     dosage: '5mg/kg',
     dateFrom: getFormattedDate(-45),
     dateTo: getFormattedDate(90),
@@ -53,7 +53,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug005',
     name: 'Budesonide',
-    patientId: 'u004',
+    patientId: 'p004',
     dosage: '9mg',
     dateFrom: getFormattedDate(-20),
     dateTo: getFormattedDate(40),
@@ -63,7 +63,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug006',
     name: 'Adalimumab',
-    patientId: 'u005',
+    patientId: 'p005',
     dosage: '40mg',
     dateFrom: getFormattedDate(-30),
     dateTo: getFormattedDate(150),
@@ -73,7 +73,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug007',
     name: 'Methotrexate',
-    patientId: 'u006',
+    patientId: 'p006',
     dosage: '15mg',
     dateFrom: getFormattedDate(-90),
     dateTo: getFormattedDate(180),
@@ -83,7 +83,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug008',
     name: 'Vedolizumab',
-    patientId: 'u007',
+    patientId: 'p007',
     dosage: '300mg',
     dateFrom: getFormattedDate(-60),
     dateTo: getFormattedDate(120),
@@ -93,7 +93,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug009',
     name: 'Ustekinumab',
-    patientId: 'u008',
+    patientId: 'p008',
     dosage: '90mg',
     dateFrom: getFormattedDate(-45),
     dateTo: getFormattedDate(135),
@@ -103,7 +103,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug010',
     name: 'Tofacitinib',
-    patientId: 'u009',
+    patientId: 'p009',
     dosage: '10mg',
     dateFrom: getFormattedDate(-30),
     dateTo: getFormattedDate(90),
@@ -113,7 +113,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug011',
     name: 'Mesalazine',
-    patientId: 'u010',
+    patientId: 'p010',
     dosage: '1g',
     dateFrom: getFormattedDate(-120),
     dateTo: getFormattedDate(240),
@@ -123,7 +123,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug012',
     name: 'Sulfasalazine',
-    patientId: 'u011',
+    patientId: 'p011',
     dosage: '500mg',
     dateFrom: getFormattedDate(-90),
     dateTo: getFormattedDate(180),
@@ -133,7 +133,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug013',
     name: 'Golimumab',
-    patientId: 'u012',
+    patientId: 'p012',
     dosage: '50mg',
     dateFrom: getFormattedDate(-60),
     dateTo: getFormattedDate(120),
@@ -143,7 +143,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug014',
     name: 'Balsalazide',
-    patientId: 'u013',
+    patientId: 'p013',
     dosage: '750mg',
     dateFrom: getFormattedDate(-45),
     dateTo: getFormattedDate(90),
@@ -153,7 +153,7 @@ export const mockDrugs: DrugDto[] = [
   {
     id: 'drug015',
     name: 'Certolizumab',
-    patientId: 'u014',
+    patientId: 'p014',
     dosage: '400mg',
     dateFrom: getFormattedDate(-30),
     dateTo: getFormattedDate(150),

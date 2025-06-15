@@ -15,4 +15,5 @@ const getDrugsByPatientId = http.get(
   },
 );
 
+
 export const handlers = [getDrugsByPatientId];

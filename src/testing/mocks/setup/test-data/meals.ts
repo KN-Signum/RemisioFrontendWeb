@@ -12,7 +12,7 @@ function randomPastDate(days: number): string {
 export const mockMeals: MealDto[] = [
   {
     id: 'meal001',
-    patient_id: 'u001',
+    patient_id: 'p001',
     meal_name: 'Breakfast - Oatmeal with Fruits',
     meal_date: randomPastDate(5),
     image_url:
@@ -23,7 +23,7 @@ export const mockMeals: MealDto[] = [
   },
   {
     id: 'meal002',
-    patient_id: 'u001',
+    patient_id: 'p001',
     meal_name: 'Lunch - Grilled Chicken Salad',
     meal_date: randomPastDate(5),
     image_url:
@@ -34,7 +34,7 @@ export const mockMeals: MealDto[] = [
   },
   {
     id: 'meal003',
-    patient_id: 'u001',
+    patient_id: 'p001',
     meal_name: 'Dinner - Salmon with Rice',
     meal_date: randomPastDate(4),
     image_url:
@@ -45,7 +45,7 @@ export const mockMeals: MealDto[] = [
   },
   {
     id: 'meal004',
-    patient_id: 'u002',
+    patient_id: 'p002',
     meal_name: 'Breakfast - Scrambled Eggs',
     meal_date: randomPastDate(3),
     image_url:
@@ -56,7 +56,7 @@ export const mockMeals: MealDto[] = [
   },
   {
     id: 'meal005',
-    patient_id: 'u002',
+    patient_id: 'p002',
     meal_name: 'Lunch - Tuna Sandwich',
     meal_date: randomPastDate(3),
     image_url:
@@ -67,7 +67,7 @@ export const mockMeals: MealDto[] = [
   },
   {
     id: 'meal006',
-    patient_id: 'u003',
+    patient_id: 'p003',
     meal_name: 'Breakfast - Yogurt with Granola',
     meal_date: randomPastDate(2),
     image_url:
@@ -78,7 +78,7 @@ export const mockMeals: MealDto[] = [
   },
   {
     id: 'meal007',
-    patient_id: 'u003',
+    patient_id: 'p003',
     meal_name: 'Lunch - Vegetable Soup',
     meal_date: randomPastDate(2),
     image_url:
@@ -89,7 +89,7 @@ export const mockMeals: MealDto[] = [
   },
   {
     id: 'meal008',
-    patient_id: 'u004',
+    patient_id: 'p004',
     meal_name: 'Dinner - Pasta with Tomato Sauce',
     meal_date: randomPastDate(1),
     image_url:
@@ -100,7 +100,7 @@ export const mockMeals: MealDto[] = [
   },
   {
     id: 'meal009',
-    patient_id: 'u004',
+    patient_id: 'p004',
     meal_name: 'Breakfast - Smoothie Bowl',
     meal_date: randomPastDate(1),
     image_url:
@@ -111,7 +111,7 @@ export const mockMeals: MealDto[] = [
   },
   {
     id: 'meal010',
-    patient_id: 'u005',
+    patient_id: 'p005',
     meal_name: 'Lunch - Quinoa Bowl',
     meal_date: randomPastDate(1),
     image_url:

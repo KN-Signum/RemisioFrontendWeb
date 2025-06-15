@@ -10,7 +10,7 @@ const getMealsByPatientId = http.get(
     const meals = db.meal
       .getAll()
       .filter((meal) => meal.patient_id === patientId);
-
+    console.log('[MSW] Found meals:', meals);
     return HttpResponse.json({ status: 200, content: meals });
   },
 );
