@@ -1,25 +1,25 @@
-import { API_URL } from '@/config/constants';
+import { apiClient } from '@/lib/api-client';
+import { useQuery } from '@tanstack/react-query';
 import { MealDto } from '../types';
 
-/**
- * Fetches all meals for a patient
- * @param patientId - ID of the patient
- * @returns Promise with array of meal data
- */
-export const getMealsByPatientId = async (
-  patientId: string,
-): Promise<MealDto[]> => {
-  try {
-    const response = await fetch(`${API_URL}/api/meals/${patientId}`);
+export const getMealsByPatientId = async (patientId: string): Promise<MealDto[]> => {
+  if (!patientId) throw new Error('patientId is required');
 
-    if (!response.ok) {
-      throw new Error(`Error fetching meals: ${response.status}`);
-    }
+  const { data } = await apiClient.get(`/api/meals/${patientId}`);
+  return data.content as MealDto[];
+};
 
-    const data = await response.json();
-    return data.content;
-  } catch (error) {
-    console.error('Failed to fetch meals:', error);
-    throw error;
-  }
+export const useMealsByPatientId = (patientId: string) => {
+  const query = useQuery({
+    queryKey: ['meals', patientId],
+    queryFn: () => getMealsByPatientId(patientId),
+    enabled: !!patientId,
+    initialData: [] as MealDto[],
+    staleTime: 5 * 60 * 1000,
+  });
+
+  return {
+    data: query.data,
+    isLoading: query.isFetching && !query.isFetched,
+  };
 };

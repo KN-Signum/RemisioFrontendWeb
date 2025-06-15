@@ -22,6 +22,5 @@ export const useDrugsByPatientId = (patientId: string) => {
   return {
     data: query.data,
     isLoading: query.isFetching && !query.isFetched,
-    error: query.error,
   };
 };
