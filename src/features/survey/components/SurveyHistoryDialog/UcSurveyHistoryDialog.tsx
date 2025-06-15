@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-
 import { formatDateDisplay } from '@/utils/format-date-display';
 import { usePatientUcSurveys } from '../../api/get-all-uc-surveys';
 import { SurveyCategory, UcSurveyDto } from '../../types';
@@ -32,7 +31,8 @@ export const UcSurveyHistoryDialog = ({ patientId, isOpen, onClose }: Props) => 
             <div className="flex flex-col gap-4">
                 {surveys.map((s: UcSurveyDto) => (
                     <div key={s.id} className="bg-background/10 rounded-sm p-4">
-                        <div className="mb-2 flex items-center justify-between">
+                        {/* nagłówek karty */}
+                        <div className="mb-3 flex items-center justify-between">
                             <h3 className="text-lg font-semibold text-primary-accent">
                                 {formatDateDisplay(new Date(s.survey_date))}
                             </h3>
@@ -46,10 +46,36 @@ export const UcSurveyHistoryDialog = ({ patientId, isOpen, onClose }: Props) => 
                                 </span>
                             </div>
                         </div>
-                        <p className="text-sm">
-                            {t('survey.uc.stool_frequency')}: {s.stool_frequency} ·{' '}
-                            {t('survey.uc.rectal_bleeding')}: {s.rectal_bleeding}
-                        </p>
+
+                        {/* szczegóły pomiarów */}
+                        <div className="grid grid-cols-2 gap-y-1 text-sm text-primary-accent">
+                            <p>
+                                <span className="font-semibold">
+                                    {t('survey.uc.stool_frequency')}:
+                                </span>{' '}
+                                {s.stool_frequency}
+                            </p>
+                            <p>
+                                <span className="font-semibold">
+                                    {t('survey.uc.rectal_bleeding')}:
+                                </span>{' '}
+                                {s.rectal_bleeding}
+                            </p>
+                            <p>
+                                <span className="font-semibold">
+                                    {t('survey.uc.physician_global')}:
+                                </span>{' '}
+                                {s.physician_global}
+                            </p>
+                        </div>
+
+                        {/* notatki */}
+                        {s.notes && (
+                            <div className="mt-3 border-t border-gray-600 pt-2 text-sm text-primary-accent">
+                                <span className="font-semibold">{t('survey.notes')}:</span>{' '}
+                                {s.notes}
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>

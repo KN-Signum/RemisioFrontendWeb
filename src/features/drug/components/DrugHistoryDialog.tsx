@@ -20,7 +20,7 @@ export const DrugHistoryDialog = ({
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
-
+  /* ───── pobieranie danych (tylko gdy dialog otwarty) ───── */
   const { data: drugs, isLoading } = useDrugsByPatientId(
     isOpen ? patientId : '',
   );
