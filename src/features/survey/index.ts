@@ -6,4 +6,4 @@ export * from './api/get-latest-crohn-survey';
 export * from './api/get-latest-uc-survey';
 
 // Export components
-export * from './components';
+export * from './components/SurveyHistoryDialog';

@@ -3,7 +3,7 @@ import Layout from '@/components/layout';
 
 import {
   SearchBar,
-  usePatients,
+  useGetPatients,
   SmallPatientsTable,
   BigPatientsTable,
 } from '@/features/patient';
@@ -11,32 +11,25 @@ import { FaCaretRight, FaCaretLeft } from 'react-icons/fa';
 
 const PatientsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const { data: patients, isLoading: patientsLoading } = usePatients();
+  const { data: patients, isLoading: patientsLoading } = useGetPatients();
   const [view, setView] = useState<'both' | 'uc' | 'crohn'>('both');
 
   const ucPatients = useMemo(() => {
     return patients.filter((patient) => {
-      const matchesSearch = patient.name
+      const matchesSearch = patient.full_name
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
-      const isUC =
-        String(patient.disease_type).toLowerCase() === 'ulcerative_colitis';
-      console.log(
-        `${patient.name} - Search match: ${matchesSearch}, Is UC: ${isUC}, disease_type: ${patient.disease_type}`,
-      );
+      const isUC = patient.disease === 'ulcerative_colitis';
       return matchesSearch && isUC;
     });
   }, [patients, searchQuery]);
 
   const crohnPatients = useMemo(() => {
     return patients.filter((patient) => {
-      const matchesSearch = patient.name
+      const matchesSearch = patient.full_name
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
-      const isCrohn = String(patient.disease_type).toLowerCase() === 'crohn';
-      console.log(
-        `${patient.name} - Search match: ${matchesSearch}, Is Crohn: ${isCrohn}, disease_type: ${patient.disease_type}`,
-      );
+      const isCrohn = patient.disease === 'crohn';
       return matchesSearch && isCrohn;
     });
   }, [patients, searchQuery]);

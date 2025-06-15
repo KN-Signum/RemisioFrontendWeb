@@ -9,28 +9,25 @@ import {
 import { SymptomHistoryDialog } from '@/features/symptoms';
 import { DrugHistoryDialog } from '@/features/drug';
 import { MealHistoryDialog } from '@/features/meal';
-import { CrohnSurveyHistoryDialog } from '@/features/survey/components/CrohnSurveyHistoryDialog';
-import { UcSurveyHistoryDialog } from '@/features/survey/components/UcSurveyHistoryDialog';
+
 import { Button } from '@/components/ui/button';
 
 import { useState } from 'react';
+import { CrohnSurveyHistoryDialog, UcSurveyHistoryDialog } from '@/features/survey';
 
-interface Props {
-  patient: {
-    id: string;
-    name: string;
-    hospital: string;
-    phone_number: string;
-    age: number;
-    weight: number;
-    disease_type: 'crohn' | 'ulcerative_colitis';
-  };
+interface PatientInfoCardProps {
+  id: string;
+  name: string;
+  hospital: string;
+  phone_number: string;
+  age: number;
+  weight: number;
+  disease_type: string;
 }
 
-export const PatientInfoCard: React.FC<Props> = ({ patient }) => {
-  /* sterujemy tylko dialogiem ankiet; pozostałe komponenty mają wewn. stan */
+export const PatientInfoCard = (props: PatientInfoCardProps) => {
   const [openSurvey, setOpenSurvey] = useState(false);
-
+  const patient = props;
   const SurveyDialog =
     patient.disease_type === 'crohn'
       ? CrohnSurveyHistoryDialog

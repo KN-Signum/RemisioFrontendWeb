@@ -1,23 +1,30 @@
-export interface GetFullPatientDto {
+import { DiseaseType, GenderType, PatientState } from '@/types';
+
+export interface GetPatientDto {
   id: string;
-  name: string;
-  weight: number;
-  height: number;
+  full_name: string;
+  gender: GenderType;
+  disease: DiseaseType;
+  state: PatientState;
+  last_visit: Date;
+  drugs: string[];
   age: number;
-  cdai_score: number;
-  email: string;
-  phone_number: string;
+  score: number;
+  surveys: number;
+  diet: string;
+  weight: number;
 }
 
-export interface SimpleTablePatientDto {
+export interface GetPatientDetailsDto {
   id: string;
-  name: string;
-  disease: string;
-  state: string;
-  last_visit: string;
-  drugs: string;
-  // alert: boolean; TODO: add alert field when something important happens
+  hospital: string;
+  phone: string;
+  email: string;
+  notes: string;
+  smoking: string;
 }
+
+export interface FullPatient extends GetPatientDto, GetPatientDetailsDto {}
 
 export interface CreatePatientDto {
   firstName: string;
@@ -29,13 +36,4 @@ export interface CreatePatientDto {
   height: number;
   date_of_birth: Date;
   hospital: string;
-}
-
-export interface GetPatientDto {
-  id: string;
-  name: string;
-  disease_type: string;
-  state: string;
-  age: number;
-  score: number;
 }

@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { UcSurveyDto, SurveyCategory } from '../types';
-import { usePatientUcSurveys } from '../api/get-all-uc-surveys';
-import { BaseSurveyHistoryDialog } from './BaseSurveyHistoryDialog';
+
 import { formatDateDisplay } from '@/utils/format-date-display';
+import { formatValue } from '@/lib/utils/format_value';
+import { usePatientCrohnSurveys } from '../../api/get-all-crohn-surveys';
+import { CrohnSurveyDto, SurveyCategory } from '../../types';
+import { BaseSurveyHistoryDialog } from './BaseSurveyHistoryDialog';
 
 interface Props {
     patientId: string;
@@ -10,9 +12,9 @@ interface Props {
     onClose: () => void;
 }
 
-export const UcSurveyHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
+export const CrohnSurveyHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
     const { t } = useTranslation();
-    const { data, isLoading } = usePatientUcSurveys(isOpen ? patientId : '');
+    const { data, isLoading } = usePatientCrohnSurveys(isOpen ? patientId : '');
     const surveys = data?.surveys ?? [];
 
     const getColor = (c: SurveyCategory) =>
@@ -24,12 +26,12 @@ export const UcSurveyHistoryDialog = ({ patientId, isOpen, onClose }: Props) => 
         <BaseSurveyHistoryDialog
             isOpen={isOpen}
             onClose={onClose}
-            title={t('survey.history.uc_title', 'Ulcerative Colitis Survey History')}
+            title={t('survey.history.crohn_title', "Crohn's Disease Survey History")}
             isLoading={isLoading}
             empty={surveys.length === 0}
         >
             <div className="flex flex-col gap-4">
-                {surveys.map((s: UcSurveyDto) => (
+                {surveys.map((s: CrohnSurveyDto) => (
                     <div key={s.id} className="bg-background/10 rounded-sm p-4">
                         <div className="mb-2 flex items-center justify-between">
                             <h3 className="text-lg font-semibold text-primary-accent">
@@ -39,15 +41,15 @@ export const UcSurveyHistoryDialog = ({ patientId, isOpen, onClose }: Props) => 
                                 <span className="font-semibold text-primary-accent">
                                     {t('survey.total_score')}:
                                 </span>
-                                <span className="text-primary-accent">{s.total_score}</span>
+                                <span className="text-primary-accent">{formatValue(s.total_score.toString())}</span>
                                 <span className={`ml-2 font-bold ${getColor(s.category)}`}>
                                     {t(`survey.category.${s.category}`)}
                                 </span>
                             </div>
                         </div>
                         <p className="text-sm">
-                            {t('survey.uc.stool_frequency')}: {s.stool_frequency} ·{' '}
-                            {t('survey.uc.rectal_bleeding')}: {s.rectal_bleeding}
+                            {t('survey.crohn.abdominal_pain')}: {s.abdominal_pain} ·{' '}
+                            {t('survey.crohn.stools')}: {s.stools}
                         </p>
                     </div>
                 ))}

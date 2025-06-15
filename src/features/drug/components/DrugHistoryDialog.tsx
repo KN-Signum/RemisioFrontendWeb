@@ -20,6 +20,7 @@ export const DrugHistoryDialog = ({
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
+
   const { data: drugs, isLoading } = useDrugsByPatientId(
     isOpen ? patientId : '',
   );
@@ -27,14 +28,16 @@ export const DrugHistoryDialog = ({
   const openDialog = () => setIsOpen(true);
   const closeDialog = () => setIsOpen(false);
 
-  const formatDate = (d: string) => new Date(d).toLocaleDateString();
+  const formatDate = (s: string) => new Date(s).toLocaleDateString();
 
-  const sortedDrugs = [...drugs].sort(
+  const sorted = [...drugs].sort(
     (a, b) => new Date(b.dateFrom).getTime() - new Date(a.dateFrom).getTime(),
   );
 
+  /* ───── UI ───── */
   return (
     <>
+      {/* przycisk / ikona */}
       {iconOnly ? (
         <div
           onClick={openDialog}
@@ -52,6 +55,7 @@ export const DrugHistoryDialog = ({
         </Button>
       )}
 
+      {/* dialog */}
       {isOpen &&
         createPortal(
           <div
@@ -59,10 +63,10 @@ export const DrugHistoryDialog = ({
             onClick={closeDialog}
           >
             <div
-              className="bg-foreground/90 flex h-fit max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6"
+              className="bg-foreground/90 flex max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* ───── header ───── */}
+              {/* header */}
               <div className="flex w-full items-center justify-between">
                 <div className="size-8" />
                 <span className="text-2xl font-bold text-primary-accent">
@@ -76,13 +80,13 @@ export const DrugHistoryDialog = ({
                 </div>
               </div>
 
-              {/* ───── body ───── */}
+              {/* body */}
               <div className="mt-4 flex-1 overflow-y-auto">
                 {isLoading ? (
                   <div className="flex h-40 items-center justify-center">
                     <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-white" />
                   </div>
-                ) : sortedDrugs.length === 0 ? (
+                ) : sorted.length === 0 ? (
                   <div className="flex h-40 items-center justify-center">
                     <p className="text-lg text-primary-accent">
                       {t('drug.history.no_drugs', 'No medications recorded')}
@@ -90,7 +94,7 @@ export const DrugHistoryDialog = ({
                   </div>
                 ) : (
                   <div className="flex flex-col gap-4">
-                    {sortedDrugs.map((drug: DrugDto) => (
+                    {sorted.map((drug: DrugDto) => (
                       <div key={drug.id} className="bg-background/10 rounded-sm p-4">
                         <div className="mb-2 flex items-center justify-between">
                           <h3 className="text-lg font-semibold text-primary-accent">
@@ -141,9 +145,7 @@ export const DrugHistoryDialog = ({
                               <span className="font-semibold text-primary-accent">
                                 {t('drug.additionalInfo', 'Notes')}:
                               </span>{' '}
-                              <span className="text-primary-accent">
-                                {drug.additionalInfo}
-                              </span>
+                              <span className="text-primary-accent">{drug.additionalInfo}</span>
                             </p>
                           </div>
                         )}
@@ -153,7 +155,7 @@ export const DrugHistoryDialog = ({
                 )}
               </div>
 
-              {/* ───── footer ───── */}
+              {/* footer */}
               <div className="mt-4 flex justify-end text-primary-accent">
                 <Button onClick={closeDialog}>{t('common.close', 'Close')}</Button>
               </div>

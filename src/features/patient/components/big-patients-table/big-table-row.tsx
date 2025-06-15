@@ -1,4 +1,5 @@
 import { cn } from '@/utils/cn';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 interface BigTableRowProps {
@@ -11,7 +12,7 @@ interface BigTableRowProps {
   surveys: number;
   drugs: string[];
   diet: string;
-  bmi: number;
+  weight: number;
 }
 
 export const paddings = 'px-1 py-3';
@@ -25,9 +26,10 @@ export const BigTableRow = ({
   surveys,
   drugs,
   diet,
-  bmi,
+  weight,
   roundedBottom = false,
 }: BigTableRowProps) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   return (
     <div
@@ -43,10 +45,10 @@ export const BigTableRow = ({
       <div className={`flex-1 ${paddings}`}>{score}</div>
       <div className={`flex-1 ${paddings}`}>{surveys}</div>
       <div className={`flex-4 ${paddings}`}>
-        {drugs.length > 0 ? drugs.join(', ') : 'None'}
+        {drugs.length > 0 ? drugs.join(', ') : t('general.none')}
       </div>
       <div className={`flex-2 ${paddings}`}>{diet}</div>
-      <div className={`flex-1 ${paddings}`}>{bmi}</div>
+      <div className={`flex-1 ${paddings}`}>{weight}</div>
     </div>
   );
 };
