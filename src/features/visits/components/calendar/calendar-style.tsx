@@ -120,6 +120,9 @@ export const CalendarStyle = () => {
       .fc-event:hover {
         cursor: help !important;
       }
+      .fc-event-start, .fc-timegrid-slot-label-cushion {
+        color: var(--color-primary-accent) !important;
+      }
     `}</style>
   );
 };

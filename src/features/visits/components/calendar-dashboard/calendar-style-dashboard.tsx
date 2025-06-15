@@ -95,6 +95,10 @@ export const CalendarStyleDashboard = () => {
       thead {
         background-color: var(--color-secondary) !important;
       }
+
+      .fc-event-start {
+        color: var(--color-primary-accent) !important;
+      }
     `}</style>
   );
 };
