@@ -1,5 +1,5 @@
 //api
-export * from './api';
+export * from './api/get-patient-symptoms';
 
 //components
 export * from './components';

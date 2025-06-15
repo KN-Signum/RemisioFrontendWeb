@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getSymptomsByPatientId } from '../api';
+import { getSymptomsByPatientId } from '../api/get-patient-symptoms';
 import { SymptomDto } from '../types';
 
 interface SymptomsListProps {

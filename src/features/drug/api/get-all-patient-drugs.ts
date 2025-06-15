@@ -1,25 +1,27 @@
-import { API_URL } from '@/config/constants';
+import { apiClient } from '@/lib/api-client';
 import { DrugDto } from '../types';
+import { useQuery } from '@tanstack/react-query';
 
-/**
- * Fetches all drugs for a patient
- * @param patientId - ID of the patient
- * @returns Promise with array of drug data
- */
 export const getDrugsByPatientId = async (
   patientId: string,
 ): Promise<DrugDto[]> => {
-  try {
-    const response = await fetch(`${API_URL}/api/drugs/${patientId}`);
+  if (!patientId) throw new Error('patientId is required');
 
-    if (!response.ok) {
-      throw new Error(`Error fetching drugs: ${response.status}`);
-    }
+  const res = await apiClient.get(`/api/drugs/${patientId}`);
+  return res.data.content as DrugDto[];
+};
 
-    const data = await response.json();
-    return data.content;
-  } catch (error) {
-    console.error('Failed to fetch drugs:', error);
-    throw error;
-  }
+export const useDrugsByPatientId = (patientId: string) => {
+  const query = useQuery({
+    queryKey: ['drugs', patientId],
+    queryFn: () => getDrugsByPatientId(patientId),
+    enabled: !!patientId,
+    initialData: [],
+  });
+
+  return {
+    data: query.data,
+    isLoading: query.isFetching && !query.isFetched,
+    error: query.error,
+  };
 };
