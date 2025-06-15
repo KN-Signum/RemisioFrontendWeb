@@ -6,3 +6,6 @@ export * from './api/get-patient-diagnostic-tests';
 
 // types
 export * from './types/index';
+
+// utils
+export * from './utils/translate-analyte';

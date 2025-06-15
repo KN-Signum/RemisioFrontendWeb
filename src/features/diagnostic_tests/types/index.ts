@@ -1,3 +1,7 @@
+/**
+ * Analyte type representing the different types of analytes that can be measured in diagnostic tests.
+ * The values correspond to keys in the i18n translation files under the "analytes" namespace.
+ */
 export type Analyte =
   | 'cea'
   | 'ldl'
@@ -9,11 +13,21 @@ export type Analyte =
   | 'bacteria_urine_count'
   | 'erythrocytes'
   | 'mch'
-  | 'pLcr'
+  | 'plcr'
   | 'hemoglobin'
   | 'hct'
   | 'leukocytes'
-  | 'ob';
+  | 'ob'
+  | 'ast'
+  | 'bilirubin'
+  | 'alkaline_phosphatase'
+  | 'basophils'
+  | 'erythroblasts'
+  | 'mchc'
+  | 'monocytes'
+  | 'mpv'
+  | 'neutrophils'
+  | 'potassium';
 
 // Diagnostic test types
 
@@ -36,6 +50,16 @@ export interface DiagnosticTestDto {
   leukocytes?: number;
   plcr?: number;
   ob?: number;
+  ast?: number;
+  bilirubin?: number;
+  alkaline_phosphatase?: number;
+  basophils?: number;
+  erythroblasts?: number;
+  mchc?: number;
+  monocytes?: number;
+  mpv?: number;
+  neutrophils?: number;
+  potassium?: number;
   test_notes?: string;
   created_at: string;
   updated_at: string;
@@ -59,6 +83,16 @@ export interface CreateDiagnosticTestDto {
   leukocytes?: number;
   plcr?: number;
   ob?: number;
+  ast?: number;
+  bilirubin?: number;
+  alkaline_phosphatase?: number;
+  basophils?: number;
+  erythroblasts?: number;
+  mchc?: number;
+  monocytes?: number;
+  mpv?: number;
+  neutrophils?: number;
+  potassium?: number;
   test_notes?: string;
 }
 

@@ -3,7 +3,7 @@ import Layout from '@/components/layout';
 import { PatientInfoCard } from '@/features/patient/components/details/patient-info-card';
 import { DiagnosticTestsGrid } from '@/features/patient/components/details/diagnostic-test-grid';
 import { ScoreTimelineChart } from '@/features/patient/components/details/score-time-line-chart';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { cn } from '@/utils/cn';
 import { usePatientDiagnosticTests } from '@/features/diagnostic_tests/api/get-patient-diagnostic-tests';
 import { DiagnosticTestDto } from '@/features/diagnostic_tests';
@@ -12,9 +12,43 @@ import {
   useGetPatientDetails,
   useGetPatients,
 } from '@/features/patient';
+import { usePatientScores } from '@/features/score/api/get-patient-scores';
 
 const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
+
+// Function to get historical values for a specific analyte
+const getAnalyteHistory = (
+  diagnosticData: { tests: DiagnosticTestDto[] } | undefined,
+  analyteName: string,
+) => {
+  if (!diagnosticData?.tests?.length) {
+    return [];
+  }
+
+  // Filter tests that have the specified analyte
+  const relevantTests = diagnosticData.tests.filter(
+    (test) =>
+      test[analyteName as keyof typeof test] !== undefined &&
+      test[analyteName as keyof typeof test] !== null,
+  );
+
+  // Sort by date (oldest first)
+  const sortedTests = [...relevantTests].sort(
+    (a, b) => new Date(a.test_date).getTime() - new Date(b.test_date).getTime(),
+  );
+
+  // Extract date and value for the specified analyte
+  const history = sortedTests.map((test) => ({
+    date: test.test_date.split('T')[0], // Format date as YYYY-MM-DD
+    value: test[analyteName as keyof typeof test],
+  }));
+
+  // Example usage - print to console
+  console.log(`History for ${analyteName}:`, history);
+
+  return history;
+};
 
 // Helper function to process diagnostic tests data
 const processTestData = (
@@ -57,8 +91,20 @@ const processTestData = (
         else if (key === 'ldl') formattedValue = `${value} mg/dL`;
         else if (key === 'calprotectin_feces') formattedValue = `${value} µg/g`;
         else if (key === 'hemoglobin') formattedValue = `${value} g/dL`;
-        else if (key === 'hct') formattedValue = `${value} %`;
-        else if (key === 'leukocytes') formattedValue = `${value} 10^3/µL`;
+        else if (key === 'hct' || key === 'basophils' || key === 'neutrophils')
+          formattedValue = `${value} %`;
+        else if (key === 'leukocytes' || key === 'monocytes')
+          formattedValue = `${value} 10^3/µL`;
+        else if (key === 'erythrocytes') formattedValue = `${value} 10^6/µL`;
+        else if (key === 'erythroblasts')
+          formattedValue = `${value} NRBC/100 WBC`;
+        else if (key === 'ast' || key === 'alkaline_phosphatase')
+          formattedValue = `${value} U/L`;
+        else if (key === 'bilirubin') formattedValue = `${value} mg/dL`;
+        else if (key === 'mch') formattedValue = `${value} pg`;
+        else if (key === 'mchc') formattedValue = `${value} g/dL`;
+        else if (key === 'mpv') formattedValue = `${value} fL`;
+        else if (key === 'potassium') formattedValue = `${value} mmol/L`;
         else formattedValue = value.toString();
       } else {
         formattedValue = value.toString();
@@ -71,16 +117,34 @@ const processTestData = (
     });
 };
 
-// Helper function to generate score history
-const generateScoreHistory = (score: number = 50) => {
-  return Array.from({ length: 8 }).map((_, w) => {
-    const d = new Date();
-    d.setDate(d.getDate() + w * 7);
-    return {
-      week: d.toISOString().split('T')[0],
-      score: Math.max(0, Math.min(100, score + (Math.random() * 10 - 5))),
-    };
-  });
+interface PatientScoreData {
+  score_date: string;
+  score: number;
+  notes?: string;
+}
+
+interface PatientScoreResponse {
+  scores: PatientScoreData[];
+}
+
+// Helper function to format patient scores for the chart
+const formatPatientScores = (
+  patientScores: PatientScoreResponse | null | undefined,
+) => {
+  if (!patientScores?.scores?.length) {
+    return [];
+  }
+
+  // Sort scores by date (oldest first for the chart)
+  return [...patientScores.scores]
+    .sort(
+      (a, b) =>
+        new Date(a.score_date).getTime() - new Date(b.score_date).getTime(),
+    )
+    .map((score) => ({
+      week: score.score_date.split('T')[0],
+      score: score.score, // Convert 0-10 scale to 0-100 for the chart
+    }));
 };
 
 const PatientDetailsPage = () => {
@@ -90,9 +154,15 @@ const PatientDetailsPage = () => {
     isLoading: testsLoading,
     error: testsError,
   } = usePatientDiagnosticTests(id ?? '');
+  const {
+    data: patientScores,
+    isLoading: scoresLoading,
+    error: scoresError,
+  } = usePatientScores(id ?? '');
   const { data: patientDetail, isLoading: patientLoading } =
     useGetPatientDetails(id ?? '');
   const { data: patients, isLoading: patientsLoading } = useGetPatients();
+  const [selectedAnalyte, setSelectedAnalyte] = useState<string | null>('cea');
 
   // merge patientDetail with patient[id] into FullPatientDto
   const patient = patients?.find((p) => p.id === patientDetail?.id);
@@ -110,10 +180,91 @@ const PatientDetailsPage = () => {
     return processTestData(diagnosticData);
   }, [diagnosticData]);
 
-  // Generate score history - always call useMemo unconditionally
+  // Format patient scores for the chart - always call useMemo unconditionally
   const scoreHistory = useMemo(() => {
-    return generateScoreHistory(fullPatient?.score);
-  }, [fullPatient?.score]);
+    return formatPatientScores(patientScores);
+  }, [patientScores]);
+
+  // Get historical values for multiple analytes
+  const analyteHistories = useMemo(() => {
+    if (!diagnosticData?.tests?.length) {
+      return {};
+    }
+
+    // Define the analytes we want to track
+    const analytesToTrack = [
+      'cea',
+      'hemoglobin',
+      'calprotectin_feces',
+      'ldl',
+      'hct',
+      'leukocytes',
+      'ast',
+      'bilirubin',
+      'alkaline_phosphatase',
+      'basophils',
+      'erythroblasts',
+      'erythrocytes',
+      'mch',
+      'mchc',
+      'monocytes',
+      'mpv',
+      'neutrophils',
+      'potassium',
+    ];
+    const result: Record<
+      string,
+      { name: string; dates: string[]; values: number[] }
+    > = {};
+
+    // Get history for each analyte
+    analytesToTrack.forEach((analyteName) => {
+      const history = getAnalyteHistory(diagnosticData, analyteName);
+
+      if (history.length > 0) {
+        // Format display names
+        let displayName = analyteName.toUpperCase().replace(/_/g, ' ');
+
+        // Add units to display names
+        if (analyteName === 'cea') displayName = 'CEA (ng/mL)';
+        else if (analyteName === 'ldl') displayName = 'LDL (mg/dL)';
+        else if (analyteName === 'calprotectin_feces')
+          displayName = 'CALPROTECTIN (µg/g)';
+        else if (analyteName === 'hemoglobin')
+          displayName = 'HEMOGLOBIN (g/dL)';
+        else if (analyteName === 'hct') displayName = 'HCT (%)';
+        else if (analyteName === 'leukocytes')
+          displayName = 'LEUKOCYTES (10^3/µL)';
+        else if (analyteName === 'ast') displayName = 'AST (U/L)';
+        else if (analyteName === 'bilirubin') displayName = 'BILIRUBIN (mg/dL)';
+        else if (analyteName === 'alkaline_phosphatase')
+          displayName = 'ALKALINE PHOSPHATASE (U/L)';
+        else if (analyteName === 'basophils') displayName = 'BASOPHILS (%)';
+        else if (analyteName === 'erythroblasts')
+          displayName = 'ERYTHROBLASTS (NRBC/100 WBC)';
+        else if (analyteName === 'erythrocytes')
+          displayName = 'ERYTHROCYTES (10^6/µL)';
+        else if (analyteName === 'mch') displayName = 'MCH (pg)';
+        else if (analyteName === 'mchc') displayName = 'MCHC (g/dL)';
+        else if (analyteName === 'monocytes')
+          displayName = 'MONOCYTES (10^3/µL)';
+        else if (analyteName === 'mpv') displayName = 'MPV (fL)';
+        else if (analyteName === 'neutrophils') displayName = 'NEUTROPHILS (%)';
+        else if (analyteName === 'potassium')
+          displayName = 'POTASSIUM (mmol/L)';
+
+        result[analyteName] = {
+          name: displayName,
+          dates: history.map((item) => item.date),
+          values: history.map((item) => item.value as number),
+        };
+
+        console.log(`${displayName} History:`, history);
+      }
+    });
+
+    return result;
+  }, [diagnosticData]);
 
   if (patientsLoading || patientLoading) {
     return (
@@ -125,7 +276,7 @@ const PatientDetailsPage = () => {
     );
   }
 
-  if (!fullPatient) {
+  if (!patient) {
     return (
       <Layout>
         <div className="flex h-full items-center justify-center text-red-500">
@@ -144,11 +295,13 @@ const PatientDetailsPage = () => {
         {/* top */}
         <div className={cn(borderClasses, 'h-[40vh] gap-3 px-1.5')}>
           <PatientInfoCard
-            name={fullPatient.full_name}
-            phone_number={fullPatient.phone}
-            age={fullPatient.age}
-            hospital={fullPatient.hospital}
-            weight={fullPatient.weight}
+            id={fullPatient!.id}
+            disease_type={fullPatient!.disease}
+            name={fullPatient!.full_name}
+            phone_number={fullPatient!.phone}
+            age={fullPatient!.age}
+            hospital={fullPatient!.hospital}
+            weight={fullPatient!.weight}
           />
           {testsError ? (
             <div className="text-red-500">Failed to load tests</div>
@@ -159,14 +312,50 @@ const PatientDetailsPage = () => {
 
         {/* bottom */}
         <div className={cn(borderClasses, 'h-[50.5vh] px-1.5')}>
-          <div className="flex w-full flex-col rounded-sm p-8 shadow-md">
-            <span className="text-primary mb-4 text-lg font-bold">
-              Zmiana score w ostatnich 8 tygodniach
-            </span>
-            <ScoreTimelineChart
-              weeks={scoreHistory.map((p) => p.week)}
-              scores={scoreHistory.map((p) => p.score)}
-            />
+          <div className="flex w-full flex-col rounded-sm bg-white p-8 shadow-md">
+            {scoresError ? (
+              <div className="text-red-500">Failed to load patient scores</div>
+            ) : scoresLoading ? (
+              <div className="text-gray-500">Loading patient scores...</div>
+            ) : scoreHistory.length === 0 ? (
+              <div className="text-gray-500">No score history available</div>
+            ) : (
+              <div className="flex h-full flex-col">
+                {/* Analyte selector */}
+                <div className="mb-4">
+                  <label className="mb-1 block text-sm font-medium text-gray-700">
+                    Select Analyte to Display:
+                  </label>
+                  <select
+                    value={selectedAnalyte || ''}
+                    onChange={(e) => setSelectedAnalyte(e.target.value || null)}
+                    className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
+                  >
+                    <option value="">Score Only (No Analyte)</option>
+                    {Object.entries(analyteHistories).map(([key, data]) => (
+                      <option key={key} value={key}>
+                        {data.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Chart */}
+                <div className="flex-grow">
+                  <ScoreTimelineChart
+                    weeks={scoreHistory.map((p) => p.week)}
+                    scores={scoreHistory.map((p) => p.score)}
+                    analyteData={
+                      selectedAnalyte
+                        ? analyteHistories[selectedAnalyte]
+                        : undefined
+                    }
+                    // You can provide default colors here if needed
+                    // colors={{ scoreColor: '#4299e1', analyteColor: '#f56565' }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

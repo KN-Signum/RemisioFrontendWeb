@@ -1,5 +1,32 @@
 {
   "language": "en",
+  "analytes": {
+    "cea": "CEA",
+    "ldl": "LDL",
+    "hbe_positive": "HBe Positive",
+    "parasite_feces_positive": "Parasite in Feces Positive",
+    "calprotectin_feces": "Calprotectin in Feces",
+    "creatinine_serum": "Creatinine in Serum",
+    "glucose_urine": "Glucose in Urine",
+    "bacteria_urine_count": "Bacteria Count in Urine",
+    "erythrocytes": "Erythrocytes",
+    "mch": "MCH",
+    "plcr": "PLCR",
+    "hemoglobin": "Hemoglobin",
+    "hct": "HCT",
+    "leukocytes": "Leukocytes",
+    "ob": "OB",
+    "ast": "AST",
+    "bilirubin": "Bilirubin",
+    "alkaline_phosphatase": "Alkaline Phosphatase",
+    "basophils": "Basophils",
+    "erythroblasts": "Erythroblasts",
+    "mchc": "MCHC",
+    "monocytes": "Monocytes",
+    "mpv": "MPV",
+    "neutrophils": "Neutrophils",
+    "potassium": "Potassium"
+  },
   "general": {
     "loading": "Loading...",
     "error": "An error occurred",
@@ -213,5 +240,73 @@
         "past_date": "The date cannot be in the past"
       }
     }
+  },
+  "survey": {
+    "history": {
+      "view_surveys": "View Surveys",
+      "crohn_title": "Crohn's Disease Survey History",
+      "uc_title": "Ulcerative Colitis Survey History",
+      "no_surveys": "No surveys available for this patient"
+    },
+    "total_score": "Total Score",
+    "notes": "Notes",
+    "category": {
+      "remission": "Remission",
+      "mild": "Mild",
+      "moderate": "Moderate",
+      "severe": "Severe"
+    },
+    "crohn": {
+      "abdominal_pain": "Abdominal Pain",
+      "stools": "Stools",
+      "general_wellbeing": "General Wellbeing",
+      "extraintestinal_manifestations": "Extraintestinal Manifestations",
+      "abdominal_mass": "Abdominal Mass",
+      "hematocrit": "Hematocrit",
+      "weight_loss": "Weight Loss"
+    },
+    "uc": {
+      "stool_frequency": "Stool Frequency",
+      "rectal_bleeding": "Rectal Bleeding",
+      "physician_global": "Physician Global Assessment"
+    }
+  },
+  "common": {
+    "close": "Close"
+  },
+  "symptoms": {
+    "history": {
+      "title": "Symptoms History",
+      "view_symptoms": "View Symptoms History",
+      "no_symptoms": "No symptoms recorded"
+    },
+    "type": "Type",
+    "duration": "Duration",
+    "pain_level": "Pain Level",
+    "description": "Description"
+  },
+  "drug": {
+    "history": {
+      "title": "Medications History",
+      "view_drugs": "View Medications",
+      "no_drugs": "No medications recorded"
+    },
+    "name": "Name",
+    "dosage": "Dosage",
+    "dateFrom": "Start Date",
+    "dateTo": "End Date",
+    "times": "Schedule",
+    "additionalInfo": "Notes"
+  },
+  "meal": {
+    "history": {
+      "title": "Meal History",
+      "view_meals": "View Meal History",
+      "no_meals": "No meals recorded"
+    },
+    "meal_name": "Meal",
+    "meal_date": "Date",
+    "ontology": "Categories",
+    "notes": "Notes"
   }
 }

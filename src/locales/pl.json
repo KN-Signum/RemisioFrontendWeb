@@ -1,5 +1,32 @@
 {
   "language": "pl",
+  "analytes": {
+    "cea": "CEA",
+    "ldl": "LDL",
+    "hbe_positive": "HBe Dodatni",
+    "parasite_feces_positive": "Pasożyty w Kale Dodatnie",
+    "calprotectin_feces": "Kalprotektyna w Kale",
+    "creatinine_serum": "Kreatynina w Surowicy",
+    "glucose_urine": "Glukoza w Moczu",
+    "bacteria_urine_count": "Liczba Bakterii w Moczu",
+    "erythrocytes": "Erytrocyty",
+    "mch": "MCH",
+    "plcr": "PLCR",
+    "hemoglobin": "Hemoglobina",
+    "hct": "HCT",
+    "leukocytes": "Leukocyty",
+    "ob": "OB",
+    "ast": "AST",
+    "bilirubin": "Bilirubina",
+    "alkaline_phosphatase": "Fosfataza Alkaliczna",
+    "basophils": "Bazofile",
+    "erythroblasts": "Erytroblasty",
+    "mchc": "MCHC",
+    "monocytes": "Monocyty",
+    "mpv": "MPV",
+    "neutrophils": "Neutrofile",
+    "potassium": "Potas"
+  },
   "general": {
     "loading": "Ładowanie...",
     "error": "Wystąpił błąd",
@@ -204,5 +231,73 @@
         "past_date": "Data nie może być z przeszłości"
       }
     }
+  },
+  "survey": {
+    "history": {
+      "view_surveys": "Zobacz ankiety",
+      "crohn_title": "Historia ankiet choroby Leśniowskiego-Crohna",
+      "uc_title": "Historia ankiet wrzodziejącego zapalenia jelita grubego",
+      "no_surveys": "Brak dostępnych ankiet dla tego pacjenta"
+    },
+    "total_score": "Wynik całkowity",
+    "notes": "Notatki",
+    "category": {
+      "remission": "Remisja",
+      "mild": "Łagodny",
+      "moderate": "Umiarkowany",
+      "severe": "Ciężki"
+    },
+    "crohn": {
+      "abdominal_pain": "Ból brzucha",
+      "stools": "Stolce",
+      "general_wellbeing": "Ogólne samopoczucie",
+      "extraintestinal_manifestations": "Objawy pozajelitowe",
+      "abdominal_mass": "Masa brzuszna",
+      "hematocrit": "Hematokryt",
+      "weight_loss": "Utrata wagi"
+    },
+    "uc": {
+      "stool_frequency": "Częstotliwość wypróżnień",
+      "rectal_bleeding": "Krwawienie z odbytu",
+      "physician_global": "Ogólna ocena lekarza"
+    }
+  },
+  "common": {
+    "close": "Zamknij"
+  },
+  "symptoms": {
+    "history": {
+      "title": "Historia objawów",
+      "view_symptoms": "Zobacz historię objawów",
+      "no_symptoms": "Brak zarejestrowanych objawów"
+    },
+    "type": "Typ",
+    "duration": "Czas trwania",
+    "pain_level": "Poziom bólu",
+    "description": "Opis"
+  },
+  "drug": {
+    "history": {
+      "title": "Historia leków",
+      "view_drugs": "Zobacz leki",
+      "no_drugs": "Brak zarejestrowanych leków"
+    },
+    "name": "Nazwa",
+    "dosage": "Dawkowanie",
+    "dateFrom": "Data rozpoczęcia",
+    "dateTo": "Data zakończenia",
+    "times": "Harmonogram",
+    "additionalInfo": "Uwagi"
+  },
+  "meal": {
+    "history": {
+      "title": "Historia posiłków",
+      "view_meals": "Zobacz historię posiłków",
+      "no_meals": "Brak zarejestrowanych posiłków"
+    },
+    "meal_name": "Posiłek",
+    "meal_date": "Data",
+    "ontology": "Kategorie",
+    "notes": "Uwagi"
   }
 }

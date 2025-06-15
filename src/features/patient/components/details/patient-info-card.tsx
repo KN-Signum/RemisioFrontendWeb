@@ -1,48 +1,51 @@
 import {
-  BiBandAid,
   BiBody,
   BiClinic,
-  BiFirstAid,
   BiHealth,
   BiPhone,
-  BiPulse,
-  BiRestaurant,
   BiTimeFive,
 } from 'react-icons/bi';
+import { SurveyHistoryDialog } from '@/features/survey';
+import { SymptomHistoryDialog } from '@/features/symptoms';
+import { DrugHistoryDialog } from '@/features/drug';
+import { MealHistoryDialog } from '@/features/meal';
 
 interface PatientInfoCardProps {
+  id: string;
   name: string;
   hospital: string;
   phone_number: string;
   age: number;
   weight: number;
+  disease_type: string;
 }
 
 export const PatientInfoCard = (props: PatientInfoCardProps) => {
-  const { name, hospital, phone_number, age, weight } = props;
+  const patient = props;
   return (
     <div className="flex w-[35%] gap-4 overflow-y-auto rounded-sm bg-white p-4 shadow-md">
       {/* left column */}
       <div className="text-primary-accent flex min-w-[120px] flex-col items-start gap-4">
         <span className="bg-primary block rounded-lg px-4 py-3 text-xl leading-tight font-semibold text-white">
-          {name}
+          {patient.name}
         </span>
 
         <ul className="flex flex-col gap-2 text-base">
           <li className="flex items-center gap-2">
-            <BiClinic className="text-xl" /> {hospital}
+            <BiClinic className="text-xl" /> {patient.hospital}
           </li>
           <li className="flex items-center gap-2">
-            <BiPhone className="text-xl" /> {phone_number}
+            <BiPhone className="text-xl" /> {patient.phone_number}
           </li>
           <li className="flex items-center gap-2">
-            <BiTimeFive className="text-xl" /> {age} years
+            <BiTimeFive className="text-xl" /> {patient.age} years
           </li>
           <li className="flex items-center gap-2">
-            <BiBody className="text-xl" /> {weight} kg
+            <BiBody className="text-xl" /> {patient.weight} kg
           </li>
           <li className="flex items-center gap-2">
-            <BiHealth className="text-xl" /> Crohn
+            <BiHealth className="text-xl" />{' '}
+            {patient.disease_type === 'crohn' ? 'Crohn' : 'Ulcerative Colitis'}
           </li>
         </ul>
       </div>
@@ -56,19 +59,31 @@ export const PatientInfoCard = (props: PatientInfoCardProps) => {
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          {[
-            { Icon: BiPulse },
-            { Icon: BiRestaurant },
-            { Icon: BiBandAid },
-            { Icon: BiFirstAid },
-          ].map(({ Icon }, idx) => (
-            <button
-              key={idx}
-              className="bg-secondary hover:bg-primary-accent/80 flex items-center justify-center rounded-lg p-4 transition"
-            >
-              <Icon className="text-3xl text-white" />
-            </button>
-          ))}
+          {/* Symptom History Button */}
+          <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
+            <SymptomHistoryDialog patientId={patient.id} iconOnly={true} />
+          </div>
+
+          {/* Drug History Button */}
+          <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
+            <DrugHistoryDialog patientId={patient.id} iconOnly={true} />
+          </div>
+
+          {/* Meal History Button */}
+          <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
+            <MealHistoryDialog patientId={patient.id} iconOnly={true} />
+          </div>
+
+          {/* Survey History Button */}
+          <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
+            <SurveyHistoryDialog
+              patientId={patient.id}
+              diseaseType={
+                patient.disease_type as 'crohn' | 'ulcerative_colitis'
+              }
+              iconOnly={true}
+            />
+          </div>
         </div>
       </div>
     </div>
