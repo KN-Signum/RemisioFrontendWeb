@@ -22,6 +22,7 @@ export const DashboardPatientsTable = ({
         {patients.map((patient) => (
           <DashboardTableRow
             key={patient.id}
+            id={patient.id}
             name={patient.full_name}
             gender={patient.gender}
             age={patient.age}

@@ -3,6 +3,7 @@ import { formatDiseaseName } from '@/utils/format-disease-name';
 import { formatDateDisplay } from '@/utils/format-date-display';
 import { useTranslation } from 'react-i18next';
 import { IoPersonOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
 const PatientName = ({
   name,
@@ -45,6 +46,7 @@ const getStateColor = (state: PatientState): string => {
 };
 
 interface DashboardTablePatientDto {
+  id: string;
   name: string;
   gender: GenderType;
   age: number;
@@ -56,11 +58,15 @@ interface DashboardTablePatientDto {
 
 export const DashboardTableRow = (props: DashboardTablePatientDto) => {
   const { t } = useTranslation();
-  const { name, gender, age, disease, state, last_visit, drugs } = props;
+  const navigate = useNavigate();
+  const { id, name, gender, age, disease, state, last_visit, drugs } = props;
   const stateColor = getStateColor(state);
 
   return (
-    <div className="bg-foreground flex cursor-pointer gap-2 overflow-auto px-4 py-3 hover:bg-gray-100">
+    <div
+      className="bg-foreground hover:bg-secondary/20 flex cursor-pointer gap-2 overflow-auto px-4 py-3"
+      onClick={() => navigate(`/patients/${id}`)}
+    >
       <div className="flex-2">
         <PatientName name={name} gender={gender} age={age} />
       </div>
