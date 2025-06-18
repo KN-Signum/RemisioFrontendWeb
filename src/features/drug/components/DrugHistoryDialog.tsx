@@ -1,4 +1,3 @@
-// src/features/drug/components/DrugHistoryDialog.tsx
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
