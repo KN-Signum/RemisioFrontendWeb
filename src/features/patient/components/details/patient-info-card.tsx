@@ -30,7 +30,6 @@ interface PatientInfoCardProps {
   drugsLoading: boolean;
   symptoms?: SymptomDto[];
   symptomsLoading: boolean;
-  symptomsError?: unknown;
 }
 
 export const PatientInfoCard = ({
@@ -45,7 +44,6 @@ export const PatientInfoCard = ({
   drugsLoading,
   symptoms,
   symptomsLoading,
-  symptomsError,
 }: PatientInfoCardProps) => {
   /* lokalny stan do otwierania okienek */
   const [openSurvey, setOpenSurvey] = useState(false);
@@ -128,7 +126,6 @@ export const PatientInfoCard = ({
         onClose={() => setOpenSymptoms(false)}
         symptoms={symptoms}
         loading={symptomsLoading}
-        error={symptomsError}
       />
       <DrugHistoryDialog
         isOpen={openDrugs}

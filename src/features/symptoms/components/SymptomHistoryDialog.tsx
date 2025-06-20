@@ -16,7 +16,6 @@ interface Props {
 export const SymptomHistoryDialog = ({
   symptoms,
   loading,
-  error,
   isOpen,
   onClose,
 }: Props) => {
@@ -69,8 +68,6 @@ export const SymptomHistoryDialog = ({
         <div className="mt-4 flex-1 overflow-y-auto">
           {loading ? (
             <Spinner />
-          ) : error ? (
-            <EmptyState msg={t('symptoms.history.failed', 'Failed to load symptoms')} />
           ) : sorted.length === 0 ? (
             <EmptyState msg={t('symptoms.history.no_symptoms')} />
           ) : (

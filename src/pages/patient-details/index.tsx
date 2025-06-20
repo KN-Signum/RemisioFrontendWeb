@@ -108,7 +108,6 @@ const PatientDetailsPage = () => {
   const {
     data: symptoms,
     isLoading: symptomsLoading,
-    error: symptomsError,
   } = useSymptomsByPatientId(id ?? '');
 
 
@@ -228,7 +227,6 @@ const PatientDetailsPage = () => {
             drugsLoading={drugsLoading}
             symptoms={symptoms}
             symptomsLoading={symptomsLoading}
-            symptomsError={symptomsError}
           />
           {testsError ? (
             <div className="text-red-500">Failed to load tests</div>
