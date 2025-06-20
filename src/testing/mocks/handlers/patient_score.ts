@@ -1,34 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { API_URL } from '@/config/constants';
 import { db } from '..';
-import { CreatePatientScoreDto } from '@/features/score';
-import { v4 as uuidv4 } from 'uuid';
-
-// POST endpoint to create a patient score
-export const createPatientScore = http.post(
-  `${API_URL}/api/patient_scores`,
-  async ({ request }) => {
-    const data = (await request.json()) as CreatePatientScoreDto;
-    console.log('[MSW] Create patient score', data);
-
-    // Generate a new UUID for the score
-    const id = uuidv4();
-    const now = new Date().toISOString();
-
-    // Store the score in the database
-    db.patientScore.create({
-      id,
-      ...data,
-      created_at: now,
-      updated_at: now,
-    });
-
-    return HttpResponse.json({
-      status: 201,
-      content: { id },
-    });
-  },
-);
 
 // GET endpoint to retrieve patient scores
 export const getPatientScores = http.get(
@@ -67,4 +39,4 @@ export const getPatientScores = http.get(
   },
 );
 
-export const handlers = [createPatientScore, getPatientScores];
+export const handlers = [getPatientScores];

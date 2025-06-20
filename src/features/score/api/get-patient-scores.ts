@@ -4,11 +4,8 @@ import { GetPatientScoresDto } from '../types';
 
 export const getPatientScores = async (
   patientId: string,
-  scoreDate?: string,
 ): Promise<GetPatientScoresDto> => {
-  const url = scoreDate
-    ? `/api/patient_scores/${patientId}?score_date=${encodeURIComponent(scoreDate)}`
-    : `/api/patient_scores/${patientId}`;
+  const url = `/api/patient_scores/${patientId}`;
 
   const { data } = await apiClient.get(url);
   console.log('[API-CLIENT] ←', data);
@@ -18,7 +15,7 @@ export const getPatientScores = async (
 export const usePatientScores = (patientId: string, scoreDate?: string) =>
   useQuery({
     queryKey: ['patient-scores', patientId, scoreDate],
-    queryFn: () => getPatientScores(patientId, scoreDate),
+    queryFn: () => getPatientScores(patientId),
     enabled: !!patientId,
     staleTime: 5 * 60 * 1000,
   });
