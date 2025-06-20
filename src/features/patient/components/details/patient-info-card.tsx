@@ -9,8 +9,8 @@ import {
   BiBandAid,
   BiRestaurant,
 } from 'react-icons/bi';
-import { SymptomHistoryDialog } from '@/features/symptoms';
-import { DrugHistoryDialog } from '@/features/drug';
+import { SymptomDto, SymptomHistoryDialog } from '@/features/symptoms';
+import { DrugDto, DrugHistoryDialog } from '@/features/drug';
 import { MealHistoryDialog } from '@/features/meal';
 
 import { Button } from '@/components/ui/button';
@@ -26,16 +26,34 @@ interface PatientInfoCardProps {
   age: number;
   weight: number;
   disease_type: string;
+  drugs?: DrugDto[];
+  drugsLoading: boolean;
+  symptoms?: SymptomDto[];
+  symptomsLoading: boolean;
+  symptomsError?: unknown;
 }
 
-export const PatientInfoCard = (props: PatientInfoCardProps) => {
+export const PatientInfoCard = ({
+  id,
+  name,
+  hospital,
+  phone_number,
+  age,
+  weight,
+  disease_type,
+  drugs,
+  drugsLoading,
+  symptoms,
+  symptomsLoading,
+  symptomsError,
+}: PatientInfoCardProps) => {
+  /* lokalny stan do otwierania okienek */
   const [openSurvey, setOpenSurvey] = useState(false);
   const [openSymptoms, setOpenSymptoms] = useState(false);
   const [openDrugs, setOpenDrugs] = useState(false);
   const [openMeals, setOpenMeals] = useState(false);
-  const patient = props;
   const SurveyDialog =
-    patient.disease_type === 'crohn'
+    disease_type === 'crohn'
       ? CrohnSurveyHistoryDialog
       : UcSurveyHistoryDialog;
 
@@ -44,25 +62,25 @@ export const PatientInfoCard = (props: PatientInfoCardProps) => {
       {/* left column */}
       <div className="text-primary-accent flex min-w-[120px] flex-col items-start gap-4">
         <span className="bg-primary block rounded-lg px-4 py-3 text-xl leading-tight font-semibold text-white">
-          {patient.name}
+          {name}
         </span>
 
         <ul className="flex flex-col gap-2 text-base">
           <li className="flex items-center gap-2">
-            <BiClinic className="text-xl" /> {patient.hospital}
+            <BiClinic className="text-xl" /> {hospital}
           </li>
           <li className="flex items-center gap-2">
-            <BiPhone className="text-xl" /> {patient.phone_number}
+            <BiPhone className="text-xl" /> {phone_number}
           </li>
           <li className="flex items-center gap-2">
-            <BiTimeFive className="text-xl" /> {patient.age} years
+            <BiTimeFive className="text-xl" /> {age} years
           </li>
           <li className="flex items-center gap-2">
-            <BiBody className="text-xl" /> {patient.weight} kg
+            <BiBody className="text-xl" /> {weight} kg
           </li>
           <li className="flex items-center gap-2">
             <BiHealth className="text-xl" />{' '}
-            {patient.disease_type === 'crohn' ? 'Crohn' : 'Ulcerative Colitis'}
+            {disease_type === 'crohn' ? 'Crohn' : 'Ulcerative Colitis'}
           </li>
         </ul>
       </div>
@@ -101,22 +119,25 @@ export const PatientInfoCard = (props: PatientInfoCardProps) => {
 
       {/* właściwy dialog (Crohn lub UC) */}
       <SurveyDialog
-        patientId={patient.id}
+        patientId={id}
         isOpen={openSurvey}
         onClose={() => setOpenSurvey(false)}
       />
       <SymptomHistoryDialog
-        patientId={patient.id}
         isOpen={openSymptoms}
         onClose={() => setOpenSymptoms(false)}
+        symptoms={symptoms}
+        loading={symptomsLoading}
+        error={symptomsError}
       />
       <DrugHistoryDialog
-        patientId={patient.id}
         isOpen={openDrugs}
         onClose={() => setOpenDrugs(false)}
+        drugs={drugs}
+        loading={drugsLoading}
       />
       <MealHistoryDialog
-        patientId={patient.id}
+        patientId={id}
         isOpen={openMeals}
         onClose={() => setOpenMeals(false)}
       />

@@ -8,7 +8,10 @@ import { cn } from '@/utils/cn';
 import { usePatientDiagnosticTests } from '@/features/diagnostic_tests/api/get-patient-diagnostic-tests';
 import { DiagnosticTestDto } from '@/features/diagnostic_tests';
 import { FullPatient, useGetPatientDetails, useGetPatients } from '@/features/patient';
+
 import { usePatientScores } from '@/features/score/api/get-patient-scores';
+import { useDrugsByPatientId } from '@/features/drug/api/get-all-patient-drugs';
+import { useSymptomsByPatientId } from '@/features/symptoms/api/get-patient-symptoms';
 
 const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
@@ -100,6 +103,14 @@ const PatientDetailsPage = () => {
   const { data: patientDetail, isLoading: patientLoading } =
     useGetPatientDetails(id ?? '');
   const { data: patients, isLoading: patientsLoading } = useGetPatients();
+
+  const { data: drugs, isLoading: drugsLoading } = useDrugsByPatientId(id ?? '');
+  const {
+    data: symptoms,
+    isLoading: symptomsLoading,
+    error: symptomsError,
+  } = useSymptomsByPatientId(id ?? '');
+
 
   const [selectedAnalyte, setSelectedAnalyte] = useState<string | null>('cea');
   const [timeRange, setTimeRange] = useState<TimeRange>('all');
@@ -213,6 +224,11 @@ const PatientDetailsPage = () => {
             age={fullPatient!.age}
             hospital={fullPatient!.hospital}
             weight={fullPatient!.weight}
+            drugs={drugs}
+            drugsLoading={drugsLoading}
+            symptoms={symptoms}
+            symptomsLoading={symptomsLoading}
+            symptomsError={symptomsError}
           />
           {testsError ? (
             <div className="text-red-500">Failed to load tests</div>

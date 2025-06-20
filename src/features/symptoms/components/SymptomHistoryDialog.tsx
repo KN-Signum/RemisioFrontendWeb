@@ -3,20 +3,33 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { formatDateDisplay } from '@/utils/format-date-display';
 import { SymptomDto } from '../types';
-import { useSymptomsByPatientId } from '../api/get-patient-symptoms';
 
 interface Props {
-  patientId: string;
+  symptoms?: SymptomDto[];
+  loading: boolean;
+  error?: unknown;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
+
+export const SymptomHistoryDialog = ({
+  symptoms,
+  loading,
+  error,
+  isOpen,
+  onClose,
+}: Props) => {
   const { t } = useTranslation();
 
-  const { data: symptoms, isLoading } = useSymptomsByPatientId(
-    patientId
+  /* sortujemy przekazaną tablicę */
+  const sorted = (symptoms ?? []).slice().sort(
+    (a, b) =>
+      (b.created_at ? Date.parse(b.created_at) : 0) -
+      (a.created_at ? Date.parse(a.created_at) : 0),
   );
+
+  if (!isOpen) return null;
 
   const levelColor = (lvl: string) =>
   ({
@@ -26,12 +39,6 @@ export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
     Severe: 'text-orange-500',
     'Very Severe': 'text-red-500',
   }[lvl] ?? 'text-gray-400');
-
-  const sorted = (symptoms ?? []).slice().sort(
-    (a, b) =>
-      (b.created_at ? Date.parse(b.created_at) : 0) -
-      (a.created_at ? Date.parse(a.created_at) : 0),
-  );
 
   if (!isOpen) return null;
 
@@ -60,8 +67,10 @@ export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
 
         {/* body */}
         <div className="mt-4 flex-1 overflow-y-auto">
-          {isLoading ? (
+          {loading ? (
             <Spinner />
+          ) : error ? (
+            <EmptyState msg={t('symptoms.history.failed', 'Failed to load symptoms')} />
           ) : sorted.length === 0 ? (
             <EmptyState msg={t('symptoms.history.no_symptoms')} />
           ) : (

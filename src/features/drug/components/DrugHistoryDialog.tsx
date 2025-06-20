@@ -1,21 +1,20 @@
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { useDrugsByPatientId } from '../api/get-all-patient-drugs';
 import { DrugDto } from '../types';
 
 interface Props {
-  patientId: string;
+  drugs?: DrugDto[];
+  loading: boolean;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const DrugHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
+export const DrugHistoryDialog = ({ drugs, loading, isOpen, onClose }: Props) => {
   const { t } = useTranslation();
-  const { data: drugs, isLoading } = useDrugsByPatientId(isOpen ? patientId : '');
-
   const format = (d: string) => new Date(d).toLocaleDateString();
 
+  // sortujemy to co dostaliśmy
   const sorted = (drugs ?? []).slice().sort(
     (a, b) => Date.parse(b.dateFrom) - Date.parse(a.dateFrom),
   );
@@ -23,14 +22,9 @@ export const DrugHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
   if (!isOpen) return null;
 
   return createPortal(
-    <div
-      className="fixed inset-0 z-[9998] flex items-center justify-center backdrop-blur-xs"
-      onClick={onClose}
-    >
-      <div
-        className="bg-foreground/90 flex max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="fixed inset-0 z-[9998] flex items-center justify-center backdrop-blur-xs"
+      onClick={onClose}>
+      <div className="bg-foreground/90 flex max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6" onClick={(e) => e.stopPropagation()}>
         {/* header */}
         <div className="flex w-full items-center justify-between">
           <div className="size-8" />
@@ -47,7 +41,7 @@ export const DrugHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
 
         {/* body */}
         <div className="mt-4 flex-1 overflow-y-auto">
-          {isLoading ? (
+          {loading ? (
             <div className="flex h-40 items-center justify-center">
               <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-white" />
             </div>
