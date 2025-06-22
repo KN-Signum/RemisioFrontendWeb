@@ -27,7 +27,8 @@
     "monocytes": "Monocyty",
     "mpv": "MPV",
     "neutrophils": "Neutrofile",
-    "potassium": "Potas"
+    "potassium": "Potas",
+    "hematocrit": "Hematokryt"
   },
   "general": {
     "loading": "Ładowanie...",

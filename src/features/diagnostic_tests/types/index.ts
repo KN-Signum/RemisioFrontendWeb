@@ -27,7 +27,8 @@ export type Analyte =
   | 'monocytes'
   | 'mpv'
   | 'neutrophils'
-  | 'potassium';
+  | 'potassium'
+  | 'hematocrit';
 
 // Diagnostic test types
 
@@ -60,6 +61,7 @@ export interface DiagnosticTestDto {
   mpv?: number;
   neutrophils?: number;
   potassium?: number;
+  hematocrit?: number;
   test_notes?: string;
   created_at: string;
   updated_at: string;

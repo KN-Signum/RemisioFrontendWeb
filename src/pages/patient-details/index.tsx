@@ -65,6 +65,7 @@ const processTestData = (
         else if (k === 'mchc') val = `${v} g/dL`;
         else if (k === 'mpv') val = `${v} fL`;
         else if (k === 'potassium') val = `${v} mmol/L`;
+        else if (k === 'hematocrit') val = `${v} %`;
         else val = v.toString();
       } else {
         val = v.toString();
