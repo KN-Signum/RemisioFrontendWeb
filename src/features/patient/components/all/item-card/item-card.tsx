@@ -1,5 +1,5 @@
 import { FaArrowRightLong } from 'react-icons/fa6';
-import { ItemCardChart } from '../..';
+import { ItemCardChart } from '.';
 
 type ItemCardProps = {
   title: string;

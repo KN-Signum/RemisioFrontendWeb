@@ -3,11 +3,11 @@ import { API_URL } from '@/config/constants';
 import { db } from '..';
 
 // GET endpoint to retrieve patient scores
-export const getPatientScores = http.get(
+export const getPatientScores = http.get<{ patientId: string }>(
   `${API_URL}/api/patient_scores/:patientId`,
   ({ params, request }) => {
     console.log('[MSW] Get patient scores', params);
-    const { patientId } = params as { patientId: string };
+    const { patientId } = params;
 
     // Get the score_date query parameter if it exists
     const url = new URL(request.url);

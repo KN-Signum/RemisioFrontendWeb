@@ -57,11 +57,10 @@ export const calculateUcCategory = (totalScore: number): SurveyCategory => {
   return 'severe';
 };
 
-
 // ===== CROHN'S DISEASE SURVEY ENDPOINTS =====
 
 /** GET /api/patients/:patientId/surveys/crohn */
-const getAllCrohnSurveys = http.get(
+const getAllCrohnSurveys = http.get<{ patientId: string }>(
   `${API_URL}/api/patients/:patientId/surveys/crohn`,
   ({ params }) => {
     const { patientId } = params;
@@ -86,7 +85,7 @@ const getAllCrohnSurveys = http.get(
 );
 
 /** GET /api/patients/:patientId/surveys/crohn/latest */
-const getLatestCrohnSurvey = http.get(
+const getLatestCrohnSurvey = http.get<{ patientId: string }>(
   `${API_URL}/api/patients/:patientId/surveys/crohn/latest`,
   ({ params }) => {
     const { patientId } = params;
@@ -99,8 +98,8 @@ const getLatestCrohnSurvey = http.get(
       surveys.length === 0
         ? null
         : surveys.reduce((prev, cur) =>
-          new Date(cur.survey_date) > new Date(prev.survey_date) ? cur : prev,
-        );
+            new Date(cur.survey_date) > new Date(prev.survey_date) ? cur : prev,
+          );
 
     return HttpResponse.json(
       {
@@ -117,7 +116,7 @@ const getLatestCrohnSurvey = http.get(
 // ===== Ulcerative Colitis SURVEY ENDPOINTS =====
 
 /** GET /api/patients/:patientId/surveys/uc */
-const getAllUcSurveys = http.get(
+const getAllUcSurveys = http.get<{ patientId: string }>(
   `${API_URL}/api/patients/:patientId/surveys/uc`,
   ({ params }) => {
     const { patientId } = params;
@@ -142,7 +141,7 @@ const getAllUcSurveys = http.get(
 );
 
 /** GET /api/patients/:patientId/surveys/uc/latest */
-const getLatestUcSurvey = http.get(
+const getLatestUcSurvey = http.get<{ patientId: string }>(
   `${API_URL}/api/patients/:patientId/surveys/uc/latest`,
   ({ params }) => {
     const { patientId } = params;
@@ -155,8 +154,8 @@ const getLatestUcSurvey = http.get(
       surveys.length === 0
         ? null
         : surveys.reduce((prev, cur) =>
-          new Date(cur.survey_date) > new Date(prev.survey_date) ? cur : prev,
-        );
+            new Date(cur.survey_date) > new Date(prev.survey_date) ? cur : prev,
+          );
 
     return HttpResponse.json(
       {
@@ -170,8 +169,9 @@ const getLatestUcSurvey = http.get(
   },
 );
 
-
-export const handlers = [getAllCrohnSurveys,
+export const handlers = [
+  getAllCrohnSurveys,
   getLatestCrohnSurvey,
   getAllUcSurveys,
-  getLatestUcSurvey,];
+  getLatestUcSurvey,
+];

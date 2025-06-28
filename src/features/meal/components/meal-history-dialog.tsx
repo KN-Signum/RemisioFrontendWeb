@@ -42,7 +42,7 @@ export const MealHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
         {/* header */}
         <div className="flex w-full items-center justify-between">
           <div className="size-8" />
-          <span className="text-2xl font-bold text-primary-accent">
+          <span className="text-primary-accent text-2xl font-bold">
             {t('meal.history.title', 'Meal History')}
           </span>
           <div
@@ -63,14 +63,19 @@ export const MealHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
             <div className="flex flex-col gap-4">
               {Object.entries(grouped).map(([date, list]) => (
                 <div key={date} className="mb-4">
-                  <h3 className="mb-2 text-lg font-bold text-primary-accent">{date}</h3>
+                  <h3 className="text-primary-accent mb-2 text-lg font-bold">
+                    {date}
+                  </h3>
                   {list.map((m) => (
-                    <div key={m.id} className="bg-background/10 mb-3 rounded-sm p-4">
+                    <div
+                      key={m.id}
+                      className="bg-background/10 mb-3 rounded-sm p-4"
+                    >
                       <div className="mb-2 flex items-center justify-between">
-                        <h4 className="text-lg font-semibold text-primary-accent">
+                        <h4 className="text-primary-accent text-lg font-semibold">
                           {m.meal_name}
                         </h4>
-                        <span className="text-sm font-medium text-primary-accent">
+                        <span className="text-primary-accent text-sm font-medium">
                           {formatTime(m.meal_date)}
                         </span>
                       </div>
@@ -81,13 +86,15 @@ export const MealHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
                             src={m.image_url}
                             alt={m.meal_name}
                             className="max-h-40 rounded-sm object-cover"
-                            onError={(e) => (e.currentTarget.style.display = 'none')}
+                            onError={(e) =>
+                              (e.currentTarget.style.display = 'none')
+                            }
                           />
                         </div>
                       )}
 
                       {m.ontology && (
-                        <div className="mb-2 flex flex-wrap gap-1 text-primary-accent">
+                        <div className="text-primary-accent mb-2 flex flex-wrap gap-1">
                           {m.ontology.split(',').map((tag) => (
                             <span
                               key={tag}
@@ -134,6 +141,6 @@ const Spinner = () => (
 
 const EmptyState = ({ msg }: { msg: string }) => (
   <div className="flex h-40 items-center justify-center">
-    <p className="text-lg text-primary-accent">{msg}</p>
+    <p className="text-primary-accent text-lg">{msg}</p>
   </div>
 );

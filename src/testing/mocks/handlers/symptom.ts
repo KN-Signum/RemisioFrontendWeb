@@ -7,7 +7,10 @@ const getSymptomsByPatientId = http.get<{ patientId: string }>(
   `${API_URL}/api/symptoms/:patientId`,
   ({ params }) => {
     const { patientId } = params;
-    console.log('[MSW] Received request for symptoms with patientId:', patientId);
+    console.log(
+      '[MSW] Received request for symptoms with patientId:',
+      patientId,
+    );
 
     const symptoms = db.symptom
       .getAll()
@@ -20,6 +23,4 @@ const getSymptomsByPatientId = http.get<{ patientId: string }>(
   },
 );
 
-export const handlers = [
-  getSymptomsByPatientId
-];
+export const handlers = [getSymptomsByPatientId];

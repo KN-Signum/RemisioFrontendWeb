@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { useCreatePatient } from '../..';
 import { useNotifications } from '@/stores/notifications';
 import { createPortal } from 'react-dom';
 import { useState } from 'react';
@@ -8,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { FormDateInput } from '@/components/ui/form-date-input';
 import { CreatePatientForm } from './create-patient-form';
 import { validateFields } from './validate-fields';
+import { useCreatePatient } from '@/features/patient';
 
 interface NewPatientDialogProps {
   onClose: () => void;

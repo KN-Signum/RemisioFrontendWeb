@@ -1,7 +1,6 @@
 import Chart from 'react-apexcharts';
 import { useMemo } from 'react';
-
-export type TimeRange = 'month' | 'year' | 'all';
+import { TimeRange } from '@/types';
 
 interface Props {
   weeks: string[];
@@ -48,16 +47,24 @@ export const ScoreTimelineChart: React.FC<Props> = ({
 
     const ana = analyteData
       ? (() => {
-        const pts = analyteData.dates
-          .map((d, i) => ({ d, v: analyteData.values[i], t: new Date(d).getTime() }))
-          .filter(({ t }) => t >= cutoff);
-        return { name: analyteData.name, dates: pts.map(p => p.d), values: pts.map(p => p.v) };
-      })()
+          const pts = analyteData.dates
+            .map((d, i) => ({
+              d,
+              v: analyteData.values[i],
+              t: new Date(d).getTime(),
+            }))
+            .filter(({ t }) => t >= cutoff);
+          return {
+            name: analyteData.name,
+            dates: pts.map((p) => p.d),
+            values: pts.map((p) => p.v),
+          };
+        })()
       : undefined;
 
     return {
-      filteredWeeks: filteredData.map(p => p.w),
-      filteredScores: filteredData.map(p => p.s),
+      filteredWeeks: filteredData.map((p) => p.w),
+      filteredScores: filteredData.map((p) => p.s),
       filteredAnalyteData: ana,
     };
   }, [weeks, scores, analyteData, timeRange]);
@@ -82,16 +89,30 @@ export const ScoreTimelineChart: React.FC<Props> = ({
       width="100%"
       series={[
         { name: 'Score', data: filteredScores },
-        ...(filteredAnalyteData ? [{ name: filteredAnalyteData.name, data: filteredAnalyteData.values }] : []),
+        ...(filteredAnalyteData
+          ? [
+              {
+                name: filteredAnalyteData.name,
+                data: filteredAnalyteData.values,
+              },
+            ]
+          : []),
       ]}
       options={{
-        chart: { id: 'score-chart', zoom: { enabled: false }, stacked: false, toolbar: { show: false } },
+        chart: {
+          id: 'score-chart',
+          zoom: { enabled: false },
+          stacked: false,
+          toolbar: { show: false },
+        },
         stroke: { curve: 'smooth', width: 2 },
         markers: { size: 4 },
         colors: [colors.scoreColor, colors.analyteColor],
         xaxis: {
           categories: filteredAnalyteData
-            ? [...new Set([...filteredWeeks, ...filteredAnalyteData.dates])].sort()
+            ? [
+                ...new Set([...filteredWeeks, ...filteredAnalyteData.dates]),
+              ].sort()
             : filteredWeeks,
           labels: { rotate: -45 },
           type: 'datetime',
@@ -106,20 +127,35 @@ export const ScoreTimelineChart: React.FC<Props> = ({
           },
           ...(filteredAnalyteData
             ? [
-              {
-                opposite: true,
-                min: 0,
-                max: filteredAnalyteData.values.length > 0 ? Math.max(...filteredAnalyteData.values) * 1.2 : 10,
-                title: { text: filteredAnalyteData.name.toUpperCase(), style: { color: colors.analyteColor } },
-                labels: { style: { colors: colors.analyteColor }, formatter: (v: number) => `${v}` },
-              },
-            ]
+                {
+                  opposite: true,
+                  min: 0,
+                  max:
+                    filteredAnalyteData.values.length > 0
+                      ? Math.max(...filteredAnalyteData.values) * 1.2
+                      : 10,
+                  title: {
+                    text: filteredAnalyteData.name.toUpperCase(),
+                    style: { color: colors.analyteColor },
+                  },
+                  labels: {
+                    style: { colors: colors.analyteColor },
+                    formatter: (v: number) => `${v}`,
+                  },
+                },
+              ]
             : []),
         ],
-        tooltip: { shared: true, intersect: false, y: { formatter: (v: number) => `${v.toFixed(1)}` } },
+        tooltip: {
+          shared: true,
+          intersect: false,
+          y: { formatter: (v: number) => `${v.toFixed(1)}` },
+        },
         grid: { strokeDashArray: 4 },
         legend: { show: true },
-        responsive: [{ breakpoint: 640, options: { xaxis: { labels: { rotate: -90 } } } }],
+        responsive: [
+          { breakpoint: 640, options: { xaxis: { labels: { rotate: -90 } } } },
+        ],
       }}
     />
   );

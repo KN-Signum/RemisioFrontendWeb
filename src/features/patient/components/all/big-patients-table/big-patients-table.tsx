@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { GetPatientDto } from '../../types';
 import { BigTableRow, paddings } from './big-table-row';
+import { GetPatientDto } from '@/features/patient/types';
 
 interface SmallPatientsTableProps {
   diesese: string;

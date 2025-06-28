@@ -13,10 +13,12 @@ import { SymptomDto, SymptomHistoryDialog } from '@/features/symptoms';
 import { DrugDto, DrugHistoryDialog } from '@/features/drug';
 import { MealHistoryDialog } from '@/features/meal';
 
-import { Button } from '@/components/ui/button';
-
 import { useState } from 'react';
-import { CrohnSurveyHistoryDialog, UcSurveyHistoryDialog } from '@/features/survey';
+import {
+  CrohnSurveyHistoryDialog,
+  UcSurveyHistoryDialog,
+} from '@/features/survey';
+import { HistoryTile } from './history-tile';
 
 interface PatientInfoCardProps {
   id: string;
@@ -51,9 +53,7 @@ export const PatientInfoCard = ({
   const [openDrugs, setOpenDrugs] = useState(false);
   const [openMeals, setOpenMeals] = useState(false);
   const SurveyDialog =
-    disease_type === 'crohn'
-      ? CrohnSurveyHistoryDialog
-      : UcSurveyHistoryDialog;
+    disease_type === 'crohn' ? CrohnSurveyHistoryDialog : UcSurveyHistoryDialog;
 
   return (
     <div className="flex w-[35%] gap-4 overflow-y-auto rounded-sm bg-white p-4 shadow-md">
@@ -141,20 +141,3 @@ export const PatientInfoCard = ({
     </div>
   );
 };
-
-const HistoryTile = ({
-  icon,
-  onClick,
-}: {
-  icon: React.ReactNode;
-  onClick: () => void;
-}) => (
-  <div className="bg-secondary hover:bg-primary-accent/80 rounded-lg p-4 transition">
-    <Button
-      onClick={onClick}
-      className="flex h-full w-full items-center justify-center bg-transparent p-0"
-    >
-      {icon}
-    </Button>
-  </div>
-);

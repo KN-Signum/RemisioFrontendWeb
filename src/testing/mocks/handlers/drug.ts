@@ -3,7 +3,7 @@ import { API_URL } from '@/config/constants';
 import { db } from '..';
 
 // Get drugs by patient ID
-const getDrugsByPatientId = http.get(
+const getDrugsByPatientId = http.get<{ patientId: string }>(
   `${API_URL}/api/drugs/:patientId`,
   ({ params }) => {
     const { patientId } = params;
@@ -14,6 +14,5 @@ const getDrugsByPatientId = http.get(
     return HttpResponse.json({ status: 200, content: drugs });
   },
 );
-
 
 export const handlers = [getDrugsByPatientId];

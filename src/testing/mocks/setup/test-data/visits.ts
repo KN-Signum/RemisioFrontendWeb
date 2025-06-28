@@ -10,7 +10,7 @@ function getFormattedDate(offsetDays: number, hour: string): string {
 export const mockVisits = [
   {
     id: 'v001',
-    patient_id: 'u001',
+    patient_id: 'p001',
     doctor_id: 'd001',
     name: 'John Doe',
     time_start: getFormattedDate(0, '09'),
@@ -19,7 +19,7 @@ export const mockVisits = [
   },
   {
     id: 'v002',
-    patient_id: 'u002',
+    patient_id: 'p002',
     doctor_id: 'd001',
     name: 'Jane Smith',
     time_start: getFormattedDate(1, '09'),
@@ -28,7 +28,7 @@ export const mockVisits = [
   },
   {
     id: 'v003',
-    patient_id: 'u003',
+    patient_id: 'p003',
     doctor_id: 'd001',
     name: 'Michael Johnson',
     time_start: getFormattedDate(2, '15'),

@@ -3,7 +3,7 @@ import { API_URL } from '@/config/constants';
 import { db } from '..';
 
 // Get meals by patient ID
-const getMealsByPatientId = http.get(
+const getMealsByPatientId = http.get<{ patientId: string }>(
   `${API_URL}/api/meals/:patientId`,
   ({ params }) => {
     const { patientId } = params;
