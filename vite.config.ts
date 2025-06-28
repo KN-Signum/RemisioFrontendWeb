@@ -11,6 +11,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    target: "esnext"
+  },
+  esbuild: {
+    target: "esnext"
+  },
   server: {
     open: true,
     port: 3000,
