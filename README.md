@@ -15,6 +15,6 @@ Web page is a part of the project called Gastro-App. The solution we suggest is 
   - python
   - fastApi
   - SQLAlchemy
-  - rabbitmq
+  - redis
   - sqlite3
   - docker
