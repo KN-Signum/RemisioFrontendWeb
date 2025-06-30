@@ -9,7 +9,7 @@ import {
   BiBandAid,
   BiRestaurant,
 } from 'react-icons/bi';
-import { SymptomDto, SymptomHistoryDialog } from '@/features/symptoms';
+import { SymptomHistoryDialog } from '@/features/symptoms';
 import { DrugDto, DrugHistoryDialog } from '@/features/drug';
 import { MealHistoryDialog } from '@/features/meal';
 
@@ -30,8 +30,6 @@ interface PatientInfoCardProps {
   disease_type: string;
   drugs?: DrugDto[];
   drugsLoading: boolean;
-  symptoms?: SymptomDto[];
-  symptomsLoading: boolean;
 }
 
 export const PatientInfoCard = ({
@@ -44,8 +42,6 @@ export const PatientInfoCard = ({
   disease_type,
   drugs,
   drugsLoading,
-  symptoms,
-  symptomsLoading,
 }: PatientInfoCardProps) => {
   /* lokalny stan do otwierania okienek */
   const [openSurvey, setOpenSurvey] = useState(false);
@@ -122,10 +118,9 @@ export const PatientInfoCard = ({
         onClose={() => setOpenSurvey(false)}
       />
       <SymptomHistoryDialog
+        patientId={id}
         isOpen={openSymptoms}
         onClose={() => setOpenSymptoms(false)}
-        symptoms={symptoms}
-        loading={symptomsLoading}
       />
       <DrugHistoryDialog
         isOpen={openDrugs}

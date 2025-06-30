@@ -1,5 +1,5 @@
 //api
-export * from './api/get-all-patient-drugs';
+export * from './api/get-drugs-by-patientid';
 
 //components
 export * from './components';

@@ -7,26 +7,21 @@ export const getSymptomsByPatientId = async (
 ): Promise<SymptomDto[]> => {
   if (!patientId) throw new Error('patientId is required');
 
-  console.log('[API-CLIENT] → Requesting symptoms for patientId:', patientId);
-  const url = `/api/symptoms/${patientId}`;
-  console.log('[API-CLIENT] → Request URL:', url);
-
-  const { data } = await apiClient.get(url);
-  console.log('[API-CLIENT] ← symptoms response:', data);
-  return data.content as SymptomDto[];
+  console.log('[API-CLIENT] fetching symptoms for patientId:', patientId);
+  const response = await apiClient.get(`/api/symptoms/${patientId}`);
+  return response.data.content;
 };
 
 export const useSymptomsByPatientId = (patientId: string) => {
-  const query = useQuery({
+  const { data, isFetched, isFetching } = useQuery({
     queryKey: ['symptoms', patientId],
     queryFn: () => getSymptomsByPatientId(patientId),
     enabled: !!patientId,
-    initialData: [],
     staleTime: 5 * 60 * 1000,
   });
 
   return {
-    data: query.data,
-    isLoading: query.isFetching && !query.isFetched,
+    data: data,
+    isLoading: isFetching && !isFetched,
   };
 };

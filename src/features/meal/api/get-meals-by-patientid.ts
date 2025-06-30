@@ -2,25 +2,26 @@ import { apiClient } from '@/lib/api-client';
 import { useQuery } from '@tanstack/react-query';
 import { MealDto } from '../types';
 
-export const getMealsByPatientId = async (patientId: string): Promise<MealDto[]> => {
+export const getMealsByPatientId = async (
+  patientId: string,
+): Promise<MealDto[]> => {
   if (!patientId) throw new Error('patientId is required');
 
-  const { data } = await apiClient.get(`/api/meals/${patientId}`);
-  console.log('[API-CLIENT] ← meals', data);
-  return data.content as MealDto[];
+  const response = await apiClient.get(`/api/meals/${patientId}`);
+  console.log('[API-CLIENT] fetching meals for patient:', patientId);
+  return response.data.content;
 };
 
 export const useMealsByPatientId = (patientId: string) => {
-  const query = useQuery({
+  const { data, isFetching, isFetched } = useQuery({
     queryKey: ['meals', patientId],
     queryFn: () => getMealsByPatientId(patientId),
     enabled: !!patientId,
-    initialData: [] as MealDto[],
     staleTime: 5 * 60 * 1000,
   });
 
   return {
-    data: query.data,
-    isLoading: query.isFetching && !query.isFetched,
+    data: data,
+    isLoading: isFetching && !isFetched,
   };
 };

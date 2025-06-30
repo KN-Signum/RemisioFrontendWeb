@@ -2,8 +2,9 @@
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { useMealsByPatientId } from '../api/get-all-patient-meals';
+import { useMealsByPatientId } from '../api/get-meals-by-patientid';
 import { MealDto } from '../types';
+import { Loading } from '@/components/ui/loading';
 
 interface Props {
   patientId: string;
@@ -13,8 +14,9 @@ interface Props {
 
 export const MealHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
   const { t } = useTranslation();
-  const { data: meals, isLoading } = useMealsByPatientId(patientId);
-
+  const { data: meals, isLoading } = useMealsByPatientId(
+    isOpen ? patientId : '',
+  );
   const formatTime = (d: string) =>
     new Date(d).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -56,8 +58,8 @@ export const MealHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
         {/* body */}
         <div className="mt-4 flex-1 overflow-y-auto">
           {isLoading ? (
-            <Spinner />
-          ) : sorted.length === 0 ? (
+            <Loading size={50} className="mt-5 overflow-hidden" />
+          ) : sorted.length == 0 ? (
             <EmptyState msg={t('meal.history.no_meals')} />
           ) : (
             <div className="flex flex-col gap-4">
@@ -131,13 +133,6 @@ export const MealHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
     document.body,
   );
 };
-
-/* wspólne */
-const Spinner = () => (
-  <div className="flex h-40 items-center justify-center">
-    <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-white" />
-  </div>
-);
 
 const EmptyState = ({ msg }: { msg: string }) => (
   <div className="flex h-40 items-center justify-center">

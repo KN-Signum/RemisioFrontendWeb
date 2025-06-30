@@ -18,7 +18,6 @@ import {
 import { TimeRange } from '@/types';
 import { usePatientScores } from '@/features/score';
 import { useDrugsByPatientId } from '@/features/drug';
-import { useSymptomsByPatientId } from '@/features/symptoms';
 
 const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
@@ -116,19 +115,14 @@ const PatientDetailsPage = () => {
     isLoading: testsLoading,
     error: testsError,
   } = usePatientDiagnosticTests(id ?? '');
-  const {
-    data: patientScores,
-    isLoading: scoresLoading,
-    error: scoresError,
-  } = usePatientScores(id ?? '');
+  const { data: patientScores, isLoading: scoresLoading } = usePatientScores(
+    id ?? '',
+  );
   const { data: patientDetail, isLoading: patientLoading } =
     useGetPatientDetails(id ?? '');
   const { data: patients, isLoading: patientsLoading } = useGetPatients();
 
   const { data: drugs, isLoading: drugsLoading } = useDrugsByPatientId(
-    id ?? '',
-  );
-  const { data: symptoms, isLoading: symptomsLoading } = useSymptomsByPatientId(
     id ?? '',
   );
 
@@ -251,8 +245,6 @@ const PatientDetailsPage = () => {
             weight={fullPatient!.weight}
             drugs={drugs}
             drugsLoading={drugsLoading}
-            symptoms={symptoms}
-            symptomsLoading={symptomsLoading}
           />
           {testsError ? (
             <div className="text-red-500">Failed to load tests</div>
@@ -262,9 +254,7 @@ const PatientDetailsPage = () => {
         </div>
         <div className={cn(borderClasses, 'h-[50.5vh] px-1.5')}>
           <div className="flex w-full flex-col rounded-sm bg-white p-8 shadow-md">
-            {scoresError ? (
-              <div className="text-red-500">Failed to load patient scores</div>
-            ) : scoresLoading ? (
+            {scoresLoading ? (
               <div className="text-gray-500">Loading patient scores...</div>
             ) : scoreHistory.length === 0 ? (
               <div className="text-gray-500">No score history available</div>

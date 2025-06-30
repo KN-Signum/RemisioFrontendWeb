@@ -2,42 +2,40 @@ import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { formatDateDisplay } from '@/utils/format-date-display';
-import { SymptomDto } from '../types';
+import { SymptomDto, useSymptomsByPatientId } from '..';
+import { Loading } from '@/components/ui/loading';
 
 interface Props {
-  symptoms?: SymptomDto[];
-  loading: boolean;
-  error?: unknown;
+  patientId: string;
   isOpen: boolean;
   onClose: () => void;
 }
 
-
-export const SymptomHistoryDialog = ({
-  symptoms,
-  loading,
-  isOpen,
-  onClose,
-}: Props) => {
+export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
   const { t } = useTranslation();
+  const { data: symptoms, isLoading: loading } = useSymptomsByPatientId(
+    isOpen ? patientId : '',
+  );
 
   /* sortujemy przekazaną tablicę */
-  const sorted = (symptoms ?? []).slice().sort(
-    (a, b) =>
-      (b.created_at ? Date.parse(b.created_at) : 0) -
-      (a.created_at ? Date.parse(a.created_at) : 0),
-  );
+  const sorted = (symptoms ?? [])
+    .slice()
+    .sort(
+      (a, b) =>
+        (b.created_at ? Date.parse(b.created_at) : 0) -
+        (a.created_at ? Date.parse(a.created_at) : 0),
+    );
 
   if (!isOpen) return null;
 
   const levelColor = (lvl: string) =>
-  ({
-    None: 'text-gray-400',
-    Mild: 'text-green-500',
-    Moderate: 'text-yellow-500',
-    Severe: 'text-orange-500',
-    'Very Severe': 'text-red-500',
-  }[lvl] ?? 'text-gray-400');
+    ({
+      None: 'text-gray-400',
+      Mild: 'text-green-500',
+      Moderate: 'text-yellow-500',
+      Severe: 'text-orange-500',
+      'Very Severe': 'text-red-500',
+    })[lvl] ?? 'text-gray-400';
 
   if (!isOpen) return null;
 
@@ -67,7 +65,7 @@ export const SymptomHistoryDialog = ({
         {/* body */}
         <div className="mt-4 flex-1 overflow-y-auto">
           {loading ? (
-            <Spinner />
+            <Loading size={50} className="mt-5 overflow-hidden" />
           ) : sorted.length === 0 ? (
             <EmptyState msg={t('symptoms.history.no_symptoms')} />
           ) : (
@@ -75,23 +73,27 @@ export const SymptomHistoryDialog = ({
               {sorted.map((s: SymptomDto) => (
                 <div key={s.id} className="bg-background/10 rounded-sm p-4">
                   <div className="mb-2 flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-primary-accent">
+                    <h3 className="text-primary-accent text-lg font-semibold">
                       {s.created_at
                         ? formatDateDisplay(new Date(s.created_at))
                         : 'Unknown date'}
                     </h3>
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold text-primary-accent">
+                      <span className="text-primary-accent font-semibold">
                         {t('symptoms.type')}:
                       </span>
-                      <span className="text-primary-accent">{s.symptom_type}</span>
-                      <span className={`ml-2 font-bold ${levelColor(s.pain_level)}`}>
+                      <span className="text-primary-accent">
+                        {s.symptom_type}
+                      </span>
+                      <span
+                        className={`ml-2 font-bold ${levelColor(s.pain_level)}`}
+                      >
                         {s.pain_level}
                       </span>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-y-1 text-sm text-primary-accent">
+                  <div className="text-primary-accent grid grid-cols-2 gap-y-1 text-sm">
                     <p>
                       <span className="font-semibold">
                         {t('symptoms.duration')}:
@@ -130,14 +132,8 @@ export const SymptomHistoryDialog = ({
   );
 };
 
-const Spinner = () => (
-  <div className="flex h-40 items-center justify-center">
-    <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-white" />
-  </div>
-);
-
 const EmptyState = ({ msg }: { msg: string }) => (
   <div className="flex h-40 items-center justify-center">
-    <p className="text-lg text-primary-accent">{msg}</p>
+    <p className="text-primary-accent text-lg">{msg}</p>
   </div>
 );

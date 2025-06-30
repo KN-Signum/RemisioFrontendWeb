@@ -1,1 +1,1 @@
-export * from './SymptomHistoryDialog';
+export * from './symptom-history-dialog';

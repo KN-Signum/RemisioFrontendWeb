@@ -1,1 +1,1 @@
-export * from './DrugHistoryDialog';
+export * from './drug-history-dialog';

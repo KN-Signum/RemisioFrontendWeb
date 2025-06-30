@@ -8,7 +8,7 @@ export const getDrugsByPatientId = async (
   if (!patientId) throw new Error('patientId is required');
 
   const res = await apiClient.get(`/api/drugs/${patientId}`);
-  console.log('[API-CLIENT] ← drugs', res.data);
+  console.log('[API-CLIENT] fetching drugs for patient:', patientId);
   return res.data.content as DrugDto[];
 };
 
