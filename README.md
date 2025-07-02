@@ -18,3 +18,8 @@ Web page is a part of the project called Gastro-App. The solution we suggest is 
   - redis
   - sqlite3
   - docker
+
+## Deply new version to production server note:
+  - npm run build
+  - scp -r dist/* root@172.104.143.209:/var/www/html/
+  - provide a passowrd

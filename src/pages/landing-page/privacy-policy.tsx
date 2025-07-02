@@ -103,7 +103,7 @@ const PrivacyPolicyPage: React.FC = () => {
 
                 <aside className="lg:w-64 order-last lg:order-first">
                     <nav className="sticky top-28 bg-white shadow-sm rounded-lg p-6 lg:max-h-[80vh] overflow-y-auto">
-                        <h2 className="text-sm font-semibold uppercase tracking-wide mb-4 text-gray-500">
+                        <h2 className="text-sm font-semibold uppercase tracking-wide mb-4 text-primary-accent">
                             {t('privacyPolicy.tableOfContents', 'Spis treści')}
                         </h2>
                         <ul className="space-y-2">
@@ -123,7 +123,7 @@ const PrivacyPolicyPage: React.FC = () => {
 
                 {/* POLICY CARD */}
                 <article className="flex-1">
-                    <div className="bg-white shadow-lg rounded-xl px-8 py-10 prose prose-indigo max-w-none">
+                    <div className="bg-white shadow-lg rounded-xl px-8 py-10 prose prose-indigo max-w-none text-primary-accent">
                         {jsx}
                     </div>
                 </article>
