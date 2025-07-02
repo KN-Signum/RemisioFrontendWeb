@@ -82,6 +82,7 @@ const models = {
     mpv: Number,
     neutrophils: Number,
     potassium: Number,
+    hematocrit: Number,
     test_notes: String,
     created_at: String,
     updated_at: String,

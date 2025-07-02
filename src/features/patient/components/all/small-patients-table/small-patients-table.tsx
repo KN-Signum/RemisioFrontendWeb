@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { GetPatientDto } from '../../types';
+import { GetPatientDto } from '@/features/patient/types';
 import { TableRow, paddings } from './table-row';
 
 export { TableRow } from './table-row';

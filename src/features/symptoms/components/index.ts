@@ -1,2 +1,1 @@
-export * from './SymptomsList';
-export * from './SymptomHistoryDialog';
+export * from './symptom-history-dialog';

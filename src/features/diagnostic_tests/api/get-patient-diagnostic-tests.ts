@@ -11,7 +11,12 @@ export const getPatientDiagnosticTests = async (
     : `/api/diagnostic_tests/${patientId}`;
 
   const { data } = await apiClient.get(url);
-  console.log('[API-CLIENT] ←', data);
+  console.log(
+    '[API-CLIENT] fetching diagnostic tests for patient:',
+    patientId,
+    'on date:',
+    testDate,
+  );
   return data.content;
 };
 

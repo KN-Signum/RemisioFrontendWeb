@@ -1,12 +1,20 @@
+import { cn } from '@/utils/cn';
+
 export interface LoadingProps {
   size?: number;
   color?: string;
+  className?: string;
 }
 
 export const Loading = (props: LoadingProps) => {
-  const { size, color } = props;
+  const { size, color, className } = props;
   return (
-    <div className="align-center flex h-full w-full items-center justify-center bg-transparent hover:cursor-auto">
+    <div
+      className={cn(
+        'align-center flex h-full w-full items-center justify-center bg-transparent hover:cursor-auto',
+        className || '',
+      )}
+    >
       <svg
         className="animate-spin"
         width={size || 23}

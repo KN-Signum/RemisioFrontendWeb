@@ -1,8 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
-import {
-  CrohnSurveyDto
-} from '../types';
+import { CrohnSurveyDto } from '../types';
 
 /**
  * GET /patients/:id/surveys/crohn/latest
@@ -14,7 +12,10 @@ export const getLatestPatientCrohnSurvey = async (
   const response = await apiClient.get(
     `/api/patients/${patientId}/surveys/crohn/latest`,
   );
-  console.log('[API-CLIENT] ←', response.data);
+  console.log(
+    '[API-CLIENT] fetching latest Crohn survey for patient:',
+    patientId,
+  );
   return response.data.content;
 };
 

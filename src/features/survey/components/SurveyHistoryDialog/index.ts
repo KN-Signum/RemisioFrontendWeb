@@ -1,2 +1,2 @@
-export * from './CrohnSurveyHistoryDialog';
-export * from './UcSurveyHistoryDialog';
+export * from './crohn-survey-history-dialog';
+export * from './uc-survey-history-dialog';

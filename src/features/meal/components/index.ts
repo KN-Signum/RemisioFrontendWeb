@@ -1,1 +1,1 @@
-export * from './MealHistoryDialog';
+export * from './meal-history-dialog';

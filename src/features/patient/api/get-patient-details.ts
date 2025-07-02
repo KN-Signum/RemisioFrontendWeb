@@ -5,7 +5,7 @@ import { GetPatientDetailsDto } from '../types';
 export const getPatientDetails = async (
   pid: string,
 ): Promise<GetPatientDetailsDto> => {
-  console.log('Fetching patient details for PID:', pid);
+  console.log('[API-CLIENT] Fetching patient details for PID:', pid);
   const response = await apiClient.get(`/api/patients/${pid}`);
   return response.data;
 };
