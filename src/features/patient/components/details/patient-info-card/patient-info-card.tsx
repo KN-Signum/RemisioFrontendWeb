@@ -52,7 +52,7 @@ export const PatientInfoCard = ({
     disease_type === 'crohn' ? CrohnSurveyHistoryDialog : UcSurveyHistoryDialog;
 
   return (
-    <div className="flex w-[35%] gap-4 overflow-y-auto rounded-sm bg-white p-4 shadow-md">
+    <div className="flex w-[35%] gap-4 overflow-y-auto rounded-sm p-4">
       {/* left column */}
       <div className="text-primary-accent flex min-w-[120px] flex-col items-start gap-4">
         <span className="bg-primary block rounded-lg px-4 py-3 text-xl leading-tight font-semibold text-white">
@@ -90,22 +90,22 @@ export const PatientInfoCard = ({
         <div className="grid grid-cols-2 gap-3">
           {/* Symptoms */}
           <HistoryTile
-            icon={<BiPulse className="text-3xl text-white" />}
+            icon={<BiPulse />}
             onClick={() => setOpenSymptoms(true)}
           />
           {/* Drugs */}
           <HistoryTile
-            icon={<BiBandAid className="text-3xl text-white" />}
+            icon={<BiBandAid />}
             onClick={() => setOpenDrugs(true)}
           />
           {/* Meals */}
           <HistoryTile
-            icon={<BiRestaurant className="text-3xl text-white" />}
+            icon={<BiRestaurant />}
             onClick={() => setOpenMeals(true)}
           />
           {/* Surveys */}
           <HistoryTile
-            icon={<BiFirstAid className="text-3xl text-white" />}
+            icon={<BiFirstAid />}
             onClick={() => setOpenSurvey(true)}
           />
         </div>
