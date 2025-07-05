@@ -71,3 +71,10 @@ export interface GetPatientDiagnosticTestsDto {
   patient_id: string;
   tests: DiagnosticTestDto[];
 }
+
+export type GridTest = {
+  name: Analyte;
+  value: string;
+  status: 'low' | 'normal' | 'high';
+  history: number[];
+};
