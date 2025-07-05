@@ -11,7 +11,7 @@
   --secondary: oklch(0.55 0.1317 317.93);
   --secondary-accent: oklch(0.75 0.0817 345.53);
   --secondary-accent-25: oklch(0.75 0.0817 345.53 / 0.25);
-  --background: oklch(0.88 0 0);
+  --background: oklch(0.99 0.01 1);
   --foreground: oklch(0.96 0 0);
 }
 

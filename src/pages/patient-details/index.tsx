@@ -1,11 +1,11 @@
-import { useParams } from 'react-router-dom';
-import Layout from '@/components/layout';
-import { useMemo, useState } from 'react';
-import { cn } from '@/utils/cn';
+import { useParams } from 'react-router-dom'
+import { useMemo, useState } from 'react'
+import Layout from '@/components/layout'
+import { cn } from '@/utils/cn'
 import {
-  DiagnosticTestDto,
   usePatientDiagnosticTests,
-} from '@/features/diagnostic_tests';
+  DiagnosticTestDto,
+} from '@/features/diagnostic_tests'
 import {
   DiagnosticTestsGrid,
   FullPatient,
@@ -13,144 +13,96 @@ import {
   ScoreTimelineChart,
   useGetPatientDetails,
   useGetPatients,
-} from '@/features/patient';
-
-import { TimeRange } from '@/types';
-import { usePatientScores } from '@/features/score';
-import { useDrugsByPatientId } from '@/features/drug';
+} from '@/features/patient'
+import { TimeRange } from '@/types'
+import { usePatientScores } from '@/features/score'
+import { useDrugsByPatientId } from '@/features/drug'
+import {
+  latestTestsToGrid,
+  GridTest,
+  formatAnalyteValue,
+} from '@/utils/diagnostic-utils'
 
 const borderClasses =
-  'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
+  'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs'
 
 const getAnalyteHistory = (
   diagnosticData: { tests: DiagnosticTestDto[] } | undefined,
   analyteName: string,
 ) => {
-  if (!diagnosticData?.tests?.length) return [];
+  if (!diagnosticData?.tests?.length) return []
   const relevant = diagnosticData.tests.filter(
     (t) =>
       t[analyteName as keyof typeof t] !== undefined &&
       t[analyteName as keyof typeof t] !== null,
-  );
+  )
   const sorted = [...relevant].sort(
-    (a, b) => new Date(a.test_date).getTime() - new Date(b.test_date).getTime(),
-  );
+    (a, b) => +new Date(a.test_date) - +new Date(b.test_date),
+  )
   return sorted.map((t) => ({
     date: t.test_date.split('T')[0],
     value: t[analyteName as keyof typeof t],
-  }));
-};
-
-const processTestData = (
-  diagnosticData: { tests: DiagnosticTestDto[] } | undefined,
-) => {
-  if (!diagnosticData?.tests?.length) return [];
-  const latest = [...diagnosticData.tests].sort(
-    (a, b) => new Date(b.test_date).getTime() - new Date(a.test_date).getTime(),
-  )[0];
-  return Object.entries(latest)
-    .filter(
-      ([k, v]) =>
-        ![
-          'id',
-          'patient_id',
-          'test_date',
-          'created_at',
-          'updated_at',
-          'test_notes',
-        ].includes(k) &&
-        v !== null &&
-        v !== undefined,
-    )
-    .map(([k, v]) => {
-      let val = '';
-      if (typeof v === 'boolean') val = v ? 'Positive' : 'Negative';
-      else if (typeof v === 'number') {
-        if (k === 'cea') val = `${v} ng/mL`;
-        else if (k === 'ldl') val = `${v} mg/dL`;
-        else if (k === 'calprotectin_feces') val = `${v} µg/g`;
-        else if (k === 'hemoglobin') val = `${v} g/dL`;
-        else if (k === 'hct' || k === 'basophils' || k === 'neutrophils')
-          val = `${v} %`;
-        else if (k === 'leukocytes' || k === 'monocytes') val = `${v} 10^3/µL`;
-        else if (k === 'erythrocytes') val = `${v} 10^6/µL`;
-        else if (k === 'erythroblasts') val = `${v} NRBC/100 WBC`;
-        else if (k === 'ast' || k === 'alkaline_phosphatase') val = `${v} U/L`;
-        else if (k === 'bilirubin') val = `${v} mg/dL`;
-        else if (k === 'mch') val = `${v} pg`;
-        else if (k === 'mchc') val = `${v} g/dL`;
-        else if (k === 'mpv') val = `${v} fL`;
-        else if (k === 'potassium') val = `${v} mmol/L`;
-        else if (k === 'hematocrit') val = `${v} %`;
-        else val = v.toString();
-      } else {
-        val = v.toString();
-      }
-      return { name: k.replace(/_/g, ' ').toUpperCase(), value: val };
-    });
-};
+  }))
+}
 
 interface PatientScoreData {
-  score_date: string;
-  score: number;
-  notes?: string;
+  score_date: string
+  score: number
+  notes?: string
 }
 
 const formatPatientScores = (
   patientScores: PatientScoreData[] | null | undefined,
 ) => {
-  if (!patientScores?.length) return [];
+  if (!patientScores?.length) return []
   return [...patientScores]
-    .sort(
-      (a, b) =>
-        new Date(a.score_date).getTime() - new Date(b.score_date).getTime(),
-    )
-    .map((s) => ({ week: s.score_date.split('T')[0], score: s.score }));
-};
+    .sort((a, b) => +new Date(a.score_date) - +new Date(b.score_date))
+    .map((s) => ({ week: s.score_date.split('T')[0], score: s.score }))
+}
 
 const PatientDetailsPage = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>()
   const {
     data: diagnosticData,
     isLoading: testsLoading,
     error: testsError,
-  } = usePatientDiagnosticTests(id ?? '');
+  } = usePatientDiagnosticTests(id ?? '')
   const { data: patientScores, isLoading: scoresLoading } = usePatientScores(
     id ?? '',
-  );
+  )
   const { data: patientDetail, isLoading: patientLoading } =
-    useGetPatientDetails(id ?? '');
-  const { data: patients, isLoading: patientsLoading } = useGetPatients();
-
+    useGetPatientDetails(id ?? '')
+  const { data: patients, isLoading: patientsLoading } = useGetPatients()
   const { data: drugs, isLoading: drugsLoading } = useDrugsByPatientId(
     id ?? '',
-  );
+  )
 
-  const [selectedAnalyte, setSelectedAnalyte] = useState<string | null>('cea');
-  const [timeRange, setTimeRange] = useState<TimeRange>('all');
+  const [selectedAnalyte, setSelectedAnalyte] = useState<string | null>('cea')
+  const [timeRange, setTimeRange] = useState<TimeRange>('all')
   const [colors, setColors] = useState({
     scoreColor: '#6b46c1',
     analyteColor: '#e53e3e',
-  });
-  const [showColorPicker, setShowColorPicker] = useState(false);
+  })
+  const [showColorPicker, setShowColorPicker] = useState(false)
 
-  const patient = patients?.find((p) => p.id === patientDetail?.id);
+  const patient = patients?.find((p) => p.id === patientDetail?.id)
   const fullPatient: FullPatient | undefined = useMemo(() => {
-    if (!patient || !patientDetail) return undefined;
-    return { ...patient, ...patientDetail };
-  }, [patient, patientDetail]);
+    if (!patient || !patientDetail) return undefined
+    return { ...patient, ...patientDetail }
+  }, [patient, patientDetail])
 
-  const tests = useMemo(
-    () => processTestData(diagnosticData),
+  const tests: GridTest[] = useMemo(
+    () => latestTestsToGrid(diagnosticData),
     [diagnosticData],
-  );
+  )
+
   const scoreHistory = useMemo(
     () => formatPatientScores(patientScores?.scores),
     [patientScores],
-  );
+  )
 
   const analyteHistories = useMemo(() => {
-    if (!diagnosticData?.tests?.length) return {};
+    if (!diagnosticData?.tests?.length) return {}
     const analytes = [
       'cea',
       'hemoglobin',
@@ -170,63 +122,41 @@ const PatientDetailsPage = () => {
       'mpv',
       'neutrophils',
       'potassium',
-    ];
+    ] as const
     const result: Record<
       string,
       { name: string; dates: string[]; values: number[] }
-    > = {};
+    > = {}
     analytes.forEach((name) => {
-      const history = getAnalyteHistory(diagnosticData, name);
-      if (history.length === 0) return;
-      let display = name.toUpperCase().replace(/_/g, ' ');
-      if (name === 'cea') display = 'CEA (ng/mL)';
-      else if (name === 'ldl') display = 'LDL (mg/dL)';
-      else if (name === 'calprotectin_feces') display = 'CALPROTECTIN (µg/g)';
-      else if (name === 'hemoglobin') display = 'HEMOGLOBIN (g/dL)';
-      else if (name === 'hct') display = 'HCT (%)';
-      else if (name === 'leukocytes') display = 'LEUKOCYTES (10^3/µL)';
-      else if (name === 'ast') display = 'AST (U/L)';
-      else if (name === 'bilirubin') display = 'BILIRUBIN (mg/dL)';
-      else if (name === 'alkaline_phosphatase')
-        display = 'ALKALINE PHOSPHATASE (U/L)';
-      else if (name === 'basophils') display = 'BASOPHILS (%)';
-      else if (name === 'erythroblasts')
-        display = 'ERYTHROBLASTS (NRBC/100 WBC)';
-      else if (name === 'erythrocytes') display = 'ERYTHROCYTES (10^6/µL)';
-      else if (name === 'mch') display = 'MCH (pg)';
-      else if (name === 'mchc') display = 'MCHC (g/dL)';
-      else if (name === 'monocytes') display = 'MONOCYTES (10^3/µL)';
-      else if (name === 'mpv') display = 'MPV (fL)';
-      else if (name === 'neutrophils') display = 'NEUTROPHILS (%)';
-      else if (name === 'potassium') display = 'POTASSIUM (mmol/L)';
+      const history = getAnalyteHistory(diagnosticData, name)
+      if (!history.length) return
+      const display = formatAnalyteValue(name, history[0].value as number)
       result[name] = {
-        name: display,
+        name: display.split(' ')[0].toUpperCase(),
         dates: history.map((h) => h.date),
         values: history.map((h) => h.value as number),
-      };
-    });
-    return result;
-  }, [diagnosticData]);
+      }
+    })
+    return result
+  }, [diagnosticData])
 
-  if (patientsLoading || patientLoading) {
+  if (patientsLoading || patientLoading)
     return (
       <Layout>
         <div className="flex h-full items-center justify-center text-gray-500">
           Loading patient details...
         </div>
       </Layout>
-    );
-  }
+    )
 
-  if (!patient) {
+  if (!patient)
     return (
       <Layout>
         <div className="flex h-full items-center justify-center text-red-500">
           Patient not found.
         </div>
       </Layout>
-    );
-  }
+    )
 
   return (
     <Layout>
@@ -256,7 +186,7 @@ const PatientDetailsPage = () => {
           <div className="flex w-full flex-col rounded-sm bg-white p-8 shadow-md">
             {scoresLoading ? (
               <div className="text-gray-500">Loading patient scores...</div>
-            ) : scoreHistory.length === 0 ? (
+            ) : !scoreHistory.length ? (
               <div className="text-gray-500">No score history available</div>
             ) : (
               <div className="flex h-full flex-col">
@@ -278,17 +208,15 @@ const PatientDetailsPage = () => {
                       <button
                         key={r}
                         onClick={() => setTimeRange(r)}
-                        className={`px-3 py-1 text-xs font-medium ${
-                          timeRange === r
-                            ? 'bg-secondary-accent text-white'
-                            : 'text-primary-accent bg-gray-200 hover:bg-gray-300'
-                        } ${
-                          r === 'month'
+                        className={`px-3 py-1 text-xs font-medium ${timeRange === r
+                          ? 'bg-secondary-accent text-white'
+                          : 'text-primary-accent bg-gray-200 hover:bg-gray-300'
+                          } ${r === 'month'
                             ? 'rounded-l-md'
                             : r === 'all'
                               ? 'rounded-r-md'
                               : ''
-                        }`}
+                          }`}
                       >
                         {r === 'month'
                           ? 'Month'
@@ -303,9 +231,7 @@ const PatientDetailsPage = () => {
                       onClick={() => setShowColorPicker((v) => !v)}
                       className="flex items-center gap-1 rounded-md bg-gray-200 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-300"
                     >
-                      {selectedAnalyte
-                        ? 'Customize colors'
-                        : 'Customize score color'}
+                      {selectedAnalyte ? 'Customize colors' : 'Customize score color'}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="14"
@@ -317,9 +243,9 @@ const PatientDetailsPage = () => {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       >
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M12 8v8"></path>
-                        {showColorPicker ? <path d="M8 12h8"></path> : null}
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 8v8" />
+                        {showColorPicker && <path d="M8 12h8" />}
                       </svg>
                     </button>
                     {showColorPicker && (
@@ -373,9 +299,7 @@ const PatientDetailsPage = () => {
                     weeks={scoreHistory.map((p) => p.week)}
                     scores={scoreHistory.map((p) => p.score)}
                     analyteData={
-                      selectedAnalyte
-                        ? analyteHistories[selectedAnalyte]
-                        : undefined
+                      selectedAnalyte ? analyteHistories[selectedAnalyte] : undefined
                     }
                     timeRange={timeRange}
                     colors={colors}
@@ -387,7 +311,7 @@ const PatientDetailsPage = () => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default PatientDetailsPage;
+export default PatientDetailsPage
