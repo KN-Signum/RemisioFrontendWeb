@@ -2,7 +2,7 @@ import Chart from 'react-apexcharts';
 import { useMemo } from 'react';
 import { TimeRange } from '@/types';
 
-interface Props {
+interface ScoreTimeLineChartProps {
   weeks: string[];
   scores: number[];
   analyteData?: {
@@ -17,13 +17,13 @@ interface Props {
   };
 }
 
-export const ScoreTimelineChart: React.FC<Props> = ({
+export const ScoreTimelineChart = ({
   weeks,
   scores,
   analyteData,
   timeRange,
   colors,
-}) => {
+}: ScoreTimeLineChartProps) => {
   const { filteredWeeks, filteredScores, filteredAnalyteData } = useMemo(() => {
     if (timeRange === 'all') {
       return {

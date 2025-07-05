@@ -20,6 +20,7 @@ import {
 import { TimeRange } from '@/types';
 import { usePatientScores } from '@/features/score';
 import { useDrugsByPatientId } from '@/features/drug';
+import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 
 const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
@@ -60,6 +61,7 @@ const formatPatientScores = (
 
 const PatientDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
+  const [isGraphExpanded, setIsGraphExpanded] = useState(false);
   const {
     data: diagnosticData,
     isLoading: testsLoading,
@@ -158,11 +160,15 @@ const PatientDetailsPage = () => {
 
   return (
     <Layout>
-      <div
-        className="flex w-full flex-col gap-1 overflow-y-visible"
-        style={{ height: '100vh' }}
-      >
-        <div className={cn(borderClasses, 'h-[40vh] gap-3 px-1.5')}>
+      <div className="flex w-full flex-col gap-1 overflow-y-visible">
+        <div
+          className={cn(
+            borderClasses,
+            'gap-3 px-1.5',
+            'overflow-hidden transition-all duration-900 ease-in-out',
+            isGraphExpanded ? 'h-[0vh] border-0 py-0' : 'h-[35vh]',
+          )}
+        >
           <PatientInfoCard
             id={fullPatient!.id}
             disease_type={fullPatient!.disease}
@@ -180,8 +186,23 @@ const PatientDetailsPage = () => {
             <DiagnosticTestsGrid tests={tests} loading={testsLoading} />
           )}
         </div>
-        <div className={cn(borderClasses, 'h-[50.5vh] px-1.5')}>
-          <div className="flex w-full flex-col rounded-sm bg-white p-8 shadow-md">
+        <div className="flex justify-center">
+          <button
+            onClick={() => setIsGraphExpanded((v) => !v)}
+            className="bg-secondary-accent hover:bg-secondary/50 flex w-20 items-center justify-center rounded-sm text-2xl hover:cursor-pointer"
+          >
+            {isGraphExpanded ? <FaAngleDown /> : <FaAngleUp />}
+          </button>
+        </div>
+        {/*TODO: breake it into seperate components */}
+        <div
+          className={cn(
+            borderClasses,
+            'px-1.5',
+            isGraphExpanded ? 'h-[85vh]' : 'h-[50vh]',
+          )}
+        >
+          <div className="flex w-full flex-col rounded-sm p-8">
             {scoresLoading ? (
               <div className="text-gray-500">Loading patient scores...</div>
             ) : !scoreHistory.length ? (
