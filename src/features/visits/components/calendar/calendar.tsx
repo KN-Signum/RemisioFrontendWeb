@@ -96,6 +96,7 @@ export const Calendar = (props: CalendarProps) => {
       <CalendarStyle />
       {isDialogOpen && (
         <NewVisitDialog
+          isOpen={isDialogOpen}
           onClose={() => {
             setIsDialogOpen(false);
           }}

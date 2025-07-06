@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { formatDateDisplay } from '@/utils/format-date-display';
 import { SurveyCategory, UcSurveyDto, usePatientUcSurveys } from '../..';
-import { BaseSurveyHistoryDialog } from './base-survey-history-dialog';
+import { Dialog } from '@/components/ui/dialog';
 
 interface Props {
   patientId: string;
@@ -27,14 +27,16 @@ export const UcSurveyHistoryDialog = ({
     })[c];
 
   return (
-    <BaseSurveyHistoryDialog
+    <Dialog
       isOpen={isOpen}
       onClose={onClose}
       title={t('survey.history.uc_title', 'Ulcerative Colitis Survey History')}
+      className="max-h-[80vh] w-[90%] max-w-3xl px-6"
       isLoading={isLoading}
-      empty={surveys.length === 0}
+      isEmpty={surveys.length === 0}
+      emptyText="No surveys available"
     >
-      <div className="flex flex-col gap-4">
+      <div className="mt-4 w-full flex-1 overflow-y-auto">
         {surveys.map((s: UcSurveyDto) => (
           <div key={s.id} className="bg-background/10 rounded-sm p-4">
             {/* nagłówek karty */}
@@ -85,6 +87,6 @@ export const UcSurveyHistoryDialog = ({
           </div>
         ))}
       </div>
-    </BaseSurveyHistoryDialog>
+    </Dialog>
   );
 };

@@ -1,8 +1,7 @@
-import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/ui/button';
 import { DrugDto } from '../types';
 import { Loading } from '@/components/ui/loading';
+import { Dialog } from '@/components/ui/dialog';
 
 interface Props {
   drugs?: DrugDto[];
@@ -25,93 +24,70 @@ export const DrugHistoryDialog = ({
     .slice()
     .sort((a, b) => Date.parse(b.dateFrom) - Date.parse(a.dateFrom));
 
-  if (!isOpen) return null;
-
-  return createPortal(
-    <div
-      className="fixed inset-0 z-[9998] flex items-center justify-center backdrop-blur-xs"
-      onClick={onClose}
+  return (
+    <Dialog
+      isOpen={isOpen}
+      title={t('drug.history.title', 'Medications History')}
+      className="max-h-[80vh] w-[90%] max-w-3xl px-6"
+      onClose={onClose}
+      isLoading={loading}
+      isEmpty={sorted.length == 0}
+      emptyText={t('drug.history.no_drugs', 'No medications recorded')}
     >
-      <div
-        className="bg-foreground/90 flex max-h-[80vh] w-[90%] max-w-3xl flex-col rounded-sm px-6 pt-6 pb-6"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* header */}
-        <div className="flex w-full items-center justify-between">
-          <div className="size-8" />
-          <span className="text-primary-accent text-2xl font-bold">
-            {t('drug.history.title', 'Medications History')}
-          </span>
-          <div
-            className="hover:bg-foreground flex size-8 items-center justify-center rounded-full text-3xl font-bold hover:cursor-pointer"
-            onClick={onClose}
-          >
-            &times;
+      <div className="mt-4 w-full flex-1 overflow-y-auto">
+        {loading ? (
+          <Loading size={50} className="mt-5 overflow-hidden" />
+        ) : sorted.length == 0 ? (
+          <div className="flex h-40 items-center justify-center">
+            <p className="text-primary-accent text-lg">
+              {t('drug.history.no_drugs', 'No medications recorded')}
+            </p>
           </div>
-        </div>
-
-        {/* body */}
-        <div className="mt-4 flex-1 overflow-y-auto">
-          {loading ? (
-            <Loading size={50} className="mt-5 overflow-hidden" />
-          ) : sorted.length == 0 ? (
-            <div className="flex h-40 items-center justify-center">
-              <p className="text-primary-accent text-lg">
-                {t('drug.history.no_drugs', 'No medications recorded')}
-              </p>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-4">
-              {sorted.map((d: DrugDto) => (
-                <div key={d.id} className="bg-background/10 rounded-sm p-4">
-                  <div className="mb-2 flex items-center justify-between">
-                    <h3 className="text-primary-accent text-lg font-semibold">
-                      {d.name}
-                    </h3>
-                    <span className="text-primary-accent">{d.dosage}</span>
-                  </div>
-
-                  <div className="text-primary-accent grid grid-cols-2 gap-y-1 text-sm">
-                    <p>
-                      <span className="font-semibold">
-                        {t('drug.dateFrom', 'Start Date')}:
-                      </span>{' '}
-                      {format(d.dateFrom)}
-                    </p>
-                    <p>
-                      <span className="font-semibold">
-                        {t('drug.dateTo', 'End Date')}:
-                      </span>{' '}
-                      {format(d.dateTo)}
-                    </p>
-                    <p className="col-span-2">
-                      <span className="font-semibold">
-                        {t('drug.times', 'Schedule')}:
-                      </span>{' '}
-                      {d.times.join(', ')}
-                    </p>
-                  </div>
-
-                  {d.additionalInfo && (
-                    <div className="mt-2 border-t border-gray-600 pt-2 text-sm">
-                      <span className="font-semibold">
-                        {t('drug.additionalInfo', 'Notes')}:
-                      </span>{' '}
-                      {d.additionalInfo}
-                    </div>
-                  )}
+        ) : (
+          <div className="flex flex-col gap-4">
+            {sorted.map((d: DrugDto) => (
+              <div key={d.id} className="bg-background/10 rounded-sm p-4">
+                <div className="mb-2 flex items-center justify-between">
+                  <h3 className="text-primary-accent text-lg font-semibold">
+                    {d.name}
+                  </h3>
+                  <span className="text-primary-accent">{d.dosage}</span>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
 
-        {/* footer */}
-        <div className="text-primary-accent mt-4 flex justify-end">
-          <Button onClick={onClose}>{t('common.close', 'Close')}</Button>
-        </div>
+                <div className="text-primary-accent grid grid-cols-2 gap-y-1 text-sm">
+                  <p>
+                    <span className="font-semibold">
+                      {t('drug.dateFrom', 'Start Date')}:
+                    </span>{' '}
+                    {format(d.dateFrom)}
+                  </p>
+                  <p>
+                    <span className="font-semibold">
+                      {t('drug.dateTo', 'End Date')}:
+                    </span>{' '}
+                    {format(d.dateTo)}
+                  </p>
+                  <p className="col-span-2">
+                    <span className="font-semibold">
+                      {t('drug.times', 'Schedule')}:
+                    </span>{' '}
+                    {d.times.join(', ')}
+                  </p>
+                </div>
+
+                {d.additionalInfo && (
+                  <div className="mt-2 border-t border-gray-600 pt-2 text-sm">
+                    <span className="font-semibold">
+                      {t('drug.additionalInfo', 'Notes')}:
+                    </span>{' '}
+                    {d.additionalInfo}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-    </div>,
-    document.body,
+    </Dialog>
   );
 };
