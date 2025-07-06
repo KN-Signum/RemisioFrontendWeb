@@ -31,14 +31,28 @@ const Card = ({ href, src, alt, name }: CardProps) => (
 )
 
 const InfoSlice = ({ title, text, img, reverse }: InfoSliceProps) => (
-  <div className={`mx-auto flex max-w-7xl flex-col items-center gap-10 px-4 py-16 sm:flex-row ${reverse ? 'sm:flex-row-reverse' : ''}`}>
-    <img src={img} className="h-93 w-full rounded-xl object-cover shadow-lg" />
+  <div
+    className={`mx-auto flex max-w-7xl flex-col items-center gap-10 px-4 py-16
+                sm:flex-row ${reverse ? 'sm:flex-row-reverse' : ''}
+                bg-transparent`}
+  >
+    <img
+      src={img}
+      alt=""                                  /* alt dla a11y */
+      className="h-93 w-full object-contain"  /* usunięto rounded-xl i shadow-lg */
+    />
+
     <div className="max-w-lg">
-      <h2 className="text-3xl font-extrabold text-primary-accent">{title}</h2>
-      <p className="mt-4 text-base text-primary-accent">{text}</p>
+      <h2 className="text-3xl font-extrabold text-primary-accent">
+        {title}
+      </h2>
+      <p className="mt-4 text-base text-primary-accent">
+        {text}
+      </p>
     </div>
   </div>
-)
+);
+
 
 export const LandingPage = () => {
   const { t } = useTranslation()
@@ -105,7 +119,7 @@ export const LandingPage = () => {
       </section>
 
       <section id="info">
-        <InfoSlice title={t('landing-page.row_title_1')} text={t('landing-page.row_subtitle_1')} img="dashboard_image.png" />
+        <InfoSlice title={t('landing-page.row_title_1')} text={t('landing-page.row_subtitle_1')} img="remisio_mobile_demo.png" />
         <InfoSlice title={t('landing-page.row_title_2')} text={t('landing-page.row_subtitle_2')} img="dashboard_image.png" reverse />
       </section>
 
