@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 interface Stat {
@@ -45,10 +45,10 @@ export const LandingPage = () => {
   const navigate = useNavigate()
 
   const stats: Stat[] = [
-    { value: '4', label: 'Key Deliverables' },
-    { value: '13', label: 'Functional Features' },
-    { value: '2', label: 'Scientific Talks' },
-    { value: '0 €', label: 'Licensing Costs' },
+    { value: '4', label: t('landing-page.stat_1') },
+    { value: '13', label: t('landing-page.stat_2') },
+    { value: '2', label: t('landing-page.stat_3') },
+    { value: '0 PLN', label: t('landing-page.stat_4') },
   ]
 
   return (
@@ -56,37 +56,36 @@ export const LandingPage = () => {
       <header className="mx-auto flex w-full max-w-7xl items-center px-4 py-6">
         <div className="flex items-center gap-3">
           <img src="/logo.svg" alt="Remisio logo" className="h-10 sm:h-12" />
-          <span className="text-xl font-semibold text-primary-accent sm:text-3xl">Remisio</span>
+          <span className="text-xl font-semibold text-primary-accent sm:text-3xl">{t('landing-page.title')}</span>
           <nav className="ml-10 hidden items-center gap-8 text-sm font-medium text-primary-accent md:flex">
-            <a href="#">Home</a>
-            <a href="#info">Info</a>
-            <a href="#download">Application</a>
+            <a href="#">{t('landing-page.home')}</a>
+            <a href="#info">{t('landing-page.info')}</a>
+            <a href="#download">{t('landing-page.application')}</a>
           </nav>
         </div>
         <div className="ml-auto flex items-center gap-4 whitespace-nowrap">
           <button onClick={() => navigate('/login')} className="text-sm font-medium text-primary-accent">
-            Sign in
+            {t('landing-page.sign_in')}
           </button>
           <Button className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-background">
-            Contact
+            {t('landing-page.contact')}
           </Button>
         </div>
       </header>
 
       <section className="relative mx-auto flex min-h-[550px] w-full max-w-7xl items-center overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-secondary-accent)] to-[var(--color-primary)] px-8 py-20">
         <div className="flex max-w-xl flex-col gap-6">
-          <p className="text-xs uppercase tracking-widest text-primary-accent">Remisio • Digital IBD Care</p>
-          <h1 className="text-4xl font-extrabold leading-tight text-foreground sm:text-6xl">Remisio&nbsp;łączy<br />pacjentów&nbsp;i&nbsp;lekarzy</h1>
-          <p className="text-sm text-foreground/80 sm:text-base">Pacjenci zyskują kontrolę nad chorobą, lekarze – widok trendów i powiadomienia o nagłych zmianach. Jedna baza, zero papieru.</p>
+          <p className="text-xs uppercase tracking-widest text-primary-accent">{t('landing-page.title')} • {t('landing-page.subtitle')}</p>
+          <h1 className="text-4xl font-extrabold leading-tight text-foreground sm:text-6xl"><Trans i18nKey="landing-page.hero_headline" /></h1>
+          <p className="text-sm text-foreground/80 sm:text-base">{t('landing-page.body')}</p>
           <div className="mt-4 flex flex-wrap gap-4">
-            <Button onClick={() => document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' })} className="rounded-full bg-primary-accent px-6 py-3 text-sm font-semibold text-background">Pobierz aplikację</Button>
-            <Button onClick={() => navigate('/doctor')} className="rounded-full border border-primary-accent bg-transparent px-6 py-3 text-sm font-semibold text-primary-accent">Panel lekarza</Button>
+            <Button onClick={() => document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' })} className="rounded-full bg-primary-accent px-6 py-3 text-sm font-semibold text-background">{t('landing-page.download_app')}</Button>
+            <Button onClick={() => { }} className="rounded-full border border-primary-accent bg-transparent px-6 py-3 text-sm font-semibold text-primary-accent">{t('landing-page.demo')}</Button>
           </div>
         </div>
         <div className="ml-auto hidden h-full w-1/2 md:block">
           <img
             src="/hero.png"
-            alt="Lekarz rozmawia z pacjentem"
             className="h-full w-full object-cover"
             draggable={false}
           />
@@ -106,12 +105,12 @@ export const LandingPage = () => {
       </section>
 
       <section id="info">
-        <InfoSlice title="Your Personal IBD Companion" text="Track symptoms, medications and lifestyle factors in one place. Remisio helps you and your doctor understand patterns and adjust treatment early." img="public/dashboard_image.png" />
-        <InfoSlice title="Dashboard for Healthcare Professionals" text="Clinicians gain real-time insights into patient-reported outcomes, enabling proactive care and data-driven decisions." img="public/dashboard_image.png" reverse />
+        <InfoSlice title={t('landing-page.row_title_1')} text={t('landing-page.row_subtitle_1')} img="dashboard_image.png" />
+        <InfoSlice title={t('landing-page.row_title_2')} text={t('landing-page.row_subtitle_2')} img="dashboard_image.png" reverse />
       </section>
 
       <section id="download" className="mt-20 flex flex-col items-center gap-8 px-4">
-        <span className="text-lg font-semibold text-primary-accent">{t('landing-page.download', { defaultValue: 'Download Our App' })}</span>
+        <span className="text-lg font-semibold text-primary-accent">{t('landing-page.download_app', { defaultValue: 'Download Our App' })}</span>
         <div className="flex gap-8">
           <Card href="https://play.google.com" src="/logos/android.png" alt="Android" name="Android" />
           <Card href="https://apps.apple.com" src="/logos/apple.png" alt="iOS" name="iOS" />

@@ -47,10 +47,25 @@
     "none": "None"
   },
   "landing-page": {
-    "title": "GastroApp",
-    "subtitle": "Please log in to perform actions.",
-    "cta": "Log in",
-    "download": "Download the app for:"
+    "title": "Remisio",
+    "subtitle": "Digital IBD Care",
+    "hero_headline": "Remisio\nconnects patients\nand doctors",
+    "stat_1": "Key Deliverables",
+    "stat_2": "Functional Features",
+    "stat_3": "Scientific Talks",
+    "stat_4": "Licensig Costs",
+    "application": "Application",
+    "info": "Information",
+    "home": "Home",
+    "sign_in": "Sign in",
+    "contact": "Contact",
+    "body": "Patients gain control over their disease, doctors gain a view of trends and notifications of sudden changes. One base, no paper.",
+    "demo": "Demo",
+    "download_app": "Dwonload App",
+    "row_title_1": "You personal IBD Companion",
+    "row_subtitle_1": "Track symptoms, medications and lifestyle factors in one place. Remisio helps you and your doctor understand patterns and adjust treatment early.",
+    "row_title_2": "Dashboard for Healthcare Professionals",
+    "row_subtitle_2": "Clinicians gain real-time insights into patient-reported outcomes, enabling proactive care and data-driven decisions."
   },
   "login": {
     "welcome": "Welcome back",

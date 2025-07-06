@@ -47,10 +47,25 @@
     "none": "Brak"
   },
   "landing-page": {
-    "title": "GastroApp",
-    "subtitle": "Zaloguj się, by przejść dalej.",
-    "cta": "Zaloguj się",
-    "download": "Pobierz aplikację dla:"
+    "title": "Remisio",
+    "subtitle": "Cyfrowa opieka IBD",
+    "hero_headline": "Remisio\nłączy pacjentów\ni lekarzy",
+    "stat_1": "Kluczowe rezultaty",
+    "stat_2": "Cechy funkcjonalne",
+    "stat_3": "Wykłady naukowe",
+    "stat_4": "Koszty licencji",
+    "application": "Aplikacja",
+    "info": "Informacja",
+    "home": "Główna",
+    "sign_in": "Zaloguj się",
+    "contact": "Kontakt",
+    "body": "Pacjenci zyskują kontrolę nad chorobą, lekarze – widok trendów i powiadomienia o nagłych zmianach. Jedna baza, zero papieru.",
+    "demo": "Zobacz demo",
+    "download_app": "Pobierz aplikację",
+    "row_title_1": "Twój osobisty asystent IBD",
+    "row_subtitle_1": "Śledź objawy, leki i czynniki związane ze stylem życia w jednym miejscu. Remisio pomaga Tobie i Twojemu lekarzowi zrozumieć wzorce i odpowiednio wcześnie dostosować leczenie.",
+    "row_title_2": "Pulpit nawigacyjny dla pracowników służby zdrowia",
+    "row_subtitle_2": "Lekarze uzyskują w czasie rzeczywistym wgląd w wyniki zgłaszane przez pacjentów, umożliwiając proaktywną opiekę i podejmowanie decyzji w oparciu o dane."
   },
   "login": {
     "welcome": "Witamy ponownie",
