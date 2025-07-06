@@ -8,6 +8,7 @@ import {
   GridTest,
   latestTestsToGrid,
   formatAnalyteValue,
+  analytes,
 } from '@/features/diagnostic_tests';
 import {
   DiagnosticTestsGrid,
@@ -103,26 +104,6 @@ const PatientDetailsPage = () => {
 
   const analyteHistories = useMemo(() => {
     if (!diagnosticData?.tests?.length) return {};
-    const analytes = [
-      'cea',
-      'hemoglobin',
-      'calprotectin_feces',
-      'ldl',
-      'hct',
-      'leukocytes',
-      'ast',
-      'bilirubin',
-      'alkaline_phosphatase',
-      'basophils',
-      'erythroblasts',
-      'erythrocytes',
-      'mch',
-      'mchc',
-      'monocytes',
-      'mpv',
-      'neutrophils',
-      'potassium',
-    ] as const;
     const result: Record<
       string,
       { name: string; dates: string[]; values: number[] }
@@ -160,7 +141,7 @@ const PatientDetailsPage = () => {
 
   return (
     <Layout>
-      <div className="flex w-full flex-col gap-1 overflow-y-visible">
+      <div className="flex w-full flex-col gap-2.5 overflow-y-visible">
         <div
           className={cn(
             borderClasses,
@@ -186,29 +167,27 @@ const PatientDetailsPage = () => {
             <DiagnosticTestsGrid tests={tests} loading={testsLoading} />
           )}
         </div>
-        <div className="flex justify-center">
-          <button
-            onClick={() => setIsGraphExpanded((v) => !v)}
-            className="bg-secondary-accent hover:bg-secondary/50 flex w-20 items-center justify-center rounded-sm text-2xl hover:cursor-pointer"
-          >
-            {isGraphExpanded ? <FaAngleDown /> : <FaAngleUp />}
-          </button>
-        </div>
         {/*TODO: breake it into seperate components */}
         <div
           className={cn(
             borderClasses,
             'px-1.5',
-            isGraphExpanded ? 'h-[85vh]' : 'h-[50vh]',
+            isGraphExpanded ? '-mt-2.5 h-[88.5vh]' : 'h-[52vh]',
           )}
         >
-          <div className="flex w-full flex-col rounded-sm p-8">
+          <div className="flex w-full flex-col rounded-sm pb-8">
             {scoresLoading ? (
               <div className="text-gray-500">Loading patient scores...</div>
             ) : !scoreHistory.length ? (
               <div className="text-gray-500">No score history available</div>
             ) : (
               <div className="flex h-full flex-col">
+                <button
+                  onClick={() => setIsGraphExpanded((v) => !v)}
+                  className="bg-secondary-accent hover:bg-secondary/50 my-2 flex w-28 items-center justify-center rounded-sm text-2xl hover:cursor-pointer"
+                >
+                  {isGraphExpanded ? <FaAngleDown /> : <FaAngleUp />}
+                </button>
                 <div className="mb-4 flex flex-wrap items-center gap-4">
                   <select
                     value={selectedAnalyte ?? ''}

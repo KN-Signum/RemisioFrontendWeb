@@ -12,3 +12,4 @@ export * from './utils/latest-test-to-grid.ts';
 export * from './utils/classify.ts';
 export * from './utils/analyte-limits.ts';
 export * from './utils/format-analyte-value.ts';
+export * from './utils/analytes.ts';
