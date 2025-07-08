@@ -46,6 +46,18 @@
     "confirm": "Confirm",
     "none": "None"
   },
+    "footer": {
+    "brand": "Remisio",
+    "disclaimer": "Remisio is a support tool and does not replace professional medical advice. If your health suddenly worsens, contact a doctor or call 112.",
+    "location": "Wrocław, Poland",
+    "quickLinks": "Quick links",
+    "legalInfo": "Legal information",
+    "termsOfService": "Terms of Service",
+    "cookiePolicy": "Cookie Policy",
+    "creators": "Creators",
+    "followUs": "Follow us:",
+    "rights": "© {{year}} Remisio. All rights reserved."
+  },
   "landing-page": {
     "title": "Remisio",
     "subtitle": "Digital IBD Care",
@@ -61,7 +73,7 @@
     "contact": "Contact",
     "body": "Patients gain control over their disease, doctors gain a view of trends and notifications of sudden changes. One base, no paper.",
     "demo": "Demo",
-    "download_app": "Dwonload App",
+    "download_app": "Download App",
     "row_title_1": "You personal IBD Companion",
     "row_subtitle_1": "Track symptoms, medications and lifestyle factors in one place. Remisio helps you and your doctor understand patterns and adjust treatment early.",
     "row_title_2": "Dashboard for Healthcare Professionals",

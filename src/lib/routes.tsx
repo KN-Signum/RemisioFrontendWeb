@@ -6,7 +6,7 @@ import PatientsPage from '@/pages/patients';
 import PatientDetailsPage from '@/pages/patient-details';
 import LandingPage from '@/pages/landing-page';
 import ProtectedRoutes from './protected-routes';
-import PrivacyPolicyPage from '@/pages/landing-page/privacy-policy';
+import PrivacyPolicyPage from '@/pages/privacy-policy';
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +47,7 @@ export const router = createBrowserRouter([
   {
     path: '/privacy-policy',
     element: <PrivacyPolicyPage />,
+    errorElement: <div>Error</div>,
   },
 
   {

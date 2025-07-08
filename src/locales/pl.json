@@ -46,6 +46,18 @@
     "confirm": "Potwierdź",
     "none": "Brak"
   },
+    "footer": {
+    "brand": "Remisio",
+    "disclaimer": "Remisio jest narzędziem wspomagającym i nie zastępuje profesjonalnej porady lekarskiej. W przypadku nagłego pogorszenia stanu zdrowia skontaktuj się z lekarzem lub zadzwoń pod 112.",
+    "location": "Wrocław, Polska",
+    "quickLinks": "Szybkie linki",
+    "legalInfo": "Informacje prawne",
+    "termsOfService": "Regulamin",
+    "cookiePolicy": "Polityka cookies",
+    "creators": "Twórcy",
+    "followUs": "Śledź nas:",
+    "rights": "© {{year}} Remisio. Wszystkie prawa zastrzeżone."
+  },
   "landing-page": {
     "title": "Remisio",
     "subtitle": "Cyfrowa opieka IBD",
