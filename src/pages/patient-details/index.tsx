@@ -7,7 +7,6 @@ import {
   DiagnosticTestDto,
   GridTest,
   latestTestsToGrid,
-  formatAnalyteValue,
   analytes,
 } from '@/features/diagnostic_tests';
 import {
@@ -108,18 +107,18 @@ const PatientDetailsPage = () => {
       string,
       { name: string; dates: string[]; values: number[] }
     > = {};
-    analytes.forEach((name) => {
-      const history = getAnalyteHistory(diagnosticData, name);
+    analytes.forEach((analyte) => {
+      const history = getAnalyteHistory(diagnosticData, analyte);
       if (!history.length) return;
-      const display = formatAnalyteValue(name, history[0].value as number);
-      result[name] = {
-        name: display.split(' ')[0].toUpperCase(),
+      result[analyte] = {
+        name: analyte.toUpperCase(),
         dates: history.map((h) => h.date),
         values: history.map((h) => h.value as number),
       };
     });
     return result;
   }, [diagnosticData]);
+
 
   if (patientsLoading || patientLoading)
     return (
@@ -206,17 +205,15 @@ const PatientDetailsPage = () => {
                       <button
                         key={r}
                         onClick={() => setTimeRange(r)}
-                        className={`px-3 py-1 text-xs font-medium ${
-                          timeRange === r
-                            ? 'bg-secondary-accent text-white'
-                            : 'text-primary-accent bg-gray-200 hover:bg-gray-300'
-                        } ${
-                          r === 'month'
+                        className={`px-3 py-1 text-xs font-medium ${timeRange === r
+                          ? 'bg-secondary-accent text-white'
+                          : 'text-primary-accent bg-gray-200 hover:bg-gray-300'
+                          } ${r === 'month'
                             ? 'rounded-l-md'
                             : r === 'all'
                               ? 'rounded-r-md'
                               : ''
-                        }`}
+                          }`}
                       >
                         {r === 'month'
                           ? 'Month'
