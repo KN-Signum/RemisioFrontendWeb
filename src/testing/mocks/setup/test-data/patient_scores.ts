@@ -81,7 +81,7 @@ export const mockPatientScores: PatientScoreDto[] = (() => {
         patient_id: patient.id,
         score_date: date.toISOString(),
         score: score,
-        notes: `${patient.name}'s ${isUlcerativeColitis ? 'UC' : "Crohn's"} assessment - Score: ${score}`,
+        notes: `${patient.first_name}'s ${isUlcerativeColitis ? 'UC' : "Crohn's"} assessment - Score: ${score}`,
         created_at: date.toISOString(),
         updated_at: date.toISOString(),
       };

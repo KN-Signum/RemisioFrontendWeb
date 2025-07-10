@@ -7,8 +7,8 @@ export const getPatientDiagnosticTests = async (
   testDate?: string,
 ): Promise<GetPatientDiagnosticTestsDto> => {
   const url = testDate
-    ? `/api/diagnostic_tests/${patientId}?test_date=${encodeURIComponent(testDate)}`
-    : `/api/diagnostic_tests/${patientId}`;
+    ? `/diagnostic_tests/${patientId}?test_date=${encodeURIComponent(testDate)}`
+    : `/diagnostic_tests/${patientId}`;
 
   const { data } = await apiClient.get(url);
   console.log(

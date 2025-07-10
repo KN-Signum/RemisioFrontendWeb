@@ -1,14 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import { BigTableRow, paddings } from './big-table-row';
 import { GetPatientDto } from '@/features/patient/types';
+import { calculateState } from '@/utils/calculate-state';
 
 interface SmallPatientsTableProps {
-  diesese: string;
+  disease: 'CDAI' | 'Mayo';
   patients: GetPatientDto[];
 }
 
 export const BigPatientsTable = ({
-  diesese,
+  disease,
   patients,
 }: SmallPatientsTableProps) => {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ export const BigPatientsTable = ({
         </div>
         <div className={`flex-1 ${paddings}`}>{t('patients-tables.age')}</div>
         <div className={`flex-1 ${paddings}`}>{t('patients-tables.state')}</div>
-        <div className={`flex-1 ${paddings}`}>{diesese}</div>
+        <div className={`flex-1 ${paddings}`}>{disease}</div>
         <div className={`flex-1 ${paddings}`}>
           {t('patients-tables.surveys')}
         </div>
@@ -43,10 +44,10 @@ export const BigPatientsTable = ({
                 <BigTableRow
                   key={patient.id}
                   id={patient.id}
-                  name={patient.full_name}
+                  name={patient.first_name + ' ' + patient.last_name}
                   age={patient.age}
-                  state={patient.state}
-                  score={patient.score}
+                  state={calculateState(patient.last_score)}
+                  score={patient.last_score}
                   surveys={patient.surveys}
                   drugs={patient.drugs}
                   diet={patient.diet}

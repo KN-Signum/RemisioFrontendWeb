@@ -119,7 +119,6 @@ const PatientDetailsPage = () => {
     return result;
   }, [diagnosticData]);
 
-
   if (patientsLoading || patientLoading)
     return (
       <Layout>
@@ -151,9 +150,9 @@ const PatientDetailsPage = () => {
         >
           <PatientInfoCard
             id={fullPatient!.id}
-            disease_type={fullPatient!.disease}
-            name={fullPatient!.full_name}
-            phone_number={fullPatient!.phone}
+            disease_type={fullPatient!.disease_type}
+            name={fullPatient!.first_name + ' ' + fullPatient!.last_name}
+            phone_number={fullPatient!.phone_number}
             age={fullPatient!.age}
             hospital={fullPatient!.hospital}
             weight={fullPatient!.weight}
@@ -205,15 +204,17 @@ const PatientDetailsPage = () => {
                       <button
                         key={r}
                         onClick={() => setTimeRange(r)}
-                        className={`px-3 py-1 text-xs font-medium ${timeRange === r
-                          ? 'bg-secondary-accent text-white'
-                          : 'text-primary-accent bg-gray-200 hover:bg-gray-300'
-                          } ${r === 'month'
+                        className={`px-3 py-1 text-xs font-medium ${
+                          timeRange === r
+                            ? 'bg-secondary-accent text-white'
+                            : 'text-primary-accent bg-gray-200 hover:bg-gray-300'
+                        } ${
+                          r === 'month'
                             ? 'rounded-l-md'
                             : r === 'all'
                               ? 'rounded-r-md'
                               : ''
-                          }`}
+                        }`}
                       >
                         {r === 'month'
                           ? 'Month'

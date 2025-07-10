@@ -4,7 +4,7 @@ import { db } from '..';
 
 // Get drugs by patient ID
 const getDrugsByPatientId = http.get<{ patientId: string }>(
-  `${API_URL}/api/drugs/:patientId`,
+  `${API_URL}/drugs/:patientId`,
   ({ params }) => {
     const { patientId } = params;
     const drugs = db.drug

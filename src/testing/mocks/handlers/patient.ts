@@ -2,28 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { API_URL } from '@/config/constants';
 import { db } from '..';
 
-function getAge(dateOfBirth: string): number {
-  const birthDate = new Date(dateOfBirth);
-  const today = new Date();
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birthDate.getDate())
-  ) {
-    age--;
-  }
-  return age;
-}
-
-function getState(score: number): string {
-  if (score >= 8) return 'Remission';
-  if (score >= 6) return 'Mild';
-  if (score >= 4) return 'Moderate';
-  return 'Severe';
-}
-
-const getAllPatients = http.get(`${API_URL}/api/get_all_patients`, () => {
+const getAllPatients = http.get(`${API_URL}/patients`, () => {
   // filter all visits by doctor_id to be "1"
   const doctorId = 'd001';
   const patients = db.patient
@@ -31,14 +10,14 @@ const getAllPatients = http.get(`${API_URL}/api/get_all_patients`, () => {
     .filter((patient) => patient.doctor_id === doctorId)
     .map((patient) => ({
       id: patient.id,
-      full_name: patient.name,
+      first_name: patient.first_name,
+      last_name: patient.last_name,
       gender: patient.gender,
-      disease: patient.disease_type,
-      state: getState(patient.score),
-      last_visit: new Date(patient.updated_at),
+      disease_type: patient.disease_type,
+      last_visit: patient.last_visit,
       drugs: patient.drugs,
-      age: getAge(patient.date_of_birth),
-      score: patient.score,
+      age: patient.age,
+      last_score: patient.last_score,
       surveys: patient.surveys,
       diet: patient.diet,
       weight: patient.weight,
@@ -48,7 +27,7 @@ const getAllPatients = http.get(`${API_URL}/api/get_all_patients`, () => {
 });
 
 const getPatientDetails = http.get<{ pid: string }>(
-  `${API_URL}/api/patients/:pid`,
+  `${API_URL}/patients/:pid?view=basic`,
   ({ params }) => {
     const { pid } = params;
     const patient = db.patient.findFirst({
@@ -64,9 +43,9 @@ const getPatientDetails = http.get<{ pid: string }>(
     return HttpResponse.json({
       id: patient.id,
       hospital: patient.hospital,
-      phone: patient.phone_number,
+      phone_number: patient.phone_number,
       email: patient.email,
-      notes: patient.notes,
+      notes_about_patient: patient.notes_about_patient,
       smoking: patient.smoking,
     });
   },

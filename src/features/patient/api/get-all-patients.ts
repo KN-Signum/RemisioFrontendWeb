@@ -4,7 +4,7 @@ import { GetPatientDto } from '../types';
 
 export const getPatients = async (): Promise<GetPatientDto[]> => {
   console.log('[API-CLIENT] Fetching all patients');
-  const response = await apiClient.get('/api/get_all_patients');
+  const response = await apiClient.get('/patients');
   return response.data;
 };
 

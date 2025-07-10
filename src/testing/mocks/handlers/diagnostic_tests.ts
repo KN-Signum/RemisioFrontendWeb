@@ -5,7 +5,7 @@ import { DiagnosticTestDto } from '@/features/diagnostic_tests';
 
 // GET endpoint to retrieve patient diagnostic tests
 export const getPatientDiagnosticTests = http.get<{ patientId: string }>(
-  `${API_URL}/api/diagnostic_tests/:patientId`,
+  `${API_URL}/diagnostic_tests/:patientId`,
   ({ params, request }) => {
     console.log('[MSW] Get patient diagnostic tests', params);
     const { patientId } = params as { patientId: string };

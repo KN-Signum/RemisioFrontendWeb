@@ -9,7 +9,7 @@ export const createVisit = (
   data: GetVisitDto;
 }> => {
   console.log('Creating visit:', createVisitDto);
-  return apiClient.post('/api/assign_visit', createVisitDto);
+  return apiClient.post('/visits', createVisitDto);
 };
 
 type UseCreateVisitOptions = {

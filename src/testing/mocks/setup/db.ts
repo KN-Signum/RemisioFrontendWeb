@@ -4,22 +4,24 @@ const models = {
   patient: {
     id: primaryKey(String),
     doctor_id: String, // ID of the doctor assigned to the patient
-    name: String,
+    first_name: String,
+    last_name: String,
     email: String,
     phone_number: String,
     weight: Number,
     height: Number,
     date_of_birth: String,
-    score: Number,
     smoking: String,
     gender: String, // 'male' | 'female' | 'other'
     disease_type: String, // 'crohn' | 'ulcerative_colitis'
-    last_visit: String, // ISO timestamp
+    hospital: String,
+    notes_about_patient: String,
+    last_score: Number,
+    last_visit: String, // ISO timestamp or "None"
+    age: Number,
     drugs: Array<string>,
     surveys: Number,
     diet: String,
-    hospital: String,
-    notes: String, // was `notes_about_patient`
     updated_at: String, // ISO timestamp
   },
   visit: {

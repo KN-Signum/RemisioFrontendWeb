@@ -4,7 +4,7 @@ import { db } from '..';
 
 // GET endpoint to retrieve patient scores
 export const getPatientScores = http.get<{ patientId: string }>(
-  `${API_URL}/api/patient_scores/:patientId`,
+  `${API_URL}/scores/:patientId`,
   ({ params, request }) => {
     console.log('[MSW] Get patient scores', params);
     const { patientId } = params;

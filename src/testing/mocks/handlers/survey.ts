@@ -61,7 +61,7 @@ export const calculateUcCategory = (totalScore: number): SurveyCategory => {
 
 /** GET /api/patients/:patientId/surveys/crohn */
 const getAllCrohnSurveys = http.get<{ patientId: string }>(
-  `${API_URL}/api/patients/:patientId/surveys/crohn`,
+  `${API_URL}/patients/:patientId/surveys/crohn`,
   ({ params }) => {
     const { patientId } = params;
 
@@ -86,7 +86,7 @@ const getAllCrohnSurveys = http.get<{ patientId: string }>(
 
 /** GET /api/patients/:patientId/surveys/crohn/latest */
 const getLatestCrohnSurvey = http.get<{ patientId: string }>(
-  `${API_URL}/api/patients/:patientId/surveys/crohn/latest`,
+  `${API_URL}/patients/:patientId/surveys/crohn/latest`,
   ({ params }) => {
     const { patientId } = params;
 
@@ -117,7 +117,7 @@ const getLatestCrohnSurvey = http.get<{ patientId: string }>(
 
 /** GET /api/patients/:patientId/surveys/uc */
 const getAllUcSurveys = http.get<{ patientId: string }>(
-  `${API_URL}/api/patients/:patientId/surveys/uc`,
+  `${API_URL}/patients/:patientId/surveys/uc`,
   ({ params }) => {
     const { patientId } = params;
 
@@ -142,7 +142,7 @@ const getAllUcSurveys = http.get<{ patientId: string }>(
 
 /** GET /api/patients/:patientId/surveys/uc/latest */
 const getLatestUcSurvey = http.get<{ patientId: string }>(
-  `${API_URL}/api/patients/:patientId/surveys/uc/latest`,
+  `${API_URL}/patients/:patientId/surveys/uc/latest`,
   ({ params }) => {
     const { patientId } = params;
 

@@ -1,15 +1,15 @@
-import { DiseaseType, GenderType, PatientState } from '@/types';
+import { DiseaseType, GenderType } from '@/types';
 
 export interface GetPatientDto {
   id: string;
-  full_name: string;
+  first_name: string;
+  last_name: string;
   gender: GenderType;
-  disease: DiseaseType;
-  state: PatientState;
+  disease_type: DiseaseType;
   last_visit: Date;
   drugs: string[];
   age: number;
-  score: number;
+  last_score: number;
   surveys: number;
   diet: string;
   weight: number;
@@ -18,9 +18,9 @@ export interface GetPatientDto {
 export interface GetPatientDetailsDto {
   id: string;
   hospital: string;
-  phone: string;
+  phone_number: string;
   email: string;
-  notes: string;
+  notes_about_patient: string;
   smoking: string;
 }
 

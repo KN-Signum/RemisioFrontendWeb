@@ -16,20 +16,20 @@ const PatientsPage = () => {
 
   const ucPatients = useMemo(() => {
     return patients.filter((patient) => {
-      const matchesSearch = patient.full_name
+      const matchesSearch = `${patient.first_name} ${patient.last_name}`
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
-      const isUC = patient.disease === 'ulcerative_colitis';
+      const isUC = patient.disease_type === 'ulcerative_colitis';
       return matchesSearch && isUC;
     });
   }, [patients, searchQuery]);
 
   const crohnPatients = useMemo(() => {
     return patients.filter((patient) => {
-      const matchesSearch = patient.full_name
+      const matchesSearch = `${patient.first_name} ${patient.last_name}`
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
-      const isCrohn = patient.disease === 'crohn';
+      const isCrohn = patient.disease_type === 'crohn';
       return matchesSearch && isCrohn;
     });
   }, [patients, searchQuery]);
@@ -54,10 +54,10 @@ const PatientsPage = () => {
         </div>
         <div className="flex h-full gap-1">
           {view === 'both' && (
-            <SmallPatientsTable patients={ucPatients} diesese="Mayo" />
+            <SmallPatientsTable patients={ucPatients} disease="Mayo" />
           )}
           {view === 'uc' && (
-            <BigPatientsTable patients={ucPatients} diesese="Mayo" />
+            <BigPatientsTable patients={ucPatients} disease="Mayo" />
           )}
           <div className="justify-top mt-3 flex w-5 flex-col gap-2">
             {view !== 'uc' && (
@@ -86,10 +86,10 @@ const PatientsPage = () => {
             )}
           </div>
           {view === 'both' && (
-            <SmallPatientsTable patients={crohnPatients} diesese="CDAI" />
+            <SmallPatientsTable patients={crohnPatients} disease="CDAI" />
           )}
           {view === 'crohn' && (
-            <BigPatientsTable patients={crohnPatients} diesese="CDAI" />
+            <BigPatientsTable patients={crohnPatients} disease="CDAI" />
           )}
         </div>
       </div>

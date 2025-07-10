@@ -10,7 +10,7 @@ export const login = (
 ): Promise<{
   data: LoginResponse;
 }> => {
-  return apiClient.post('/login/', creditentials);
+  return apiClient.post('/login', creditentials);
 };
 
 type UseLoginOptions = {

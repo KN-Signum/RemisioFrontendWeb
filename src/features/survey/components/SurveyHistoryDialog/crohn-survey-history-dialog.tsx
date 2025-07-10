@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { formatDateDisplay } from '@/utils/format-date-display';
-import { formatValue } from '@/lib/utils/format_value';
+import { formatValue } from '@/utils/format_value';
 import { CrohnSurveyDto, SurveyCategory, usePatientCrohnSurveys } from '../..';
 import { Dialog } from '@/components/ui/dialog';
 

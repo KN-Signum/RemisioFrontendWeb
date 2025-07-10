@@ -1,16 +1,17 @@
 import { useTranslation } from 'react-i18next';
 import { GetPatientDto } from '@/features/patient/types';
 import { TableRow, paddings } from './table-row';
+import { calculateState } from '@/utils/calculate-state';
 
 export { TableRow } from './table-row';
 
 interface SmallPatientsTableProps {
-  diesese: string;
+  disease: 'CDAI' | 'Mayo';
   patients: GetPatientDto[];
 }
 
 export const SmallPatientsTable = ({
-  diesese,
+  disease,
   patients,
 }: SmallPatientsTableProps) => {
   const { t } = useTranslation();
@@ -22,7 +23,7 @@ export const SmallPatientsTable = ({
         </div>
         <div className={`flex-2 ${paddings}`}>{t('patients-tables.age')}</div>
         <div className={`flex-2 ${paddings}`}>{t('patients-tables.state')}</div>
-        <div className={`flex-2 ${paddings}`}>{diesese}</div>
+        <div className={`flex-2 ${paddings}`}>{disease}</div>
       </div>
       <div className="text-primary-accent text-sm">
         {patients.length === 0 ? (
@@ -37,10 +38,10 @@ export const SmallPatientsTable = ({
                 <TableRow
                   key={patient.id}
                   id={patient.id}
-                  name={patient.full_name}
+                  name={patient.first_name + ' ' + patient.last_name}
                   age={patient.age}
-                  state={patient.state}
-                  score={patient.score}
+                  state={calculateState(patient.last_score)}
+                  score={patient.last_score}
                   roundedBottom={isPreLast}
                 />
               );

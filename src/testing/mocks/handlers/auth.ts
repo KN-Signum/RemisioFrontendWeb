@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { API_URL } from '@/config/constants';
 import { LoginRequestDto } from '@/features/auth';
 
-const login = http.post(`${API_URL}/login/`, async ({ request }) => {
+const login = http.post(`${API_URL}/login`, async ({ request }) => {
   const { email, password } = (await request.json()) as LoginRequestDto;
 
   // Simulate a successful login

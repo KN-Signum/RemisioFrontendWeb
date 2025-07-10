@@ -4,7 +4,7 @@ import { GetVisitDto } from '../types';
 
 export const getVisits = async (): Promise<GetVisitDto[]> => {
   console.log('Fetching visits');
-  const response = await apiClient.get('/api/view_user_visits');
+  const response = await apiClient.get('/visits');
   return response.data.content;
 };
 

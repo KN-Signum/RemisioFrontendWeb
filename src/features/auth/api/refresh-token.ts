@@ -8,7 +8,7 @@ export const refreshToken = (): Promise<{
   data: { access_token: string };
 }> => {
   console.log('Refreshing token...');
-  return apiClient.post('/refresh_token/');
+  return apiClient.post('/refresh_token');
 };
 
 export const useRefreshToken = (setIsAuth: (val: boolean) => void) => {
