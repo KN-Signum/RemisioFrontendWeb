@@ -44,8 +44,8 @@ export const DiagnosticTestsGrid: React.FC<Props> = ({ tests, loading }) => {
   if (!tests.length) return <div className="text-gray-500">Brak wyników.</div>
 
   return (
-    <div className="w-[65%] overflow-y-auto rounded-sm bg-white p-4 shadow-md
-                    grid grid-cols-6 auto-rows-[5.5rem] gap-4 [grid-auto-flow:dense]">
+    <div className="w-[65%] overflow-y-auto rounded-sm bg-white p-1 shadow-md
+                    grid grid-cols-6 auto-rows-[5.5rem] gap-1 [grid-auto-flow:dense]">
       {tests.map((t, idx) => {
         const large = bigTiles.has(t.name)
         const span = large ? 'col-span-2 row-span-1' : 'col-span-1 row-span-1'

@@ -1,57 +1,58 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'universal-cookie';
 import { useRefreshToken } from '@/features/auth/api/refresh-token';
 import { API_MOCKING } from '@/config/constants';
 
-interface JwtPayload {
-  exp: number;
-}
+interface JwtPayload { exp: number }
 
-const isTokenExpired = (token: string): boolean => {
+const isTokenExpired = (token: string) => {
   try {
-    const decoded = jwtDecode<JwtPayload>(token);
-    const currentTime = Date.now() / 1000;
-    console.log('Decoded token:', decoded.exp);
-    console.log('Current time:', currentTime);
-    return decoded.exp < currentTime;
-  } catch (error) {
-    console.error('Error decoding token:', error);
+    const { exp } = jwtDecode<JwtPayload>(token);
+    return exp * 1000 < Date.now();
+  } catch {
     return true;
   }
 };
-const ProtectedRoutes = () => {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [isCheckingAuth, setIsCheckingAuth] = useState<boolean>(true);
-  const { refresh, isLoading } = useRefreshToken(setIsAuth);
 
-  if (API_MOCKING) {
-    return <Outlet />;
-  }
+export default function ProtectedRoutes() {
+  const [isAuth, setIsAuth] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+  const { refresh, isLoading } = useRefreshToken(() => setIsAuth(true));
 
-  const cookies = new Cookies();
-  const accessToken = cookies.get('access_token');
-  const refreshTokenCookie = cookies.get('refresh_token');
+  useEffect(() => {
+    if (API_MOCKING) {
+      setIsAuth(true);
+      setAuthChecked(true);
+      return;
+    }
 
-  if (accessToken && !isTokenExpired(accessToken)) {
-    console.log('Valid access token detected.');
-    setIsAuth(true);
-  } else if (refreshTokenCookie) {
-    console.log('No valid access token; attempting refresh.');
-    refresh();
-  } else {
-    console.log('No tokens available. Setting isAuth false.');
-    setIsAuth(false);
-  }
-  setIsCheckingAuth(false);
+    const cookies = new Cookies();
+    const accessToken = cookies.get('access_token');
+    const refreshToken = cookies.get('refresh_token');
 
-  // Log auth state on every render.
-  console.log('isAuth state:', isAuth);
+    if (accessToken && !isTokenExpired(accessToken)) {
+      setIsAuth(true);
+      setAuthChecked(true);
+      return;
+    }
 
-  if (isLoading || isCheckingAuth) return <div>Loading...</div>;
+    if (refreshToken) {
+      (async () => {
+        try {
+          await refresh();
+        } finally {
+          setAuthChecked(true);
+        }
+      })();
+    } else {
+      setIsAuth(false);
+      setAuthChecked(true);
+    }
+  }, [refresh]);
 
-  return isAuth ? <Outlet /> : <Navigate to="/login" />;
-};
+  if (isLoading || !authChecked) return <div>Loading...</div>;
 
-export default ProtectedRoutes;
+  return isAuth ? <Outlet /> : <Navigate to="/login" replace />;
+}

@@ -77,6 +77,16 @@ const PatientDetailsPage = () => {
     id ?? '',
   );
 
+  const drugBars = useMemo(() => {
+    if (!drugs?.length) return [];
+    return drugs.map((d) => ({
+      name: d.name,
+      start: d.dateFrom.split('T')[0],
+      end: d.dateTo ? d.dateTo.split('T')[0] : null,
+    }));
+  }, [drugs]);
+
+
   const [selectedAnalyte, setSelectedAnalyte] = useState<string | null>('cea');
   const [timeRange, setTimeRange] = useState<TimeRange>('all');
   const [colors, setColors] = useState({
@@ -204,17 +214,15 @@ const PatientDetailsPage = () => {
                       <button
                         key={r}
                         onClick={() => setTimeRange(r)}
-                        className={`px-3 py-1 text-xs font-medium ${
-                          timeRange === r
-                            ? 'bg-secondary-accent text-white'
-                            : 'text-primary-accent bg-gray-200 hover:bg-gray-300'
-                        } ${
-                          r === 'month'
+                        className={`px-3 py-1 text-xs font-medium ${timeRange === r
+                          ? 'bg-secondary-accent text-white'
+                          : 'text-primary-accent bg-gray-200 hover:bg-gray-300'
+                          } ${r === 'month'
                             ? 'rounded-l-md'
                             : r === 'all'
                               ? 'rounded-r-md'
                               : ''
-                        }`}
+                          }`}
                       >
                         {r === 'month'
                           ? 'Month'
@@ -299,13 +307,13 @@ const PatientDetailsPage = () => {
                     weeks={scoreHistory.map((p) => p.week)}
                     scores={scoreHistory.map((p) => p.score)}
                     analyteData={
-                      selectedAnalyte
-                        ? analyteHistories[selectedAnalyte]
-                        : undefined
+                      selectedAnalyte ? analyteHistories[selectedAnalyte] : undefined
                     }
                     timeRange={timeRange}
                     colors={colors}
+                    drugBars={drugBars}
                   />
+
                 </div>
               </div>
             )}
