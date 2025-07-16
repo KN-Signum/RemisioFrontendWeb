@@ -1,4 +1,4 @@
-import { apiClient } from '@/lib/api-client';
+import { authClient } from '@/lib/auth-client';
 import { useMutation } from '@tanstack/react-query';
 import Cookies from 'universal-cookie';
 
@@ -8,9 +8,14 @@ export const refreshToken = (): Promise<{
   data: { access_token: string };
 }> => {
   console.log('Refreshing token...');
-  return apiClient.post('/refresh_token');
+  const refreshToken = cookies.get('refresh_token');
+  if (!refreshToken) {
+    return Promise.reject(new Error('No refresh token found'));
+  }
+  return authClient.post('/refresh_token', { refresh_token: refreshToken });
 };
 
+//TODO: Implement refreshing token logic
 export const useRefreshToken = (setIsAuth: (val: boolean) => void) => {
   const { mutate: refresh, isPending: isLoading } = useMutation({
     mutationFn: refreshToken,

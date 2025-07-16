@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { apiClient } from '@/lib/api-client';
 import Cookies from 'universal-cookie';
 import { LoginRequestDto, LoginResponse } from '../types';
+import { authClient } from '@/lib/auth-client';
 
 const cookies = new Cookies();
 
@@ -10,7 +10,7 @@ export const login = (
 ): Promise<{
   data: LoginResponse;
 }> => {
-  return apiClient.post('/login', creditentials);
+  return authClient.post('/login', creditentials);
 };
 
 type UseLoginOptions = {
