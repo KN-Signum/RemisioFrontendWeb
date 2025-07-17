@@ -1,9 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Footer } from '@/components/layout/footer';
-import { useTranslation } from 'react-i18next';
 
 export const RegistrationForm = () => {
-    const { t } = useTranslation();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
