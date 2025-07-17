@@ -23,8 +23,6 @@ interface ScoreTimeLineChartProps {
   };
   drugBars?: DrugBar[];
   drugBandHeight?: number;
-
-
 }
 
 export const ScoreTimelineChart = ({
@@ -38,7 +36,11 @@ export const ScoreTimelineChart = ({
 }: ScoreTimeLineChartProps) => {
   const { filteredWeeks, filteredScores, filteredAnalyteData } = useMemo(() => {
     if (timeRange === 'all')
-      return { filteredWeeks: weeks, filteredScores: scores, filteredAnalyteData: analyteData };
+      return {
+        filteredWeeks: weeks,
+        filteredScores: scores,
+        filteredAnalyteData: analyteData,
+      };
     const cutoffDate = new Date();
     if (timeRange === 'month') cutoffDate.setMonth(cutoffDate.getMonth() - 1);
     else cutoffDate.setFullYear(cutoffDate.getFullYear() - 1);
@@ -48,11 +50,19 @@ export const ScoreTimelineChart = ({
       .filter(({ t }) => t >= cutoff);
     const ana = analyteData
       ? (() => {
-        const pts = analyteData.dates
-          .map((d, i) => ({ d, v: analyteData.values[i], t: new Date(d).getTime() }))
-          .filter(({ t }) => t >= cutoff);
-        return { name: analyteData.name, dates: pts.map((p) => p.d), values: pts.map((p) => p.v) };
-      })()
+          const pts = analyteData.dates
+            .map((d, i) => ({
+              d,
+              v: analyteData.values[i],
+              t: new Date(d).getTime(),
+            }))
+            .filter(({ t }) => t >= cutoff);
+          return {
+            name: analyteData.name,
+            dates: pts.map((p) => p.d),
+            values: pts.map((p) => p.v),
+          };
+        })()
       : undefined;
     return {
       filteredWeeks: filteredData.map((p) => p.w),
@@ -71,14 +81,28 @@ export const ScoreTimelineChart = ({
 
   const tickAmount = maxScore <= 12 ? 6 : 5;
 
-  const scoreSeries = filteredWeeks.map((w, i) => ({ x: new Date(w).getTime(), y: filteredScores[i] }));
-  const analyteSeries =
-    filteredAnalyteData && filteredAnalyteData.dates.length
-      ? filteredAnalyteData.dates.map((d, i) => ({ x: new Date(d).getTime(), y: filteredAnalyteData.values[i] }))
-      : [];
+  const scoreSeries = filteredWeeks.map((w, i) => ({
+    x: new Date(w).getTime(),
+    y: filteredScores[i],
+  }));
+  const analyteSeries = useMemo(() => {
+    if (filteredAnalyteData && filteredAnalyteData.dates.length)
+      return filteredAnalyteData.dates.map((d, i) => ({
+        x: new Date(d).getTime(),
+        y: filteredAnalyteData.values[i],
+      }));
+    return [];
+  }, [filteredAnalyteData]);
 
   const drugAnnotations = useMemo(() => {
-    const palette = ['#63b3ed80', '#f6ad5580', '#68d39180', '#f5656580', '#9f7aea80', '#ed893680'];
+    const palette = [
+      '#63b3ed80',
+      '#f6ad5580',
+      '#68d39180',
+      '#f5656580',
+      '#9f7aea80',
+      '#ed893680',
+    ];
     const bandTop = maxScore * drugBandHeight;
     return drugBars.map((db, i) => ({
       x: new Date(db.start).getTime(),
@@ -112,15 +136,26 @@ export const ScoreTimelineChart = ({
       width="100%"
       series={[
         { name: 'Score', data: scoreSeries },
-        ...(filteredAnalyteData ? [{ name: filteredAnalyteData.name, data: analyteSeries }] : []),
+        ...(filteredAnalyteData
+          ? [{ name: filteredAnalyteData.name, data: analyteSeries }]
+          : []),
       ]}
       options={{
-        chart: { id: 'score-chart', zoom: { enabled: false }, toolbar: { show: false } },
+        chart: {
+          id: 'score-chart',
+          zoom: { enabled: false },
+          toolbar: { show: false },
+        },
         stroke: { curve: 'smooth', width: 2 },
         markers: { size: 4 },
         colors: [colors.scoreColor, colors.analyteColor],
         annotations: { xaxis: drugAnnotations },
-        xaxis: { type: 'datetime', labels: { rotate: -45 }, min: axisExtremes.min, max: axisExtremes.max },
+        xaxis: {
+          type: 'datetime',
+          labels: { rotate: -45 },
+          min: axisExtremes.min,
+          max: axisExtremes.max,
+        },
         yaxis: [
           {
             min: 0,
@@ -131,22 +166,35 @@ export const ScoreTimelineChart = ({
           },
           ...(filteredAnalyteData
             ? [
-              {
-                opposite: true,
-                min: 0,
-                max: filteredAnalyteData.values.length
-                  ? Math.max(...filteredAnalyteData.values) * 1.2
-                  : 10,
-                title: { text: filteredAnalyteData.name.toUpperCase(), style: { color: colors.analyteColor } },
-                labels: { style: { colors: colors.analyteColor }, formatter: (v: number) => `${v}` },
-              },
-            ]
+                {
+                  opposite: true,
+                  min: 0,
+                  max: filteredAnalyteData.values.length
+                    ? Math.max(...filteredAnalyteData.values) * 1.2
+                    : 10,
+                  title: {
+                    text: filteredAnalyteData.name.toUpperCase(),
+                    style: { color: colors.analyteColor },
+                  },
+                  labels: {
+                    style: { colors: colors.analyteColor },
+                    formatter: (v: number) => `${v}`,
+                  },
+                },
+              ]
             : []),
         ],
-        tooltip: { shared: true, intersect: false, followCursor: true, y: { formatter: (v: number) => `${v.toFixed(1)}` } },
+        tooltip: {
+          shared: true,
+          intersect: false,
+          followCursor: true,
+          y: { formatter: (v: number) => `${v.toFixed(1)}` },
+        },
         grid: { strokeDashArray: 4 },
         legend: { show: true },
-        responsive: [{ breakpoint: 640, options: { xaxis: { labels: { rotate: -90 } } } }],
+        responsive: [
+          { breakpoint: 640, options: { xaxis: { labels: { rotate: -90 } } } },
+        ],
       }}
     />
   );
