@@ -7,6 +7,7 @@ import PatientDetailsPage from '@/pages/patient-details';
 import LandingPage from '@/pages/landing-page';
 import ProtectedRoutes from './protected-routes';
 import PrivacyPolicyPage from '@/pages/privacy-policy';
+import RegistrationForm from '@/pages/landing-page/registration-form';
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +50,11 @@ export const router = createBrowserRouter([
     element: <PrivacyPolicyPage />,
     errorElement: <div>Error</div>,
   },
-
+  {
+    path: '/registration-form',
+    element: <RegistrationForm />,
+    errorElement: <div>Error</div>,
+  },
   {
     path: '/test',
     element: <div>Test</div>,

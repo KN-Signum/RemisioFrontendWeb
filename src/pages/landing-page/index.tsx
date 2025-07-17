@@ -109,7 +109,7 @@ export const LandingPage = () => {
               {t('landing-page.download_app')}
             </Button>
             <Button
-              onClick={() => {}}
+              onClick={() => { }}
               className="border-primary-accent text-primary-accent rounded-full border bg-transparent px-6 py-3 text-sm font-semibold"
             >
               {t('landing-page.demo')}
@@ -161,13 +161,13 @@ export const LandingPage = () => {
         </span>
         <div className="flex gap-8">
           <Card
-            href="https://play.google.com"
+            href="https://remisio.pl/registration-form"
             src="/logos/android.png"
             alt="Android"
             name="Android"
           />
           <Card
-            href="https://apps.apple.com"
+            href="https://testflight.apple.com/join/B9suPaRJ"
             src="/logos/apple.png"
             alt="iOS"
             name="iOS"
