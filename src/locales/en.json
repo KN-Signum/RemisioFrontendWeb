@@ -46,7 +46,7 @@
     "confirm": "Confirm",
     "none": "None"
   },
-    "footer": {
+  "footer": {
     "brand": "Remisio",
     "disclaimer": "Remisio is a support tool and does not replace professional medical advice. If your health suddenly worsens, contact a doctor or call 112.",
     "location": "Wrocław, Poland",
@@ -344,5 +344,14 @@
     "meal_date": "Date",
     "ontology": "Categories",
     "notes": "Notes"
+  },
+  "registration": {
+    "title": "Registration Form",
+    "description": "To get the Android application, we need your email to send you an invitation to the testing group. After that, you can install the app by clicking the link sent via Google Console.",
+    "email_label": "Email address",
+    "email_placeholder": "Enter your email",
+    "submit_button": "Send",
+    "email_subject": "Application Testing Request",
+    "email_body": "Hello,\n\nI would like to request access to test the Remisio Android application.\nMy email address is: {{email}}\n\nBest regards,\n{{email}}"
   }
 }

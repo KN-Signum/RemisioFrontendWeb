@@ -22,18 +22,35 @@ interface InfoSliceProps {
   reverse?: boolean;
 }
 
-const Card = ({ href, src, alt, name }: CardProps) => (
-  <a href={href} className="transition-opacity hover:opacity-80">
-    <div className="border-primary-accent/40 bg-foreground/50 flex flex-col items-center gap-2 rounded-lg border p-6 shadow">
-      <img src={src} alt={alt} className="h-14 w-14 sm:h-20 sm:w-20" />
-      <span className="text-primary-accent font-semibold">{name}</span>
-    </div>
-  </a>
-);
+const Card = ({ href, src, alt, name }: CardProps) => {
+  const navigate = useNavigate();
+  const isExternal = href.startsWith('http');
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (!isExternal) {
+      e.preventDefault();
+      navigate(href);
+    }
+  };
+
+  return (
+    <a
+      href={href}
+      onClick={handleClick}
+      className="transition-opacity hover:opacity-80"
+    >
+      <div className="border-primary-accent/40 bg-foreground/50 flex flex-col items-center gap-2 rounded-lg border p-6 shadow">
+        <img src={src} alt={alt} className="h-14 w-14 sm:h-20 sm:w-20" />
+        <span className="text-primary-accent font-semibold">{name}</span>
+      </div>
+    </a>
+  );
+};
 
 const InfoSlice = ({ title, text, img, reverse }: InfoSliceProps) => (
   <div
-    className={`mx-auto flex max-w-7xl flex-col items-center gap-10 px-4 py-16 sm:flex-row ${reverse ? 'sm:flex-row-reverse' : ''} bg-transparent`}
+    className={`mx-auto flex max-w-7xl flex-col items-center gap-10 px-4 py-16 sm:flex-row ${reverse ? 'sm:flex-row-reverse' : ''
+      } bg-transparent`}
   >
     <img
       src={img}
@@ -161,7 +178,7 @@ export const LandingPage = () => {
         </span>
         <div className="flex gap-8">
           <Card
-            href="https://remisio.pl/registration-form"
+            href="/registration-form"
             src="/logos/android.png"
             alt="Android"
             name="Android"
