@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import Layout from '@/components/layout';
 
 import {
@@ -10,6 +11,7 @@ import {
 import { FaCaretRight, FaCaretLeft } from 'react-icons/fa';
 
 const PatientsPage = () => {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const { data: patients, isLoading: patientsLoading } = useGetPatients();
   const [view, setView] = useState<'both' | 'uc' | 'crohn'>('both');
@@ -53,13 +55,20 @@ const PatientsPage = () => {
           <SearchBar placeholder="Search patients..." onSearch={handleSearch} />
         </div>
         <div className="flex h-full gap-1">
-          {view === 'both' && (
-            <SmallPatientsTable patients={ucPatients} disease="Mayo" />
+          {(view === 'both' || view === 'uc') && (
+            <div className="flex flex-col flex-1">
+              <h2 className="text-primary-accent text-lg font-semibold mb-3 text-center">
+                {t('patients.diseases.ulcerative_colitis')}
+              </h2>
+              {view === 'both' && (
+                <SmallPatientsTable patients={ucPatients} disease="Mayo" />
+              )}
+              {view === 'uc' && (
+                <BigPatientsTable patients={ucPatients} disease="Mayo" />
+              )}
+            </div>
           )}
-          {view === 'uc' && (
-            <BigPatientsTable patients={ucPatients} disease="Mayo" />
-          )}
-          <div className="justify-top mt-3 flex w-5 flex-col gap-2">
+          <div className="justify-top mt-8 flex w-5 flex-col gap-2">
             {view !== 'uc' && (
               <FaCaretLeft
                 className="bg-secondary h-8 w-full rounded-xl pr-1 hover:cursor-pointer hover:opacity-70"
@@ -85,11 +94,18 @@ const PatientsPage = () => {
               />
             )}
           </div>
-          {view === 'both' && (
-            <SmallPatientsTable patients={crohnPatients} disease="CDAI" />
-          )}
-          {view === 'crohn' && (
-            <BigPatientsTable patients={crohnPatients} disease="CDAI" />
+          {(view === 'both' || view === 'crohn') && (
+            <div className="flex flex-col flex-1">
+              <h2 className="text-primary-accent text-lg font-semibold mb-3 text-center">
+                {t('patients.diseases.crohn')}
+              </h2>
+              {view === 'both' && (
+                <SmallPatientsTable patients={crohnPatients} disease="CDAI" />
+              )}
+              {view === 'crohn' && (
+                <BigPatientsTable patients={crohnPatients} disease="CDAI" />
+              )}
+            </div>
           )}
         </div>
       </div>

@@ -186,6 +186,10 @@
     }
   },
   "patients": {
+    "diseases": {
+      "crohn": "Crohn's Disease",
+      "ulcerative_colitis": "Ulcerative Colitis"
+    },
     "new-patient": {
       "title": "New patient",
       "form": {

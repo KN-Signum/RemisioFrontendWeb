@@ -9,6 +9,7 @@ interface InputFieldProps {
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
 }
 
 export const InputField: React.FC<InputFieldProps> = ({
@@ -18,6 +19,7 @@ export const InputField: React.FC<InputFieldProps> = ({
   placeholder,
   value,
   onChange,
+  error,
 }) => {
   return (
     <div className="grid gap-1">
@@ -31,7 +33,13 @@ export const InputField: React.FC<InputFieldProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        aria-invalid={!!error}
       />
+      {error && (
+        <span className="text-sm text-red-500 ml-1">
+          {error}
+        </span>
+      )}
     </div>
   );
 };

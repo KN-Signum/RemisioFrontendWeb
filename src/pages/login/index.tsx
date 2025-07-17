@@ -25,9 +25,40 @@ const LoginPage = () => {
   const [userLogInInfo, setuserLogInInfo] =
     useState<LoginRequestDto>(initialValue);
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLFormElement>) => {
+  const [errors, setErrors] = useState<{
+    email?: string;
+    password?: string;
+  }>({});
+
+  const validateForm = (): boolean => {
+    const newErrors: { email?: string; password?: string } = {};
+
+    if (!userLogInInfo.email.trim()) {
+      newErrors.email = t('login.email_not_empty');
+    }
+
+    if (!userLogInInfo.password.trim()) {
+      newErrors.password = t('login.password_not_empty');
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const clearError = (field: 'email' | 'password') => {
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     console.log('Submitting login form', userLogInInfo);
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       login.submit(userLogInInfo);
     } catch (error) {
@@ -60,12 +91,14 @@ const LoginPage = () => {
                 type="email"
                 placeholder={t('login.email_placeholder')}
                 value={userLogInInfo.email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                error={errors.email}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setuserLogInInfo({
                     ...userLogInInfo,
                     email: e.target.value,
-                  })
-                }
+                  });
+                  clearError('email');
+                }}
               />
 
               <InputField
@@ -74,12 +107,14 @@ const LoginPage = () => {
                 type="password"
                 placeholder={t('login.password_placeholder')}
                 value={userLogInInfo.password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                error={errors.password}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setuserLogInInfo({
                     ...userLogInInfo,
                     password: e.target.value,
-                  })
-                }
+                  });
+                  clearError('password');
+                }}
               />
 
               <Button

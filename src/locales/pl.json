@@ -171,6 +171,10 @@
     }
   },
   "patients": {
+    "diseases": {
+      "crohn": "Choroba Leśniowskiego-Crohna",
+      "ulcerative_colitis": "Wrzodziejące zapalenie jelita grubego"
+    },
     "new-patient": {
       "title": "Nowy pacjent",
       "form": {
