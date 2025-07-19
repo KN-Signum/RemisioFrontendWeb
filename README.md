@@ -23,3 +23,6 @@ Web page is a part of the project called Gastro-App. The solution we suggest is 
   - npm run build
   - scp -r dist/* root@172.104.143.209:/var/www/html/
   - provide a passowrd
+
+  GIT_SSH_COMMAND='ssh -i ~/.ssh/deploy_key' git pull
+  docker-compose up --build w repo backendu
