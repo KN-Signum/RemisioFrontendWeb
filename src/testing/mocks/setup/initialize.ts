@@ -1,14 +1,21 @@
-import { IS_DEVELOPMENT } from '@/config/constants';
+import { API_MOCKING } from '@/config/constants';
 import { seedDb } from './seed-db';
 
 const initializeMocks = async () => {
-  if (IS_DEVELOPMENT) {
+  if (API_MOCKING) {
     const { worker } = await import('./browser');
-    worker.start({
+    await worker.start({
       onUnhandledRequest: 'bypass',
+      serviceWorker: {
+        url: '/mockServiceWorker.js',
+        options: {
+          // This ensures the service worker is properly registered
+          scope: '/',
+        },
+      },
     });
   }
   seedDb();
 };
 
-initializeMocks();
+export default initializeMocks;

@@ -12,7 +12,14 @@ export default defineConfig({
     },
   },
   build: {
-    target: "esnext"
+    target: "esnext",
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+      },
+    },
+    // This ensures mockServiceWorker.js is copied as-is
+    copyPublicDir: true,
   },
   esbuild: {
     target: "esnext"
@@ -21,4 +28,5 @@ export default defineConfig({
     open: true,
     port: 3000,
   },
+  publicDir: 'public',
 });
