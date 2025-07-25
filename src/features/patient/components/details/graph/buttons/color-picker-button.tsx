@@ -41,7 +41,7 @@ export const ColorPickerButton = ({
     <div className="relative" ref={wrapperRef}>
       <button
         onClick={() => setShowColorPicker((v) => !v)}
-        className="flex items-center gap-1 rounded-md bg-gray-200 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-300"
+        className="flex items-center gap-1 rounded-md bg-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-300"
       >
         {selectedAnalyte ? 'Customize colors' : 'Customize score color'}
         <svg
@@ -61,7 +61,7 @@ export const ColorPickerButton = ({
         </svg>
       </button>
       {showColorPicker && (
-        <div className="absolute z-10 mt-2 w-56 rounded-md border border-gray-200 bg-white p-3 shadow-lg">
+        <div className="absolute z-11 mt-2 w-56 rounded-md border border-gray-200 bg-white p-3 shadow-lg">
           <label className="mb-1 block text-xs font-medium text-gray-700">
             Score Color
           </label>

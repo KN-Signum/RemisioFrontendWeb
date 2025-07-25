@@ -1,6 +1,5 @@
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import { useState, useMemo } from 'react';
-import { ScoreTimelineChart } from './score-time-line-chart';
 import { TimeRange } from '@/types';
 import { GetPatientScoresDto } from '@/features/score';
 import { DrugDto } from '@/features/drug';
@@ -9,10 +8,14 @@ import {
   GetPatientDiagnosticTestsDto,
 } from '@/features/diagnostic_tests';
 import { Loading } from '@/components/ui/loading';
-import { ColorPickerButton } from './color-picker-button';
-import { TimeModeButton } from './time-mode-button';
-import { SelectAnalyteButton } from './select-analyte-button';
+import {
+  TimeModeButton,
+  ShowDrugsButton,
+  SelectAnalyteButton,
+  ColorPickerButton,
+} from './buttons';
 import { formatPatientScores, getAnalyteHistory } from './utils';
+import { Charts } from './charts';
 
 type GraphProps = {
   patientScores?: GetPatientScoresDto;
@@ -31,21 +34,13 @@ export const Graph = ({
   isGraphExpanded,
   resizeGraph,
 }: GraphProps) => {
-  const drugBars = useMemo(() => {
-    if (!drugs?.length) return [];
-    return drugs.map((d) => ({
-      name: d.name,
-      start: d.dateFrom.split('T')[0],
-      end: d.dateTo ? d.dateTo.split('T')[0] : null,
-    }));
-  }, [drugs]);
-
   const [selectedAnalyte, setSelectedAnalyte] = useState<string | null>('cea');
   const [timeRange, setTimeRange] = useState<TimeRange>('all');
   const [colors, setColors] = useState({
     scoreColor: '#6b46c1',
     analyteColor: '#e53e3e',
   });
+  const [showDrugs, setShowDrugs] = useState(true);
 
   const scoreHistory = useMemo(
     () => formatPatientScores(patientScores?.scores),
@@ -84,7 +79,7 @@ export const Graph = ({
       >
         {isGraphExpanded ? <FaAngleDown /> : <FaAngleUp />}
       </button>
-      <div className="mb-4 flex flex-wrap items-center gap-4">
+      <div className="mb-4 flex flex-wrap items-center gap-4 text-sm">
         <SelectAnalyteButton
           value={selectedAnalyte}
           onChange={setSelectedAnalyte}
@@ -99,9 +94,13 @@ export const Graph = ({
           colors={colors}
           onChange={setColors}
         />
+        <ShowDrugsButton
+          showDrugs={showDrugs}
+          onToggle={() => setShowDrugs((prev) => !prev)}
+        />
       </div>
       <div className="flex-grow">
-        <ScoreTimelineChart
+        <Charts
           weeks={scoreHistory.map((p) => p.week)}
           scores={scoreHistory.map((p) => p.score)}
           analyteData={
@@ -109,7 +108,8 @@ export const Graph = ({
           }
           timeRange={timeRange}
           colors={colors}
-          drugBars={drugBars}
+          drugs={drugs}
+          showDrugs={showDrugs}
         />
       </div>
     </div>
