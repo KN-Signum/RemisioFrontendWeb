@@ -94,7 +94,12 @@ export const DrugTimeBarChart = ({ drugs, xmin }: DrugTimeBarChartProps) => {
         },
         yaxis: { show: false },
         grid: { show: false },
-        tooltip: { shared: false },
+        tooltip: {
+          shared: false,
+          x: {
+            format: 'dd MMM yyyy',
+          },
+        },
       }}
     />
   );

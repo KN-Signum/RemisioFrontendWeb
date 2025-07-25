@@ -86,9 +86,11 @@ export const ScoreTimelineChart = ({
         ],
         tooltip: {
           shared: true,
-          intersect: false,
           followCursor: true,
           y: { formatter: (v: number) => `${v.toFixed(1)}` },
+          x: {
+            format: 'dd MMM yyyy',
+          },
         },
         grid: { strokeDashArray: 4 },
         legend: { show: true },
