@@ -1,0 +1,20 @@
+export default {
+  language: 'en',
+  yes: 'Yes',
+  no: 'No',
+  save: 'Save',
+  cancel: 'Cancel',
+  delete: 'Delete',
+  edit: 'Edit',
+  update: 'Update',
+  confirm: 'Confirm',
+  none: 'None',
+  loading: 'Loading...',
+  error: 'Error occurred',
+  notifications: {
+    success: 'Success',
+    error: 'Error',
+    warning: 'Warning',
+    info: 'Information',
+  },
+};

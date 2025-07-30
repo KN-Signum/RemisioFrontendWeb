@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { GetPatientDto } from '@/features/patient/types';
+import { GetPatientDto } from '@/features/patients/types';
 import { DashboardTableRow } from './dashboard-table-row';
 import { calculateState } from '@/utils/calculate-state';
 

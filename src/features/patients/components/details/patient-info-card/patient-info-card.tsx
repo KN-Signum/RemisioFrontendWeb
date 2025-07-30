@@ -10,14 +10,14 @@ import {
   BiRestaurant,
 } from 'react-icons/bi';
 import { SymptomHistoryDialog } from '@/features/symptoms';
-import { DrugDto, DrugHistoryDialog } from '@/features/drug';
-import { MealHistoryDialog } from '@/features/meal';
+import { DrugDto, DrugHistoryDialog } from '@/features/drugs';
+import { MealHistoryDialog } from '@/features/meals';
 
 import { useState } from 'react';
 import {
   CrohnSurveyHistoryDialog,
   UcSurveyHistoryDialog,
-} from '@/features/survey';
+} from '@/features/surveys';
 import { HistoryTile } from './history-tile';
 
 interface PatientInfoCardProps {

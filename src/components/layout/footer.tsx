@@ -90,7 +90,7 @@ const LegalLink = ({
 };
 
 export const Footer = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('layout');
 
   return (
     <footer className="text-primary-accent mt-10 flex w-full flex-col gap-6 bg-black/5 px-50 py-10">
@@ -128,7 +128,7 @@ export const Footer = () => {
             </span>
             <LegalLink
               icon={MdPrivacyTip}
-              text={t('privacyPolicy.title')}
+              text={t('footer.privacyPolicy')}
               nav="/privacy-policy"
             />
             <LegalLink

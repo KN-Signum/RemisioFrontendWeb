@@ -1,4 +1,4 @@
-import { DrugDto } from '@/features/drug/types';
+import { DrugDto } from '@/features/drugs/types';
 
 function getFormattedDate(offsetDays: number): string {
   const d = new Date();

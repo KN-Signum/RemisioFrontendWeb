@@ -1,0 +1,20 @@
+export default {
+  language: 'pl',
+  yes: 'Tak',
+  no: 'Nie',
+  save: 'Zapisz',
+  cancel: 'Anuluj',
+  delete: 'Usuń',
+  edit: 'Edytuj',
+  update: 'Aktualizuj',
+  confirm: 'Potwierdź',
+  none: 'Brak',
+  loading: 'Ładowanie...',
+  error: 'Wystąpił błąd',
+  notifications: {
+    success: 'Sukces',
+    error: 'Błąd',
+    warning: 'Ostrzeżenie',
+    info: 'Informacja',
+  },
+};

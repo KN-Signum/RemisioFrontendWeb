@@ -1,7 +1,7 @@
 import { TimeRange } from '@/types';
 import { ScoreTimelineChart } from './score-time-line-chart';
 import { DrugTimeBarChart } from './drug-time-bar-chart';
-import { DrugDto } from '@/features/drug';
+import { DrugDto } from '@/features/drugs';
 import { useMemo } from 'react';
 
 interface ChartsProps {

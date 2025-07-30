@@ -7,11 +7,11 @@ import {
   useGetPatients,
   SmallPatientsTable,
   BigPatientsTable,
-} from '@/features/patient';
+} from '@/features/patients';
 import { FaCaretRight, FaCaretLeft } from 'react-icons/fa';
 
 const PatientsPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
   const [searchQuery, setSearchQuery] = useState('');
   const { data: patients, isLoading: patientsLoading } = useGetPatients();
   const [view, setView] = useState<'both' | 'uc' | 'crohn'>('both');
@@ -56,9 +56,9 @@ const PatientsPage = () => {
         </div>
         <div className="flex h-full gap-1">
           {(view === 'both' || view === 'uc') && (
-            <div className="flex flex-col flex-1">
-              <h2 className="text-primary-accent text-lg font-semibold mb-3 text-center">
-                {t('patients.diseases.ulcerative_colitis')}
+            <div className="flex flex-1 flex-col">
+              <h2 className="text-primary-accent mb-3 text-center text-lg font-semibold">
+                {t('ulcerativeColitis')}
               </h2>
               {view === 'both' && (
                 <SmallPatientsTable patients={ucPatients} disease="Mayo" />
@@ -95,9 +95,9 @@ const PatientsPage = () => {
             )}
           </div>
           {(view === 'both' || view === 'crohn') && (
-            <div className="flex flex-col flex-1">
-              <h2 className="text-primary-accent text-lg font-semibold mb-3 text-center">
-                {t('patients.diseases.crohn')}
+            <div className="flex flex-1 flex-col">
+              <h2 className="text-primary-accent mb-3 text-center text-lg font-semibold">
+                {t('crohn')}
               </h2>
               {view === 'both' && (
                 <SmallPatientsTable patients={crohnPatients} disease="CDAI" />

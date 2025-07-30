@@ -4,7 +4,11 @@ import { db, handlers } from '@/testing/mocks';
 
 // Lazy load MSWDevTools only when needed
 const MSWDevTools = ENABLE_MSW_DEVTOOLS
-  ? lazy(() => import('msw-devtools').then(module => ({ default: module.MSWDevTools })))
+  ? lazy(() =>
+      import('msw-devtools').then((module) => ({
+        default: module.MSWDevTools,
+      })),
+    )
   : null;
 
 export type MSWWrapperProps = {

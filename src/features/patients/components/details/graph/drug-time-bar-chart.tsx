@@ -1,6 +1,6 @@
 import Chart from 'react-apexcharts';
 import { useMemo } from 'react';
-import { DrugDto } from '@/features/drug';
+import { DrugDto } from '@/features/drugs';
 
 export type DrugBar = { name: string; start: string; end: string | null };
 

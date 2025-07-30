@@ -14,9 +14,9 @@ import {
   PatientInfoCard,
   useGetPatientDetails,
   useGetPatients,
-} from '@/features/patient';
-import { usePatientScores } from '@/features/score';
-import { useDrugsByPatientId } from '@/features/drug';
+} from '@/features/patients';
+import { usePatientScores } from '@/features/scores';
+import { useDrugsByPatientId } from '@/features/drugs';
 
 const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';

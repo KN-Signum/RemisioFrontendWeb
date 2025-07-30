@@ -10,7 +10,7 @@ import {
   ItemCard,
   DashboardPatientsTable,
   useGetPatients,
-} from '@/features/patient';
+} from '@/features/patients';
 
 const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { FormDateInput } from '@/components/ui/form-date-input';
 import { CreatePatientForm } from './create-patient-form';
 import { validateFields } from './validate-fields';
-import { useCreatePatient } from '@/features/patient';
+import { useCreatePatient } from '@/features/patients';
 
 interface NewPatientDialogProps {
   onClose: () => void;

@@ -1,8 +1,8 @@
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import { useState, useMemo } from 'react';
 import { TimeRange } from '@/types';
-import { GetPatientScoresDto } from '@/features/score';
-import { DrugDto } from '@/features/drug';
+import { GetPatientScoresDto } from '@/features/scores';
+import { DrugDto } from '@/features/drugs';
 import {
   analytes,
   GetPatientDiagnosticTestsDto,
