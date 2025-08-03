@@ -1,7 +1,8 @@
 export default {
-  language: 'en',
+  lng: 'en',
   yes: 'Yes',
   no: 'No',
+  submit: 'Submit',
   save: 'Save',
   cancel: 'Cancel',
   delete: 'Delete',

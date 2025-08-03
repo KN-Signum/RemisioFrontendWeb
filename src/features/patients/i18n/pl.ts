@@ -7,4 +7,6 @@ export default {
   drugs: 'Leki',
   diet: 'Dieta',
   weight: 'Waga',
+  disease: 'Choroba',
+  lastVisit: 'Ostatnia wizyta',
 };

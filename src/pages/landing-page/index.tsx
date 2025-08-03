@@ -67,14 +67,14 @@ const InfoSlice = ({ title, text, img, reverse }: InfoSliceProps) => (
 );
 
 export const LandingPage = () => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('', { keyPrefix: 'pages.landingPage' });
   const navigate = useNavigate();
 
   const stats: Stat[] = [
-    { value: '4', label: t('landingPage.stat_1') },
-    { value: '13', label: t('landingPage.stat_2') },
-    { value: '2', label: t('landingPage.stat_3') },
-    { value: '0 PLN', label: t('landingPage.stat_4') },
+    { value: '4', label: t('stat_1') },
+    { value: '13', label: t('stat_2') },
+    { value: '2', label: t('stat_3') },
+    { value: '0 PLN', label: t('stat_4') },
   ];
 
   return (
@@ -86,9 +86,9 @@ export const LandingPage = () => {
             Remisio
           </span>
           <nav className="text-primary-accent ml-10 hidden items-center gap-8 text-sm font-medium md:flex">
-            <a href="#">{t('landingPage.home')}</a>
-            <a href="#info">{t('landingPage.info')}</a>
-            <a href="#download">{t('landingPage.application')}</a>
+            <a href="#">{t('home')}</a>
+            <a href="#info">{t('info')}</a>
+            <a href="#download">{t('application')}</a>
           </nav>
         </div>
         <div className="ml-auto flex items-center gap-4 whitespace-nowrap">
@@ -96,10 +96,10 @@ export const LandingPage = () => {
             onClick={() => navigate('/login')}
             className="text-primary-accent text-sm font-medium"
           >
-            {t('landingPage.sign_in')}
+            {t('sign_in')}
           </button>
           <Button className="bg-primary text-background rounded-full px-5 py-2 text-sm font-semibold">
-            {t('landingPage.contact')}
+            {t('contact')}
           </Button>
         </div>
       </header>
@@ -107,14 +107,12 @@ export const LandingPage = () => {
       <section className="relative mx-auto flex min-h-[550px] w-full max-w-7xl items-center overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-secondary-accent)] to-[var(--color-primary)] px-8 py-20">
         <div className="flex max-w-xl flex-col gap-6">
           <p className="text-primary-accent text-xs tracking-widest uppercase">
-            Remisio • {t('landingPage.subtitle')}
+            Remisio • {t('subtitle')}
           </p>
           <h1 className="text-foreground text-4xl leading-tight font-extrabold sm:text-6xl">
-            {t('landingPage.hero_headline')}
+            {t('hero_headline')}
           </h1>
-          <p className="text-foreground/80 text-sm sm:text-base">
-            {t('landingPage.body')}
-          </p>
+          <p className="text-foreground/80 text-sm sm:text-base">{t('body')}</p>
           <div className="mt-4 flex flex-wrap gap-4">
             <Button
               onClick={() =>
@@ -124,13 +122,13 @@ export const LandingPage = () => {
               }
               className="bg-primary-accent text-background rounded-full px-6 py-3 text-sm font-semibold"
             >
-              {t('landingPage.download_app')}
+              {t('download_app')}
             </Button>
             <Button
               onClick={() => {}}
               className="border-primary-accent text-primary-accent rounded-full border bg-transparent px-6 py-3 text-sm font-semibold"
             >
-              {t('landingPage.demo')}
+              {t('demo')}
             </Button>
           </div>
         </div>
@@ -158,13 +156,13 @@ export const LandingPage = () => {
 
       <section id="info">
         <InfoSlice
-          title={t('landingPage.row_title_1')}
-          text={t('landingPage.row_subtitle_1')}
+          title={t('row_title_1')}
+          text={t('row_subtitle_1')}
           img="remisio_mobile_demo.png"
         />
         <InfoSlice
-          title={t('landingPage.row_title_2')}
-          text={t('landingPage.row_subtitle_2')}
+          title={t('row_title_2')}
+          text={t('row_subtitle_2')}
           img="dashboard_image.png"
           reverse
         />
@@ -175,7 +173,7 @@ export const LandingPage = () => {
         className="mt-20 flex flex-col items-center gap-8 px-4"
       >
         <span className="text-primary-accent text-lg font-semibold">
-          {t('landingPage.download_app', { defaultValue: 'Download Our App' })}
+          {t('download_app', { defaultValue: 'Download Our App' })}
         </span>
         <div className="flex gap-8">
           <Card

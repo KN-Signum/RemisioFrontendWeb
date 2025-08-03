@@ -1,13 +1,11 @@
-import commonEn from './common';
-import generalEn from './general';
-import layoutEn from './layout';
-import pagesEn from './pages';
+import common from './common';
+import general from './general';
+import layout from './layout';
+import pages from './pages';
 
-const enResources = {
-  common: commonEn,
-  general: generalEn,
-  layout: layoutEn,
-  pages: pagesEn,
-} as const;
-
-export default enResources;
+export default {
+  common: common,
+  general: general,
+  layout: layout,
+  pages: pages,
+};

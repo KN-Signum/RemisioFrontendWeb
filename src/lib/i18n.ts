@@ -1,8 +1,8 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
-import plResources from '@/locales/pl';
-import enResources from '@/locales/en';
+import translationEn from '@/locales/en/index.ts';
+import translationPl from '@/locales/pl/index.ts';
 
 // Track loaded features to avoid duplicate loading
 const loadedFeatures = new Set<string>();
@@ -47,6 +47,8 @@ const ROUTE_FEATURE_MAP: Record<string, string[]> = {
     'drugs',
   ],
   '/patients': ['patients'],
+  '/dashboard': ['patients'],
+  '/calendar': ['visits'],
 };
 
 export const loadTranslationsForRoute = (pathname: string) => {
@@ -71,17 +73,19 @@ export const loadTranslationsForRoute = (pathname: string) => {
 };
 
 const resources = {
-  en: enResources,
-  pl: plResources,
+  en: {
+    translation: translationEn,
+  },
+  pl: {
+    translation: translationPl,
+  },
 };
 
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: 'en',
     resources: resources,
-    ns: ['common', 'general', 'layout', 'pages'],
     interpolation: {
       escapeValue: false,
     },

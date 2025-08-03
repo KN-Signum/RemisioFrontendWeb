@@ -30,7 +30,7 @@ const SidebarItem = (props: SidebarItemProps) => {
 
 export const Sidebar = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation('layout');
+  const { t } = useTranslation('', { keyPrefix: 'layout.sidebar' });
 
   return (
     <aside

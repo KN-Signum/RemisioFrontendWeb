@@ -16,7 +16,7 @@ const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
 
 export const Dashboard = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('', { keyPrefix: 'pages.dashboard' });
   const navigate = useNavigate();
   const { data: visits, isLoading } = useGetVisits();
   const { data: patients, isLoading: patientsLoading } = useGetPatients();
@@ -25,29 +25,31 @@ export const Dashboard = () => {
     <Layout>
       <div className="flex w-full flex-col gap-2.5 overflow-y-visible">
         <div className={cn(borderClasses, 'h-63 w-full gap-10 px-4')}>
+          {/* TODO: Fix how it looks */}
+          {/* TODO: Add functionality */}
           <ItemCard
-            title={t('dashboard.cards.surveys.title')}
+            title={t('cards.surveys.title')}
             number={44}
             icon={<FiFilePlus className="size-8" />}
-            subtitle={t('dashboard.cards.surveys.subtitle')}
+            subtitle={t('cards.surveys.subtitle')}
             onClick={() => {
               console.log('Ankiety clicked');
             }}
           />
           <ItemCard
-            title={t('dashboard.cards.patients.title')}
+            title={t('cards.patients.title')}
             number={23}
             icon={<BsPeople className="size-8" />}
-            subtitle={t('dashboard.cards.patients.subtitle')}
+            subtitle={t('cards.patients.subtitle')}
             onClick={() => {
               navigate('/patients');
             }}
           />
           <ItemCard
-            title={t('dashboard.cards.state-of-emergency.title')}
+            title={t('cards.stateOfEmergency.title')}
             number={2}
             icon={<FiFlag className="size-8" />}
-            subtitle={t('dashboard.cards.state-of-emergency.subtitle')}
+            subtitle={t('cards.stateOfEmergency.subtitle')}
             onClick={() => {
               console.log('Ankiety clicked');
             }}

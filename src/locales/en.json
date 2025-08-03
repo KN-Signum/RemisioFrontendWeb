@@ -263,23 +263,6 @@
     "weight": "Weight",
     "no_patients": "No patients found"
   },
-  "calendar": {
-    "new_visit": {
-      "title": "New visit",
-      "visit_name": "Visit name",
-      "choose_patient": "Choose a patient",
-      "additional_info": "Additional description",
-      "submit": "Submit",
-      "errors": {
-        "name_required": "Name is required",
-        "patient_required": "Patient is required",
-        "start_time_required": "Start time is required",
-        "end_time_required": "End time is required",
-        "invalid_time_range": "Start time must be before end time",
-        "past_date": "The date cannot be in the past"
-      }
-    }
-  },
   "survey": {
     "history": {
       "view_surveys": "View Surveys",

@@ -8,16 +8,16 @@ export const DashboardPatientsTable = ({
 }: {
   patients: GetPatientDto[];
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('patients');
 
   return (
     <div className="max-h-full w-full overflow-y-scroll rounded-xs">
       <div className="bg-secondary flex items-center gap-2 px-4 py-3 text-left text-sm font-bold text-white/80">
-        <div className="flex-2">{t('dashboard.table.full_name')}</div>
-        <div className="flex-2">{t('dashboard.table.disease')}</div>
-        <div className="flex-1">{t('dashboard.table.state')}</div>
-        <div className="flex-1">{t('dashboard.table.last_visit')}</div>
-        <div className="flex-2">{t('dashboard.table.drugs')}</div>
+        <div className="flex-2">{t('fullName')}</div>
+        <div className="flex-2">{t('disease')}</div>
+        <div className="flex-1">{t('state')}</div>
+        <div className="flex-1">{t('lastVisit')}</div>
+        <div className="flex-2">{t('drugs')}</div>
       </div>
       <div className="text-primary-accent text-sm">
         {patients.map((patient) => (

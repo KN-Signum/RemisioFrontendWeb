@@ -7,4 +7,6 @@ export default {
   drugs: 'Drugs',
   diet: 'Diet',
   weight: 'Weight',
+  disease: 'Disease',
+  lastVisit: 'Last Visit',
 };

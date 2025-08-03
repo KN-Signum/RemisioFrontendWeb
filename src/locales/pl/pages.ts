@@ -69,13 +69,13 @@ export default {
         title: 'Pacjenci',
         subtitle: 'liczba pacjentów',
       },
-      'state-of-emergency': {
+      stateOfEmergency: {
         title: 'Stany alarmowe',
         subtitle: 'pacjentów w stanie alarmowym',
       },
     },
     table: {
-      full_name: 'Imię i nazwisko',
+      fullName: 'Imię i nazwisko',
       state: 'Stan',
       disease: 'Choroba',
       last_visit: 'Ostatnia wizyta',

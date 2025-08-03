@@ -33,7 +33,6 @@ export const NewPatientDialog = (props: NewPatientDialogProps) => {
   const onSuccess = () => {
     showNotification({
       type: 'success',
-      title: t('notifications.type.success'),
       duration: 5000,
       message: t('notifications.messages.patient_added'),
     });

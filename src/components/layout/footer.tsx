@@ -90,7 +90,7 @@ const LegalLink = ({
 };
 
 export const Footer = () => {
-  const { t } = useTranslation('layout');
+  const { t } = useTranslation('', { keyPrefix: 'layout' });
 
   return (
     <footer className="text-primary-accent mt-10 flex w-full flex-col gap-6 bg-black/5 px-50 py-10">

@@ -1,7 +1,8 @@
 export default {
-  language: 'pl',
+  lng: 'pl',
   yes: 'Tak',
   no: 'Nie',
+  submit: 'Zatwierdź',
   save: 'Zapisz',
   cancel: 'Anuluj',
   delete: 'Usuń',
