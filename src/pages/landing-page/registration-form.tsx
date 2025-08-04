@@ -14,6 +14,7 @@ export const RegistrationForm = () => {
     const subject = t('registration.email_subject');
     const body = t('registration.email_body', { email });
 
+    // TODO: emails should be in env variables, and add function to send an email
     const mailtoLink = `mailto:kontakt@remisio.pl?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoLink;
   };
