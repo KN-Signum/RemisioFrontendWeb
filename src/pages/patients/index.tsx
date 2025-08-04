@@ -11,7 +11,7 @@ import {
 import { FaCaretRight, FaCaretLeft } from 'react-icons/fa';
 
 const PatientsPage = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('', { keyPrefix: 'common' });
   const [searchQuery, setSearchQuery] = useState('');
   const { data: patients, isLoading: patientsLoading } = useGetPatients();
   const [view, setView] = useState<'both' | 'uc' | 'crohn'>('both');

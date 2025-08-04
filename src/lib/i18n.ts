@@ -49,6 +49,8 @@ const ROUTE_FEATURE_MAP: Record<string, string[]> = {
   '/patients': ['patients'],
   '/dashboard': ['patients'],
   '/calendar': ['visits'],
+  '/login': ['auth'],
+  '/registration-form': ['auth'],
 };
 
 export const loadTranslationsForRoute = (pathname: string) => {

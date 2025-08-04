@@ -30,34 +30,12 @@ export default {
     title: 'Formularz rejestracyjny',
     description:
       'Aby otrzymać aplikację Android, potrzebujemy Twojego adresu email, aby wysłać zaproszenie do grupy testowej. Następnie możesz zainstalować aplikację, klikając w link wysłany przez Google Console.',
-    email_label: 'Adres email',
-    email_placeholder: 'Wprowadź swój email',
-    submit_button: 'Wyślij',
-    email_subject: 'Prośba o dostęp do testów aplikacji',
-    email_body:
+    emailLabel: 'Adres email',
+    emailPlaceholder: 'Wprowadź swój email',
+    submitButton: 'Wyślij',
+    emailSubject: 'Prośba o dostęp do testów aplikacji',
+    emailBody:
       'Witam,\n\nChciałbym poprosić o dostęp do testowania aplikacji Remisio Android.\nMój adres email to: {{email}}\n\nPozdrawiam,\n{{email}}',
-  },
-  login: {
-    welcome: 'Witamy ponownie',
-    subtitle:
-      'Wprowadź swój email i hasło, aby uzyskać dostęp do swojego konta',
-    email: 'Email',
-    email_placeholder: 'Proszę podać swój email.',
-    email_help: "Email musi zawierać '@' i '.'",
-    email_not_empty: 'Email nie może być pusty.',
-    password: 'Hasło',
-    password_placeholder: 'Proszę podać swoje hasło.',
-    password_help:
-      'Hasło musi zawierać co najmniej 6 znaków, wielką literę, znak specjalny.',
-    password_not_empty: 'Hasło nie może być puste.',
-    login: 'Zaloguj',
-    reset: 'Resetuj',
-    success: 'Zalogowano pomyślnie',
-    failed: 'Logowanie nieudane',
-    split_screen_title:
-      'Spersonalizowana opieka nad pacjentami z IBD zaczyna się tutaj',
-    split_screen_subtitle:
-      'Wspieraj swoich pacjentów dzięki analizie w czasie rzeczywistym i inteligentnym narzędziom monitorowania',
   },
   dashboard: {
     cards: {
@@ -84,24 +62,6 @@ export default {
       female: 'Kobieta',
       other: 'Inna',
       years: 'l',
-    },
-  },
-  calendar: {
-    new_visit: {
-      title: 'Nowa wizyta',
-      visit_name: 'Nazwa wizyty',
-      choose_patient: 'Wybierz pacjenta',
-      additional_info: 'Dodatkowy opis',
-      submit: 'Zatwierdź',
-      errors: {
-        name_required: 'Nazwa jest wymagana',
-        patient_required: 'Pacjent jest wymagany',
-        start_time_required: 'Wymagana godzina rozpoczęcia',
-        end_time_required: 'Wymagana godzina zakończenia',
-        invalid_time_range:
-          'Godzina rozpoczęcia musi być wcześniejsza niż godzina zakończenia',
-        past_date: 'Data nie może być z przeszłości',
-      },
     },
   },
 };
