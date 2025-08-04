@@ -10,7 +10,7 @@ export const getLatestPatientUcSurvey = async (
   patientId: string,
 ): Promise<UcSurveyDto | null> => {
   const response = await apiClient.get(
-    `/api/patients/${patientId}/surveys/uc/latest`,
+    `/patients/${patientId}/surveys/uc/latest`,
   );
   console.log('[API-CLIENT] fetching latest UC survey for patient:', patientId);
   return response.data.content;

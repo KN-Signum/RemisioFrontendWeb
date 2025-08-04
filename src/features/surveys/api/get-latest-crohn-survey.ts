@@ -10,7 +10,7 @@ export const getLatestPatientCrohnSurvey = async (
   patientId: string,
 ): Promise<CrohnSurveyDto | null> => {
   const response = await apiClient.get(
-    `/api/patients/${patientId}/surveys/crohn/latest`,
+    `/patients/${patientId}/surveys/crohn/latest`,
   );
   console.log(
     '[API-CLIENT] fetching latest Crohn survey for patient:',

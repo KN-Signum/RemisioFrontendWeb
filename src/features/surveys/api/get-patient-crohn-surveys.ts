@@ -9,9 +9,7 @@ import { CrohnSurveyDto, GetPatientSurveysDto } from '../types';
 export const getPatientCrohnSurveys = async (
   patientId: string,
 ): Promise<GetPatientSurveysDto<CrohnSurveyDto>> => {
-  const response = await apiClient.get(
-    `/api/patients/${patientId}/surveys/crohn`,
-  );
+  const response = await apiClient.get(`/patients/${patientId}/surveys/crohn`);
   console.log('[API-CLIENT] fetching Crohn surveys for patient:', patientId);
   return response.data.content;
 };
