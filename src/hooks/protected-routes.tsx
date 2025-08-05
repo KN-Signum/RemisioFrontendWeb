@@ -5,7 +5,9 @@ import Cookies from 'universal-cookie';
 import { useRefreshToken } from '@/features/auth/api/refresh-token';
 import { API_MOCKING } from '@/config/constants';
 
-interface JwtPayload { exp: number }
+interface JwtPayload {
+  exp: number;
+}
 
 const isTokenExpired = (token: string) => {
   try {

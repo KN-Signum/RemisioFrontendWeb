@@ -39,4 +39,3 @@ export interface GetPatientSurveysDto<T extends BaseSurveyDto> {
   patient_id: string;
   surveys: T[];
 }
-
