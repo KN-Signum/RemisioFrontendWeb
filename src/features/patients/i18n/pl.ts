@@ -9,4 +9,7 @@ export default {
   weight: 'Waga',
   disease: 'Choroba',
   lastVisit: 'Ostatnia wizyta',
+  male: 'Mężczyzna',
+  female: 'Kobieta',
+  years: 'l',
 };

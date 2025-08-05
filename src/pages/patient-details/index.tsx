@@ -6,9 +6,9 @@ import {
   usePatientDiagnosticTests,
   GridTest,
   latestTestsToGrid,
+  DiagnosticTestsGrid,
 } from '@/features/diagnostic_tests';
 import {
-  DiagnosticTestsGrid,
   FullPatient,
   Graph,
   PatientInfoCard,

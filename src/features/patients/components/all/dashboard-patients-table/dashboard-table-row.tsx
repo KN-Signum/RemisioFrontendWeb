@@ -1,5 +1,4 @@
 import { DiseaseType, GenderType, PatientState } from '@/types';
-import { formatDiseaseName } from '@/utils/format-disease-name';
 import { formatDateDisplay } from '@/utils/format-date-display';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -46,9 +45,9 @@ export const DashboardTableRow = (props: DashboardTablePatientDto) => {
       <div className="flex-2">
         <PatientDetail name={name} gender={gender} age={age} />
       </div>
-      <div className="flex-2">{formatDiseaseName(disease)}</div>
+      <div className="flex-2">{t(`disease.${disease}`)}</div>
       <div className="flex-1">
-        <span className={stateColor}>{state}</span>
+        <span className={stateColor}>{t(`state.${state}`)}</span>
       </div>
       <div className="flex-1">{formatDateDisplay(last_visit)}</div>
       <div className="flex-2">

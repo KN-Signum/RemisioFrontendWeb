@@ -9,4 +9,7 @@ export default {
   weight: 'Weight',
   disease: 'Disease',
   lastVisit: 'Last Visit',
+  male: 'Male',
+  female: 'Female',
+  years: 'y',
 };

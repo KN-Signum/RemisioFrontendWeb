@@ -11,7 +11,7 @@ import {
 import { FaCaretRight, FaCaretLeft } from 'react-icons/fa';
 
 const PatientsPage = () => {
-  const { t } = useTranslation('', { keyPrefix: 'common' });
+  const { t } = useTranslation('', { keyPrefix: 'common.disease' });
   const [searchQuery, setSearchQuery] = useState('');
   const { data: patients, isLoading: patientsLoading } = useGetPatients();
   const [view, setView] = useState<'both' | 'uc' | 'crohn'>('both');
@@ -58,7 +58,7 @@ const PatientsPage = () => {
           {(view === 'both' || view === 'uc') && (
             <div className="flex flex-1 flex-col">
               <h2 className="text-primary-accent mb-3 text-center text-lg font-semibold">
-                {t('ulcerativeColitis')}
+                {t('ulcerative_colitis')}
               </h2>
               {view === 'both' && (
                 <SmallPatientsTable patients={ucPatients} disease="Mayo" />

@@ -52,16 +52,5 @@ export default {
         subtitle: 'pacjentów w stanie alarmowym',
       },
     },
-    table: {
-      fullName: 'Imię i nazwisko',
-      state: 'Stan',
-      disease: 'Choroba',
-      last_visit: 'Ostatnia wizyta',
-      drugs: 'Przyjmowane leki',
-      male: 'Mężczyzna',
-      female: 'Kobieta',
-      other: 'Inna',
-      years: 'l',
-    },
   },
 };
