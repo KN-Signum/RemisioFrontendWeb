@@ -339,19 +339,6 @@
     "pain_level": "Pain Level",
     "description": "Description"
   },
-  "drug": {
-    "history": {
-      "title": "Medications History",
-      "view_drugs": "View Medications",
-      "no_drugs": "No medications recorded"
-    },
-    "name": "Name",
-    "dosage": "Dosage",
-    "dateFrom": "Start Date",
-    "dateTo": "End Date",
-    "times": "Schedule",
-    "additionalInfo": "Notes"
-  },
   "meal": {
     "history": {
       "title": "Meal History",
@@ -371,5 +358,105 @@
     "submit_button": "Send",
     "email_subject": "Application Testing Request",
     "email_body": "Hello,\n\nI would like to request access to test the Remisio Android application.\nMy email address is: {{email}}\n\nBest regards,\n{{email}}"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your preferences and account settings",
+    "profile": {
+      "title": "User Profile",
+      "description": "Manage your profile information",
+      "name": "Full Name",
+      "email": "Email Address",
+      "specialization": "Specialization",
+      "gastroenterology": "Gastroenterology"
+    },
+    "language": {
+      "title": "Application Language",
+      "description": "Choose your preferred interface language",
+      "select": "Select language"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Manage your notification settings",
+      "email": "Email notifications",
+      "push": "Push notifications"
+    },
+    "privacy": {
+      "title": "Privacy",
+      "description": "Control how your data is used",
+      "dataSharing": "Data sharing for scientific research"
+    },
+    "about": {
+      "title": "About Application",
+      "description": "Technical details and version information",
+      "version": "Application Version",
+      "developer": "Developer"
+    },
+    "logout": "Log Out"
+  },
+  "help": {
+    "title": "Help",
+    "subtitle": "Find answers to your questions and get support",
+    "quickHelp": {
+      "title": "Quick Help",
+      "description": "Access to basic help resources",
+      "userGuide": {
+        "title": "User Guide",
+        "description": "Complete guide to application features",
+        "action": "Open Guide"
+      },
+      "tutorials": {
+        "title": "Video Tutorials",
+        "description": "Watch instructional videos",
+        "action": "Watch Videos"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "description": "Answers to most commonly asked questions",
+      "questions": {
+        "login": {
+          "question": "How to log in to the application?",
+          "answer": "Use your email address and password received from the administrator. If you have login problems, contact technical support."
+        },
+        "patients": {
+          "question": "How to add a new patient?",
+          "answer": "Go to the 'Patients' section and click the 'Add Patient' button. Fill in all required form fields and save changes."
+        },
+        "data": {
+          "question": "Where is patient data stored?",
+          "answer": "All data is securely stored on servers in Germany with full encryption and in compliance with GDPR regulations."
+        },
+        "notifications": {
+          "question": "How to manage notifications?",
+          "answer": "In application settings, you can enable or disable email and push notifications according to your preferences."
+        },
+        "backup": {
+          "question": "Is data automatically backed up?",
+          "answer": "Yes, all data is automatically backed up daily. Additionally, you can export patient data at any time."
+        }
+      }
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "Need additional help? Contact our support team",
+      "email": {
+        "title": "Email",
+        "description": "kontakt@remisio.pl",
+        "action": "Send Email"
+      },
+      "phone": {
+        "title": "Phone",
+        "description": "Technical support",
+        "action": "Call"
+      }
+    },
+    "system": {
+      "title": "System Information",
+      "description": "Technical details needed for diagnostics",
+      "version": "Application Version",
+      "browser": "Browser",
+      "lastUpdate": "Last Update"
+    }
   }
 }

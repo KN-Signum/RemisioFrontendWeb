@@ -330,19 +330,6 @@
     "pain_level": "Poziom bólu",
     "description": "Opis"
   },
-  "drug": {
-    "history": {
-      "title": "Historia leków",
-      "view_drugs": "Zobacz leki",
-      "no_drugs": "Brak zarejestrowanych leków"
-    },
-    "name": "Nazwa",
-    "dosage": "Dawkowanie",
-    "dateFrom": "Data rozpoczęcia",
-    "dateTo": "Data zakończenia",
-    "times": "Harmonogram",
-    "additionalInfo": "Uwagi"
-  },
   "meal": {
     "history": {
       "title": "Historia posiłków",
@@ -362,5 +349,105 @@
     "submit_button": "Wyślij",
     "email_subject": "Prośba o dostęp do testów aplikacji",
     "email_body": "Witam,\n\nChciałbym poprosić o dostęp do testowania aplikacji Remisio Android.\nMój adres email to: {{email}}\n\nPozdrawiam,\n{{email}}"
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "subtitle": "Zarządzaj swoimi preferencjami i ustawieniami konta",
+    "profile": {
+      "title": "Profil użytkownika",
+      "description": "Zarządzaj informacjami o swoim profilu",
+      "name": "Imię i nazwisko",
+      "email": "Adres email",
+      "specialization": "Specjalizacja",
+      "gastroenterology": "Gastroenterologia"
+    },
+    "language": {
+      "title": "Język aplikacji",
+      "description": "Wybierz preferowany język interfejsu",
+      "select": "Wybierz język"
+    },
+    "notifications": {
+      "title": "Powiadomienia",
+      "description": "Zarządzaj ustawieniami powiadomień",
+      "email": "Powiadomienia email",
+      "push": "Powiadomienia push"
+    },
+    "privacy": {
+      "title": "Prywatność",
+      "description": "Kontroluj sposób wykorzystania Twoich danych",
+      "dataSharing": "Udostępnianie danych do badań naukowych"
+    },
+    "about": {
+      "title": "Informacje o aplikacji",
+      "description": "Szczegóły techniczne i informacje o wersji",
+      "version": "Wersja aplikacji",
+      "developer": "Deweloper"
+    },
+    "logout": "Wyloguj się"
+  },
+  "help": {
+    "title": "Pomoc",
+    "subtitle": "Znajdź odpowiedzi na swoje pytania i uzyskaj wsparcie",
+    "quickHelp": {
+      "title": "Szybka pomoc",
+      "description": "Dostęp do podstawowych zasobów pomocy",
+      "userGuide": {
+        "title": "Przewodnik użytkownika",
+        "description": "Kompletny przewodnik po funkcjach aplikacji",
+        "action": "Otwórz przewodnik"
+      },
+      "tutorials": {
+        "title": "Samouczki wideo",
+        "description": "Obejrzyj instruktażowe filmy wideo",
+        "action": "Zobacz filmy"
+      }
+    },
+    "faq": {
+      "title": "Często zadawane pytania",
+      "description": "Odpowiedzi na najczęściej zadawane pytania",
+      "questions": {
+        "login": {
+          "question": "Jak zalogować się do aplikacji?",
+          "answer": "Użyj swojego adresu email i hasła otrzymanego od administratora. W przypadku problemów z logowaniem skontaktuj się z pomocą techniczną."
+        },
+        "patients": {
+          "question": "Jak dodać nowego pacjenta?",
+          "answer": "Przejdź do sekcji 'Pacjenci' i kliknij przycisk 'Dodaj pacjenta'. Wypełnij wszystkie wymagane pola formularza i zapisz zmiany."
+        },
+        "data": {
+          "question": "Gdzie są przechowywane dane pacjentów?",
+          "answer": "Wszystkie dane są bezpiecznie przechowywane na serwerach w Niemczech z pełnym szyfrowaniem i zgodnie z przepisami RODO."
+        },
+        "notifications": {
+          "question": "Jak zarządzać powiadomieniami?",
+          "answer": "W ustawieniach aplikacji możesz włączyć lub wyłączyć powiadomienia email oraz push według swoich preferencji."
+        },
+        "backup": {
+          "question": "Czy dane są automatycznie kopione zapasowo?",
+          "answer": "Tak, wszystkie dane są automatycznie kopione zapasowo codziennie. Dodatkowo można eksportować dane pacjentów w dowolnym momencie."
+        }
+      }
+    },
+    "contact": {
+      "title": "Skontaktuj się z nami",
+      "description": "Potrzebujesz dodatkowej pomocy? Skontaktuj się z naszym zespołem wsparcia",
+      "email": {
+        "title": "Email",
+        "description": "kontakt@remisio.pl",
+        "action": "Wyślij email"
+      },
+      "phone": {
+        "title": "Telefon",
+        "description": "Wsparcie techniczne",
+        "action": "Zadzwoń"
+      }
+    },
+    "system": {
+      "title": "Informacje systemowe",
+      "description": "Szczegóły techniczne potrzebne do diagnostyki",
+      "version": "Wersja aplikacji",
+      "browser": "Przeglądarka",
+      "lastUpdate": "Ostatnia aktualizacja"
+    }
   }
 }
