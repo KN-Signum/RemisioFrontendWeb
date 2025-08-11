@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Colors {
   scoreColor: string;
@@ -19,6 +20,7 @@ export const ColorPickerButton = ({
   colors,
   onChange,
 }: ColorPickerButtonProps) => {
+  const { t } = useTranslation('', { keyPrefix: 'general' });
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [showColorPicker, setShowColorPicker] = useState(false);
 
@@ -43,7 +45,7 @@ export const ColorPickerButton = ({
         onClick={() => setShowColorPicker((v) => !v)}
         className="flex items-center gap-1 rounded-md bg-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-300"
       >
-        {selectedAnalyte ? 'Customize colors' : 'Customize score color'}
+        {t('customizeColors')}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="14"
@@ -63,7 +65,7 @@ export const ColorPickerButton = ({
       {showColorPicker && (
         <div className="absolute z-11 mt-2 w-56 rounded-md border border-gray-200 bg-white p-3 shadow-lg">
           <label className="mb-1 block text-xs font-medium text-gray-700">
-            Score Color
+            {t('score')}
           </label>
           <input
             type="color"
@@ -76,7 +78,7 @@ export const ColorPickerButton = ({
           {selectedAnalyte && (
             <>
               <label className="mb-1 block text-xs font-medium text-gray-700">
-                {selectedAnalyteName} Color
+                {t(`analytes.${selectedAnalyteName}`)}
               </label>
               <input
                 type="color"
@@ -100,7 +102,7 @@ export const ColorPickerButton = ({
             }
             className="w-full rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-200"
           >
-            Reset defaults
+            {t('resetDefaults')}
           </button>
         </div>
       )}

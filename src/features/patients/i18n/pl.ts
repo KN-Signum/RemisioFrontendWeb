@@ -12,4 +12,6 @@ export default {
   male: 'Mężczyzna',
   female: 'Kobieta',
   years: 'l',
+  showDrugs: 'Pokaż leki',
+  hideDrugs: 'Ukryj leki',
 };

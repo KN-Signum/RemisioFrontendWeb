@@ -4,82 +4,51 @@ import { initReactI18next } from 'react-i18next';
 import translationEn from '@/locales/en/index.ts';
 import translationPl from '@/locales/pl/index.ts';
 
-// Track loaded features to avoid duplicate loading
-const loadedFeatures = new Set<string>();
-
-// Function to load feature translations dynamically
-export const loadFeatureTranslations = async (featureName: string) => {
-  if (loadedFeatures.has(featureName)) {
-    return; // Already loaded
-  }
-
-  try {
-    const [enModule, plModule] = await Promise.all([
-      import(`@/features/${featureName}/i18n/en.ts`).catch(() => null),
-      import(`@/features/${featureName}/i18n/pl.ts`).catch(() => null),
-    ]);
-
-    if (enModule?.default) {
-      i18n.addResourceBundle('en', featureName, enModule.default, true, true);
-    }
-
-    if (plModule?.default) {
-      i18n.addResourceBundle('pl', featureName, plModule.default, true, true);
-    }
-
-    loadedFeatures.add(featureName);
-    console.log(`Loaded translations for feature: ${featureName}`);
-  } catch (error) {
-    console.warn(
-      `Failed to load translations for feature: ${featureName}`,
-      error,
-    );
-  }
+type TranslationModule = {
+  default: Record<string, unknown>;
 };
 
-// Map routes to features for auto-loading
-const ROUTE_FEATURE_MAP: Record<string, string[]> = {
-  '/patients/:id': [
-    'patients',
-    'surveys',
-    'symptoms',
-    'diagnostic_tests',
-    'drugs',
-  ],
-  '/patients': ['patients'],
-  '/dashboard': ['patients'],
-  '/calendar': ['visits'],
-  '/login': ['auth'],
-  '/registration-form': ['auth'],
-};
+type FeatureFiles = Record<string, TranslationModule>;
 
-export const loadTranslationsForRoute = (pathname: string) => {
-  // Check for more specific routes first (order matters)
-  const sortedRoutes = Object.entries(ROUTE_FEATURE_MAP).sort(([a], [b]) => {
-    // Sort by specificity (more specific routes first)
-    return b.split('/').length - a.split('/').length;
+// Load all feature translations eagerly
+const enFeatureFiles = import.meta.glob('@/features/*/i18n/en.ts', {
+  eager: true,
+}) as FeatureFiles;
+
+const plFeatureFiles = import.meta.glob('@/features/*/i18n/pl.ts', {
+  eager: true,
+}) as FeatureFiles;
+
+// Extract feature translations
+const extractFeatureTranslations = (
+  files: FeatureFiles,
+  lang: string,
+): Record<string, Record<string, unknown>> => {
+  const translations: Record<string, Record<string, unknown>> = {};
+
+  Object.entries(files).forEach(([path, module]) => {
+    const match = path.match(/\/features\/([^/]+)\/i18n\/[^/]+\.ts$/);
+    if (match && module.default) {
+      const featureName = match[1];
+      translations[featureName] = module.default;
+      console.log(`Loaded ${lang} translations for feature: ${featureName}`);
+    }
   });
 
-  const matchedFeatures = sortedRoutes.find(([route]) => {
-    // Handle dynamic routes with :id
-    const routePattern = route.replace(/:id/g, '[^/]+');
-    const regex = new RegExp(`^${routePattern}$`);
-    return regex.test(pathname);
-  })?.[1];
-
-  if (matchedFeatures) {
-    matchedFeatures.forEach((feature) => {
-      loadFeatureTranslations(feature);
-    });
-  }
+  return translations;
 };
+
+const featureTranslationsEn = extractFeatureTranslations(enFeatureFiles, 'en');
+const featureTranslationsPl = extractFeatureTranslations(plFeatureFiles, 'pl');
 
 const resources = {
   en: {
     translation: translationEn,
+    ...featureTranslationsEn,
   },
   pl: {
     translation: translationPl,
+    ...featureTranslationsPl,
   },
 };
 

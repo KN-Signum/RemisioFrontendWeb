@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const MealHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('meals');
   const { data: meals, isLoading } = useMealsByPatientId(
     isOpen ? patientId : '',
   );
@@ -31,12 +31,12 @@ export const MealHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
   return (
     <Dialog
       isOpen={isOpen}
-      title={t('meal.history.title', 'Meal History')}
+      title={t('history.title', 'Meal History')}
       className="max-h-[80vh] w-[90%] max-w-3xl px-6"
       onClose={onClose}
       isLoading={isLoading}
       isEmpty={sorted.length == 0}
-      emptyText={t('meal.history.no_meals')}
+      emptyText={t('history.noMeals')}
     >
       <div className="mt-4 w-full flex-1 overflow-y-auto">
         <div className="flex flex-col gap-4">
@@ -88,7 +88,7 @@ export const MealHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
                   {m.meal_notes && (
                     <div className="mt-2 border-t border-gray-600 pt-2 text-sm">
                       <span className="font-semibold">
-                        {t('meal.notes', 'Notes')}:
+                        {t('notes', 'Notes')}:
                       </span>{' '}
                       {m.meal_notes}
                     </div>

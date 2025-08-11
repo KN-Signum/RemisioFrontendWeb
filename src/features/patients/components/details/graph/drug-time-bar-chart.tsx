@@ -1,6 +1,7 @@
 import Chart from 'react-apexcharts';
 import { useMemo } from 'react';
 import { DrugDto } from '@/features/drugs';
+import { useTranslation } from 'react-i18next';
 
 export type DrugBar = { name: string; start: string; end: string | null };
 
@@ -10,6 +11,7 @@ interface DrugTimeBarChartProps {
 }
 
 export const DrugTimeBarChart = ({ drugs, xmin }: DrugTimeBarChartProps) => {
+  const { t } = useTranslation('', { keyPrefix: 'general' });
   const drugBars = useMemo(() => {
     return drugs.map((d) => ({
       name: d.name,
@@ -48,6 +50,18 @@ export const DrugTimeBarChart = ({ drugs, xmin }: DrugTimeBarChartProps) => {
       series={series}
       options={{
         chart: {
+          defaultLocale: t('lng'),
+          locales: [
+            {
+              name: 'pl',
+              options: {
+                months: t('months', { returnObjects: true }) as string[],
+                shortMonths: t('shortMonths', {
+                  returnObjects: true,
+                }) as string[],
+              },
+            },
+          ],
           type: 'rangeBar',
           zoom: { enabled: false },
           toolbar: { show: false },

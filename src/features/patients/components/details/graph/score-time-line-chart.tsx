@@ -1,4 +1,5 @@
 import Chart from 'react-apexcharts';
+import { useTranslation } from 'react-i18next';
 
 interface ScoreTimeLineChartProps {
   weeks: string[];
@@ -22,17 +23,18 @@ export const ScoreTimelineChart = ({
   colors,
   xmin,
 }: ScoreTimeLineChartProps) => {
+  const { t } = useTranslation('', { keyPrefix: 'general' });
   return (
     <Chart
       type="line"
       height="100%"
       width="100%"
       series={[
-        { name: 'Score', data: scores },
+        { name: t('score'), data: scores },
         ...(analyteData
           ? [
               {
-                name: analyteData.name,
+                name: t(`analytes.${analyteData.name}`),
                 data: analyteData.values,
               },
             ]
@@ -40,6 +42,18 @@ export const ScoreTimelineChart = ({
       ]}
       options={{
         chart: {
+          defaultLocale: t('lng'),
+          locales: [
+            {
+              name: 'pl',
+              options: {
+                months: t('months', { returnObjects: true }) as string[],
+                shortMonths: t('shortMonths', {
+                  returnObjects: true,
+                }) as string[],
+              },
+            },
+          ],
           id: 'score-chart',
           zoom: { enabled: false },
           toolbar: { show: false },
@@ -61,7 +75,7 @@ export const ScoreTimelineChart = ({
             min: 0,
             tickAmount: 5,
             labels: { formatter: (v: number) => `${v}` },
-            title: { text: 'Score' },
+            title: { text: t('score') },
           },
           ...(analyteData
             ? [
@@ -73,7 +87,7 @@ export const ScoreTimelineChart = ({
                       ? Math.max(...analyteData.values) * 1.2
                       : 10,
                   title: {
-                    text: analyteData.name.toUpperCase(),
+                    text: t(`analytes.${analyteData.name}`),
                     style: { color: colors.analyteColor },
                   },
                   labels: {

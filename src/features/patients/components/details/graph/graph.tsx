@@ -57,7 +57,7 @@ export const Graph = ({
       const history = getAnalyteHistory(diagnosticData, analyte);
       if (!history.length) return;
       result[analyte] = {
-        name: analyte.toUpperCase(),
+        name: analyte,
         dates: history.map((h) => h.date),
         values: history.map((h) => h.value as number),
       };
@@ -81,11 +81,11 @@ export const Graph = ({
       </button>
       <div className="mb-4 flex flex-wrap items-center gap-4 text-sm">
         <SelectAnalyteButton
-          value={selectedAnalyte}
+          selectedAnalyte={selectedAnalyte}
           onChange={setSelectedAnalyte}
-          options={analyteHistories}
+          analytes={analyteHistories}
         />
-        <TimeModeButton value={timeRange} onChange={setTimeRange} />
+        <TimeModeButton selectedRange={timeRange} onChange={setTimeRange} />
         <ColorPickerButton
           selectedAnalyte={selectedAnalyte}
           selectedAnalyteName={

@@ -14,7 +14,7 @@ export const UcSurveyHistoryDialog = ({
   isOpen,
   onClose,
 }: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('surveys');
   const { data, isLoading } = usePatientUcSurveys(isOpen ? patientId : '');
   const surveys = data?.surveys ?? [];
 
@@ -30,11 +30,11 @@ export const UcSurveyHistoryDialog = ({
     <Dialog
       isOpen={isOpen}
       onClose={onClose}
-      title={t('survey.history.uc_title', 'Ulcerative Colitis Survey History')}
+      title={t('history.ucTitle', 'Ulcerative Colitis Survey History')}
       className="max-h-[80vh] w-[90%] max-w-3xl px-6"
       isLoading={isLoading}
       isEmpty={surveys.length === 0}
-      emptyText="No surveys available"
+      emptyText={t('noSurveys', 'No surveys available for this patient')}
     >
       <div className="mt-4 w-full flex-1 overflow-y-auto">
         {surveys.map((s: UcSurveyDto) => (
@@ -46,11 +46,11 @@ export const UcSurveyHistoryDialog = ({
               </h3>
               <div className="flex items-center gap-2">
                 <span className="text-primary-accent font-semibold">
-                  {t('survey.total_score')}:
+                  {t('totalScore')}:
                 </span>
                 <span className="text-primary-accent">{s.total_score}</span>
                 <span className={`ml-2 font-bold ${getColor(s.category)}`}>
-                  {t(`survey.category.${s.category}`)}
+                  {t(`category.${s.category}`)}
                 </span>
               </div>
             </div>
@@ -58,20 +58,16 @@ export const UcSurveyHistoryDialog = ({
             {/* szczegóły pomiarów */}
             <div className="text-primary-accent grid grid-cols-2 gap-y-1 text-sm">
               <p>
-                <span className="font-semibold">
-                  {t('survey.uc.stool_frequency')}:
-                </span>{' '}
+                <span className="font-semibold">{t('uc.stoolFrequency')}:</span>{' '}
                 {s.stool_frequency}
               </p>
               <p>
-                <span className="font-semibold">
-                  {t('survey.uc.rectal_bleeding')}:
-                </span>{' '}
+                <span className="font-semibold">{t('uc.rectalBleeding')}:</span>{' '}
                 {s.rectal_bleeding}
               </p>
               <p>
                 <span className="font-semibold">
-                  {t('survey.uc.physician_global')}:
+                  {t('uc.physicianGlobal')}:
                 </span>{' '}
                 {s.physician_global}
               </p>
@@ -80,8 +76,7 @@ export const UcSurveyHistoryDialog = ({
             {/* notatki */}
             {s.notes && (
               <div className="text-primary-accent mt-3 border-t border-gray-600 pt-2 text-sm">
-                <span className="font-semibold">{t('survey.notes')}:</span>{' '}
-                {s.notes}
+                <span className="font-semibold">{t('notes')}:</span> {s.notes}
               </div>
             )}
           </div>

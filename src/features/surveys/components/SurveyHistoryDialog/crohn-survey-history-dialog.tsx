@@ -15,7 +15,7 @@ export const CrohnSurveyHistoryDialog = ({
   isOpen,
   onClose,
 }: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('surveys');
   const { data, isLoading } = usePatientCrohnSurveys(isOpen ? patientId : '');
   const surveys = data?.surveys ?? [];
 
@@ -31,11 +31,14 @@ export const CrohnSurveyHistoryDialog = ({
     <Dialog
       isOpen={isOpen}
       onClose={onClose}
-      title={t('survey.history.crohn_title', "Crohn's Disease Survey History")}
+      title={t('history.crohnTitle', "Crohn's Disease Survey History")}
       className="max-h-[80vh] w-[90%] max-w-3xl px-6"
       isLoading={isLoading}
       isEmpty={surveys.length === 0}
-      emptyText="No surveys available"
+      emptyText={t(
+        'history.noSurveys',
+        'No surveys available for this patient',
+      )}
     >
       <div className="mt-4 w-full flex-1 overflow-y-auto">
         {surveys.map((s: CrohnSurveyDto) => (
@@ -47,10 +50,10 @@ export const CrohnSurveyHistoryDialog = ({
               </h3>
               <div className="flex items-center gap-2">
                 <span className={`font-bold ${color(s.category)}`}>
-                  {t(`survey.category.${s.category}`)}
+                  {t(`category.${s.category}`)}
                 </span>
                 <span className="text-primary-accent font-semibold">
-                  {t('survey.total_score')}:
+                  {t('totalScore')}:
                 </span>
                 <span className="text-primary-accent">
                   {formatValue(s.total_score.toString())}
@@ -62,50 +65,44 @@ export const CrohnSurveyHistoryDialog = ({
             <div className="text-primary-accent grid grid-cols-2 gap-y-1 text-sm">
               <p>
                 <span className="font-semibold">
-                  {t('survey.crohn.abdominal_pain')}:
+                  {t('crohn.abdominalPain')}:
                 </span>{' '}
                 {s.abdominal_pain}
               </p>
               <p>
-                <span className="font-semibold">
-                  {t('survey.crohn.stools')}:
-                </span>{' '}
+                <span className="font-semibold">{t('crohn.stools')}:</span>{' '}
                 {s.stools}
               </p>
               <p>
                 <span className="font-semibold">
-                  {t('survey.crohn.general_wellbeing')}:
+                  {t('crohn.generalWellbeing')}:
                 </span>{' '}
                 {s.general_wellbeing}
               </p>
               <p>
                 <span className="font-semibold">
-                  {t('survey.crohn.abdominal_mass')}:
+                  {t('crohn.abdominalMass')}:
                 </span>{' '}
                 {s.abdominal_mass}
               </p>
               <p>
                 <span className="font-semibold">
-                  {t('survey.crohn.extraintestinal_manifestations')}:
+                  {t('crohn.extraintestinalManifestations')}:
                 </span>{' '}
                 {s.extraintestinal_manifestations}
               </p>
               <p>
-                <span className="font-semibold">
-                  {t('survey.crohn.hematocrit')}:
-                </span>{' '}
+                <span className="font-semibold">{t('crohn.hematocrit')}:</span>{' '}
                 {s.hematocrit}
               </p>
               <p>
                 <span className="font-semibold">
-                  {t('survey.crohn.antidiarrheal_use')}:
+                  {t('crohn.antidiarrhealUse')}:
                 </span>{' '}
                 {t(s.antidiarrheal_use ? 'yes' : 'no')}
               </p>
               <p>
-                <span className="font-semibold">
-                  {t('survey.crohn.weight')}:
-                </span>{' '}
+                <span className="font-semibold">{t('crohn.weight')}:</span>{' '}
                 {s.weight}
               </p>
             </div>
@@ -113,8 +110,7 @@ export const CrohnSurveyHistoryDialog = ({
             {/* notes */}
             {s.notes && (
               <div className="text-primary-accent mt-3 border-t border-gray-600 pt-2 text-sm">
-                <span className="font-semibold">{t('survey.notes')}:</span>{' '}
-                {s.notes}
+                <span className="font-semibold">{t('notes')}:</span> {s.notes}
               </div>
             )}
           </div>

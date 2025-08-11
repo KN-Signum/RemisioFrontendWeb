@@ -12,4 +12,6 @@ export default {
   male: 'Male',
   female: 'Female',
   years: 'y',
+  showDrugs: 'Show Drugs',
+  hideDrugs: 'Hide Drugs',
 };

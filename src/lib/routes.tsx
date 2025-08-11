@@ -8,68 +8,61 @@ import LandingPage from '@/pages/landing-page';
 import ProtectedRoutes from '@/hooks/protected-routes';
 import PrivacyPolicyPage from '@/pages/privacy-policy';
 import RegistrationForm from '@/pages/landing-page/registration-form';
-import TranslationLoader from '@/hooks/translation-loader';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <TranslationLoader />,
+    element: <ProtectedRoutes />,
     children: [
       {
-        element: <ProtectedRoutes />,
-        children: [
-          {
-            path: '/patients',
-            element: <PatientsPage />,
-            errorElement: <div>Error</div>,
-          },
-          {
-            path: '/patients/:id',
-            element: <PatientDetailsPage />,
-            errorElement: <div>Error</div>,
-          },
-          {
-            path: '/dashboard',
-            element: <Dashboard />,
-            errorElement: <div>Error</div>,
-          },
-          {
-            path: '/assign_patient',
-            element: <div>Assign Patient</div>,
-            errorElement: <div>Error</div>,
-          },
-          {
-            path: '/calendar',
-            element: <CalendarPage />,
-            errorElement: <div>Error</div>,
-          },
-        ],
-      },
-      {
-        path: '/',
-        element: <LandingPage />,
+        path: '/patients',
+        element: <PatientsPage />,
         errorElement: <div>Error</div>,
       },
       {
-        path: '/privacy-policy',
-        element: <PrivacyPolicyPage />,
+        path: '/patients/:id',
+        element: <PatientDetailsPage />,
         errorElement: <div>Error</div>,
       },
       {
-        path: '/registration-form',
-        element: <RegistrationForm />,
+        path: '/dashboard',
+        element: <Dashboard />,
         errorElement: <div>Error</div>,
       },
       {
-        path: '/test',
-        element: <div>Test</div>,
+        path: '/assign_patient',
+        element: <div>Assign Patient</div>,
         errorElement: <div>Error</div>,
       },
       {
-        path: '/login',
-        element: <LoginPage />,
+        path: '/calendar',
+        element: <CalendarPage />,
         errorElement: <div>Error</div>,
       },
     ],
+  },
+  {
+    path: '/',
+    element: <LandingPage />,
+    errorElement: <div>Error</div>,
+  },
+  {
+    path: '/privacy-policy',
+    element: <PrivacyPolicyPage />,
+    errorElement: <div>Error</div>,
+  },
+  {
+    path: '/registration-form',
+    element: <RegistrationForm />,
+    errorElement: <div>Error</div>,
+  },
+  {
+    path: '/test',
+    element: <div>Test</div>,
+    errorElement: <div>Error</div>,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+    errorElement: <div>Error</div>,
   },
 ]);

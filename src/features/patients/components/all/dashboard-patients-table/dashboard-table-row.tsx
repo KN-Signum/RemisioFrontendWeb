@@ -47,7 +47,9 @@ export const DashboardTableRow = (props: DashboardTablePatientDto) => {
       </div>
       <div className="flex-2">{t(`disease.${disease}`)}</div>
       <div className="flex-1">
-        <span className={stateColor}>{t(`state.${state}`)}</span>
+        <span className={stateColor}>
+          {t(`state.${state.toLocaleLowerCase()}`)}
+        </span>
       </div>
       <div className="flex-1">{formatDateDisplay(last_visit)}</div>
       <div className="flex-2">

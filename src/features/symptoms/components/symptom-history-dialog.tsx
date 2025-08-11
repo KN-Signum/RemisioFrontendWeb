@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('symptoms');
   const { data: symptoms, isLoading: loading } = useSymptomsByPatientId(
     isOpen ? patientId : '',
   );
@@ -38,12 +38,12 @@ export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
   return (
     <Dialog
       isOpen={isOpen}
-      title={t('symptoms.history.title', 'Symptoms History')}
+      title={t('history.title', 'Symptoms History')}
       className="max-h-[80vh] w-[90%] max-w-3xl px-6"
       onClose={onClose}
       isLoading={loading}
       isEmpty={sorted.length == 0}
-      emptyText={t('symptoms.history.no_symptoms')}
+      emptyText={t('history.noSymptoms')}
     >
       <div className="mt-4 w-full flex-1 overflow-y-auto">
         <div className="flex flex-col gap-4">
@@ -57,7 +57,7 @@ export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
                 </h3>
                 <div className="flex items-center gap-2">
                   <span className="text-primary-accent font-semibold">
-                    {t('symptoms.type')}:
+                    {t('type')}:
                   </span>
                   <span className="text-primary-accent">{s.symptom_type}</span>
                   <span
@@ -70,24 +70,18 @@ export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
 
               <div className="text-primary-accent grid grid-cols-2 gap-y-1 text-sm">
                 <p>
-                  <span className="font-semibold">
-                    {t('symptoms.duration')}:
-                  </span>{' '}
+                  <span className="font-semibold">{t('duration')}:</span>{' '}
                   {s.duration}
                 </p>
                 <p>
-                  <span className="font-semibold">
-                    {t('symptoms.pain_level')}:
-                  </span>{' '}
+                  <span className="font-semibold">{t('painLevel')}:</span>{' '}
                   {s.pain_level}
                 </p>
               </div>
 
               {s.symptom_description && (
                 <div className="mt-2 border-t border-gray-600 pt-2 text-sm">
-                  <span className="font-semibold">
-                    {t('symptoms.description')}:
-                  </span>{' '}
+                  <span className="font-semibold">{t('description')}:</span>{' '}
                   {s.symptom_description}
                 </div>
               )}
