@@ -169,25 +169,25 @@ const HelpPage = () => {
           </div>
         </div>
 
-        {/* Quick Help */}
+        {/* quickHelp. Help */}
         <HelpSection
-          title={t('quicktitle')}
-          description={t('quickdescription')}
+          title={t('quickHelp.title')}
+          description={t('quickHelp.description')}
           icon={<AiOutlineQuestionCircle className="size-6" />}
         >
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <ContactCard
               icon={<AiOutlineFileText className="h-6 w-6" />}
-              title={t('quickuserGuide.title')}
-              description={t('quickuserGuide.description')}
-              action={t('quickuserGuide.action')}
+              title={t('quickHelp.userGuide.title')}
+              description={t('quickHelp.userGuide.description')}
+              action={t('quickHelp.userGuide.action')}
               onClick={handleUserGuide}
             />
             <ContactCard
               icon={<AiOutlineVideoCamera className="h-6 w-6" />}
-              title={t('quicktutorials.title')}
-              description={t('quicktutorials.description')}
-              action={t('quicktutorials.action')}
+              title={t('quickHelp.tutorials.title')}
+              description={t('quickHelp.tutorials.description')}
+              action={t('quickHelp.tutorials.action')}
               onClick={handleVideoTutorials}
             />
           </div>
