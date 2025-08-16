@@ -6,7 +6,13 @@ import PatientsPage from '@/pages/patients';
 import PatientDetailsPage from '@/pages/patient-details';
 import LandingPage from '@/pages/landing-page';
 import ProtectedRoutes from '@/hooks/protected-routes';
-import PrivacyPolicyPage from '@/pages/privacy-policy';
+import {
+  PrivacyPolicyPage,
+  TermsOfServicePage,
+  CookiePolicyPage,
+} from '@/pages/legal';
+import SettingsPage from '@/pages/settings';
+import HelpPage from '@/pages/help';
 import RegistrationForm from '@/pages/landing-page/registration-form';
 
 export const router = createBrowserRouter([
@@ -38,6 +44,16 @@ export const router = createBrowserRouter([
         element: <CalendarPage />,
         errorElement: <div>Error</div>,
       },
+      {
+        path: '/settings',
+        element: <SettingsPage />,
+        errorElement: <div>Error</div>,
+      },
+      {
+        path: '/help',
+        element: <HelpPage />,
+        errorElement: <div>Error</div>,
+      },
     ],
   },
   {
@@ -48,6 +64,16 @@ export const router = createBrowserRouter([
   {
     path: '/privacy-policy',
     element: <PrivacyPolicyPage />,
+    errorElement: <div>Error</div>,
+  },
+  {
+    path: '/terms-of-service',
+    element: <TermsOfServicePage />,
+    errorElement: <div>Error</div>,
+  },
+  {
+    path: '/cookie-policy',
+    element: <CookiePolicyPage />,
     errorElement: <div>Error</div>,
   },
   {

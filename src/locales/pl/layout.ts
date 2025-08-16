@@ -26,4 +26,13 @@ export default {
     english: 'Angielski',
     polish: 'Polski',
   },
+  legal: {
+    back: 'Powrót',
+    main: '- cyfrowa platforma zdrowotna wspierająca pacjentów z chorobami IBD. Tendokument określa zasady prawne korzystania z naszej aplikacji.',
+    tableOfContents: 'Spis treści',
+    questions: 'Masz pytania?',
+    contactUs:
+      'Skontaktuj się z nami w sprawie tego dokumentu lub aplikacji Remisio.',
+    mainPage: 'Strona główna',
+  },
 };

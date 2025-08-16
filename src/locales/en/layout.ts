@@ -26,4 +26,12 @@ export default {
     english: 'English',
     polish: 'Polski',
   },
+  legal: {
+    back: 'Back',
+    main: '- a digital health platform supporting patients with IBD. This document outlines the legal terms for using our application.',
+    tableOfContents: 'Table of Contents',
+    questions: 'Any questions?',
+    contactUs: 'Contact us regarding this document or the Remisio application.',
+    mainPage: 'Main Page',
+  },
 };
