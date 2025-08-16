@@ -11,17 +11,17 @@ import { Notifications } from '@/components/ui/notifications';
 // Only load MSWWrapper if mocks are enabled
 const MSWWrapper = API_MOCKING
   ? lazy(() =>
-    import('@/lib/msw').then((module) => ({ default: module.MSWWrapper })),
-  )
+      import('@/lib/msw').then((module) => ({ default: module.MSWWrapper })),
+    )
   : null;
 
 // Conditionally render ReactQueryDevtools only in development
 const ReactQueryDevtools = import.meta.env.DEV
   ? lazy(() =>
-    import('@tanstack/react-query-devtools').then((module) => ({
-      default: module.ReactQueryDevtools,
-    })),
-  )
+      import('@tanstack/react-query-devtools').then((module) => ({
+        default: module.ReactQueryDevtools,
+      })),
+    )
   : null;
 
 const App = () => {

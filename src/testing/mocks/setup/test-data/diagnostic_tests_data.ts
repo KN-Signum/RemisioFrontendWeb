@@ -1,28 +1,28 @@
-import { DiagnosticTestDto } from '@/features/diagnostic_tests'
-import { mockPatients } from './patients'
-import { v4 as uuidv4 } from 'uuid'
+import { DiagnosticTestDto } from '@/features/diagnostic_tests';
+import { mockPatients } from './patients';
+import { v4 as uuidv4 } from 'uuid';
 
-const round2 = (n: number) => Number(n.toFixed(2))
+const round2 = (n: number) => Number(n.toFixed(2));
 
 const buildDates = () => {
-  const dates: string[] = []
-  let d = new Date('2023-05-10T08:30:00Z')
-  const today = new Date()
+  const dates: string[] = [];
+  let d = new Date('2023-05-10T08:30:00Z');
+  const today = new Date();
   while (d <= today) {
-    dates.push(d.toISOString())
-    d = new Date(d.getTime() + 42 * 86_400_000)
+    dates.push(d.toISOString());
+    d = new Date(d.getTime() + 42 * 86_400_000);
   }
-  return dates
-}
+  return dates;
+};
 
 export const mockDiagnosticTests: DiagnosticTestDto[] = (() => {
-  const tests: DiagnosticTestDto[] = []
+  const tests: DiagnosticTestDto[] = [];
 
   mockPatients.forEach((patient) => {
-    const testDates = buildDates()
+    const testDates = buildDates();
 
     testDates.forEach((testDate, idx) => {
-      const progress = idx / (testDates.length - 1)
+      const progress = idx / (testDates.length - 1);
 
       const base = {
         id: uuidv4(),
@@ -30,7 +30,7 @@ export const mockDiagnosticTests: DiagnosticTestDto[] = (() => {
         test_date: testDate,
         created_at: new Date(Date.parse(testDate) + 3_600_000).toISOString(),
         updated_at: new Date(Date.parse(testDate) + 7_200_000).toISOString(),
-      }
+      };
 
       tests.push({
         ...base,
@@ -44,9 +44,7 @@ export const mockDiagnosticTests: DiagnosticTestDto[] = (() => {
         erythrocytes: round2(4.2 + progress * 0.6 + Math.random() * 0.5),
 
         calprotectin_feces: round2(
-          50 +
-          (progress > 0.5 ? -1 : 1) * progress * 120 +
-          Math.random() * 40,
+          50 + (progress > 0.5 ? -1 : 1) * progress * 120 + Math.random() * 40,
         ),
 
         hct: round2(38 + progress * 4 + Math.random() * 3),
@@ -61,7 +59,8 @@ export const mockDiagnosticTests: DiagnosticTestDto[] = (() => {
         neutrophils: round2(45 + Math.sin(idx) * 10 + Math.random() * 10),
 
         potassium: round2(3.5 + Math.sin(idx) * 0.5 + Math.random() * 0.5),
-        glucose_urine: Math.random() > 0.8 ? 50 + Math.floor(Math.random() * 20) : 0,
+        glucose_urine:
+          Math.random() > 0.8 ? 50 + Math.floor(Math.random() * 20) : 0,
         bacteria_urine_count:
           Math.random() > 0.75 ? Math.floor(Math.random() * 1000) : 0,
 
@@ -69,10 +68,12 @@ export const mockDiagnosticTests: DiagnosticTestDto[] = (() => {
         hbe_positive: Math.random() > 0.93,
         parasite_feces_positive: Math.random() > 0.9,
         ob: Math.random() > 0.82 ? 5 + Math.floor(Math.random() * 5) : 0,
-        creatinine_serum: round2(0.8 + Math.sin(idx) * 0.2 + Math.random() * 0.3),
-      })
-    })
-  })
+        creatinine_serum: round2(
+          0.8 + Math.sin(idx) * 0.2 + Math.random() * 0.3,
+        ),
+      });
+    });
+  });
 
-  return tests
-})()
+  return tests;
+})();

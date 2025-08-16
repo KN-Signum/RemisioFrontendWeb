@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Logo, SplitImage, LoginRequestDto } from '@/features/auth';
+import { SplitImage, LoginRequestDto } from '@/features/auth';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { InputField } from '@/components/ui/input-field';
@@ -13,7 +13,7 @@ const initialValue: LoginRequestDto = {
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t } = useTranslation('auth');
 
   const onSuccess = () => {
     console.log('Login successful');
@@ -34,11 +34,11 @@ const LoginPage = () => {
     const newErrors: { email?: string; password?: string } = {};
 
     if (!userLogInInfo.email.trim()) {
-      newErrors.email = t('login.email_not_empty');
+      newErrors.email = t('errors.emailNotEmpty');
     }
 
     if (!userLogInInfo.password.trim()) {
-      newErrors.password = t('login.password_not_empty');
+      newErrors.password = t('passwordNotEmpty');
     }
 
     setErrors(newErrors);
@@ -47,7 +47,7 @@ const LoginPage = () => {
 
   const clearError = (field: 'email' | 'password') => {
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: undefined }));
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
   };
 
@@ -72,14 +72,21 @@ const LoginPage = () => {
         <SplitImage />
 
         <div className="my-10 flex w-full flex-col justify-between p-8 lg:w-1/2">
-          <Logo />
+          <div className="mx-auto flex max-w-sm items-center gap-x-4">
+            <img
+              src="/logo.svg"
+              alt="Logo"
+              className="h-16 w-16 object-cover"
+            />
+            <div className="text-primary-accent color text-3xl font-bold">
+              Remisio
+            </div>
+          </div>
           <div className="flex w-full flex-col items-center justify-center">
             <span className="text-primary-accent mb-2 text-3xl font-bold">
-              {t('login.welcome')}
+              {t('welcome')}
             </span>
-            <span className="text-primary-accent mb-6 text-gray-500">
-              {t('login.subtitle')}
-            </span>
+            <span className="text-primary-accent mb-6">{t('subtitle')}</span>
 
             <form
               className="flex w-full flex-col gap-4 xl:px-20 2xl:px-50"
@@ -87,9 +94,9 @@ const LoginPage = () => {
             >
               <InputField
                 id="email"
-                label={t('login.email')}
+                label={t('email')}
                 type="email"
-                placeholder={t('login.email_placeholder')}
+                placeholder={t('emailPlaceholder')}
                 value={userLogInInfo.email}
                 error={errors.email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,9 +110,9 @@ const LoginPage = () => {
 
               <InputField
                 id="password"
-                label={t('login.password')}
+                label={t('password')}
                 type="password"
-                placeholder={t('login.password_placeholder')}
+                placeholder={t('passwordPlaceholder')}
                 value={userLogInInfo.password}
                 error={errors.password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,7 +129,7 @@ const LoginPage = () => {
                 type="submit"
                 isLoading={login.isLoading}
               >
-                {t('login.login')}
+                {t('login')}
               </Button>
             </form>
           </div>

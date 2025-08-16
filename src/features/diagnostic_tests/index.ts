@@ -2,6 +2,7 @@
 export * from './api/get-patient-diagnostic-tests';
 
 // components
+export * from './components/diagnostic-test-grid';
 
 // types
 export * from './types/index';

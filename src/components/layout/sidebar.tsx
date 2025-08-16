@@ -30,7 +30,7 @@ const SidebarItem = (props: SidebarItemProps) => {
 
 export const Sidebar = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t } = useTranslation('', { keyPrefix: 'layout.sidebar' });
 
   return (
     <aside
@@ -40,27 +40,27 @@ export const Sidebar = () => {
       }}
     >
       <SidebarItem
-        title={t('sidebar.dashboard')}
+        title={t('dashboard')}
         icon={<AiOutlineDashboard className={iconSize} />}
         onClick={() => navigate('/dashboard')}
       />
       <SidebarItem
-        title={t('sidebar.patients')}
+        title={t('patients')}
         icon={<BsPeople className={iconSize} />}
         onClick={() => navigate('/patients')}
       />
       <SidebarItem
-        title={t('sidebar.calendar')}
+        title={t('calendar')}
         icon={<AiOutlineCalendar className={iconSize} />}
         onClick={() => navigate('/calendar')}
       />
       <SidebarItem
-        title={t('sidebar.help')}
+        title={t('help')}
         icon={<AiOutlineQuestionCircle className={iconSize} />}
         onClick={() => navigate('/help')}
       />
       <SidebarItem
-        title={t('sidebar.settings')}
+        title={t('settings')}
         icon={<AiOutlineSetting className={iconSize} />}
         onClick={() => navigate('/settings')}
       />

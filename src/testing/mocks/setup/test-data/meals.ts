@@ -1,4 +1,4 @@
-import { MealDto } from '@/features/meal/types';
+import { MealDto } from '@/features/meals/types';
 
 // Helper function to generate random past timestamps
 function randomPastDate(days: number): string {

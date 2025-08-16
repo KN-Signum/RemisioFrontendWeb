@@ -27,7 +27,7 @@ export const Dialog = ({
   isEmpty = false,
   emptyText,
 }: DialogProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('', { keyPrefix: 'general' });
 
   if (!isOpen) return null;
 
@@ -47,7 +47,7 @@ export const Dialog = ({
           >
             <div className="flex w-full items-center justify-between">
               <div className="size-8"></div>
-              <span className="text-3xl font-bold">{title}</span>
+              <span className="text-center text-3xl font-bold">{title}</span>
               <div
                 className="hover:bg-foreground flex size-8 items-center justify-center rounded-full text-3xl font-bold hover:cursor-pointer"
                 onClick={onClose}
@@ -66,7 +66,7 @@ export const Dialog = ({
             )}
             {closeButton ? (
               <div className="mt-4 flex w-full justify-end">
-                <Button onClick={onClose}>{t('common.close', 'Close')}</Button>
+                <Button onClick={onClose}>{t('close', 'Close')}</Button>
               </div>
             ) : null}
           </div>
