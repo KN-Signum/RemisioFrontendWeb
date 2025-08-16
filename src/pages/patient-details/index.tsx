@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useMemo, useState } from 'react';
-import Layout from '@/components/layout';
+import Layout from '@/components/layout/main';
 import { cn } from '@/utils/cn';
 import {
   usePatientDiagnosticTests,

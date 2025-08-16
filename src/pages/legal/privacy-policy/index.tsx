@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { LegalPageLayout } from '@/components/layout/LegalPageLayout';
+import { LegalPageLayout } from '@/components/layout/legal';
 
 const PrivacyPolicyPage: React.FC = () => {
   const { t } = useTranslation('', {
