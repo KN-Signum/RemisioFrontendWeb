@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import Layout from '@/components/layout';
+import Layout from '@/components/layout/main';
 
 import {
   SearchBar,

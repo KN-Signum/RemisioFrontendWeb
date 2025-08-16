@@ -1,4 +1,4 @@
-import Layout from '@/components/layout';
+import Layout from '@/components/layout/main';
 import { FiFilePlus, FiFlag } from 'react-icons/fi';
 import { BsPeople } from 'react-icons/bs';
 import { cn } from '@/utils/cn';
