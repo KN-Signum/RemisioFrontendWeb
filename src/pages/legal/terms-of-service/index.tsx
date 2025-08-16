@@ -1,18 +1,22 @@
 import { useTranslation } from 'react-i18next';
-import { LegalPageLayout } from '../../../components/layout/LegalPageLayout';
+import { LegalPageLayout } from '@/components/layout/LegalPageLayout';
 
 const TermsOfServicePage: React.FC = () => {
-    const { t } = useTranslation();
+  const { t } = useTranslation('', {
+    keyPrefix: 'pages.termsOfService',
+  });
 
-    return (
-        <LegalPageLayout
-            title={t('termsOfService.title', 'Regulamin')}
-            subtitle={t('termsOfService.subtitle', 'Zapoznaj się z zasadami korzystania z aplikacji Remisio.')}
-            icon="📋"
-            content={t('termsOfService.full')}
-            translationKey="termsOfService"
-        />
-    );
+  return (
+    <LegalPageLayout
+      title={t('title', 'Regulamin')}
+      subtitle={t(
+        'subtitle',
+        'Zapoznaj się z zasadami korzystania z aplikacji Remisio.',
+      )}
+      icon="📋"
+      content={t('full')}
+    />
+  );
 };
 
 export default TermsOfServicePage;

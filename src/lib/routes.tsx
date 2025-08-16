@@ -5,10 +5,14 @@ import LoginPage from '@/pages/login';
 import PatientsPage from '@/pages/patients';
 import PatientDetailsPage from '@/pages/patient-details';
 import LandingPage from '@/pages/landing-page';
+import ProtectedRoutes from '@/hooks/protected-routes';
+import {
+  PrivacyPolicyPage,
+  TermsOfServicePage,
+  CookiePolicyPage,
+} from '@/pages/legal';
 import SettingsPage from '@/pages/settings';
 import HelpPage from '@/pages/help';
-import ProtectedRoutes from './protected-routes';
-import { PrivacyPolicyPage, TermsOfServicePage, CookiePolicyPage } from '@/pages/legal';
 import RegistrationForm from '@/pages/landing-page/registration-form';
 
 export const router = createBrowserRouter([

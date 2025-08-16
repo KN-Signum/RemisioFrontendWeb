@@ -1,4 +1,4 @@
-import { PatientScoreDto } from '@/features/score';
+import { PatientScoreDto } from '@/features/scores';
 import { mockPatients } from './patients';
 import { v4 as uuidv4 } from 'uuid';
 
