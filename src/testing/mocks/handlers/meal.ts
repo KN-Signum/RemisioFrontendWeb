@@ -4,7 +4,7 @@ import { db } from '..';
 
 // Get meals by patient ID
 const getMealsByPatientId = http.get<{ patientId: string }>(
-  `${API_URL}/meals/:patientId`,
+  `${API_URL}/patients/:patientId/meals`,
   ({ params }) => {
     const { patientId } = params;
     const meals = db.meal

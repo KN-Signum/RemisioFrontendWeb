@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { formatDateDisplay } from '@/utils/format-date-display';
-import { SurveyCategory, UcSurveyDto, usePatientUcSurveys } from '../..';
+import { isUcSurvey, SurveyCategory, usePatientSurveys } from '../..';
 import { Dialog } from '@/components/ui/dialog';
 
 interface Props {
@@ -15,7 +15,7 @@ export const UcSurveyHistoryDialog = ({
   onClose,
 }: Props) => {
   const { t } = useTranslation('surveys');
-  const { data, isLoading } = usePatientUcSurveys(isOpen ? patientId : '');
+  const { data, isLoading } = usePatientSurveys(isOpen ? patientId : '');
   const surveys = data?.surveys ?? [];
 
   const getColor = (c: SurveyCategory) =>
@@ -37,50 +37,62 @@ export const UcSurveyHistoryDialog = ({
       emptyText={t('noSurveys', 'No surveys available for this patient')}
     >
       <div className="mt-4 w-full flex-1 overflow-y-auto">
-        {surveys.map((s: UcSurveyDto) => (
-          <div key={s.id} className="bg-background/10 rounded-sm p-4">
-            {/* nagłówek karty */}
-            <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-primary-accent text-lg font-semibold">
-                {formatDateDisplay(new Date(s.survey_date))}
-              </h3>
-              <div className="flex items-center gap-2">
-                <span className="text-primary-accent font-semibold">
-                  {t('totalScore')}:
-                </span>
-                <span className="text-primary-accent">{s.total_score}</span>
-                <span className={`ml-2 font-bold ${getColor(s.category)}`}>
-                  {t(`category.${s.category}`)}
-                </span>
-              </div>
-            </div>
+        {surveys.map(
+          (survey) =>
+            isUcSurvey(survey) && (
+              <div key={survey.id} className="bg-background/10 rounded-sm p-4">
+                {/* nagłówek karty */}
+                <div className="mb-3 flex items-center justify-between">
+                  <h3 className="text-primary-accent text-lg font-semibold">
+                    {formatDateDisplay(new Date(survey.survey_date))}
+                  </h3>
+                  <div className="flex items-center gap-2">
+                    <span className="text-primary-accent font-semibold">
+                      {t('totalScore')}:
+                    </span>
+                    <span className="text-primary-accent">
+                      {survey.total_score}
+                    </span>
+                    <span
+                      className={`ml-2 font-bold ${getColor(survey.category)}`}
+                    >
+                      {t(`category.${survey.category}`)}
+                    </span>
+                  </div>
+                </div>
 
-            {/* szczegóły pomiarów */}
-            <div className="text-primary-accent grid grid-cols-2 gap-y-1 text-sm">
-              <p>
-                <span className="font-semibold">{t('uc.stoolFrequency')}:</span>{' '}
-                {s.stool_frequency}
-              </p>
-              <p>
-                <span className="font-semibold">{t('uc.rectalBleeding')}:</span>{' '}
-                {s.rectal_bleeding}
-              </p>
-              <p>
-                <span className="font-semibold">
-                  {t('uc.physicianGlobal')}:
-                </span>{' '}
-                {s.physician_global}
-              </p>
-            </div>
+                {/* szczegóły pomiarów */}
+                <div className="text-primary-accent grid grid-cols-2 gap-y-1 text-sm">
+                  <p>
+                    <span className="font-semibold">
+                      {t('uc.stoolFrequency')}:
+                    </span>{' '}
+                    {survey.stool_frequency}
+                  </p>
+                  <p>
+                    <span className="font-semibold">
+                      {t('uc.rectalBleeding')}:
+                    </span>{' '}
+                    {survey.rectal_bleeding}
+                  </p>
+                  <p>
+                    <span className="font-semibold">
+                      {t('uc.physicianGlobal')}:
+                    </span>{' '}
+                    {survey.physician_global}
+                  </p>
+                </div>
 
-            {/* notatki */}
-            {s.notes && (
-              <div className="text-primary-accent mt-3 border-t border-gray-600 pt-2 text-sm">
-                <span className="font-semibold">{t('notes')}:</span> {s.notes}
+                {/* notatki */}
+                {survey.notes && (
+                  <div className="text-primary-accent mt-3 border-t border-gray-600 pt-2 text-sm">
+                    <span className="font-semibold">{t('notes')}:</span>{' '}
+                    {survey.notes}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        ))}
+            ),
+        )}
       </div>
     </Dialog>
   );

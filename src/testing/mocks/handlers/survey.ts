@@ -4,15 +4,32 @@ import { db } from '..';
 
 // ===== CROHN'S DISEASE SURVEY ENDPOINTS =====
 
-/** GET /api/patients/:patientId/surveys/crohn */
-const getAllCrohnSurveys = http.get<{ patientId: string }>(
-  `${API_URL}/patients/:patientId/surveys/crohn`,
+/** GET /api/patients/:patientId/surveys */
+const getAllSurveys = http.get<{ patientId: string }>(
+  `${API_URL}/patients/:patientId/surveys`,
   ({ params }) => {
     const { patientId } = params;
 
-    const surveys = db.crohnSurvey.findMany({
-      where: { patient_id: { equals: patientId as string } },
-    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let surveys: Array<any>;
+    switch (
+      db.patient.findFirst({
+        where: { id: { equals: patientId as string } },
+      })?.disease_type
+    ) {
+      case 'crohn':
+        surveys = db.crohnSurvey.findMany({
+          where: { patient_id: { equals: patientId as string } },
+        });
+        break;
+      case 'uc':
+        surveys = db.ucSurvey.findMany({
+          where: { patient_id: { equals: patientId as string } },
+        });
+        break;
+      default:
+        surveys = [];
+    }
 
     const sorted = [...surveys].sort(
       (a, b) =>
@@ -21,7 +38,7 @@ const getAllCrohnSurveys = http.get<{ patientId: string }>(
 
     return HttpResponse.json(
       {
-        message: "Crohn's surveys retrieved successfully",
+        message: 'Surveys retrieved successfully',
         content: { patient_id: patientId, surveys: sorted },
       },
       { status: 200 },
@@ -29,16 +46,32 @@ const getAllCrohnSurveys = http.get<{ patientId: string }>(
   },
 );
 
-/** GET /api/patients/:patientId/surveys/crohn/latest */
-const getLatestCrohnSurvey = http.get<{ patientId: string }>(
-  `${API_URL}/patients/:patientId/surveys/crohn/latest`,
+/** GET /api/patients/:patientId/surveys/latest */
+const getLatestSurvey = http.get<{ patientId: string }>(
+  `${API_URL}/patients/:patientId/surveys/latest`,
   ({ params }) => {
     const { patientId } = params;
 
-    const surveys = db.crohnSurvey.findMany({
-      where: { patient_id: { equals: patientId as string } },
-    });
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let surveys: Array<any>;
+    switch (
+      db.patient.findFirst({
+        where: { id: { equals: patientId as string } },
+      })?.disease_type
+    ) {
+      case 'crohn':
+        surveys = db.crohnSurvey.findMany({
+          where: { patient_id: { equals: patientId as string } },
+        });
+        break;
+      case 'uc':
+        surveys = db.ucSurvey.findMany({
+          where: { patient_id: { equals: patientId as string } },
+        });
+        break;
+      default:
+        surveys = [];
+    }
     const latest =
       surveys.length === 0
         ? null
@@ -49,8 +82,8 @@ const getLatestCrohnSurvey = http.get<{ patientId: string }>(
     return HttpResponse.json(
       {
         message: latest
-          ? "Latest Crohn's survey retrieved successfully"
-          : 'No Crohn surveys found for this patient',
+          ? 'Latest survey retrieved successfully'
+          : 'No surveys found for this patient',
         content: latest,
       },
       { status: 200 },
@@ -58,65 +91,4 @@ const getLatestCrohnSurvey = http.get<{ patientId: string }>(
   },
 );
 
-// ===== Ulcerative Colitis SURVEY ENDPOINTS =====
-
-/** GET /api/patients/:patientId/surveys/uc */
-const getAllUcSurveys = http.get<{ patientId: string }>(
-  `${API_URL}/patients/:patientId/surveys/uc`,
-  ({ params }) => {
-    const { patientId } = params;
-
-    const surveys = db.ucSurvey.findMany({
-      where: { patient_id: { equals: patientId as string } },
-    });
-
-    const sorted = [...surveys].sort(
-      (a, b) =>
-        new Date(b.survey_date).getTime() - new Date(a.survey_date).getTime(),
-    );
-
-    return HttpResponse.json(
-      {
-        message: 'UC surveys retrieved successfully',
-        content: { patient_id: patientId, surveys: sorted },
-      },
-      { status: 200 },
-    );
-  },
-);
-
-/** GET /api/patients/:patientId/surveys/uc/latest */
-const getLatestUcSurvey = http.get<{ patientId: string }>(
-  `${API_URL}/patients/:patientId/surveys/uc/latest`,
-  ({ params }) => {
-    const { patientId } = params;
-
-    const surveys = db.ucSurvey.findMany({
-      where: { patient_id: { equals: patientId as string } },
-    });
-
-    const latest =
-      surveys.length === 0
-        ? null
-        : surveys.reduce((prev, cur) =>
-            new Date(cur.survey_date) > new Date(prev.survey_date) ? cur : prev,
-          );
-
-    return HttpResponse.json(
-      {
-        message: latest
-          ? 'Latest UC survey retrieved successfully'
-          : 'No UC surveys found for this patient',
-        content: latest,
-      },
-      { status: 200 },
-    );
-  },
-);
-
-export const handlers = [
-  getAllCrohnSurveys,
-  getLatestCrohnSurvey,
-  getAllUcSurveys,
-  getLatestUcSurvey,
-];
+export const handlers = [getAllSurveys, getLatestSurvey];
