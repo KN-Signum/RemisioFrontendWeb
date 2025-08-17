@@ -34,8 +34,18 @@ export interface UcSurveyDto extends BaseSurveyDto {
   physician_global: number; // 0-3
 }
 
+export type SurveyDto = UcSurveyDto | CrohnSurveyDto;
+
 // Response types
-export interface GetPatientSurveysDto<T extends BaseSurveyDto> {
+export interface GetPatientSurveysDto {
   patient_id: string;
-  surveys: T[];
+  surveys: SurveyDto[];
 }
+
+export const isUcSurvey = (survey: SurveyDto): survey is UcSurveyDto => {
+  return survey.survey_type === 'uc';
+};
+
+export const isCrohnSurvey = (survey: SurveyDto): survey is CrohnSurveyDto => {
+  return survey.survey_type === 'crohn';
+};
