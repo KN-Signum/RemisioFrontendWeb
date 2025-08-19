@@ -21,7 +21,9 @@ const isTokenExpired = (token: string) => {
 export default function ProtectedRoutes() {
   const [isAuth, setIsAuth] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
-  const { refresh, isLoading } = useRefreshToken(() => setIsAuth(true));
+  const { mutate: refresh, isPending: isLoading } = useRefreshToken(() =>
+    setIsAuth(true),
+  );
 
   useEffect(() => {
     if (API_MOCKING) {

@@ -15,5 +15,4 @@ export const usePatientSurveys = (patientId: string) =>
     queryKey: ['surveys', patientId],
     queryFn: () => getPatientSurveys(patientId),
     enabled: !!patientId,
-    staleTime: 5 * 60 * 1000,
   });

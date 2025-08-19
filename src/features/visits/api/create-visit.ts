@@ -16,8 +16,8 @@ type UseCreateVisitOptions = {
   onSuccess?: (data: GetVisitDto) => void;
 };
 
-export const useCreateVisit = ({ onSuccess }: UseCreateVisitOptions = {}) => {
-  const { mutate: create, isPending } = useMutation({
+export const useCreateVisit = ({ onSuccess }: UseCreateVisitOptions) =>
+  useMutation({
     mutationFn: createVisit,
     onSuccess: (result) => {
       const visit = result.data;
@@ -26,11 +26,4 @@ export const useCreateVisit = ({ onSuccess }: UseCreateVisitOptions = {}) => {
       );
       onSuccess?.(visit);
     },
-    onError: (error) => {
-      console.error('Error creating visit:', error);
-      // Handle error (e.g., show a notification)
-    },
   });
-
-  return { create, isPending };
-};

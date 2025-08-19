@@ -48,7 +48,9 @@ export const NewVisitDialog = ({
     onClose();
   };
 
-  const createVisit = useCreateVisit({ onSuccess });
+  const { mutate: createVisit, isPending: isCreating } = useCreateVisit({
+    onSuccess,
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +60,7 @@ export const NewVisitDialog = ({
       return;
     }
     console.log('Form submitted:', formData);
-    createVisit.create({
+    createVisit({
       name: formData.name,
       patient_id: formData.patientId,
       time_start: new Date(
@@ -184,11 +186,7 @@ export const NewVisitDialog = ({
           </div>
         </div>
         <div className="mt-3 flex justify-end">
-          <Button
-            type="submit"
-            onClick={handleSubmit}
-            isLoading={createVisit.isPending}
-          >
+          <Button type="submit" onClick={handleSubmit} isLoading={isCreating}>
             {tg('submit')}
           </Button>
         </div>

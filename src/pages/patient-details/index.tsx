@@ -17,11 +17,14 @@ import {
 } from '@/features/patients';
 import { usePatientScores } from '@/features/scores';
 import { useDrugsByPatientId } from '@/features/drugs';
+import { Loading } from '@/components/ui/loading';
+import { useTranslation } from 'react-i18next';
 
 const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
 
 const PatientDetailsPage = () => {
+  const { t } = useTranslation('patients');
   const { id } = useParams<{ id: string }>();
   const [isGraphExpanded, setIsGraphExpanded] = useState(false);
   const {
@@ -53,9 +56,7 @@ const PatientDetailsPage = () => {
   if (patientsLoading || patientLoading)
     return (
       <Layout>
-        <div className="flex h-full items-center justify-center text-gray-500">
-          Loading patient details...
-        </div>
+        <Loading size={150} />
       </Layout>
     );
 
@@ -63,7 +64,7 @@ const PatientDetailsPage = () => {
     return (
       <Layout>
         <div className="flex h-full items-center justify-center text-red-500">
-          Patient not found.
+          {t('patientNotFound')}
         </div>
       </Layout>
     );
@@ -91,7 +92,9 @@ const PatientDetailsPage = () => {
             drugsLoading={drugsLoading}
           />
           {testsError ? (
-            <div className="text-red-500">Failed to load tests</div>
+            <div className="flex w-[55%] items-center justify-center font-bold text-red-500">
+              {t('failedToLoadTests')}
+            </div>
           ) : (
             <DiagnosticTestsGrid tests={tests} loading={testsLoading} />
           )}
@@ -104,16 +107,22 @@ const PatientDetailsPage = () => {
             isGraphExpanded ? '-mt-2.5 h-[88.5vh]' : 'h-[52vh]',
           )}
         >
-          <Graph
-            patientScores={patientScores}
-            scoresLoading={scoresLoading}
-            drugs={drugs}
-            diagnosticData={diagnosticData}
-            isGraphExpanded={isGraphExpanded}
-            resizeGraph={() => {
-              setIsGraphExpanded((v) => !v);
-            }}
-          />
+          {testsError ? (
+            <div className="flex w-full items-center justify-center font-bold text-red-500">
+              {t('failedToLoadTests')}
+            </div>
+          ) : (
+            <Graph
+              patientScores={patientScores}
+              scoresLoading={scoresLoading}
+              drugs={drugs}
+              diagnosticData={diagnosticData}
+              isGraphExpanded={isGraphExpanded}
+              resizeGraph={() => {
+                setIsGraphExpanded((v) => !v);
+              }}
+            />
+          )}
         </div>
       </div>
     </Layout>

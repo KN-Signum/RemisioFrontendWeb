@@ -3,6 +3,8 @@ export default {
   age: 'Wiek',
   state: 'Stan',
   noPatients: 'Brak pacjentów',
+  patientNotFound: 'Nie znaleziono pacjenta',
+  failedToLoadTests: 'Nie udało się załadować testów',
   surveys: 'Ankiety',
   drugs: 'Leki',
   diet: 'Dieta',

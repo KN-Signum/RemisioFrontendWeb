@@ -12,6 +12,7 @@ import {
   AiOutlineDown,
   AiOutlineRight,
 } from 'react-icons/ai';
+import { CONTACT_EMAIL, CONTACT_PHONE } from '@/utils/constants';
 
 const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-4 shadow-primary-accent shadow-xs';
@@ -139,11 +140,11 @@ const HelpPage = () => {
   };
 
   const handleEmailSupport = () => {
-    window.location.href = 'mailto:kontakt@remisio.pl';
+    window.location.href = `mailto:${CONTACT_EMAIL}`;
   };
 
   const handlePhoneSupport = () => {
-    window.location.href = 'tel:+48123456789';
+    window.location.href = `tel:${CONTACT_PHONE}`;
   };
 
   const handleUserGuide = () => {

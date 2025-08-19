@@ -3,6 +3,7 @@ import { Footer } from '@/components/layout/footer';
 import { SplitImage } from '@/features/auth/components/split-image';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CONTACT_EMAIL } from '@/utils/constants';
 
 export const RegistrationForm = () => {
   const { t } = useTranslation('', { keyPrefix: 'pages' });
@@ -15,7 +16,7 @@ export const RegistrationForm = () => {
     const body = t('registration.email_body', { email });
 
     // TODO: emails should be in env variables, and add function to send an email
-    const mailtoLink = `mailto:kontakt@remisio.pl?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailtoLink = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoLink;
   };
 

@@ -8,15 +8,9 @@ export const getVisits = async (): Promise<GetVisitDto[]> => {
   return response.data.content;
 };
 
-export const useGetVisits = () => {
-  const { data, isFetching, isFetched } = useQuery({
+export const useGetVisits = () =>
+  useQuery({
     queryKey: ['visits'],
     queryFn: () => getVisits(),
     initialData: [],
   });
-
-  return {
-    data,
-    isLoading: isFetching && !isFetched,
-  };
-};

@@ -59,11 +59,7 @@ const LoginPage = () => {
       return;
     }
 
-    try {
-      login.submit(userLogInInfo);
-    } catch (error) {
-      console.error('Login failed', error);
-    }
+    login.mutate(userLogInInfo);
   };
 
   return (
@@ -127,7 +123,7 @@ const LoginPage = () => {
               <Button
                 className="font-bold"
                 type="submit"
-                isLoading={login.isLoading}
+                isLoading={login.isPending}
               >
                 {t('login')}
               </Button>

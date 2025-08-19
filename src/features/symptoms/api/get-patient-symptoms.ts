@@ -12,16 +12,10 @@ export const getSymptomsByPatientId = async (
   return response.data.content;
 };
 
-export const useSymptomsByPatientId = (patientId: string) => {
-  const { data, isFetched, isFetching } = useQuery({
+export const useSymptomsByPatientId = (patientId: string) =>
+  useQuery({
     queryKey: ['symptoms', patientId],
     queryFn: () => getSymptomsByPatientId(patientId),
     enabled: !!patientId,
-    staleTime: 5 * 60 * 1000,
+    initialData: [],
   });
-
-  return {
-    data: data,
-    isLoading: isFetching && !isFetched,
-  };
-};

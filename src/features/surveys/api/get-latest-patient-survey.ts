@@ -15,5 +15,4 @@ export const useLatestPatientSurvey = (patientId: string) =>
     queryKey: ['surveys', 'latest', patientId],
     queryFn: () => getLatestPatientSurvey(patientId),
     enabled: !!patientId,
-    staleTime: 5 * 60 * 1000,
   });

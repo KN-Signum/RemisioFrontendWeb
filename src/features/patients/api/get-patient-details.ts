@@ -10,15 +10,9 @@ export const getPatientDetails = async (
   return response.data;
 };
 
-export const useGetPatientDetails = (pid: string) => {
-  const { data, isFetching, isFetched } = useQuery({
+export const useGetPatientDetails = (pid: string) =>
+  useQuery({
     queryKey: ['patientDetails', pid],
     queryFn: () => getPatientDetails(pid),
     initialData: null,
   });
-
-  return {
-    data,
-    isLoading: isFetching && !isFetched,
-  };
-};

@@ -17,19 +17,12 @@ type UseLoginOptions = {
   onSuccess?: (data: LoginResponse) => void;
 };
 
-export const useLogin = ({ onSuccess }: UseLoginOptions = {}) => {
-  const { mutate: submit, isPending: isLoading } = useMutation({
+export const useLogin = ({ onSuccess }: UseLoginOptions = {}) =>
+  useMutation({
     mutationFn: login,
     onSuccess: ({ data }) => {
-      // Changed destructuring from { response } to { data }
       cookies.set('access_token', data.access_token);
       cookies.set('refresh_token', data.refresh_token);
       onSuccess?.(data);
     },
-    onError: (error) => {
-      console.error('Login error:', error);
-      // Handle error (e.g., show a notification)
-    },
   });
-  return { submit, isLoading };
-};

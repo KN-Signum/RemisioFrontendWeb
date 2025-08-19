@@ -12,16 +12,10 @@ export const getMealsByPatientId = async (
   return response.data.content;
 };
 
-export const useMealsByPatientId = (patientId: string) => {
-  const { data, isFetching, isFetched } = useQuery({
+export const useMealsByPatientId = (patientId: string) =>
+  useQuery({
     queryKey: ['meals', patientId],
     queryFn: () => getMealsByPatientId(patientId),
     enabled: !!patientId,
-    staleTime: 5 * 60 * 1000,
+    initialData: [],
   });
-
-  return {
-    data: data,
-    isLoading: isFetching && !isFetched,
-  };
-};
