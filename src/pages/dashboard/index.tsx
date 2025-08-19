@@ -18,8 +18,16 @@ const borderClasses =
 export const Dashboard = () => {
   const { t } = useTranslation('', { keyPrefix: 'pages.dashboard' });
   const navigate = useNavigate();
-  const { data: visits, isLoading } = useGetVisits();
-  const { data: patients, isLoading: patientsLoading } = useGetPatients();
+  const {
+    data: patients,
+    isLoading: patientsLoading,
+    isError: patientsError,
+  } = useGetPatients();
+  const {
+    data: visits,
+    isLoading: visitsLoading,
+    isError: visitsError,
+  } = useGetVisits();
 
   return (
     <Layout>
@@ -60,6 +68,11 @@ export const Dashboard = () => {
             <div className="w-full">
               {patientsLoading ? (
                 <Loading size={100} />
+              ) : // TODO: Handle error state
+              patientsError ? (
+                <div className="flex h-full items-center justify-center text-3xl text-red-500">
+                  Error
+                </div>
               ) : (
                 <DashboardPatientsTable patients={patients} />
               )}
@@ -67,10 +80,15 @@ export const Dashboard = () => {
           </div>
           <div className={cn(borderClasses, 'h-full w-[35%] px-1.5')}>
             <div className="w-full">
-              {isLoading ? (
+              {visitsLoading ? (
                 <Loading size={100} />
+              ) : // TODO: Handle error state
+              visitsError ? (
+                <div className="flex h-full items-center justify-center text-3xl text-red-500">
+                  Error
+                </div>
               ) : (
-                <CalendarDashboard visits={visits} />
+                <CalendarDashboard visits={visits || []} />
               )}
             </div>
           </div>

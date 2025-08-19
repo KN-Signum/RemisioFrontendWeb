@@ -17,5 +17,4 @@ export const usePatientDiagnosticTests = (patientId: string) =>
     queryKey: ['diagnostic-tests', patientId],
     queryFn: () => getPatientDiagnosticTests(patientId),
     enabled: !!patientId,
-    staleTime: 5 * 60 * 1000,
   });

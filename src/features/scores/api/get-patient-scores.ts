@@ -10,16 +10,9 @@ export const getPatientScores = async (
   return response.data.content;
 };
 
-export const usePatientScores = (patientId: string, scoreDate?: string) => {
-  const { data, isFetching, isFetched } = useQuery({
+export const usePatientScores = (patientId: string, scoreDate?: string) =>
+  useQuery({
     queryKey: ['patient-scores', patientId, scoreDate],
     queryFn: () => getPatientScores(patientId),
     enabled: !!patientId,
-    staleTime: 5 * 60 * 1000,
   });
-
-  return {
-    data,
-    isLoading: isFetching && !isFetched,
-  };
-};

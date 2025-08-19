@@ -2,6 +2,7 @@ import { useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { CONTACT_EMAIL } from '@/utils/constants';
 
 interface TocItem {
   id: string;
@@ -257,11 +258,11 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
                 <div className="flex flex-col justify-center gap-4 pt-4 sm:flex-row">
                   <Button
                     onClick={() =>
-                      (window.location.href = 'mailto:kontakt@remisio.pl')
+                      (window.location.href = `mailto:${CONTACT_EMAIL}`)
                     }
                     className="bg-primary-accent hover:bg-primary-accent/90 rounded-full px-6 py-3 text-white transition-all duration-300 hover:scale-105"
                   >
-                    📧 kontakt@remisio.pl
+                    📧 {CONTACT_EMAIL}
                   </Button>
                   <Button
                     onClick={() => navigate('/')}

@@ -3,6 +3,8 @@ export default {
   age: 'Age',
   state: 'State',
   noPatients: 'No Patients',
+  patientNotFound: 'Patient Not Found',
+  failedToLoadTests: 'Failed to Load Tests',
   surveys: 'Surveys',
   drugs: 'Drugs',
   diet: 'Diet',

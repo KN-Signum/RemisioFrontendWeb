@@ -16,8 +16,8 @@ export const refreshToken = (): Promise<{
 };
 
 //TODO: Implement refreshing token logic
-export const useRefreshToken = (setIsAuth: (val: boolean) => void) => {
-  const { mutate: refresh, isPending: isLoading } = useMutation({
+export const useRefreshToken = (setIsAuth: (val: boolean) => void) =>
+  useMutation({
     mutationFn: refreshToken,
     onSuccess: ({ data }) => {
       console.log('Token refreshed successfully:', data.access_token);
@@ -30,6 +30,3 @@ export const useRefreshToken = (setIsAuth: (val: boolean) => void) => {
       // Handle error (e.g., show a notification)
     },
   });
-
-  return { refresh, isLoading };
-};

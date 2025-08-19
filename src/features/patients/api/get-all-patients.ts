@@ -8,15 +8,9 @@ export const getPatients = async (): Promise<GetPatientDto[]> => {
   return response.data;
 };
 
-export const useGetPatients = () => {
-  const { data, isFetching, isFetched } = useQuery({
+export const useGetPatients = () =>
+  useQuery({
     queryKey: ['patients'],
     queryFn: () => getPatients(),
     initialData: [],
   });
-
-  return {
-    data,
-    isLoading: isFetching && !isFetched,
-  };
-};

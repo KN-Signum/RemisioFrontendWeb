@@ -10,16 +10,10 @@ export const getDrugsByPatientId = async (
   return res.data.content as DrugDto[];
 };
 
-export const useDrugsByPatientId = (patientId: string) => {
-  const query = useQuery({
+export const useDrugsByPatientId = (patientId: string) =>
+  useQuery({
     queryKey: ['drugs', patientId],
     queryFn: () => getDrugsByPatientId(patientId),
     enabled: !!patientId,
     initialData: [],
   });
-
-  return {
-    data: query.data || [],
-    isLoading: query.isFetching && !query.isFetched,
-  };
-};
