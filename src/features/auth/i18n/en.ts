@@ -19,4 +19,6 @@ export default {
       'Password must contain at least 6 characters, an uppercase letter, and a special character.',
     passwordNotEmpty: 'Password cannot be empty.',
   },
+  no_account: "Don't have an account?",
+  register: 'Register'
 };

@@ -128,6 +128,7 @@ const LoginPage = () => {
                 {t('login')}
               </Button>
             </form>
+            <div className="mt-4 w-full text-right text-sm text-gray-600">{t('no_account')} <a href="/register" className="text-primary hover:underline">{t('register')}</a></div>
           </div>
           <div />
         </div>
