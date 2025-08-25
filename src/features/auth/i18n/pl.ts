@@ -20,4 +20,6 @@ export default {
       'Hasło musi zawierać co najmniej 6 znaków, wielką literę, znak specjalny.',
     passwordNotEmpty: 'Hasło nie może być puste.',
   },
+  no_account: "Nie masz konta?",
+  register: 'Zarejestruj się'
 };
