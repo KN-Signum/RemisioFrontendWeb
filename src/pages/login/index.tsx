@@ -38,7 +38,7 @@ const LoginPage = () => {
     }
 
     if (!userLogInInfo.password.trim()) {
-      newErrors.password = t('passwordNotEmpty');
+      newErrors.password = t('errors.passwordNotEmpty');
     }
 
     setErrors(newErrors);

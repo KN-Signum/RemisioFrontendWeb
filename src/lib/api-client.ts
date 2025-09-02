@@ -18,7 +18,7 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    const message = error.response?.data?.message || error.message;
+    const message = error.response?.data?.error || error.message;
 
     notificationsStore.getState().showNotification({
       type: 'error',

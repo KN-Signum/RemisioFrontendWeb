@@ -11,7 +11,7 @@ const getDrugsByPatientId = http.get<{ patientId: string }>(
       .getAll()
       .filter((drug) => drug.patientId === patientId);
 
-    return HttpResponse.json({ status: 200, content: drugs });
+    return HttpResponse.json(drugs);
   },
 );
 

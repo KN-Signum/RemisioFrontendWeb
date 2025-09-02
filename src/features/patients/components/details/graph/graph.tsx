@@ -1,12 +1,9 @@
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import { useState, useMemo } from 'react';
 import { TimeRange } from '@/types';
-import { GetPatientScoresDto } from '@/features/scores';
+import { PatientScoreDto } from '@/features/scores';
 import { DrugDto } from '@/features/drugs';
-import {
-  analytes,
-  GetPatientDiagnosticTestsDto,
-} from '@/features/diagnostic_tests';
+import { analytes, DiagnosticTestDto } from '@/features/diagnostic_tests';
 import { Loading } from '@/components/ui/loading';
 import {
   TimeModeButton,
@@ -18,10 +15,10 @@ import { formatPatientScores, getAnalyteHistory } from './utils';
 import { Charts } from './charts';
 
 type GraphProps = {
-  patientScores?: GetPatientScoresDto;
+  patientScores: PatientScoreDto[];
   scoresLoading: boolean;
   drugs: DrugDto[];
-  diagnosticData?: GetPatientDiagnosticTestsDto;
+  diagnosticData: DiagnosticTestDto[];
   isGraphExpanded: boolean;
   resizeGraph: () => void;
 };
@@ -43,19 +40,18 @@ export const Graph = ({
   const [showDrugs, setShowDrugs] = useState(true);
 
   const scoreHistory = useMemo(
-    () => formatPatientScores(patientScores?.scores),
+    () => formatPatientScores(patientScores),
     [patientScores],
   );
 
   const analyteHistories = useMemo(() => {
-    if (!diagnosticData?.tests?.length) return {};
+    if (!diagnosticData?.length) return {};
     const result: Record<
       string,
       { name: string; dates: string[]; values: number[] }
     > = {};
     analytes.forEach((analyte) => {
       const history = getAnalyteHistory(diagnosticData, analyte);
-      if (!history.length) return;
       result[analyte] = {
         name: analyte,
         dates: history.map((h) => h.date),

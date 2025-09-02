@@ -1,4 +1,4 @@
-import { factory, primaryKey } from '@mswjs/data';
+import { factory, nullable, primaryKey } from '@mswjs/data';
 
 const models = {
   patient: {
@@ -92,12 +92,13 @@ const models = {
 
   patientScore: {
     id: primaryKey(String),
-    patient_id: String,
+    total_score: Number,
+    survey_score: Number,
+    meal_score: nullable(Number),
+    diagnostic_score: nullable(Number),
+    disease_type: String,
     score_date: String,
-    score: Number,
-    notes: String,
     created_at: String,
-    updated_at: String,
   },
 
   // Crohn's Disease Survey

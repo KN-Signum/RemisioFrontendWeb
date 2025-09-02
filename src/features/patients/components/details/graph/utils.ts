@@ -1,17 +1,22 @@
 import { DiagnosticTestDto } from '@/features/diagnostic_tests';
+import { PatientScoreDto } from '@/features/scores';
 
-interface PatientScoreData {
-  score_date: string;
+type FormatedPatientScore = {
+  week: string;
   score: number;
-  notes?: string;
-}
+};
 
-export const getAnalyteHistory = (
-  diagnosticData: { tests: DiagnosticTestDto[] } | undefined,
+type FormatedAnalyteValue = {
+  date: string;
+  value: string | number | boolean | undefined;
+};
+
+export function getAnalyteHistory(
+  diagnosticData: DiagnosticTestDto[],
   analyteName: string,
-) => {
-  if (!diagnosticData?.tests?.length) return [];
-  const relevant = diagnosticData.tests.filter(
+): FormatedAnalyteValue[] {
+  if (!diagnosticData?.length) return [];
+  const relevant = diagnosticData.filter(
     (t) =>
       t[analyteName as keyof typeof t] !== undefined &&
       t[analyteName as keyof typeof t] !== null,
@@ -19,17 +24,21 @@ export const getAnalyteHistory = (
   const sorted = [...relevant].sort(
     (a, b) => +new Date(a.test_date) - +new Date(b.test_date),
   );
-  return sorted.map((t) => ({
-    date: t.test_date.split('T')[0],
-    value: t[analyteName as keyof typeof t],
+  return sorted.map((test) => ({
+    date: test.test_date.split('T')[0],
+    value: test[analyteName as keyof typeof test],
   }));
-};
+}
 
-export const formatPatientScores = (
-  patientScores: PatientScoreData[] | null | undefined,
-) => {
-  if (!patientScores?.length) return [];
-  return [...patientScores]
+export function formatPatientScores(
+  patientScores: PatientScoreDto[] | undefined | null,
+): FormatedPatientScore[] {
+  if (!patientScores) return [];
+  console.log('Formatting patient scores:', patientScores);
+  return patientScores
     .sort((a, b) => +new Date(a.score_date) - +new Date(b.score_date))
-    .map((s) => ({ week: s.score_date.split('T')[0], score: s.score }));
-};
+    .map((score) => ({
+      week: score.score_date.split('T')[0],
+      score: score.survey_score,
+    }));
+}

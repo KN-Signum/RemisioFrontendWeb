@@ -90,7 +90,7 @@ export const DiagnosticTestsGrid = ({
 
         return (
           <div
-            key={t.name}
+            key={test.name}
             className={`${span} relative flex flex-col justify-between rounded-xl border p-3`}
             style={{
               backgroundImage: `linear-gradient(235deg, ${bg} 0%, #ffffff 100%)`,

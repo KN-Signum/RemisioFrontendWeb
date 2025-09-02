@@ -1,13 +1,13 @@
 import { apiClient } from '@/lib/api-client';
 import { useQuery } from '@tanstack/react-query';
-import { GetPatientScoresDto } from '../types';
+import { PatientScoreDto } from '../types';
 
 export const getPatientScores = async (
   patientId: string,
-): Promise<GetPatientScoresDto> => {
-  const response = await apiClient.get(`/scores/${patientId}`);
+): Promise<PatientScoreDto[]> => {
+  const response = await apiClient.get(`/patients/${patientId}/scores`);
   console.log('[API-CLIENT] fetching scores for patient:', patientId);
-  return response.data.content;
+  return response.data;
 };
 
 export const usePatientScores = (patientId: string, scoreDate?: string) =>
@@ -15,4 +15,5 @@ export const usePatientScores = (patientId: string, scoreDate?: string) =>
     queryKey: ['patient-scores', patientId, scoreDate],
     queryFn: () => getPatientScores(patientId),
     enabled: !!patientId,
+    initialData: [],
   });

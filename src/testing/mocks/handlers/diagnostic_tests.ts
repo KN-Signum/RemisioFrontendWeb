@@ -70,13 +70,7 @@ export const getPatientDiagnosticTests = http.get<{ patientId: string }>(
       mergedTests.push(mergedTest as DiagnosticTestDto);
     });
 
-    return HttpResponse.json({
-      status: 200,
-      content: {
-        patient_id: patientId,
-        tests: mergedTests,
-      },
-    });
+    return HttpResponse.json(mergedTests);
   },
 );
 

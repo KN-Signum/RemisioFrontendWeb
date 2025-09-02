@@ -69,11 +69,6 @@ export interface DiagnosticTestDto {
   updated_at: string;
 }
 
-export interface GetPatientDiagnosticTestsDto {
-  patient_id: string;
-  tests: DiagnosticTestDto[];
-}
-
 export type GridTest = {
   name: Analyte;
   value: string;
