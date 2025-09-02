@@ -1,5 +1,5 @@
 // api
-export * from './api/get-patient-diagnostic-tests';
+export * from './api/get-patient-diagnostic-tests.ts';
 
 // components
 
@@ -7,7 +7,7 @@ export * from './api/get-patient-diagnostic-tests';
 export * from './types/index';
 
 // utils
-export * from './utils/translate-analyte';
+export * from './utils/translate-analyte.ts';
 export * from './utils/latest-test-to-grid.ts';
 export * from './utils/classify.ts';
 export * from './utils/analyte-limits.ts';

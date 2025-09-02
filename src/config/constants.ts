@@ -1,5 +1,5 @@
-export const API_URL = import.meta.env.VITE_PUBLIC_API_URL ?? 'http://api';
-export const AUTH_URL = import.meta.env.VITE_PUBLIC_AUTH_URL ?? 'https://remisio.pl';
+export const API_URL = import.meta.env.VITE_PUBLIC_API_URL ?? 'https://remisio.pl/api';
+export const AUTH_URL = import.meta.env.VITE_PUBLIC_AUTH_URL ?? 'https://remisio.pl/auth';
 
 export const API_MOCKING = import.meta.env.VITE_PUBLIC_API_MOCKING === 'true';
 export const ENABLE_MSW_DEVTOOLS =
