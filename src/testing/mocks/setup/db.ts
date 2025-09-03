@@ -105,7 +105,6 @@ const models = {
   crohnSurvey: {
     id: primaryKey(String),
     patient_id: String,
-    survey_date: String,
     survey_type: String, // 'crohn'
     abdominal_pain: Number, // 0-3
     stools: Number, // 0-3
@@ -119,14 +118,13 @@ const models = {
     category: String, // 'remission' | 'mild' | 'moderate' | 'severe'
     notes: String,
     created_at: String,
-    updated_at: String,
+    updated_at: nullable(String),
   },
 
   // Ulcerative Colitis Survey
   ucSurvey: {
     id: primaryKey(String),
     patient_id: String,
-    survey_date: String,
     survey_type: String, // 'uc'
     stool_frequency: Number, // 0-3
     rectal_bleeding: Number, // 0-3
@@ -135,7 +133,7 @@ const models = {
     category: String, // 'remission' | 'mild' | 'moderate' | 'severe'
     notes: String,
     created_at: String,
-    updated_at: String,
+    updated_at: nullable(String),
   },
 
   // Symptoms

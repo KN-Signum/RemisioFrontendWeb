@@ -20,20 +20,28 @@ export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
     .slice()
     .sort(
       (a, b) =>
-        (b.created_at ? Date.parse(b.created_at) : 0) -
-        (a.created_at ? Date.parse(a.created_at) : 0),
+        (b.date_added ? Date.parse(b.date_added) : 0) -
+        (a.date_added ? Date.parse(a.date_added) : 0),
     );
 
   if (!isOpen) return null;
 
-  const levelColor = (lvl: string) =>
-    ({
-      None: 'text-gray-400',
-      Mild: 'text-green-500',
-      Moderate: 'text-yellow-500',
-      Severe: 'text-orange-500',
-      'Very Severe': 'text-red-500',
-    })[lvl] ?? 'text-gray-400';
+  // Todo: Make better colors
+  const PainlevelColor = (lvl: number) => {
+    if (lvl <= 2) return 'text-gray-400';
+    if (lvl <= 4) return 'text-green-500';
+    if (lvl <= 6) return 'text-yellow-500';
+    if (lvl <= 8) return 'text-orange-500';
+    return 'text-red-500';
+  };
+
+  const PainLevelText = (lvl: number) => {
+    if (lvl <= 2) return 'Mild';
+    if (lvl <= 4) return 'Moderate';
+    if (lvl <= 6) return 'Severe';
+    if (lvl <= 8) return 'Very Severe';
+    return 'Extreme';
+  };
 
   return (
     <Dialog
@@ -47,23 +55,25 @@ export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
     >
       <div className="mt-4 w-full flex-1 overflow-y-auto">
         <div className="flex flex-col gap-4">
-          {sorted.map((s: SymptomDto) => (
-            <div key={s.id} className="bg-background/10 rounded-sm p-4">
+          {sorted.map((symptom: SymptomDto) => (
+            <div key={symptom.id} className="bg-background/10 rounded-sm p-4">
               <div className="mb-2 flex items-center justify-between">
                 <h3 className="text-primary-accent text-lg font-semibold">
-                  {s.created_at
-                    ? formatDateDisplay(new Date(s.created_at))
+                  {symptom.date_added
+                    ? formatDateDisplay(new Date(symptom.date_added))
                     : 'Unknown date'}
                 </h3>
                 <div className="flex items-center gap-2">
                   <span className="text-primary-accent font-semibold">
                     {t('type')}:
                   </span>
-                  <span className="text-primary-accent">{s.symptom_type}</span>
+                  <span className="text-primary-accent">
+                    {symptom.symptom_type}
+                  </span>
                   <span
-                    className={`ml-2 font-bold ${levelColor(s.pain_level)}`}
+                    className={`ml-2 font-bold ${PainlevelColor(symptom.pain)}`}
                   >
-                    {s.pain_level}
+                    {PainLevelText(symptom.pain)}
                   </span>
                 </div>
               </div>
@@ -71,18 +81,18 @@ export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
               <div className="text-primary-accent grid grid-cols-2 gap-y-1 text-sm">
                 <p>
                   <span className="font-semibold">{t('duration')}:</span>{' '}
-                  {s.duration}
+                  {symptom.duration}
                 </p>
                 <p>
                   <span className="font-semibold">{t('painLevel')}:</span>{' '}
-                  {s.pain_level}
+                  {symptom.pain}
                 </p>
               </div>
 
-              {s.symptom_description && (
+              {symptom.additional_description && (
                 <div className="mt-2 border-t border-gray-600 pt-2 text-sm">
                   <span className="font-semibold">{t('description')}:</span>{' '}
-                  {s.symptom_description}
+                  {symptom.additional_description}
                 </div>
               )}
             </div>

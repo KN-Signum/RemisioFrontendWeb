@@ -32,9 +32,11 @@ const PatientDetailsPage = () => {
     isLoading: testsLoading,
     error: testsError,
   } = usePatientDiagnosticTests(id ?? '');
-  const { data: patientScores, isLoading: scoresLoading } = usePatientScores(
-    id ?? '',
-  );
+  const {
+    data: patientScores,
+    isLoading: scoresLoading,
+    error: scoresError,
+  } = usePatientScores(id ?? '');
   const { data: patientDetail, isLoading: patientLoading } =
     useGetPatientDetails(id ?? '');
   const { data: patients, isLoading: patientsLoading } = useGetPatients();
@@ -107,9 +109,13 @@ const PatientDetailsPage = () => {
             isGraphExpanded ? '-mt-2.5 h-[88.5vh]' : 'h-[52vh]',
           )}
         >
-          {testsError ? (
+          {testsError || scoresError ? (
             <div className="flex w-full items-center justify-center font-bold text-red-500">
               {t('failedToLoadTests')}
+            </div>
+          ) : tests.length == 0 ? (
+            <div className="flex w-full items-center justify-center font-bold text-red-500">
+              {t('noTestsFound')}
             </div>
           ) : (
             <Graph

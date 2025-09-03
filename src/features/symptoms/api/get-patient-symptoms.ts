@@ -9,7 +9,7 @@ export const getSymptomsByPatientId = async (
 
   console.log('[API-CLIENT] fetching symptoms for patientId:', patientId);
   const response = await apiClient.get(`/patients/${patientId}/symptoms`);
-  return response.data.content;
+  return response.data;
 };
 
 export const useSymptomsByPatientId = (patientId: string) =>

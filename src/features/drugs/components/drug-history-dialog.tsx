@@ -45,13 +45,13 @@ export const DrugHistoryDialog = ({
           </div>
         ) : (
           <div className="flex flex-col gap-4">
-            {sorted.map((d: DrugDto) => (
-              <div key={d.id} className="bg-background/10 rounded-sm p-4">
+            {sorted.map((drug: DrugDto) => (
+              <div key={drug.id} className="bg-background/10 rounded-sm p-4">
                 <div className="mb-2 flex items-center justify-between">
                   <h3 className="text-primary-accent text-lg font-semibold">
-                    {d.name}
+                    {drug.drug_name}
                   </h3>
-                  <span className="text-primary-accent">{d.dosage}</span>
+                  <span className="text-primary-accent">{drug.dosage}</span>
                 </div>
 
                 <div className="text-primary-accent grid grid-cols-2 gap-y-1 text-sm">
@@ -59,28 +59,28 @@ export const DrugHistoryDialog = ({
                     <span className="font-semibold">
                       {t('dateFrom', 'Start Date')}:
                     </span>{' '}
-                    {format(d.dateFrom)}
+                    {format(drug.dateFrom)}
                   </p>
                   <p>
                     <span className="font-semibold">
                       {t('dateTo', 'End Date')}:
                     </span>{' '}
-                    {format(d.dateTo)}
+                    {format(drug.dateTo)}
                   </p>
                   <p className="col-span-2">
                     <span className="font-semibold">
                       {t('times', 'Schedule')}:
                     </span>{' '}
-                    {d.times.join(', ')}
+                    {drug.dosage}
                   </p>
                 </div>
 
-                {d.additionalInfo && (
+                {drug.prescription_notes && (
                   <div className="mt-2 border-t border-gray-600 pt-2 text-sm">
                     <span className="font-semibold">
                       {t('additionalInfo', 'Notes')}:
                     </span>{' '}
-                    {d.additionalInfo}
+                    {drug.prescription_notes}
                   </div>
                 )}
               </div>

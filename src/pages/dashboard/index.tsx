@@ -84,9 +84,7 @@ export const Dashboard = () => {
                 <Loading size={100} />
               ) : // TODO: Handle error state
               visitsError ? (
-                <div className="flex h-full items-center justify-center text-3xl text-red-500">
-                  Error
-                </div>
+                <div className="flex h-full items-center justify-center text-3xl text-red-500"></div>
               ) : (
                 <CalendarDashboard visits={visits || []} />
               )}

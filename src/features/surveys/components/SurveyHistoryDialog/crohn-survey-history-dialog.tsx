@@ -17,7 +17,7 @@ export const CrohnSurveyHistoryDialog = ({
 }: Props) => {
   const { t } = useTranslation('surveys');
   const { data, isLoading } = usePatientSurveys(isOpen ? patientId : '');
-  const surveys = data?.surveys ?? [];
+  const surveys = data ?? [];
 
   const color = (c: SurveyCategory) =>
     ({
@@ -48,7 +48,13 @@ export const CrohnSurveyHistoryDialog = ({
                 {/* header */}
                 <div className="mb-3 flex items-center justify-between">
                   <h3 className="text-primary-accent text-lg font-semibold">
-                    {formatDateDisplay(new Date(survey.survey_date))}
+                    {formatDateDisplay(
+                      new Date(
+                        survey.updated_at
+                          ? survey.updated_at
+                          : survey.created_at,
+                      ),
+                    )}
                   </h3>
                   <div className="flex items-center gap-2">
                     <span className={`font-bold ${color(survey.category)}`}>

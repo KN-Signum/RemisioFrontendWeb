@@ -5,6 +5,7 @@ export default {
   noPatients: 'No Patients',
   patientNotFound: 'Patient Not Found',
   failedToLoadTests: 'Failed to Load Tests',
+  noTestsFound: 'No Tests Found',
   surveys: 'Surveys',
   drugs: 'Drugs',
   diet: 'Diet',

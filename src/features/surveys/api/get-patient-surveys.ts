@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
-import { GetPatientSurveysDto } from '../types';
+import { SurveyDto } from '../types';
 
 export const getPatientSurveys = async (
   patientId: string,
-): Promise<GetPatientSurveysDto> => {
+): Promise<SurveyDto[]> => {
   const response = await apiClient.get(`/patients/${patientId}/surveys`);
   console.log('[API-CLIENT] fetching surveys for patient:', patientId);
-  return response.data.content;
+  return response.data;
 };
 
 export const usePatientSurveys = (patientId: string) =>
@@ -15,4 +15,5 @@ export const usePatientSurveys = (patientId: string) =>
     queryKey: ['surveys', patientId],
     queryFn: () => getPatientSurveys(patientId),
     enabled: !!patientId,
+    initialData: [],
   });

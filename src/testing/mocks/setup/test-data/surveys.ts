@@ -87,9 +87,6 @@ const generateSurveyData = () => {
     const idealW = currentW * (1 + randInt(5, 10) / 100);
 
     for (let i = 0; i < 8; i++) {
-      const surveyDate = getRandomDateIso();
-      const createdAt = new Date().toISOString();
-
       if (isCrohn) {
         const liquidStools = randInt(0, 35);
         const abdominalPainSum = randInt(0, 21);
@@ -119,24 +116,20 @@ const generateSurveyData = () => {
         crohnSurveys.push({
           id: uuidv4(),
           patient_id: patientId,
-          survey_date: surveyDate,
           survey_type: 'crohn',
-
-          stools: liquidStools,
-          abdominal_pain: abdominalPainSum,
-          general_wellbeing: wellbeingSum,
-          extraintestinal_manifestations: extraintestinal,
-          antidiarrheal_use: antidiarrheal,
-          abdominal_mass: abdominalMass,
-          hematocrit,
-          weight: currentW,
-
           total_score: totalScore,
           category,
-
+          weight: currentW,
           notes: `Auto-generated Crohn survey #${i + 1}`,
-          created_at: createdAt,
-          updated_at: createdAt,
+          abdominal_pain: abdominalPainSum,
+          stools: liquidStools,
+          general_wellbeing: wellbeingSum,
+          antidiarrheal_use: antidiarrheal,
+          extraintestinal_manifestations: extraintestinal,
+          abdominal_mass: abdominalMass,
+          hematocrit,
+          created_at: getRandomDateIso(),
+          updated_at: null,
         });
       } else {
         const stoolFrequency = randInt(0, 3);
@@ -153,20 +146,16 @@ const generateSurveyData = () => {
         ucSurveys.push({
           id: uuidv4(),
           patient_id: patientId,
-          survey_date: surveyDate,
-          survey_type: 'uc',
-
+          survey_type: 'ulcerative_colitis',
+          total_score: totalScore,
+          category,
+          weight: currentW,
           stool_frequency: stoolFrequency,
           rectal_bleeding: rectalBleeding,
           physician_global: physicianGlobal,
-
-          total_score: totalScore,
-          category,
-
           notes: `Auto-generated UC survey #${i + 1}`,
-          created_at: createdAt,
-          updated_at: createdAt,
-          weight: currentW,
+          created_at: getRandomDateIso(),
+          updated_at: null,
         });
       }
     }

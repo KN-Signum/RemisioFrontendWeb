@@ -5,13 +5,12 @@ export type SurveyCategory = 'remission' | 'mild' | 'moderate' | 'severe';
 interface BaseSurveyDto {
   id: string;
   patient_id: string;
-  survey_date: string;
   total_score: number;
   category: SurveyCategory;
   weight: number;
-  notes?: string;
+  notes: string;
   created_at: string;
-  updated_at?: string;
+  updated_at: string | null;
 }
 
 // Crohn's Disease Survey
@@ -28,7 +27,7 @@ export interface CrohnSurveyDto extends BaseSurveyDto {
 
 // Ulcerative Colitis Survey
 export interface UcSurveyDto extends BaseSurveyDto {
-  survey_type: 'uc';
+  survey_type: 'ulcerative_colitis';
   stool_frequency: number; // 0-3
   rectal_bleeding: number; // 0-3
   physician_global: number; // 0-3
@@ -36,14 +35,8 @@ export interface UcSurveyDto extends BaseSurveyDto {
 
 export type SurveyDto = UcSurveyDto | CrohnSurveyDto;
 
-// Response types
-export interface GetPatientSurveysDto {
-  patient_id: string;
-  surveys: SurveyDto[];
-}
-
 export const isUcSurvey = (survey: SurveyDto): survey is UcSurveyDto => {
-  return survey.survey_type === 'uc';
+  return survey.survey_type === 'ulcerative_colitis';
 };
 
 export const isCrohnSurvey = (survey: SurveyDto): survey is CrohnSurveyDto => {

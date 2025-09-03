@@ -13,10 +13,10 @@ interface DrugTimeBarChartProps {
 export const DrugTimeBarChart = ({ drugs, xmin }: DrugTimeBarChartProps) => {
   const { t } = useTranslation('', { keyPrefix: 'general' });
   const drugBars = useMemo(() => {
-    return drugs.map((d) => ({
-      name: d.name,
-      start: d.dateFrom.split('T')[0],
-      end: d.dateTo ? d.dateTo.split('T')[0] : null,
+    return drugs.map((drug) => ({
+      name: drug.drug_name,
+      start: drug.dateFrom.split('T')[0],
+      end: drug.dateTo ? drug.dateTo.split('T')[0] : null,
     }));
   }, [drugs]);
 
