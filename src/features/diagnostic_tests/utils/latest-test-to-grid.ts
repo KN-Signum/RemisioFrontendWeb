@@ -1,10 +1,10 @@
 import { Analyte, classify, DiagnosticTestDto, GridTest } from '..';
 
 export const latestTestsToGrid = (
-  data: { tests: DiagnosticTestDto[] } | undefined,
+  tests: DiagnosticTestDto[] | undefined,
 ): GridTest[] => {
-  if (!data?.tests?.length) return [];
-  const latest = [...data.tests].sort(
+  if (!tests?.length) return [];
+  const latest = [...tests].sort(
     (a, b) => +new Date(b.test_date) - +new Date(a.test_date),
   )[0];
 
@@ -27,7 +27,7 @@ export const latestTestsToGrid = (
       const numeric = typeof v === 'number' ? v : null;
       const valueStr =
         typeof v === 'boolean' ? (v ? 'Positive' : 'Negative') : v!.toString();
-      const hist = data.tests
+      const hist = tests
         .filter((t) => t[name] !== undefined && t[name] !== null)
         .sort((a, b) => +new Date(a.test_date) - +new Date(b.test_date))
         .map((t) => Number(t[name]));

@@ -1,4 +1,4 @@
-import Layout from '@/components/layout';
+import Layout from '@/components/layout/main';
 import { FiFilePlus, FiFlag } from 'react-icons/fi';
 import { BsPeople } from 'react-icons/bs';
 import { cn } from '@/utils/cn';
@@ -10,44 +10,54 @@ import {
   ItemCard,
   DashboardPatientsTable,
   useGetPatients,
-} from '@/features/patient';
+} from '@/features/patients';
 
 const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
 
 export const Dashboard = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('', { keyPrefix: 'pages.dashboard' });
   const navigate = useNavigate();
-  const { data: visits, isLoading } = useGetVisits();
-  const { data: patients, isLoading: patientsLoading } = useGetPatients();
+  const {
+    data: patients,
+    isLoading: patientsLoading,
+    isError: patientsError,
+  } = useGetPatients();
+  const {
+    data: visits,
+    isLoading: visitsLoading,
+    isError: visitsError,
+  } = useGetVisits();
 
   return (
     <Layout>
       <div className="flex w-full flex-col gap-2.5 overflow-y-visible">
         <div className={cn(borderClasses, 'h-63 w-full gap-10 px-4')}>
+          {/* TODO: Fix how it looks */}
+          {/* TODO: Add functionality */}
           <ItemCard
-            title={t('dashboard.cards.surveys.title')}
+            title={t('cards.surveys.title')}
             number={44}
             icon={<FiFilePlus className="size-8" />}
-            subtitle={t('dashboard.cards.surveys.subtitle')}
+            subtitle={t('cards.surveys.subtitle')}
             onClick={() => {
               console.log('Ankiety clicked');
             }}
           />
           <ItemCard
-            title={t('dashboard.cards.patients.title')}
+            title={t('cards.patients.title')}
             number={23}
             icon={<BsPeople className="size-8" />}
-            subtitle={t('dashboard.cards.patients.subtitle')}
+            subtitle={t('cards.patients.subtitle')}
             onClick={() => {
               navigate('/patients');
             }}
           />
           <ItemCard
-            title={t('dashboard.cards.state-of-emergency.title')}
+            title={t('cards.stateOfEmergency.title')}
             number={2}
             icon={<FiFlag className="size-8" />}
-            subtitle={t('dashboard.cards.state-of-emergency.subtitle')}
+            subtitle={t('cards.stateOfEmergency.subtitle')}
             onClick={() => {
               console.log('Ankiety clicked');
             }}
@@ -58,6 +68,11 @@ export const Dashboard = () => {
             <div className="w-full">
               {patientsLoading ? (
                 <Loading size={100} />
+              ) : // TODO: Handle error state
+              patientsError ? (
+                <div className="flex h-full items-center justify-center text-3xl text-red-500">
+                  Error
+                </div>
               ) : (
                 <DashboardPatientsTable patients={patients} />
               )}
@@ -65,10 +80,13 @@ export const Dashboard = () => {
           </div>
           <div className={cn(borderClasses, 'h-full w-[35%] px-1.5')}>
             <div className="w-full">
-              {isLoading ? (
+              {visitsLoading ? (
                 <Loading size={100} />
+              ) : // TODO: Handle error state
+              visitsError ? (
+                <div className="flex h-full items-center justify-center text-3xl text-red-500"></div>
               ) : (
-                <CalendarDashboard visits={visits} />
+                <CalendarDashboard visits={visits || []} />
               )}
             </div>
           </div>

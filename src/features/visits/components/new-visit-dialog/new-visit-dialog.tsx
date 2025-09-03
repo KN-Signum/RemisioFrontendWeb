@@ -23,7 +23,8 @@ export const NewVisitDialog = ({
   startDate,
   endDate,
 }: NewVisitDialogProps) => {
-  const { t } = useTranslation();
+  const { t: tg } = useTranslation('', { keyPrefix: 'general' });
+  const { t } = useTranslation('visits');
   const { showNotification } = useNotifications();
   const timeStartRef = useRef<HTMLInputElement>(null);
   const timeEndRef = useRef<HTMLInputElement>(null);
@@ -41,14 +42,15 @@ export const NewVisitDialog = ({
   const onSuccess = () => {
     showNotification({
       type: 'success',
-      title: t('notifications.type.success'),
       duration: 5000,
-      message: t('notifications.messages.visit_created'),
+      message: t('visitCreated'),
     });
     onClose();
   };
 
-  const createVisit = useCreateVisit({ onSuccess });
+  const { mutate: createVisit, isPending: isCreating } = useCreateVisit({
+    onSuccess,
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +60,7 @@ export const NewVisitDialog = ({
       return;
     }
     console.log('Form submitted:', formData);
-    createVisit.create({
+    createVisit({
       name: formData.name,
       patient_id: formData.patientId,
       time_start: new Date(
@@ -75,16 +77,16 @@ export const NewVisitDialog = ({
     <Dialog
       isOpen={isOpen}
       closeButton={false}
-      title={t('calendar.new_visit.title')}
+      title={t('title')}
       onClose={onClose}
     >
       <form>
         <div className="mt-10 flex h-full w-full flex-col items-center gap-4 text-lg">
-          <span className="text-md -my-4 text-red-500">{errors[0]}</span>
+          <span className="text-md -my-4 text-red-500">{t(errors[0])}</span>
           <FormInput
             type="text"
             name="visitName"
-            placeholder={t('calendar.new_visit.visit_name')}
+            placeholder={t('visitName')}
             value={formData.name}
             onChange={(e) =>
               setFormData({
@@ -96,7 +98,7 @@ export const NewVisitDialog = ({
           <FormInput
             type="text"
             name="patientName"
-            placeholder={t('calendar.new_visit.choose_patient')}
+            placeholder={t('choosePatient')}
             value={formData.patientId}
             onChange={(e) =>
               setFormData({
@@ -171,7 +173,7 @@ export const NewVisitDialog = ({
           </div>
           <div className="h-fit w-full rounded-sm px-2 ring-1 focus-within:ring-3">
             <textarea
-              placeholder={t('calendar.new_visit.additional_info')}
+              placeholder={t('additionalInfo')}
               className="h-24 w-full text-start focus:outline-none"
               value={formData.additionalInfo}
               onChange={(e) =>
@@ -184,12 +186,8 @@ export const NewVisitDialog = ({
           </div>
         </div>
         <div className="mt-3 flex justify-end">
-          <Button
-            type="submit"
-            onClick={handleSubmit}
-            isLoading={createVisit.isPending}
-          >
-            {t('calendar.new_visit.submit')}
+          <Button type="submit" onClick={handleSubmit} isLoading={isCreating}>
+            {tg('submit')}
           </Button>
         </div>
       </form>

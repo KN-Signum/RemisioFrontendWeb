@@ -11,7 +11,7 @@ export interface CalendarDashboardProps {
 }
 
 export const CalendarDashboard = (props: CalendarDashboardProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('', { keyPrefix: 'general' });
   const navigate = useNavigate();
   const { visits } = props;
 
@@ -35,7 +35,7 @@ export const CalendarDashboard = (props: CalendarDashboardProps) => {
         initialView="dayGridMonth"
         firstDay={1}
         height={'100%'}
-        locale={t('language') === 'pl' ? plLocale : enLocale}
+        locale={t('lng') === 'pl' ? plLocale : enLocale}
         timeZone="pl"
         headerToolbar={{
           left: '',

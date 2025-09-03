@@ -1,7 +1,6 @@
 import { AUTH_URL } from '@/config/constants';
 import { notificationsStore } from '@/stores/notifications';
 import Axios from 'axios';
-import i18n from './i18n';
 
 export const authClient = Axios.create({
   baseURL: AUTH_URL,
@@ -15,11 +14,10 @@ authClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    const message = error.response?.data?.message || error.message;
+    const message = error.response?.data?.error || error.message;
 
     notificationsStore.getState().showNotification({
       type: 'error',
-      title: i18n.t('notifications.type.error'),
       duration: 5000,
       message,
     });

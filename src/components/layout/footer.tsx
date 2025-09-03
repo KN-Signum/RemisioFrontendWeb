@@ -12,6 +12,11 @@ import {
 import { FaAngleRight, FaFileContract } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import {
+  CONTACT_ADDRESS,
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+} from '@/utils/constants';
 
 const SocialLinks = [
   {
@@ -90,7 +95,7 @@ const LegalLink = ({
 };
 
 export const Footer = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('', { keyPrefix: 'layout' });
 
   return (
     <footer className="text-primary-accent mt-10 flex w-full flex-col gap-6 bg-black/5 px-50 py-10">
@@ -103,9 +108,9 @@ export const Footer = () => {
           <span>{t('footer.disclaimer')}</span>
 
           <div className="mt-6 flex flex-col gap-1">
-            <Contact icon={MdEmail} text="kontakt@remisio.pl" />
-            <Contact icon={MdPhone} text="+48 123 456 789" />
-            <Contact icon={MdLocationOn} text="Wrocław, Polska" />
+            <Contact icon={MdEmail} text={CONTACT_EMAIL} />
+            <Contact icon={MdPhone} text={CONTACT_PHONE} />
+            <Contact icon={MdLocationOn} text={CONTACT_ADDRESS} />
           </div>
         </div>
 
@@ -128,7 +133,7 @@ export const Footer = () => {
             </span>
             <LegalLink
               icon={MdPrivacyTip}
-              text={t('privacyPolicy.title')}
+              text={t('footer.privacyPolicy')}
               nav="/privacy-policy"
             />
             <LegalLink

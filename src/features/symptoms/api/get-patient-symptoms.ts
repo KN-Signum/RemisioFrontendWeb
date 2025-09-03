@@ -8,20 +8,14 @@ export const getSymptomsByPatientId = async (
   if (!patientId) throw new Error('patientId is required');
 
   console.log('[API-CLIENT] fetching symptoms for patientId:', patientId);
-  const response = await apiClient.get(`/symptoms/${patientId}`);
-  return response.data.content;
+  const response = await apiClient.get(`/patients/${patientId}/symptoms`);
+  return response.data;
 };
 
-export const useSymptomsByPatientId = (patientId: string) => {
-  const { data, isFetched, isFetching } = useQuery({
+export const useSymptomsByPatientId = (patientId: string) =>
+  useQuery({
     queryKey: ['symptoms', patientId],
     queryFn: () => getSymptomsByPatientId(patientId),
     enabled: !!patientId,
-    staleTime: 5 * 60 * 1000,
+    initialData: [],
   });
-
-  return {
-    data: data,
-    isLoading: isFetching && !isFetched,
-  };
-};

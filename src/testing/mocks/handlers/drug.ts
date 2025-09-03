@@ -4,14 +4,14 @@ import { db } from '..';
 
 // Get drugs by patient ID
 const getDrugsByPatientId = http.get<{ patientId: string }>(
-  `${API_URL}/drugs/:patientId`,
+  `${API_URL}/patients/:patientId/drugs`,
   ({ params }) => {
     const { patientId } = params;
     const drugs = db.drug
       .getAll()
       .filter((drug) => drug.patientId === patientId);
 
-    return HttpResponse.json({ status: 200, content: drugs });
+    return HttpResponse.json(drugs);
   },
 );
 

@@ -4,6 +4,7 @@ import {
   useNotifications,
 } from '@/stores/notifications';
 import { createPortal } from 'react-dom';
+import { useTranslation } from 'react-i18next';
 
 export const Notifications = () => {
   const { notifications, dismissNotification } = useNotifications();
@@ -35,7 +36,8 @@ const NotificationToast = ({
   notification,
   onDismiss,
 }: NotificationToastProps) => {
-  const { id, type, title, message } = notification;
+  const { t } = useTranslation('', { keyPrefix: 'general.notifications' });
+  const { id, type, message } = notification;
 
   // Define colors based on notification type
   const typeColors: Record<NotificationType, string> = {
@@ -51,7 +53,7 @@ const NotificationToast = ({
     >
       <div className="flex justify-between p-4">
         <div>
-          <p className="text-sm font-medium">{title}</p>
+          <p className="text-sm font-medium">{t(`${type}`)}</p>
           {message && <p className="text-sm text-gray-600">{message}</p>}
         </div>
         <button

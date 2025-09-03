@@ -5,24 +5,14 @@ import { DiagnosticTestDto } from '@/features/diagnostic_tests';
 
 // GET endpoint to retrieve patient diagnostic tests
 export const getPatientDiagnosticTests = http.get<{ patientId: string }>(
-  `${API_URL}/diagnostic_tests/:patientId`,
-  ({ params, request }) => {
+  `${API_URL}/patients/:patientId/diagnostic-tests`,
+  ({ params }) => {
     console.log('[MSW] Get patient diagnostic tests', params);
     const { patientId } = params as { patientId: string };
-
-    // Get the test_date query parameter if it exists
-    const url = new URL(request.url);
-    const testDate = url.searchParams.get('test_date');
-
     // Get all diagnostic tests for the patient
-    let tests = db.diagnosticTest
+    const tests = db.diagnosticTest
       .getAll()
       .filter((test) => test.patient_id === patientId);
-
-    // Filter by test_date if provided
-    if (testDate) {
-      tests = tests.filter((test) => test.test_date === testDate);
-    }
 
     // Group tests by test_date
     const testsByDate = new Map<string, DiagnosticTestDto[]>();
@@ -80,13 +70,7 @@ export const getPatientDiagnosticTests = http.get<{ patientId: string }>(
       mergedTests.push(mergedTest as DiagnosticTestDto);
     });
 
-    return HttpResponse.json({
-      status: 200,
-      content: {
-        patient_id: patientId,
-        tests: mergedTests,
-      },
-    });
+    return HttpResponse.json(mergedTests);
   },
 );
 

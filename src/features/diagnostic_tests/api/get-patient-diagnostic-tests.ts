@@ -1,32 +1,21 @@
 import { apiClient } from '@/lib/api-client';
 import { useQuery } from '@tanstack/react-query';
-import { GetPatientDiagnosticTestsDto } from '../types';
+import { DiagnosticTestDto } from '../types';
 
 export const getPatientDiagnosticTests = async (
   patientId: string,
-  testDate?: string,
-): Promise<GetPatientDiagnosticTestsDto> => {
-  const url = testDate
-    ? `/diagnostic_tests/${patientId}?test_date=${encodeURIComponent(testDate)}`
-    : `/diagnostic_tests/${patientId}`;
-
-  const { data } = await apiClient.get(url);
-  console.log(
-    '[API-CLIENT] fetching diagnostic tests for patient:',
-    patientId,
-    'on date:',
-    testDate,
+): Promise<DiagnosticTestDto[]> => {
+  const response = await apiClient.get(
+    `/patients/${patientId}/diagnostic-tests`,
   );
-  return data.content;
+  console.log('[API-CLIENT] fetching diagnostic tests for patient:', patientId);
+  return response.data;
 };
 
-export const usePatientDiagnosticTests = (
-  patientId: string,
-  testDate?: string,
-) =>
+export const usePatientDiagnosticTests = (patientId: string) =>
   useQuery({
-    queryKey: ['diagnostic-tests', patientId, testDate],
-    queryFn: () => getPatientDiagnosticTests(patientId, testDate),
+    queryKey: ['diagnostic-tests', patientId],
+    queryFn: () => getPatientDiagnosticTests(patientId),
     enabled: !!patientId,
-    staleTime: 5 * 60 * 1000,
+    initialData: [],
   });

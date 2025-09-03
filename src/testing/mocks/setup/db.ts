@@ -1,4 +1,4 @@
-import { factory, primaryKey } from '@mswjs/data';
+import { factory, nullable, primaryKey } from '@mswjs/data';
 
 const models = {
   patient: {
@@ -92,19 +92,19 @@ const models = {
 
   patientScore: {
     id: primaryKey(String),
-    patient_id: String,
+    total_score: Number,
+    survey_score: Number,
+    meal_score: nullable(Number),
+    diagnostic_score: nullable(Number),
+    disease_type: String,
     score_date: String,
-    score: Number,
-    notes: String,
     created_at: String,
-    updated_at: String,
   },
 
   // Crohn's Disease Survey
   crohnSurvey: {
     id: primaryKey(String),
     patient_id: String,
-    survey_date: String,
     survey_type: String, // 'crohn'
     abdominal_pain: Number, // 0-3
     stools: Number, // 0-3
@@ -118,14 +118,13 @@ const models = {
     category: String, // 'remission' | 'mild' | 'moderate' | 'severe'
     notes: String,
     created_at: String,
-    updated_at: String,
+    updated_at: nullable(String),
   },
 
   // Ulcerative Colitis Survey
   ucSurvey: {
     id: primaryKey(String),
     patient_id: String,
-    survey_date: String,
     survey_type: String, // 'uc'
     stool_frequency: Number, // 0-3
     rectal_bleeding: Number, // 0-3
@@ -134,7 +133,7 @@ const models = {
     category: String, // 'remission' | 'mild' | 'moderate' | 'severe'
     notes: String,
     created_at: String,
-    updated_at: String,
+    updated_at: nullable(String),
   },
 
   // Symptoms

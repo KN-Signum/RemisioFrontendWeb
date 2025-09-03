@@ -1,12 +1,62 @@
 import { v4 as uuidv4 } from 'uuid';
 import { mockPatients } from './patients';
-import {
-  calculateCrohnTotalScore,
-  calculateCrohnCategory,
-  calculateUcCategory,
-  calculateUcTotalScore,
-} from '../../handlers/survey';
-import { CrohnSurveyDto, UcSurveyDto } from '@/features/survey';
+import { CrohnSurveyDto, UcSurveyDto } from '@/features/surveys';
+
+import { SurveyCategory } from '@/features/surveys';
+
+const calculateCrohnTotalScore = (
+  liquidStools: number,
+  abdominalPainSum: number,
+  wellbeingSum: number,
+  extraintestinalManifestations: number,
+  antidiarrhealUse: boolean,
+  abdominalMassScore: 0 | 2 | 5,
+  hematocrit: number,
+  idealWeightKg: number,
+  currentWeightKg: number,
+  isMale: boolean,
+): number => {
+  const referenceHct = isMale ? 47 : 42;
+  const g = Math.max(0, referenceHct - hematocrit);
+  const weightDiffPct = Math.max(
+    0,
+    ((idealWeightKg - currentWeightKg) / idealWeightKg) * 100,
+  );
+
+  return (
+    2 * liquidStools +
+    5 * abdominalPainSum +
+    7 * wellbeingSum +
+    20 * extraintestinalManifestations +
+    30 * (antidiarrhealUse ? 1 : 0) +
+    10 * abdominalMassScore +
+    6 * g +
+    weightDiffPct
+  );
+};
+
+const calculateCrohnCategory = (totalScore: number): SurveyCategory => {
+  if (totalScore < 150) return 'remission';
+  if (totalScore < 220) return 'mild';
+  if (totalScore < 450) return 'moderate';
+  return 'severe';
+};
+
+// Helper functions for UC scoring
+const calculateUcTotalScore = (
+  stoolFrequency: number,
+  rectalBleeding: number,
+  physicianGlobal: number,
+): number => {
+  return stoolFrequency + rectalBleeding + physicianGlobal;
+};
+
+const calculateUcCategory = (totalScore: number): SurveyCategory => {
+  if (totalScore <= 2) return 'remission';
+  if (totalScore <= 4) return 'mild';
+  if (totalScore <= 6) return 'moderate';
+  return 'severe';
+};
 
 const getRandomDateIso = (): string => {
   const now = new Date();
@@ -14,7 +64,8 @@ const getRandomDateIso = (): string => {
   oneYearAgo.setFullYear(now.getFullYear() - 1);
 
   const t =
-    oneYearAgo.getTime() + Math.random() * (now.getTime() - oneYearAgo.getTime());
+    oneYearAgo.getTime() +
+    Math.random() * (now.getTime() - oneYearAgo.getTime());
 
   return new Date(t).toISOString().split('T')[0];
 };
@@ -36,11 +87,7 @@ const generateSurveyData = () => {
     const idealW = currentW * (1 + randInt(5, 10) / 100);
 
     for (let i = 0; i < 8; i++) {
-      const surveyDate = getRandomDateIso();
-      const createdAt = new Date().toISOString();
-
       if (isCrohn) {
-
         const liquidStools = randInt(0, 35);
         const abdominalPainSum = randInt(0, 21);
         const wellbeingSum = randInt(0, 28);
@@ -61,7 +108,7 @@ const generateSurveyData = () => {
           hematocrit,
           idealW,
           currentW,
-          isMale
+          isMale,
         );
 
         const category = calculateCrohnCategory(totalScore);
@@ -69,27 +116,22 @@ const generateSurveyData = () => {
         crohnSurveys.push({
           id: uuidv4(),
           patient_id: patientId,
-          survey_date: surveyDate,
           survey_type: 'crohn',
-
-          stools: liquidStools,
-          abdominal_pain: abdominalPainSum,
-          general_wellbeing: wellbeingSum,
-          extraintestinal_manifestations: extraintestinal,
-          antidiarrheal_use: antidiarrheal,
-          abdominal_mass: abdominalMass,
-          hematocrit,
-          weight: currentW,
-
           total_score: totalScore,
           category,
-
+          weight: currentW,
           notes: `Auto-generated Crohn survey #${i + 1}`,
-          created_at: createdAt,
-          updated_at: createdAt,
+          abdominal_pain: abdominalPainSum,
+          stools: liquidStools,
+          general_wellbeing: wellbeingSum,
+          antidiarrheal_use: antidiarrheal,
+          extraintestinal_manifestations: extraintestinal,
+          abdominal_mass: abdominalMass,
+          hematocrit,
+          created_at: getRandomDateIso(),
+          updated_at: null,
         });
       } else {
-
         const stoolFrequency = randInt(0, 3);
         const rectalBleeding = randInt(0, 3);
         const physicianGlobal = randInt(0, 3);
@@ -104,20 +146,16 @@ const generateSurveyData = () => {
         ucSurveys.push({
           id: uuidv4(),
           patient_id: patientId,
-          survey_date: surveyDate,
-          survey_type: 'uc',
-
+          survey_type: 'ulcerative_colitis',
+          total_score: totalScore,
+          category,
+          weight: currentW,
           stool_frequency: stoolFrequency,
           rectal_bleeding: rectalBleeding,
           physician_global: physicianGlobal,
-
-          total_score: totalScore,
-          category,
-
           notes: `Auto-generated UC survey #${i + 1}`,
-          created_at: createdAt,
-          updated_at: createdAt,
-          weight: currentW,
+          created_at: getRandomDateIso(),
+          updated_at: null,
         });
       }
     }
@@ -125,7 +163,6 @@ const generateSurveyData = () => {
 
   return { crohnSurveys, ucSurveys };
 };
-
 
 const { crohnSurveys, ucSurveys } = generateSurveyData();
 

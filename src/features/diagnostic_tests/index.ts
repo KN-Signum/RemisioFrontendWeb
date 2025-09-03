@@ -2,9 +2,10 @@
 export * from './api/get-patient-diagnostic-tests.ts';
 
 // components
+export * from './components/diagnostic-test-grid';
 
 // types
-export * from './types/index';
+export * from './types/index.ts';
 
 // utils
 export * from './utils/translate-analyte.ts';

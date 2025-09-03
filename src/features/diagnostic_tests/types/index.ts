@@ -1,3 +1,5 @@
+import { Status } from '@/types';
+
 /**
  * Analyte type representing the different types of analytes that can be measured in diagnostic tests.
  * The values correspond to keys in the i18n translation files under the "analytes" namespace.
@@ -67,14 +69,9 @@ export interface DiagnosticTestDto {
   updated_at: string;
 }
 
-export interface GetPatientDiagnosticTestsDto {
-  patient_id: string;
-  tests: DiagnosticTestDto[];
-}
-
 export type GridTest = {
   name: Analyte;
   value: string;
-  status: 'low' | 'normal' | 'high';
+  status: Status;
   history: number[];
 };

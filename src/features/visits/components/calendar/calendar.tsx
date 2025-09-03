@@ -21,7 +21,7 @@ export interface CalendarProps {
 }
 
 export const Calendar = (props: CalendarProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('', { keyPrefix: 'general' });
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState('dayGridMonth');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -78,7 +78,7 @@ export const Calendar = (props: CalendarProps) => {
         initialView="dayGridMonth"
         firstDay={1}
         height={'100%'}
-        locale={t('language') === 'pl' ? plLocale : enLocale}
+        locale={t('lng') === 'pl' ? plLocale : enLocale}
         timeZone="pl"
         headerToolbar={{
           left: 'prev, today',

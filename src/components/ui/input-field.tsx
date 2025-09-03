@@ -35,11 +35,7 @@ export const InputField: React.FC<InputFieldProps> = ({
         onChange={onChange}
         aria-invalid={!!error}
       />
-      {error && (
-        <span className="text-sm text-red-500 ml-1">
-          {error}
-        </span>
-      )}
+      {error && <span className="ml-1 text-sm text-red-500">{error}</span>}
     </div>
   );
 };

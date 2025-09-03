@@ -1,27 +1,30 @@
 import { useParams } from 'react-router-dom';
 import { useMemo, useState } from 'react';
-import Layout from '@/components/layout';
+import Layout from '@/components/layout/main';
 import { cn } from '@/utils/cn';
 import {
   usePatientDiagnosticTests,
   GridTest,
   latestTestsToGrid,
+  DiagnosticTestsGrid,
 } from '@/features/diagnostic_tests';
 import {
-  DiagnosticTestsGrid,
   FullPatient,
   Graph,
   PatientInfoCard,
   useGetPatientDetails,
   useGetPatients,
-} from '@/features/patient';
-import { usePatientScores } from '@/features/score';
-import { useDrugsByPatientId } from '@/features/drug';
+} from '@/features/patients';
+import { usePatientScores } from '@/features/scores';
+import { useDrugsByPatientId } from '@/features/drugs';
+import { Loading } from '@/components/ui/loading';
+import { useTranslation } from 'react-i18next';
 
 const borderClasses =
   'flex bg-foreground border-2 border-primary-accent/60 rounded-sm py-2 shadow-primary-accent shadow-xs';
 
 const PatientDetailsPage = () => {
+  const { t } = useTranslation('patients');
   const { id } = useParams<{ id: string }>();
   const [isGraphExpanded, setIsGraphExpanded] = useState(false);
   const {
@@ -29,9 +32,11 @@ const PatientDetailsPage = () => {
     isLoading: testsLoading,
     error: testsError,
   } = usePatientDiagnosticTests(id ?? '');
-  const { data: patientScores, isLoading: scoresLoading } = usePatientScores(
-    id ?? '',
-  );
+  const {
+    data: patientScores,
+    isLoading: scoresLoading,
+    error: scoresError,
+  } = usePatientScores(id ?? '');
   const { data: patientDetail, isLoading: patientLoading } =
     useGetPatientDetails(id ?? '');
   const { data: patients, isLoading: patientsLoading } = useGetPatients();
@@ -53,9 +58,7 @@ const PatientDetailsPage = () => {
   if (patientsLoading || patientLoading)
     return (
       <Layout>
-        <div className="flex h-full items-center justify-center text-gray-500">
-          Loading patient details...
-        </div>
+        <Loading size={150} />
       </Layout>
     );
 
@@ -63,7 +66,7 @@ const PatientDetailsPage = () => {
     return (
       <Layout>
         <div className="flex h-full items-center justify-center text-red-500">
-          Patient not found.
+          {t('patientNotFound')}
         </div>
       </Layout>
     );
@@ -91,7 +94,9 @@ const PatientDetailsPage = () => {
             drugsLoading={drugsLoading}
           />
           {testsError ? (
-            <div className="text-red-500">Failed to load tests</div>
+            <div className="flex w-[55%] items-center justify-center font-bold text-red-500">
+              {t('failedToLoadTests')}
+            </div>
           ) : (
             <DiagnosticTestsGrid tests={tests} loading={testsLoading} />
           )}
@@ -104,16 +109,26 @@ const PatientDetailsPage = () => {
             isGraphExpanded ? '-mt-2.5 h-[88.5vh]' : 'h-[52vh]',
           )}
         >
-          <Graph
-            patientScores={patientScores}
-            scoresLoading={scoresLoading}
-            drugs={drugs}
-            diagnosticData={diagnosticData}
-            isGraphExpanded={isGraphExpanded}
-            resizeGraph={() => {
-              setIsGraphExpanded((v) => !v);
-            }}
-          />
+          {testsError || scoresError ? (
+            <div className="flex w-full items-center justify-center font-bold text-red-500">
+              {t('failedToLoadTests')}
+            </div>
+          ) : tests.length == 0 ? (
+            <div className="flex w-full items-center justify-center font-bold text-red-500">
+              {t('noTestsFound')}
+            </div>
+          ) : (
+            <Graph
+              patientScores={patientScores}
+              scoresLoading={scoresLoading}
+              drugs={drugs}
+              diagnosticData={diagnosticData}
+              isGraphExpanded={isGraphExpanded}
+              resizeGraph={() => {
+                setIsGraphExpanded((v) => !v);
+              }}
+            />
+          )}
         </div>
       </div>
     </Layout>
