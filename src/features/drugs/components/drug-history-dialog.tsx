@@ -22,7 +22,7 @@ export const DrugHistoryDialog = ({
   // sortujemy to co dostaliśmy
   const sorted = (drugs ?? [])
     .slice()
-    .sort((a, b) => Date.parse(b.dateFrom) - Date.parse(a.dateFrom));
+    .sort((a, b) => Date.parse(b.date_from) - Date.parse(a.date_from));
 
   return (
     <Dialog
@@ -59,13 +59,13 @@ export const DrugHistoryDialog = ({
                     <span className="font-semibold">
                       {t('dateFrom', 'Start Date')}:
                     </span>{' '}
-                    {format(drug.dateFrom)}
+                    {format(drug.date_from)}
                   </p>
                   <p>
                     <span className="font-semibold">
                       {t('dateTo', 'End Date')}:
                     </span>{' '}
-                    {format(drug.dateTo)}
+                    {format(drug.date_to)}
                   </p>
                   <p className="col-span-2">
                     <span className="font-semibold">

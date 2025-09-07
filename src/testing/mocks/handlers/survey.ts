@@ -36,13 +36,7 @@ const getAllSurveys = http.get<{ patientId: string }>(
         new Date(b.survey_date).getTime() - new Date(a.survey_date).getTime(),
     );
 
-    return HttpResponse.json(
-      {
-        message: 'Surveys retrieved successfully',
-        content: { patient_id: patientId, surveys: sorted },
-      },
-      { status: 200 },
-    );
+    return HttpResponse.json(sorted);
   },
 );
 

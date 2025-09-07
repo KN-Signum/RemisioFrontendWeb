@@ -35,13 +35,14 @@ const models = {
   },
   drug: {
     id: primaryKey(String),
-    name: String,
-    patientId: String,
+    patient_id: String,
+    drug_name: String,
     dosage: String,
-    dateFrom: String,
-    dateTo: String,
-    additionalInfo: String,
-    times: Array<string>,
+    date_from: String,
+    date_to: String,
+    prescription_notes: String,
+    created_at: String,
+    updated_at: String,
   },
 
   meal: {
@@ -106,17 +107,17 @@ const models = {
     id: primaryKey(String),
     patient_id: String,
     survey_type: String, // 'crohn'
-    abdominal_pain: Number, // 0-3
+    category: String, // 'remission' | 'mild' | 'moderate' | 'severe'
+    total_score: Number,
+    weight: Number, // 60-120
+    notes: String,
     stools: Number, // 0-3
+    abdominal_pain: Number, // 0-3
     general_wellbeing: Number, // 0-4
-    extraintestinal_manifestations: Number, // 0-9
     antidiarrheal_use: Boolean, // true or false
+    extraintestinal_manifestations: Number, // 0-9
     abdominal_mass: Number, // 0-5
     hematocrit: Number, // 0-4
-    weight: Number, // 60-120
-    total_score: Number,
-    category: String, // 'remission' | 'mild' | 'moderate' | 'severe'
-    notes: String,
     created_at: String,
     updated_at: nullable(String),
   },
@@ -126,12 +127,13 @@ const models = {
     id: primaryKey(String),
     patient_id: String,
     survey_type: String, // 'uc'
+    total_score: Number,
+    category: String, // 'remission' | 'mild' | 'moderate' | 'severe'
+    weight: Number, // 60-120
+    notes: String,
     stool_frequency: Number, // 0-3
     rectal_bleeding: Number, // 0-3
     physician_global: Number, // 0-3
-    total_score: Number,
-    category: String, // 'remission' | 'mild' | 'moderate' | 'severe'
-    notes: String,
     created_at: String,
     updated_at: nullable(String),
   },
@@ -142,9 +144,9 @@ const models = {
     patient_id: String,
     symptom_type: String,
     duration: String,
-    pain_level: String,
-    symptom_description: String,
-    created_at: String, // ISO timestamp
+    pain: Number,
+    additional_description: String,
+    date_added: String, // ISO timestamp
   },
 };
 

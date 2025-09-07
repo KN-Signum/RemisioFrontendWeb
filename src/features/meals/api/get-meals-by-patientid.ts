@@ -9,7 +9,7 @@ export const getMealsByPatientId = async (
 
   const response = await apiClient.get(`/patients/${patientId}/meals`);
   console.log('[API-CLIENT] fetching meals for patient:', patientId);
-  return response.data.content;
+  return response.data;
 };
 
 export const useMealsByPatientId = (patientId: string) =>

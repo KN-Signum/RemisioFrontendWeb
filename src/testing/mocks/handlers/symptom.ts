@@ -16,7 +16,7 @@ const getSymptomsByPatientId = http.get<{ patientId: string }>(
       .getAll()
       .filter((symptom) => symptom.patient_id === String(patientId));
 
-    return HttpResponse.json({ status: 200, content: symptoms });
+    return HttpResponse.json(symptoms);
   },
 );
 

@@ -15,8 +15,8 @@ export const DrugTimeBarChart = ({ drugs, xmin }: DrugTimeBarChartProps) => {
   const drugBars = useMemo(() => {
     return drugs.map((drug) => ({
       name: drug.drug_name,
-      start: drug.dateFrom.split('T')[0],
-      end: drug.dateTo ? drug.dateTo.split('T')[0] : null,
+      start: drug.date_from,
+      end: drug.date_to ? drug.date_to : null,
     }));
   }, [drugs]);
 

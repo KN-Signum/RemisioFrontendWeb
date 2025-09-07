@@ -9,7 +9,7 @@ const getDrugsByPatientId = http.get<{ patientId: string }>(
     const { patientId } = params;
     const drugs = db.drug
       .getAll()
-      .filter((drug) => drug.patientId === patientId);
+      .filter((drug) => drug.patient_id === patientId);
 
     return HttpResponse.json(drugs);
   },
