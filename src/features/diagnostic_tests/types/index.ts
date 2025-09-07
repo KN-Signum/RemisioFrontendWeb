@@ -1,9 +1,6 @@
 import { Status } from '@/types';
+import { z } from 'zod';
 
-/**
- * Analyte type representing the different types of analytes that can be measured in diagnostic tests.
- * The values correspond to keys in the i18n translation files under the "analytes" namespace.
- */
 export type Analyte =
   | 'cea'
   | 'ldl'
@@ -32,42 +29,57 @@ export type Analyte =
   | 'potassium'
   | 'hematocrit';
 
-// Diagnostic test types
+export const DiagnosticTestSchema = z.object({
+  id: z.string(),
+  patient_id: z.string(),
+  test_date: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), {
+      message: 'Invalid date format',
+    })
+    .transform((val) => new Date(val)),
+  cea: z.number().optional(),
+  ldl: z.number().optional(),
+  hbe_positive: z.boolean().optional(),
+  parasite_feces_positive: z.boolean().optional(),
+  calprotectin_feces: z.number().optional(),
+  creatinine_serum: z.number().optional(),
+  glucose_urine: z.number().optional(),
+  bacteria_urine_count: z.number().optional(),
+  erythrocytes: z.number().optional(),
+  hemoglobin: z.number().optional(),
+  mch: z.number().optional(),
+  hct: z.number().optional(),
+  leukocytes: z.number().optional(),
+  plcr: z.number().optional(),
+  ob: z.number().optional(),
+  ast: z.number().optional(),
+  bilirubin: z.number().optional(),
+  alkaline_phosphatase: z.number().optional(),
+  basophils: z.number().optional(),
+  erythroblasts: z.number().optional(),
+  mchc: z.number().optional(),
+  monocytes: z.number().optional(),
+  mpv: z.number().optional(),
+  neutrophils: z.number().optional(),
+  potassium: z.number().optional(),
+  hematocrit: z.number().optional(),
+  test_notes: z.string().optional(),
+  created_at: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), {
+      message: 'Invalid date format',
+    })
+    .transform((val) => new Date(val)),
+  updated_at: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), {
+      message: 'Invalid date format',
+    })
+    .transform((val) => new Date(val)),
+});
 
-export interface DiagnosticTestDto {
-  id: string;
-  patient_id: string;
-  test_date: string;
-  cea?: number;
-  ldl?: number;
-  hbe_positive?: boolean;
-  parasite_feces_positive?: boolean;
-  calprotectin_feces?: number;
-  creatinine_serum?: number;
-  glucose_urine?: number;
-  bacteria_urine_count?: number;
-  erythrocytes?: number;
-  hemoglobin?: number;
-  mch?: number;
-  hct?: number;
-  leukocytes?: number;
-  plcr?: number;
-  ob?: number;
-  ast?: number;
-  bilirubin?: number;
-  alkaline_phosphatase?: number;
-  basophils?: number;
-  erythroblasts?: number;
-  mchc?: number;
-  monocytes?: number;
-  mpv?: number;
-  neutrophils?: number;
-  potassium?: number;
-  hematocrit?: number;
-  test_notes?: string;
-  created_at: string;
-  updated_at: string;
-}
+export type DiagnosticTest = z.infer<typeof DiagnosticTestSchema>;
 
 export type GridTest = {
   name: Analyte;

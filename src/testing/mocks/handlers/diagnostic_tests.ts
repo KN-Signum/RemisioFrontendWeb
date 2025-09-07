@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { API_URL } from '@/config/constants';
 import { db } from '..';
-import { DiagnosticTestDto } from '@/features/diagnostic_tests';
+import { DiagnosticTestJSON } from '../setup/types';
 
 // GET endpoint to retrieve patient diagnostic tests
 export const getPatientDiagnosticTests = http.get<{ patientId: string }>(
@@ -15,7 +15,7 @@ export const getPatientDiagnosticTests = http.get<{ patientId: string }>(
       .filter((test) => test.patient_id === patientId);
 
     // Group tests by test_date
-    const testsByDate = new Map<string, DiagnosticTestDto[]>();
+    const testsByDate = new Map<string, DiagnosticTestJSON[]>();
     tests.forEach((test) => {
       if (!testsByDate.has(test.test_date)) {
         testsByDate.set(test.test_date, []);
@@ -24,7 +24,7 @@ export const getPatientDiagnosticTests = http.get<{ patientId: string }>(
     });
 
     // Merge tests with the same test_date
-    const mergedTests: DiagnosticTestDto[] = [];
+    const mergedTests: DiagnosticTestJSON[] = [];
 
     testsByDate.forEach((testsForDate, date) => {
       // Sort tests by updated_at to get the latest values
@@ -34,10 +34,11 @@ export const getPatientDiagnosticTests = http.get<{ patientId: string }>(
       );
 
       // Create a merged test with the latest non-null values
-      const mergedTest: DiagnosticTestDto = {
+      const mergedTest: DiagnosticTestJSON = {
         id: testsForDate[0].id,
         patient_id: patientId,
         test_date: date,
+        test_notes: testsForDate[0].test_notes,
         created_at: testsForDate[testsForDate.length - 1].created_at,
         updated_at: testsForDate[0].updated_at,
       };
@@ -57,7 +58,7 @@ export const getPatientDiagnosticTests = http.get<{ patientId: string }>(
       // For each column, find the latest non-null value
       columnNames.forEach((column) => {
         for (const test of testsForDate) {
-          const typedColumn = column as keyof DiagnosticTestDto;
+          const typedColumn = column as keyof DiagnosticTestJSON;
           if (test[typedColumn] !== null && test[typedColumn] !== undefined) {
             // TODO: Handle type assertion more gracefully
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,7 +68,7 @@ export const getPatientDiagnosticTests = http.get<{ patientId: string }>(
         }
       });
 
-      mergedTests.push(mergedTest as DiagnosticTestDto);
+      mergedTests.push(mergedTest);
     });
 
     return HttpResponse.json(mergedTests);

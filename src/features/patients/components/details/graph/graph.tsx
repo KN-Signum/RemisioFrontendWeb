@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import { TimeRange } from '@/types';
 import { PatientScoreDto } from '@/features/scores';
 import { DrugDto } from '@/features/drugs';
-import { analytes, DiagnosticTestDto } from '@/features/diagnostic_tests';
+import { analytes, DiagnosticTest } from '@/features/diagnostic_tests';
 import { Loading } from '@/components/ui/loading';
 import {
   TimeModeButton,
@@ -18,7 +18,7 @@ type GraphProps = {
   patientScores: PatientScoreDto[];
   scoresLoading: boolean;
   drugs: DrugDto[];
-  diagnosticData: DiagnosticTestDto[];
+  diagnosticData: DiagnosticTest[];
   isGraphExpanded: boolean;
   resizeGraph: () => void;
 };
@@ -48,7 +48,7 @@ export const Graph = ({
     if (!diagnosticData?.length) return {};
     const result: Record<
       string,
-      { name: string; dates: string[]; values: number[] }
+      { name: string; dates: Date[]; values: number[] }
     > = {};
     analytes.forEach((analyte) => {
       const history = getAnalyteHistory(diagnosticData, analyte);

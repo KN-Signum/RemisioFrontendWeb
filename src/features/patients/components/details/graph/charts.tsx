@@ -9,7 +9,7 @@ interface ChartsProps {
   scores: number[];
   analyteData?: {
     name: string;
-    dates: string[];
+    dates: Date[];
     values: number[];
   };
   timeRange: TimeRange;

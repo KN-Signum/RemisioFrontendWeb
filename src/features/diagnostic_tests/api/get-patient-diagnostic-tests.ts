@@ -1,15 +1,32 @@
 import { apiClient } from '@/lib/api-client';
 import { useQuery } from '@tanstack/react-query';
-import { DiagnosticTestDto } from '../types';
+import { DiagnosticTest, DiagnosticTestSchema } from '../types';
 
 export const getPatientDiagnosticTests = async (
   patientId: string,
-): Promise<DiagnosticTestDto[]> => {
+): Promise<DiagnosticTest[]> => {
   const response = await apiClient.get(
     `/patients/${patientId}/diagnostic-tests`,
   );
   console.log('[API-CLIENT] fetching diagnostic tests for patient:', patientId);
-  return response.data;
+
+  if (
+    response.data &&
+    Array.isArray(response.data) &&
+    response.data.length > 0
+  ) {
+    return response.data
+      .map((test: unknown) => {
+        const parseResult = DiagnosticTestSchema.safeParse(test);
+        if (!parseResult.success) {
+          console.error('Invalid diagnostic test:', parseResult.error.errors);
+          return null;
+        }
+        return parseResult.data;
+      })
+      .filter((test): test is DiagnosticTest => test !== null);
+  }
+  return [];
 };
 
 export const usePatientDiagnosticTests = (patientId: string) =>

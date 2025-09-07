@@ -1,7 +1,7 @@
-import { Analyte, classify, DiagnosticTestDto, GridTest } from '..';
+import { Analyte, classify, DiagnosticTest, GridTest } from '..';
 
 export const latestTestsToGrid = (
-  tests: DiagnosticTestDto[] | undefined,
+  tests: DiagnosticTest[] | undefined,
 ): GridTest[] => {
   if (!tests?.length) return [];
   const latest = [...tests].sort(
