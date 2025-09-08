@@ -1,4 +1,4 @@
-import { GenderType } from '@/types';
+import { GenderType } from '@/utils/types';
 import { useTranslation } from 'react-i18next';
 import { IoPersonOutline } from 'react-icons/io5';
 

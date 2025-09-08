@@ -1,4 +1,4 @@
-import { DiseaseType, GenderType } from '@/types';
+import { DiseaseType, GenderType } from '@/utils/types';
 
 export interface GetPatientDto {
   id: string;

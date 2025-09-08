@@ -1,4 +1,4 @@
-import { TimeRange } from '@/types';
+import { TimeRange } from '@/utils/types';
 import { useTranslation } from 'react-i18next';
 
 interface TimeModeButtonProps {

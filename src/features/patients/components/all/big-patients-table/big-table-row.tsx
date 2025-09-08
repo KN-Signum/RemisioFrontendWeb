@@ -1,5 +1,5 @@
-import { PatientState } from '@/types';
-import { cn } from '@/utils/cn';
+import { PatientState } from '@/utils/types';
+import { cn } from '@/utils/common';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 

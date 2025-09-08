@@ -1,6 +1,6 @@
 import { apiClient } from '@/lib/api-client';
 import { useQuery } from '@tanstack/react-query';
-import { DiagnosticTest, DiagnosticTestSchema } from '../types';
+import { DiagnosticTest, DiagnosticTestSchema } from '../utils/types';
 
 export const getPatientDiagnosticTests = async (
   patientId: string,

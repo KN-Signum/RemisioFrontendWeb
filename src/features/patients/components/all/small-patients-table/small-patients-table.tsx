@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { GetPatientDto } from '@/features/patients/types';
 import { TableRow, paddings } from './table-row';
-import { calculateState } from '@/utils/calculate-state';
+import { calculateState } from '@/utils/common';
 
 export { TableRow } from './table-row';
 

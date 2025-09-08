@@ -1,4 +1,4 @@
-import { DiseaseType } from '@/types';
+import { DiseaseType } from '@/utils/types';
 
 export interface PatientScoreDto {
   id: string;

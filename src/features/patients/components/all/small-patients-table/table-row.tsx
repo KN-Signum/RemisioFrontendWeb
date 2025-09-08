@@ -1,4 +1,4 @@
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/common';
 import { useNavigate } from 'react-router-dom';
 
 interface TableRowProps {

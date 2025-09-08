@@ -1,5 +1,5 @@
-import { DiseaseType, GenderType, PatientState } from '@/types';
-import { formatDateDisplay } from '@/utils/format-date-display';
+import { DiseaseType, GenderType, PatientState } from '@/utils/types';
+import { formatDateDisplay } from '@/utils/common';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { PatientDetail } from './patient-detail';

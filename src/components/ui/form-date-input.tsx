@@ -1,5 +1,4 @@
-import { cn } from '@/utils/cn';
-import { formatDateDisplay } from '@/utils/format-date-display';
+import { cn, formatDateDisplay } from '@/utils/common';
 import { useRef } from 'react';
 
 interface FormDateInputProps {

@@ -1,4 +1,3 @@
-import { Status } from '@/types';
 import { z } from 'zod';
 
 export type Analyte =
@@ -80,10 +79,3 @@ export const DiagnosticTestSchema = z.object({
 });
 
 export type DiagnosticTest = z.infer<typeof DiagnosticTestSchema>;
-
-export type GridTest = {
-  name: Analyte;
-  value: string;
-  status: Status;
-  history: number[];
-};

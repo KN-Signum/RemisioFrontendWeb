@@ -1,7 +1,7 @@
 import Layout from '@/components/layout/main';
 import { FiFilePlus, FiFlag } from 'react-icons/fi';
 import { BsPeople } from 'react-icons/bs';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/common';
 import { useTranslation } from 'react-i18next';
 import { CalendarDashboard, useGetVisits } from '@/features/visits';
 import { useNavigate } from 'react-router-dom';
