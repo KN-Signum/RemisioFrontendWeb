@@ -32,7 +32,6 @@ export function formatPatientScores(
   patientScores: PatientScoreDto[] | undefined | null,
 ): FormatedPatientScore[] {
   if (!patientScores) return [];
-  console.log('Formatting patient scores:', patientScores);
   return patientScores
     .sort((a, b) => +new Date(a.score_date) - +new Date(b.score_date))
     .map((score) => ({

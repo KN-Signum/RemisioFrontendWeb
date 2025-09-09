@@ -1,7 +1,7 @@
 import { TimeRange } from '@/utils/types';
 import { ScoreTimelineChart } from './score-time-line-chart';
 import { DrugTimeBarChart } from './drug-time-bar-chart';
-import { DrugDto } from '@/features/drugs';
+import { Drug } from '@/features/drugs';
 import { useMemo } from 'react';
 
 interface ChartsProps {
@@ -17,7 +17,7 @@ interface ChartsProps {
     scoreColor: string;
     analyteColor: string;
   };
-  drugs?: DrugDto[];
+  drugs?: Drug[];
   showDrugs: boolean;
 }
 

@@ -10,7 +10,7 @@ import {
   BiRestaurant,
 } from 'react-icons/bi';
 import { SymptomHistoryDialog } from '@/features/symptoms';
-import { DrugDto, DrugHistoryDialog } from '@/features/drugs';
+import { Drug, DrugHistoryDialog } from '@/features/drugs';
 import { MealHistoryDialog } from '@/features/meals';
 
 import { useState } from 'react';
@@ -28,7 +28,7 @@ interface PatientInfoCardProps {
   age: number;
   weight: number;
   disease_type: string;
-  drugs?: DrugDto[];
+  drugs?: Drug[];
   drugsLoading: boolean;
 }
 

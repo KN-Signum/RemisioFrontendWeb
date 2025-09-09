@@ -2,7 +2,7 @@ import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import { useState, useMemo } from 'react';
 import { TimeRange } from '@/utils/types';
 import { PatientScoreDto } from '@/features/scores';
-import { DrugDto } from '@/features/drugs';
+import { Drug } from '@/features/drugs';
 import { ANALYTES_LIST, DiagnosticTest } from '@/features/diagnostic_tests';
 import { Loading } from '@/components/ui/loading';
 import {
@@ -17,7 +17,7 @@ import { Charts } from './charts';
 type GraphProps = {
   patientScores: PatientScoreDto[];
   scoresLoading: boolean;
-  drugs: DrugDto[];
+  drugs: Drug[];
   diagnosticData: DiagnosticTest[];
   isGraphExpanded: boolean;
   resizeGraph: () => void;

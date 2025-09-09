@@ -35,7 +35,7 @@ const PatientDetailsPage = () => {
     isLoading: scoresLoading,
     error: scoresError,
   } = usePatientScores(id ?? '');
-  const { data: patientDetail, isLoading: patientLoading } =
+  const { data: patientDetail, isLoading: patientDetailsLoading } =
     useGetPatientDetails(id ?? '');
   const { data: patients, isLoading: patientsLoading } = useGetPatients();
   const { data: drugs, isLoading: drugsLoading } = useDrugsByPatientId(
@@ -48,14 +48,14 @@ const PatientDetailsPage = () => {
     return { ...patient, ...patientDetail };
   }, [patient, patientDetail]);
 
-  if (patientsLoading || patientLoading)
+  if (patientsLoading || patientDetailsLoading)
     return (
       <Layout>
         <Loading size={150} />
       </Layout>
     );
 
-  if (!patient)
+  if (!fullPatient)
     return (
       <Layout>
         <div className="flex h-full items-center justify-center text-red-500">

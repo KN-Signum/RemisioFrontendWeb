@@ -1,10 +1,5 @@
 import { SymptomDto } from '@/features/symptoms/types';
-
-function getFormattedDate(offsetDays: number): string {
-  const d = new Date();
-  d.setDate(d.getDate() + offsetDays);
-  return d.toISOString();
-}
+import { getStringDate } from '../common';
 
 export const mockSymptoms: SymptomDto[] = [
   {
@@ -14,7 +9,7 @@ export const mockSymptoms: SymptomDto[] = [
     duration: '2-3 hours',
     pain: 6,
     additional_description: 'Sharp pain after meals, mostly on the right side',
-    date_added: getFormattedDate(-30),
+    date_added: getStringDate(-30),
   },
   {
     id: 'symptom002',
@@ -23,7 +18,7 @@ export const mockSymptoms: SymptomDto[] = [
     duration: 'All day',
     pain: 1,
     additional_description: 'Constant tiredness despite adequate sleep',
-    date_added: getFormattedDate(-25),
+    date_added: getStringDate(-25),
   },
   {
     id: 'symptom003',
@@ -32,7 +27,7 @@ export const mockSymptoms: SymptomDto[] = [
     duration: '1-2 hours',
     pain: 2,
     additional_description: 'Stiffness in fingers and wrists upon waking',
-    date_added: getFormattedDate(-20),
+    date_added: getStringDate(-20),
   },
   {
     id: 'symptom004',
@@ -41,7 +36,7 @@ export const mockSymptoms: SymptomDto[] = [
     duration: '4-5 hours',
     pain: 8,
     additional_description: 'Frequent bloody stools with mucus',
-    date_added: getFormattedDate(-15),
+    date_added: getStringDate(-15),
   },
   {
     id: 'symptom005',
@@ -50,7 +45,7 @@ export const mockSymptoms: SymptomDto[] = [
     duration: '1-2 hours',
     pain: 7,
     additional_description: 'Comes in waves, worse after eating',
-    date_added: getFormattedDate(-10),
+    date_added: getStringDate(-10),
   },
   {
     id: 'symptom006',
@@ -59,7 +54,7 @@ export const mockSymptoms: SymptomDto[] = [
     duration: '30 minutes',
     pain: 4,
     additional_description: 'Feeling of sickness after breakfast, no vomiting',
-    date_added: getFormattedDate(-5),
+    date_added: getStringDate(-5),
   },
   {
     id: 'symptom007',
@@ -68,7 +63,7 @@ export const mockSymptoms: SymptomDto[] = [
     duration: '3-4 hours',
     pain: 2,
     additional_description: 'Low-grade fever in the evenings with mild chills',
-    date_added: getFormattedDate(-2),
+    date_added: getStringDate(-2),
   },
   {
     id: 'symptom008',
@@ -77,7 +72,7 @@ export const mockSymptoms: SymptomDto[] = [
     duration: '1 week',
     pain: 3,
     additional_description: 'Unintentional loss of 2kg despite normal appetite',
-    date_added: getFormattedDate(-1),
+    date_added: getStringDate(-1),
   },
   {
     id: 'symptom009',
@@ -86,7 +81,7 @@ export const mockSymptoms: SymptomDto[] = [
     duration: 'All day',
     pain: 8,
     additional_description: 'Severe pain in knees and ankles limiting mobility',
-    date_added: getFormattedDate(0),
+    date_added: getStringDate(0),
   },
   {
     id: 'symptom010',
@@ -95,6 +90,6 @@ export const mockSymptoms: SymptomDto[] = [
     duration: '3 days',
     pain: 5,
     additional_description: 'Small painful ulcers inside cheeks and on tongue',
-    date_added: getFormattedDate(-7),
+    date_added: getStringDate(-7),
   },
 ];

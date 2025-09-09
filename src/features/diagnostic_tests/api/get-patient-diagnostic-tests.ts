@@ -1,6 +1,7 @@
 import { apiClient } from '@/lib/api-client';
 import { useQuery } from '@tanstack/react-query';
 import { DiagnosticTest, DiagnosticTestSchema } from '../utils/types';
+import { validArrayResponseData } from '@/features/common';
 
 export const getPatientDiagnosticTests = async (
   patientId: string,
@@ -10,11 +11,7 @@ export const getPatientDiagnosticTests = async (
   );
   console.log('[API-CLIENT] fetching diagnostic tests for patient:', patientId);
 
-  if (
-    response.data &&
-    Array.isArray(response.data) &&
-    response.data.length > 0
-  ) {
+  if (validArrayResponseData(response.data)) {
     return response.data
       .map((test: unknown) => {
         const parseResult = DiagnosticTestSchema.safeParse(test);
@@ -24,7 +21,9 @@ export const getPatientDiagnosticTests = async (
         }
         return parseResult.data;
       })
-      .filter((test): test is DiagnosticTest => test !== null);
+      .filter(
+        (test: DiagnosticTest | null): test is DiagnosticTest => test !== null,
+      );
   }
   return [];
 };

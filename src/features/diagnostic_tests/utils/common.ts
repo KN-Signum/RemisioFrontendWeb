@@ -34,7 +34,7 @@ function _getAnalyteHistory(
     .filter(
       (test) => test[analyteName] !== undefined && test[analyteName] !== null,
     )
-    .sort((a, b) => +new Date(a.test_date) - +new Date(b.test_date))
+    .sort((a, b) => +a.test_date - +b.test_date)
     .map((test) => Number(test[analyteName]));
 }
 
@@ -42,9 +42,7 @@ export function getLatestTestsToGrid(tests: DiagnosticTest[]): GridTest[] {
   const gridTests: GridTest[] = [];
   if (tests.length === 0) return gridTests;
 
-  const latestTest = tests.sort(
-    (a, b) => +new Date(b.test_date) - +new Date(a.test_date),
-  )[0];
+  const latestTest = tests.sort((a, b) => +b.test_date - +a.test_date)[0];
 
   for (const analyteName of ANALYTES_LIST) {
     const analyteValue = latestTest[analyteName];

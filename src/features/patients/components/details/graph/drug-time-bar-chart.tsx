@@ -1,12 +1,12 @@
 import Chart from 'react-apexcharts';
 import { useMemo } from 'react';
-import { DrugDto } from '@/features/drugs';
+import { Drug } from '@/features/drugs';
 import { useTranslation } from 'react-i18next';
 
 export type DrugBar = { name: string; start: string; end: string | null };
 
 interface DrugTimeBarChartProps {
-  drugs: DrugDto[];
+  drugs: Drug[];
   xmin?: number;
 }
 
@@ -25,8 +25,8 @@ export const DrugTimeBarChart = ({ drugs, xmin }: DrugTimeBarChartProps) => {
       data: drugBars.map((bar) => ({
         x: bar.name,
         y: [
-          new Date(bar.start).getTime(),
-          bar.end ? new Date(bar.end).getTime() : new Date().getTime(),
+          bar.start.getTime(),
+          bar.end ? bar.end.getTime() : new Date().getTime(),
         ],
       })),
     },
