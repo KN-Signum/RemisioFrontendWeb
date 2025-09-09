@@ -28,6 +28,7 @@ export type Analyte =
   | 'potassium'
   | 'hematocrit';
 
+// TODO: Set proper ranges
 export const DiagnosticTestSchema = z.object({
   id: z.string(),
   patient_id: z.string(),

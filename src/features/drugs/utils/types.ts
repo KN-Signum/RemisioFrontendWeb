@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+// TODO: Set proper ranges
 export const DrugSchema = z.object({
   id: z.string(),
   patient_id: z.string(),
