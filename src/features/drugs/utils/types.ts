@@ -1,3 +1,4 @@
+import { DateSchema } from '@/features/types';
 import { z } from 'zod';
 
 // TODO: Set proper ranges
@@ -6,31 +7,11 @@ export const DrugSchema = z.object({
   patient_id: z.string(),
   drug_name: z.string(),
   dosage: z.string(),
-  date_from: z
-    .string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: 'Invalid date format',
-    })
-    .transform((val) => new Date(val)),
-  date_to: z
-    .string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: 'Invalid date format',
-    })
-    .transform((val) => new Date(val)),
-  created_at: z
-    .string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: 'Invalid date format',
-    })
-    .transform((val) => new Date(val)),
+  date_from: DateSchema,
+  date_to: DateSchema,
   prescription_notes: z.string().optional(),
-  updated_at: z
-    .string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: 'Invalid date format',
-    })
-    .transform((val) => new Date(val)),
+  created_at: DateSchema,
+  updated_at: DateSchema,
 });
 
 export type Drug = z.infer<typeof DrugSchema>;

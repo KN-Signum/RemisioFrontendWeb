@@ -2,9 +2,10 @@ import { useTranslation } from 'react-i18next';
 import { BigTableRow, paddings } from './big-table-row';
 import { GetPatientDto } from '@/features/patients/types';
 import { calculateState } from '@/utils/common';
+import { DiseaseType } from '@/utils/types';
 
 interface SmallPatientsTableProps {
-  disease: 'CDAI' | 'Mayo';
+  disease: DiseaseType;
   patients: GetPatientDto[];
 }
 

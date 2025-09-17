@@ -99,6 +99,7 @@ const models = {
     diagnostic_score: nullable(Number),
     disease_type: String,
     score_date: String,
+    score_notes: String,
     created_at: String,
   },
 

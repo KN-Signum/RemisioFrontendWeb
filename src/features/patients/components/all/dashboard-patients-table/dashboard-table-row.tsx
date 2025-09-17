@@ -1,4 +1,9 @@
-import { DiseaseType, GenderType, PatientState } from '@/utils/types';
+import {
+  DiseaseType,
+  GenderType,
+  PATIENT_STATES,
+  PatientState,
+} from '@/utils/types';
 import { formatDateDisplay } from '@/utils/common';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -7,13 +12,13 @@ import { PatientDetail } from './patient-detail';
 // Function to get state color based on patient state
 const getStateColor = (state: PatientState): string => {
   switch (state) {
-    case 'Remission':
+    case PATIENT_STATES.remission:
       return 'text-green-600';
-    case 'Mild':
+    case PATIENT_STATES.mild:
       return 'text-yellow-600';
-    case 'Moderate':
+    case PATIENT_STATES.moderate:
       return 'text-orange-600';
-    case 'Severe':
+    case PATIENT_STATES.severe:
       return 'text-red-600';
     default:
       return '';

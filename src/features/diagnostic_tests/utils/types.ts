@@ -1,3 +1,4 @@
+import { DateSchema } from '@/features/types';
 import { z } from 'zod';
 
 export type Analyte =
@@ -32,12 +33,7 @@ export type Analyte =
 export const DiagnosticTestSchema = z.object({
   id: z.string(),
   patient_id: z.string(),
-  test_date: z
-    .string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: 'Invalid date format',
-    })
-    .transform((val) => new Date(val)),
+  test_date: DateSchema,
   cea: z.number().optional(),
   ldl: z.number().optional(),
   hbe_positive: z.boolean().optional(),
@@ -65,18 +61,8 @@ export const DiagnosticTestSchema = z.object({
   potassium: z.number().optional(),
   hematocrit: z.number().optional(),
   test_notes: z.string().optional(),
-  created_at: z
-    .string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: 'Invalid date format',
-    })
-    .transform((val) => new Date(val)),
-  updated_at: z
-    .string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: 'Invalid date format',
-    })
-    .transform((val) => new Date(val)),
+  created_at: DateSchema,
+  updated_at: DateSchema,
 });
 
 export type DiagnosticTest = z.infer<typeof DiagnosticTestSchema>;

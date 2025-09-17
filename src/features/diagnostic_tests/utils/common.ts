@@ -26,16 +26,24 @@ function _getAnalyteStatus(
   return 'normal';
 }
 
-function _getAnalyteHistory(
+type AnalyteHistoryInstance = {
+  date: Date;
+  value: number;
+};
+
+export function getAnalyteHistory(
   analyteName: Analyte,
   tests: DiagnosticTest[],
-): number[] {
+): AnalyteHistoryInstance[] {
   return tests
     .filter(
       (test) => test[analyteName] !== undefined && test[analyteName] !== null,
     )
     .sort((a, b) => +a.test_date - +b.test_date)
-    .map((test) => Number(test[analyteName]));
+    .map((test) => ({
+      date: test.test_date,
+      value: Number(test[analyteName]),
+    }));
 }
 
 export function getLatestTestsToGrid(tests: DiagnosticTest[]): GridTest[] {
@@ -53,7 +61,9 @@ export function getLatestTestsToGrid(tests: DiagnosticTest[]): GridTest[] {
       value: analyteValue,
       unit: ANALYTE_TO_UNIT_MAPPING(analyteName, analyteValue),
       status: _getAnalyteStatus(analyteName, analyteValue),
-      history: _getAnalyteHistory(analyteName, tests),
+      history: getAnalyteHistory(analyteName, tests).map(
+        (analyteHistoryInstance) => analyteHistoryInstance.value,
+      ),
     });
   }
   return gridTests;

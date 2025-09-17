@@ -1,5 +1,5 @@
 import { DiagnosticTest } from '@/features/diagnostic_tests';
-import { PatientScoreDto } from '@/features/scores';
+import { PatientScore } from '@/features/scores';
 
 type FormatedPatientScore = {
   week: string;
@@ -29,13 +29,13 @@ export function getAnalyteHistory(
 }
 
 export function formatPatientScores(
-  patientScores: PatientScoreDto[] | undefined | null,
+  patientScores: PatientScore[] | undefined | null,
 ): FormatedPatientScore[] {
   if (!patientScores) return [];
   return patientScores
     .sort((a, b) => +new Date(a.score_date) - +new Date(b.score_date))
     .map((score) => ({
-      week: score.score_date.split('T')[0],
+      week: score.score_date.toISOString().split('T')[0],
       score: score.survey_score,
     }));
 }

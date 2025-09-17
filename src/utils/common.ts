@@ -1,16 +1,16 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { PatientState } from '@/utils/types';
+import { PATIENT_STATES, PatientState } from '@/utils/types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function calculateState(score: number): PatientState {
-  if (score >= 8) return 'Remission';
-  if (score >= 6) return 'Mild';
-  if (score >= 4) return 'Moderate';
-  return 'Severe';
+  if (score >= 8) return PATIENT_STATES.remission;
+  if (score >= 6) return PATIENT_STATES.mild;
+  if (score >= 4) return PATIENT_STATES.moderate;
+  return PATIENT_STATES.severe;
 }
 
 // ——— helper ——— (probably not needed in production)

@@ -98,6 +98,7 @@ export type PatientScoreJSON = {
   diagnostic_score: number | null;
   disease_type: string;
   score_date: string;
+  score_notes: string;
   created_at: string;
 };
 

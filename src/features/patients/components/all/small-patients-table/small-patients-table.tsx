@@ -2,11 +2,12 @@ import { useTranslation } from 'react-i18next';
 import { GetPatientDto } from '@/features/patients/types';
 import { TableRow, paddings } from './table-row';
 import { calculateState } from '@/utils/common';
+import { DiseaseType } from '@/utils/types';
 
 export { TableRow } from './table-row';
 
 interface SmallPatientsTableProps {
-  disease: 'CDAI' | 'Mayo';
+  disease: DiseaseType;
   patients: GetPatientDto[];
 }
 
