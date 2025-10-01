@@ -6,8 +6,9 @@ import { validArrayResponseData } from '@/features/common';
 export const getPatientScores = async (
   patientId: string,
 ): Promise<PatientScore[]> => {
-  const response = await apiClient.get(`/patients/${patientId}/scores`);
   console.log('[API-CLIENT] fetching scores for patient:', patientId);
+
+  const response = await apiClient.get(`/patients/${patientId}/scores`);
   if (validArrayResponseData(response.data)) {
     return response.data
       .map((patientScore: unknown) => {

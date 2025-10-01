@@ -1,7 +1,7 @@
-import { SymptomDto } from '@/features/symptoms/types';
 import { getStringDate } from '../common';
+import { SymptomJSON } from '../types';
 
-export const mockSymptoms: SymptomDto[] = [
+export const mockSymptoms: SymptomJSON[] = [
   {
     id: 'symptom001',
     patient_id: 'p001',
