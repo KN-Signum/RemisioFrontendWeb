@@ -25,4 +25,4 @@ export const useLogin = ({ onSuccess }: UseLoginOptions = {}) =>
       cookies.set('refresh_token', data.refresh_token);
       onSuccess?.(data);
     },
-  });
+});

@@ -20,3 +20,11 @@ export interface LoginResponse {
   access_token: string;
   refresh_token: string;
 }
+export type UseLoginOptions = {
+    onSuccess?: (data: LoginResponse) => void;
+    onError?: (error: unknown) => void;
+};
+export type UseLogoutOptions = {
+  onSuccess?: (data: LoginResponse) => void;
+  onError?: (error: unknown) => void;
+};

@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Footer } from '@/components/layout/footer';
-import { SplitImage } from '@/features/auth/components/split-image';
+import { SplitImage } from '@/features/auth/ui/components/split-image';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CONTACT_EMAIL } from '@/utils/constants';
