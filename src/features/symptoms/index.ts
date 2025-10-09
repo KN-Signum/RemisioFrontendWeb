@@ -5,4 +5,4 @@ export * from './api/get-patient-symptoms';
 export * from './components';
 
 // types
-export * from './types';
+export * from './utils/types';

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { formatDateDisplay } from '@/utils/format-date-display';
-import { SymptomDto, useSymptomsByPatientId } from '..';
+import { formatDateDisplay } from '@/utils/common';
+import { PatientSymptom, useSymptomsByPatientId } from '..';
 import { Dialog } from '@/components/ui/dialog';
 
 interface Props {
@@ -15,14 +15,9 @@ export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
     isOpen ? patientId : '',
   );
 
-  /* sortujemy przekazaną tablicę */
   const sorted = (symptoms ?? [])
     .slice()
-    .sort(
-      (a, b) =>
-        (b.date_added ? Date.parse(b.date_added) : 0) -
-        (a.date_added ? Date.parse(a.date_added) : 0),
-    );
+    .sort((a, b) => +b.date_added - +a.date_added);
 
   if (!isOpen) return null;
 
@@ -55,7 +50,7 @@ export const SymptomHistoryDialog = ({ patientId, isOpen, onClose }: Props) => {
     >
       <div className="mt-4 w-full flex-1 overflow-y-auto">
         <div className="flex flex-col gap-4">
-          {sorted.map((symptom: SymptomDto) => (
+          {sorted.map((symptom: PatientSymptom) => (
             <div key={symptom.id} className="bg-background/10 rounded-sm p-4">
               <div className="mb-2 flex items-center justify-between">
                 <h3 className="text-primary-accent text-lg font-semibold">

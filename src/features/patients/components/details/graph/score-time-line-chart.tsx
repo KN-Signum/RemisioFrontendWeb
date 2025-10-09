@@ -6,7 +6,7 @@ interface ScoreTimeLineChartProps {
   scores: number[];
   analyteData?: {
     name: string;
-    dates: string[];
+    dates: Date[];
     values: number[];
   };
   colors: {

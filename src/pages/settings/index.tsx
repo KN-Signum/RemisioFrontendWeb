@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/main';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/common';
 import {
   AiOutlineUser,
   AiOutlineGlobal,

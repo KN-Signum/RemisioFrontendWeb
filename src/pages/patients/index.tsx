@@ -9,6 +9,7 @@ import {
   BigPatientsTable,
 } from '@/features/patients';
 import { FaCaretRight, FaCaretLeft } from 'react-icons/fa';
+import { DISEASE_TYPES } from '@/utils/types';
 
 const PatientsPage = () => {
   const { t } = useTranslation('', { keyPrefix: 'general' });
@@ -21,7 +22,7 @@ const PatientsPage = () => {
       const matchesSearch = `${patient.first_name} ${patient.last_name}`
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
-      const isUC = patient.disease_type === 'ulcerative_colitis';
+      const isUC = patient.disease_type === DISEASE_TYPES.ulcerative_colitis;
       return matchesSearch && isUC;
     });
   }, [patients, searchQuery]);
@@ -31,7 +32,7 @@ const PatientsPage = () => {
       const matchesSearch = `${patient.first_name} ${patient.last_name}`
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
-      const isCrohn = patient.disease_type === 'crohn';
+      const isCrohn = patient.disease_type === DISEASE_TYPES.crohn;
       return matchesSearch && isCrohn;
     });
   }, [patients, searchQuery]);
@@ -64,10 +65,16 @@ const PatientsPage = () => {
                 {t('disease.ulcerative_colitis')}
               </h2>
               {view === 'both' && (
-                <SmallPatientsTable patients={ucPatients} disease="Mayo" />
+                <SmallPatientsTable
+                  patients={ucPatients}
+                  disease={DISEASE_TYPES.ulcerative_colitis}
+                />
               )}
               {view === 'uc' && (
-                <BigPatientsTable patients={ucPatients} disease="Mayo" />
+                <BigPatientsTable
+                  patients={ucPatients}
+                  disease={DISEASE_TYPES.ulcerative_colitis}
+                />
               )}
             </div>
           )}
@@ -103,10 +110,16 @@ const PatientsPage = () => {
                 {t('disease.crohn')}
               </h2>
               {view === 'both' && (
-                <SmallPatientsTable patients={crohnPatients} disease="CDAI" />
+                <SmallPatientsTable
+                  patients={crohnPatients}
+                  disease={DISEASE_TYPES.crohn}
+                />
               )}
               {view === 'crohn' && (
-                <BigPatientsTable patients={crohnPatients} disease="CDAI" />
+                <BigPatientsTable
+                  patients={crohnPatients}
+                  disease={DISEASE_TYPES.crohn}
+                />
               )}
             </div>
           )}

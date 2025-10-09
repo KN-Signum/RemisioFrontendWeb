@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { formatDateDisplay } from '@/utils/format-date-display';
-import { formatValue } from '@/utils/format_value';
+import { formatValue, formatDateDisplay } from '@/utils/common';
 import { isCrohnSurvey, SurveyCategory, usePatientSurveys } from '../..';
 import { Dialog } from '@/components/ui/dialog';
 

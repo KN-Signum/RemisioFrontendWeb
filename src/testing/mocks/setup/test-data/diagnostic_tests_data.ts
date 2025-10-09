@@ -1,4 +1,4 @@
-import { DiagnosticTestDto } from '@/features/diagnostic_tests';
+import { DiagnosticTestJSON } from '../types';
 import { mockPatients } from './patients';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,8 +15,8 @@ const buildDates = () => {
   return dates;
 };
 
-export const mockDiagnosticTests: DiagnosticTestDto[] = (() => {
-  const tests: DiagnosticTestDto[] = [];
+export const mockDiagnosticTests: DiagnosticTestJSON[] = (() => {
+  const tests: DiagnosticTestJSON[] = [];
 
   mockPatients.forEach((patient) => {
     const testDates = buildDates();
@@ -28,6 +28,7 @@ export const mockDiagnosticTests: DiagnosticTestDto[] = (() => {
         id: uuidv4(),
         patient_id: patient.id,
         test_date: testDate,
+        test_notes: `Test notes for ${patient.id} on ${testDate}`,
         created_at: new Date(Date.parse(testDate) + 3_600_000).toISOString(),
         updated_at: new Date(Date.parse(testDate) + 7_200_000).toISOString(),
       };
@@ -48,6 +49,7 @@ export const mockDiagnosticTests: DiagnosticTestDto[] = (() => {
         ),
 
         hct: round2(38 + progress * 4 + Math.random() * 3),
+        hematocrit: round2(38 + progress * 4 + Math.random() * 3),
         basophils: round2(0.4 + Math.sin(idx) * 0.3 + Math.random() * 0.3),
         erythroblasts: Math.floor(Math.random() * 3),
         mch: round2(27 + Math.sin(idx) * 2 + Math.random() * 1),

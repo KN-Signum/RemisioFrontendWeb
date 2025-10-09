@@ -1,4 +1,4 @@
-import { createID } from '@/utils/create-id';
+import { v4 as uuidv4 } from 'uuid';
 import { createStore, useStore } from 'zustand';
 
 export type NotificationType = 'info' | 'warning' | 'success' | 'error';
@@ -20,7 +20,7 @@ export const notificationsStore = createStore<NotificationsStore>(
   (set, get) => ({
     notifications: [],
     showNotification: (notification) => {
-      const id = createID();
+      const id = uuidv4();
       set((state) => ({
         notifications: [...state.notifications, { id, ...notification }],
       }));

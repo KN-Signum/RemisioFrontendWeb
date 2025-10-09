@@ -1,9 +1,9 @@
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import { useState, useMemo } from 'react';
-import { TimeRange } from '@/types';
-import { PatientScoreDto } from '@/features/scores';
-import { DrugDto } from '@/features/drugs';
-import { analytes, DiagnosticTestDto } from '@/features/diagnostic_tests';
+import { TimeRange } from '@/utils/types';
+import { PatientScore } from '@/features/scores';
+import { Drug } from '@/features/drugs';
+import { ANALYTES_LIST, DiagnosticTest } from '@/features/diagnostic_tests';
 import { Loading } from '@/components/ui/loading';
 import {
   TimeModeButton,
@@ -11,14 +11,14 @@ import {
   SelectAnalyteButton,
   ColorPickerButton,
 } from './buttons';
-import { formatPatientScores, getAnalyteHistory } from './utils';
 import { Charts } from './charts';
+import { formatPatientScores, getAnalyteHistory } from './utils';
 
 type GraphProps = {
-  patientScores: PatientScoreDto[];
+  patientScores: PatientScore[];
   scoresLoading: boolean;
-  drugs: DrugDto[];
-  diagnosticData: DiagnosticTestDto[];
+  drugs: Drug[];
+  diagnosticData: DiagnosticTest[];
   isGraphExpanded: boolean;
   resizeGraph: () => void;
 };
@@ -48,9 +48,9 @@ export const Graph = ({
     if (!diagnosticData?.length) return {};
     const result: Record<
       string,
-      { name: string; dates: string[]; values: number[] }
+      { name: string; dates: Date[]; values: number[] }
     > = {};
-    analytes.forEach((analyte) => {
+    ANALYTES_LIST.forEach((analyte) => {
       const history = getAnalyteHistory(diagnosticData, analyte);
       result[analyte] = {
         name: analyte,

@@ -1,4 +1,4 @@
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/common';
 import { createPortal } from 'react-dom';
 import { Button } from './button';
 import { useTranslation } from 'react-i18next';

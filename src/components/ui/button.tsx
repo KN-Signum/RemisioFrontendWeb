@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { cn } from '@/utils/cn';
 import { Loading } from './loading';
+import { cn } from '@/utils/common';
 
 interface ButtonProps extends React.ComponentProps<'button'> {
   isLoading?: boolean | undefined;

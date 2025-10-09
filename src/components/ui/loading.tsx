@@ -1,4 +1,4 @@
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/common';
 
 export interface LoadingProps {
   size?: number;

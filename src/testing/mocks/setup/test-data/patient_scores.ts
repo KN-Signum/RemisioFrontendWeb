@@ -1,8 +1,8 @@
-import { PatientScoreDto } from '@/features/scores';
 import { v4 as uuidv4 } from 'uuid';
+import { PatientScoreJSON } from '../types';
 
-export const mockPatientScores: PatientScoreDto[] = (() => {
-  const scores: PatientScoreDto[] = [];
+export const mockPatientScores: PatientScoreJSON[] = (() => {
+  const scores: PatientScoreJSON[] = [];
 
   // Current date (using 2025-05-20 as the reference date from the mock data)
   const currentDate = new Date();
@@ -73,7 +73,7 @@ export const mockPatientScores: PatientScoreDto[] = (() => {
       }
     }
 
-    const patientScore: PatientScoreDto = {
+    const patientScore: PatientScoreJSON = {
       id: uuidv4(),
       total_score: score,
       survey_score: score,

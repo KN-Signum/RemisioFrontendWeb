@@ -1,15 +1,31 @@
 import { apiClient } from '@/lib/api-client';
-import { SymptomDto } from '../types';
 import { useQuery } from '@tanstack/react-query';
+import { PatientSymptom, PatientSymptomSchema } from '../utils/types';
+import { validArrayResponseData } from '@/features/common';
 
 export const getSymptomsByPatientId = async (
   patientId: string,
-): Promise<SymptomDto[]> => {
-  if (!patientId) throw new Error('patientId is required');
-
+): Promise<PatientSymptom[]> => {
   console.log('[API-CLIENT] fetching symptoms for patientId:', patientId);
+
   const response = await apiClient.get(`/patients/${patientId}/symptoms`);
-  return response.data;
+  if (validArrayResponseData(response.data)) {
+    return response.data
+      .map((patientSymptom: unknown) => {
+        const parseResult = PatientSymptomSchema.safeParse(patientSymptom);
+        if (!parseResult.success) {
+          console.error('Invalid patientSymptom:', parseResult.error.errors);
+          return null;
+        }
+        return parseResult.data;
+      })
+      .filter(
+        (
+          patientSymptom: PatientSymptom | null,
+        ): patientSymptom is PatientSymptom => patientSymptom !== null,
+      );
+  }
+  return [];
 };
 
 export const useSymptomsByPatientId = (patientId: string) =>

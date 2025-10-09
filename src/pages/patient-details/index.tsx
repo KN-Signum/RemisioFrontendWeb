@@ -1,11 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 import Layout from '@/components/layout/main';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/common';
 import {
   usePatientDiagnosticTests,
-  GridTest,
-  latestTestsToGrid,
   DiagnosticTestsGrid,
 } from '@/features/diagnostic_tests';
 import {
@@ -28,7 +26,7 @@ const PatientDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const [isGraphExpanded, setIsGraphExpanded] = useState(false);
   const {
-    data: diagnosticData,
+    data: diagnosticTests,
     isLoading: testsLoading,
     error: testsError,
   } = usePatientDiagnosticTests(id ?? '');
@@ -37,7 +35,7 @@ const PatientDetailsPage = () => {
     isLoading: scoresLoading,
     error: scoresError,
   } = usePatientScores(id ?? '');
-  const { data: patientDetail, isLoading: patientLoading } =
+  const { data: patientDetail, isLoading: patientDetailsLoading } =
     useGetPatientDetails(id ?? '');
   const { data: patients, isLoading: patientsLoading } = useGetPatients();
   const { data: drugs, isLoading: drugsLoading } = useDrugsByPatientId(
@@ -50,19 +48,14 @@ const PatientDetailsPage = () => {
     return { ...patient, ...patientDetail };
   }, [patient, patientDetail]);
 
-  const tests: GridTest[] = useMemo(
-    () => latestTestsToGrid(diagnosticData),
-    [diagnosticData],
-  );
-
-  if (patientsLoading || patientLoading)
+  if (patientsLoading || patientDetailsLoading)
     return (
       <Layout>
         <Loading size={150} />
       </Layout>
     );
 
-  if (!patient)
+  if (!fullPatient)
     return (
       <Layout>
         <div className="flex h-full items-center justify-center text-red-500">
@@ -93,15 +86,13 @@ const PatientDetailsPage = () => {
             drugs={drugs}
             drugsLoading={drugsLoading}
           />
-          {testsError ? (
-            <div className="flex w-[55%] items-center justify-center font-bold text-red-500">
-              {t('failedToLoadTests')}
-            </div>
-          ) : (
-            <DiagnosticTestsGrid tests={tests} loading={testsLoading} />
-          )}
+
+          <DiagnosticTestsGrid
+            diagnosticTests={diagnosticTests}
+            loading={testsLoading}
+            error={testsError}
+          />
         </div>
-        {/*TODO: breake it into seperate components */}
         <div
           className={cn(
             borderClasses,
@@ -109,11 +100,13 @@ const PatientDetailsPage = () => {
             isGraphExpanded ? '-mt-2.5 h-[88.5vh]' : 'h-[52vh]',
           )}
         >
-          {testsError || scoresError ? (
+          {testsLoading || scoresLoading ? (
+            <Loading />
+          ) : testsError || scoresError ? (
             <div className="flex w-full items-center justify-center font-bold text-red-500">
               {t('failedToLoadTests')}
             </div>
-          ) : tests.length == 0 ? (
+          ) : diagnosticTests.length == 0 ? (
             <div className="flex w-full items-center justify-center font-bold text-red-500">
               {t('noTestsFound')}
             </div>
@@ -122,7 +115,7 @@ const PatientDetailsPage = () => {
               patientScores={patientScores}
               scoresLoading={scoresLoading}
               drugs={drugs}
-              diagnosticData={diagnosticData}
+              diagnosticData={diagnosticTests}
               isGraphExpanded={isGraphExpanded}
               resizeGraph={() => {
                 setIsGraphExpanded((v) => !v);

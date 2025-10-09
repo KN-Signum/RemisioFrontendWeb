@@ -1,10 +1,15 @@
 import { Loading } from '@/components/ui/loading';
-import { Analyte, GridTest } from '@/features/diagnostic_tests';
+import {
+  Analyte,
+  DiagnosticTest,
+  getLatestTestsToGrid,
+} from '@/features/diagnostic_tests';
 import { useTranslation } from 'react-i18next';
 
 interface DiagnosticTestsGridProps {
-  tests: GridTest[];
-  loading?: boolean;
+  diagnosticTests: DiagnosticTest[];
+  loading: boolean;
+  error: Error | null;
 }
 
 const bigTiles: Set<Analyte> = new Set([
@@ -22,16 +27,9 @@ const bigTiles: Set<Analyte> = new Set([
   'mchc',
   'monocytes',
   'neutrophils',
-]);
+] as const);
 
-const splitValue = (v: string) => {
-  const m = v.match(/^(-?\d+(?:[.,]\d+)?)\s*(.*)$/);
-  if (!m) return { main: v };
-  const [, num, rest] = m;
-  return rest ? { main: num, unit: rest.trim() } : { main: v };
-};
-
-const chipColor = {
+const statusChipColor = {
   normal: 'bg-emerald-100 text-emerald-600',
   high: 'bg-rose-100 text-rose-600',
   low: 'bg-amber-100 text-amber-600',
@@ -50,27 +48,38 @@ const genPath = (vals: number[]) => {
 };
 
 export const DiagnosticTestsGrid = ({
-  tests,
+  diagnosticTests,
   loading,
+  error,
 }: DiagnosticTestsGridProps) => {
-  const { t } = useTranslation('', { keyPrefix: 'general' });
-  if (loading) return <Loading />;
-  if (!tests.length)
-    return <div className="text-gray-500">{t('no_results')}</div>;
+  const { t: tg } = useTranslation('', { keyPrefix: 'general' });
+  const { t } = useTranslation('patients');
 
+  if (loading) return <Loading />;
+  if (error)
+    return (
+      <div className="flex w-[55%] items-center justify-center font-bold text-red-500">
+        {t('failedToLoadTests')}
+      </div>
+    );
+  if (diagnosticTests.length === 0)
+    return (
+      <div className="flex w-full items-center justify-center font-bold text-red-500">
+        {t('noTestsFound')}
+      </div>
+    );
+
+  const gridTests = getLatestTestsToGrid(diagnosticTests);
   return (
     <div className="grid w-[65%] [grid-auto-flow:dense] auto-rows-[5.5rem] grid-cols-6 gap-1 overflow-y-auto rounded-sm p-1">
-      {tests.map((test, idx) => {
+      {gridTests.map((test, idx) => {
         const large = bigTiles.has(test.name);
         const span = large ? 'col-span-2 row-span-1' : 'col-span-1 row-span-1';
         const bg = large
           ? 'color-mix(in oklch, var(--color-primary) 20%, white)'
           : 'color-mix(in oklch, var(--color-secondary) 20%, white)';
 
-        const { main, unit } = splitValue(test.value);
-        const isNumeric = /^-?\d+(?:[.,]\d+)?$/.test(main);
-
-        /* rozmiary tekstu: duże kafle 2xl / xl, małe kafle  xl / lg */
+        const isNumeric = typeof test.value === 'number';
         const size = large
           ? isNumeric
             ? 'text-2xl'
@@ -79,8 +88,7 @@ export const DiagnosticTestsGrid = ({
             ? 'text-xl'
             : 'text-lg';
 
-        /* qualitative value → bez chipa */
-        const showChip = unit !== undefined || isNumeric;
+        const showStatusChip = isNumeric;
 
         const d = genPath(test.history);
         const area = d + ' L 100 20 L 0 20 Z';
@@ -97,17 +105,19 @@ export const DiagnosticTestsGrid = ({
             }}
           >
             <span className="line-clamp-2 text-[0.70rem] font-semibold tracking-wide text-gray-700 uppercase">
-              {t(`analytes.${test.name}`)}
+              {tg(`analytes.${test.name}`)}
             </span>
 
             <span
               className={`${size} leading-none font-bold tracking-tight text-gray-900`}
             >
-              {isNumeric ? main : t(main.toLowerCase())}
+              {isNumeric ? test.value : tg(test.unit.toLowerCase())}
             </span>
 
-            {unit && (
-              <span className="text-[0.60rem] text-gray-400">{unit}</span>
+            {test.unit && (
+              <span className="text-[0.60rem] text-gray-400">
+                {isNumeric && test.unit}
+              </span>
             )}
 
             {large && (
@@ -155,13 +165,13 @@ export const DiagnosticTestsGrid = ({
               </svg>
             )}
 
-            {showChip && (
+            {showStatusChip && (
               <span
                 className={`absolute ${
                   large ? 'top-2 right-2' : 'right-2 bottom-2'
-                } rounded-full px-2 py-[2px] text-[0.55rem] font-medium ${chipColor[test.status]}`}
+                } rounded-full px-2 py-[2px] text-[0.55rem] font-medium ${statusChipColor[test.status]}`}
               >
-                {t(`status.${test.status}`)}
+                {tg(`status.${test.status}`)}
               </span>
             )}
           </div>
