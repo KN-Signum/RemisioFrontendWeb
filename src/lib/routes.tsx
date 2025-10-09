@@ -5,7 +5,7 @@ import LoginPage from '@/features/auth/ui/login';
 import PatientsPage from '@/pages/patients';
 import PatientDetailsPage from '@/pages/patient-details';
 import LandingPage from '@/pages/landing-page';
-import ProtectedRoutes from '@/hooks/protected-routes';
+import ProtectedRoutes from '@/features/auth/ui/components/protected-routes';
 import {
   PrivacyPolicyPage,
   TermsOfServicePage,

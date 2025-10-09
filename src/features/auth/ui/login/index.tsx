@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { SplitImage, LoginRequestDto } from '@/features/auth';
+import { SplitImage, LoginRequestDto, useAuthMutations } from '@/features/auth';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { InputField } from '@/components/ui/input-field';
-import { useLogin } from '@/features/auth/api/login';
 import { Button } from '@/components/ui/button';
 
 const initialValue: LoginRequestDto = {
@@ -20,7 +19,7 @@ const LoginPage = () => {
     navigate('/dashboard');
   };
 
-  const login = useLogin({ onSuccess });
+  const { mutate: login, isPending} = useAuthMutations().useLogin({ onSuccess });
 
   const [userLogInInfo, setuserLogInInfo] =
     useState<LoginRequestDto>(initialValue);
@@ -59,7 +58,7 @@ const LoginPage = () => {
       return;
     }
 
-    login.mutate(userLogInInfo);
+    login(userLogInInfo);
   };
 
   return (
@@ -123,7 +122,7 @@ const LoginPage = () => {
               <Button
                 className="font-bold"
                 type="submit"
-                isLoading={login.isPending}
+                isLoading={isPending}
               >
                 {t('login')}
               </Button>

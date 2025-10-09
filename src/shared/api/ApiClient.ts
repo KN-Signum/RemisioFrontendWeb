@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import { AUTH_URL, API_URL } from '@/config/constants';
 
 interface TokenStorage {
   getAccessToken(): string | null;
@@ -27,7 +28,7 @@ export class ApiClient {
   private protectedInstance: AxiosInstance;
   private publicInstance: AxiosInstance;
   private tokenStorage: MemoryTokenStorage;
-
+  private onAuthFailureCallback: (() => void) | null = null;
   private constructor() {
     this.tokenStorage = new MemoryTokenStorage();
     this.publicInstance = this.createPublicInstance();
@@ -35,14 +36,17 @@ export class ApiClient {
   }
   private createPublicInstance(): AxiosInstance {
     const instance = axios.create({
-        baseURL: import.meta.env.VITE_PUBLIC_API_URL,
+        baseURL: API_URL,
         withCredentials: true
     })
     return instance
   }
+  public setOnAuthFailure(callback: () => void): void {
+    this.onAuthFailureCallback = callback;
+  }
   private createProtectedInstance(): AxiosInstance {
     const instance = axios.create({
-      baseURL: import.meta.env.VITE_PUBLIC_AUTH_URL,
+      baseURL: AUTH_URL,
       withCredentials: true,
     });
 
@@ -71,7 +75,7 @@ export class ApiClient {
 
           } catch (refreshError) {
             this.tokenStorage.removeAccessToken();
-            window.location.href = '/login';
+            this.onAuthFailureCallback?.();
             return Promise.reject(refreshError);
           }
         }
@@ -90,16 +94,15 @@ export class ApiClient {
   public removeAccessToken(): void {
     this.tokenStorage.removeAccessToken();
   }
-
+  public isAuthenticated(): boolean {
+    return this.tokenStorage.getAccessToken() !== null;
+  }
   public getPublicClient(): AxiosInstance {
     return this.publicInstance;
   }
 
   public getProtectedClient(): AxiosInstance {
     return this.protectedInstance;
-  }
-  public isAuthenticated(): boolean {
-    return this.tokenStorage.getAccessToken() !== null; // do poprawy, dokładna weryfikacja tokena? 
   }
   public static getInstance(): ApiClient {
     if (!ApiClient.instance) {
