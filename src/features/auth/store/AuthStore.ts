@@ -1,10 +1,20 @@
-import { create } from "zustand";
+import { create,  } from "zustand";
+import { persist } from "zustand/middleware";
 
-export const useAuthStore = create<{
+interface AuthState {
     isAuthenticated: boolean;
     setIsAuthenticated: (value: boolean) => void;
-}>((set) => ({
-    isAuthenticated: false,
-    setIsAuthenticated: (value: boolean) => set({ isAuthenticated: value }),
-}));
+}
+
+export const useAuthStore = create(
+    persist<AuthState>(
+        (set) => ({
+            isAuthenticated: false,
+            setIsAuthenticated: (value: boolean) => set({ isAuthenticated: value }),
+        }),
+        {
+            name: "auth-storage"
+        }
+    )
+);
 

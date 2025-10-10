@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { AUTH_URL, API_URL } from '@/config/constants';
+import { eventBus } from '../events/EventBus';
 
 interface TokenStorage {
   getAccessToken(): string | null;
@@ -28,7 +29,6 @@ export class ApiClient {
   private protectedInstance: AxiosInstance;
   private publicInstance: AxiosInstance;
   private tokenStorage: MemoryTokenStorage;
-  private onAuthFailureCallback: (() => void) | null = null;
   private constructor() {
     this.tokenStorage = new MemoryTokenStorage();
     this.publicInstance = this.createPublicInstance();
@@ -40,9 +40,6 @@ export class ApiClient {
         withCredentials: true
     })
     return instance
-  }
-  public setOnAuthFailure(callback: () => void): void {
-    this.onAuthFailureCallback = callback;
   }
   private createProtectedInstance(): AxiosInstance {
     const instance = axios.create({
@@ -71,11 +68,12 @@ export class ApiClient {
             const newAccessToken = response.data.accessToken;
             this.tokenStorage.setAccessToken(newAccessToken);
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+            eventBus.emit('refreshTokenSuccess');
             return instance(originalRequest);
 
           } catch (refreshError) {
             this.tokenStorage.removeAccessToken();
-            this.onAuthFailureCallback?.();
+            eventBus.emit('refreshTokenFailure');
             return Promise.reject(refreshError);
           }
         }

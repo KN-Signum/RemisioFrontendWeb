@@ -1,6 +1,7 @@
 import { AiOutlineSetting } from 'react-icons/ai';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { BiWorld } from 'react-icons/bi';
+import LogoutButton from '@/features/auth/ui/components/logout-button';
 
 export const Header = () => {
   return (
@@ -19,6 +20,7 @@ export const Header = () => {
             <AiOutlineSetting className="size-8" />
             <BsFillPersonFill className="size-8" />
             <BiWorld className="size-8" />
+            <LogoutButton />
           </div>
         </div>
       </div>

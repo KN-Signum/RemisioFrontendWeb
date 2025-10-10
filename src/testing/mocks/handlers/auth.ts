@@ -20,7 +20,7 @@ const login = http.post(`${AUTH_URL}/login`, async ({ request }) => {
   );
 });
 const refresh = http.post(`${AUTH_URL}/refresh`, async () => {
-  //Zawsze zwracam jakiś token, bo refresh jest w http-only cookie i nie mam jak sprawdzić czy jest, pozdro
+  //Zawsze zwracam jakiś token, bo refresh jest w http-only cookie i nie mam jak sprawdzić czy jest
   return HttpResponse.json({
     access_token:
       'G9jdG9yIiwiaWQiOiI2ZDY4OTkwYWIwYjhjMzIwODZlYWI0YWFjZmM3NTNkYiIsInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE3Mzc3NDQ0ODl9.4Sp8jN02qKjsWSqO3hniXwdVnF0OObSM2I7gEZGxr24',
