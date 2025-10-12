@@ -1,7 +1,11 @@
+import * as z from 'zod'
+
+import { LoginDataSchema } from './schema';
 export interface LoginRequestDto {
   email: string;
   password: string;
 }
+export type LoginDataType = z.infer<typeof LoginDataSchema>
 
 export interface GetMeResponseDto {
   id: string;

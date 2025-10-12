@@ -1,4 +1,4 @@
-import { LoginResponse } from '../types';
+import { LoginResponse } from '../types/types';
 import { ApiClient } from '@/shared/api/ApiClient';
 
 export const logout = (): Promise<{

@@ -1,67 +1,12 @@
-import { useState } from 'react';
-import { SplitImage, LoginRequestDto, useAuthMutations } from '@/features/auth';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { SplitImage, LoginForm } from '@/features/auth';
+import { Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { InputField } from '@/components/ui/input-field';
-import { Button } from '@/components/ui/button';
 import { useAuthStore } from '../../store/AuthStore';
 
-const initialValue: LoginRequestDto = {
-  email: '',
-  password: '',
-};
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation('auth');
   const isAuth = useAuthStore(state => state.isAuthenticated);
-
-  const onSuccess = () => {
-    console.log('Login successful');
-    navigate('/dashboard');
-  };
-
-  const { mutate: login, isPending} = useAuthMutations().useLogin({ onSuccess });
-
-  const [userLogInInfo, setuserLogInInfo] =
-    useState<LoginRequestDto>(initialValue);
-
-  const [errors, setErrors] = useState<{
-    email?: string;
-    password?: string;
-  }>({});
-
-  const validateForm = (): boolean => {
-    const newErrors: { email?: string; password?: string } = {};
-
-    if (!userLogInInfo.email.trim()) {
-      newErrors.email = t('errors.emailNotEmpty');
-    }
-
-    if (!userLogInInfo.password.trim()) {
-      newErrors.password = t('errors.passwordNotEmpty');
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const clearError = (field: 'email' | 'password') => {
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: undefined }));
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log('Submitting login form', userLogInInfo);
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    login(userLogInInfo);
-  };
 
   if(isAuth){
     return <Navigate to="/dashboard" />
@@ -89,50 +34,7 @@ const LoginPage = () => {
             </span>
             <span className="text-primary-accent mb-6">{t('subtitle')}</span>
 
-            <form
-              className="flex w-full flex-col gap-4 xl:px-20 2xl:px-50"
-              onSubmit={handleSubmit}
-            >
-              <InputField
-                id="email"
-                label={t('email')}
-                type="email"
-                placeholder={t('emailPlaceholder')}
-                value={userLogInInfo.email}
-                error={errors.email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setuserLogInInfo({
-                    ...userLogInInfo,
-                    email: e.target.value,
-                  });
-                  clearError('email');
-                }}
-              />
-
-              <InputField
-                id="password"
-                label={t('password')}
-                type="password"
-                placeholder={t('passwordPlaceholder')}
-                value={userLogInInfo.password}
-                error={errors.password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setuserLogInInfo({
-                    ...userLogInInfo,
-                    password: e.target.value,
-                  });
-                  clearError('password');
-                }}
-              />
-
-              <Button
-                className="font-bold"
-                type="submit"
-                isLoading={isPending}
-              >
-                {t('login')}
-              </Button>
-            </form>
+            <LoginForm />
           </div>
           <div />
         </div>

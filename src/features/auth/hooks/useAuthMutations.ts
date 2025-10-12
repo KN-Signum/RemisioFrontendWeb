@@ -2,7 +2,7 @@ import { ApiClient } from "@/shared/api/ApiClient";
 import { logout } from "../api/logout";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../api/updatedLogin";
-import { LoginRequestDto, UseLoginOptions, UseLogoutOptions } from "../types";
+import { LoginRequestDto, UseLoginOptions, UseLogoutOptions } from "../types/types";
 import { useAuthStore } from "../store/AuthStore";
 
 export const useAuthMutations = () => {

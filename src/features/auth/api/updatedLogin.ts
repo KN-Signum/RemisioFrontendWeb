@@ -1,4 +1,4 @@
-import { LoginRequestDto, LoginResponse } from '../types';
+import { LoginRequestDto, LoginResponse } from '../types/types';
 import { ApiClient } from '@/shared/api/ApiClient';
 
 export const login = (
