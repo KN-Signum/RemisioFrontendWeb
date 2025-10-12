@@ -7,7 +7,7 @@ export const login = (
   data: LoginResponse;
 }> => {
   const api = ApiClient.getInstance();
-  return api.getProtectedClient().post('/login', creditentials);
+  return api.getPublicClient().post('/login', creditentials);
 };
 
 

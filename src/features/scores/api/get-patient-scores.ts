@@ -1,14 +1,14 @@
-import { apiClient } from '@/lib/api-client';
 import { useQuery } from '@tanstack/react-query';
 import { PatientScore, PatientScoreSchema } from '../utils/types';
 import { validArrayResponseData } from '@/features/common';
+import { ApiClient } from '@/shared/api/ApiClient';
 
 export const getPatientScores = async (
   patientId: string,
 ): Promise<PatientScore[]> => {
   console.log('[API-CLIENT] fetching scores for patient:', patientId);
-
-  const response = await apiClient.get(`/patients/${patientId}/scores`);
+  const api = ApiClient.getInstance()
+  const response = await api.getProtectedClient().get(`/patients/${patientId}/scores`);
   if (validArrayResponseData(response.data)) {
     return response.data
       .map((patientScore: unknown) => {

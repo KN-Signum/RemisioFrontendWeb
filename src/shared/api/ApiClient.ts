@@ -36,14 +36,14 @@ export class ApiClient {
   }
   private createPublicInstance(): AxiosInstance {
     const instance = axios.create({
-        baseURL: API_URL,
+        baseURL: AUTH_URL,
         withCredentials: true
     })
     return instance
   }
   private createProtectedInstance(): AxiosInstance {
     const instance = axios.create({
-      baseURL: AUTH_URL,
+      baseURL: API_URL,
       withCredentials: true,
     });
 

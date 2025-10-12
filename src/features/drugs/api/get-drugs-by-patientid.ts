@@ -1,12 +1,13 @@
-import { apiClient } from '@/lib/api-client';
 import { useQuery } from '@tanstack/react-query';
 import { Drug, DrugSchema } from '../utils/types';
 import { validArrayResponseData } from '@/features/common';
+import { ApiClient } from '@/shared/api/ApiClient';
 
 export const getDrugsByPatientId = async (
   patientId: string,
 ): Promise<Drug[]> => {
-  const response = await apiClient.get(`/patients/${patientId}/drugs`);
+  const api = ApiClient.getInstance()
+  const response = await api.getProtectedClient().get(`/patients/${patientId}/drugs`);
   console.log('[API-CLIENT] fetching drugs for patient:', patientId);
 
   if (validArrayResponseData(response.data)) {

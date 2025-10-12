@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { AUTH_URL } from '@/config/constants';
+import { API_URL, AUTH_URL } from '@/config/constants';
 import { LoginRequestDto } from '@/features/auth';
 
 const login = http.post(`${AUTH_URL}/login`, async ({ request }) => {
@@ -27,4 +27,9 @@ const refresh = http.post(`${AUTH_URL}/refresh`, async () => {
   });
 
 });
-export const handlers = [login, refresh];
+const logout = http.post(`${API_URL}/logout`,async () =>{
+  return HttpResponse.json({
+    success: true
+  })
+})
+export const handlers = [login, refresh, logout];
