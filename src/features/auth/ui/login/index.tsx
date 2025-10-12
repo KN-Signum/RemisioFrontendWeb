@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { SplitImage, LoginRequestDto, useAuthMutations } from '@/features/auth';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { InputField } from '@/components/ui/input-field';
 import { Button } from '@/components/ui/button';
+import { useAuthStore } from '../../store/AuthStore';
 
 const initialValue: LoginRequestDto = {
   email: '',
@@ -13,6 +14,7 @@ const initialValue: LoginRequestDto = {
 const LoginPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation('auth');
+  const isAuth = useAuthStore(state => state.isAuthenticated);
 
   const onSuccess = () => {
     console.log('Login successful');
@@ -60,6 +62,10 @@ const LoginPage = () => {
 
     login(userLogInInfo);
   };
+
+  if(isAuth){
+    return <Navigate to="/dashboard" />
+  }
 
   return (
     <div className="bg-background h-screen p-8">
