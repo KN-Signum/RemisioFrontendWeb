@@ -6,34 +6,37 @@ import { useAuthMutations } from '../../hooks/useAuthMutations';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { LoginDataType } from '../../types/types';
-import { LoginDataSchema } from '../../types/schema';
+import { createLoginDataSchema } from '../../types/schema';
 
 export const LoginForm = () => {
   const [loginData, setLoginData] = useState<LoginDataType>({email:'',password:''})
-
+  const [errorMessage, setErrorMessage] = useState("")
   const { t } = useTranslation('auth');
   const navigate = useNavigate();
+  const schema = createLoginDataSchema(t('errors.emailHelp'),t('errors.passwordHelp'))
 
   const onSuccess = () => {
     navigate('/dashboard');
   };
 
-  const { mutate: login, isPending: isLoading, isError: error} = useAuthMutations().useLogin({ onSuccess });
+  const { mutate: login, isPending: isLoading } = useAuthMutations().useLogin({ onSuccess });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = LoginDataSchema.safeParse(loginData)
+    const result = schema.safeParse(loginData)
+    console.log("rezult walidacji", result)
     if (!result.success){
-      console.log(result.error)  
+      console.log("walidacja nieudana: ",result.error.issues)
+      setErrorMessage(result.error.issues[0].message)  
       return;
     }
-    console.log(loginData)
+    console.log("Loguje: ",loginData)
     login(loginData);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 w-2/3 flex flex-col gap-5">
-      {error && <p className="text-red-500">{error}</p>}
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
       <InputField
         id="email"
