@@ -28,8 +28,6 @@ const refresh = http.post(`${AUTH_URL}/refresh`, async () => {
 
 });
 const logout = http.post(`${API_URL}/logout`,async () =>{
-  return HttpResponse.json({
-    success: true
-  })
+  return new HttpResponse(null, { status: 204 });
 })
 export const handlers = [login, refresh, logout];

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { InputField } from '@/components/ui/input-field';
 import { useTranslation } from 'react-i18next';
-import { Loading } from '@/components/ui/loading';
 import { useAuthMutations } from '../../hooks/useAuthMutations';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -58,8 +57,9 @@ export const LoginForm = () => {
         type="submit"
         className="w-full rounded bg-secondary opacity-90 py-2 text-white hover:opacity-100"
         disabled={isLoading}
+        isLoading={isLoading}
       >
-        {isLoading ? <Loading /> : t('login')}
+         {t('login')}
       </Button>
     </form>
   );

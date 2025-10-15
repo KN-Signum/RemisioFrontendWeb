@@ -15,7 +15,7 @@ export const useAuthMutations = () => {
         onSuccess: ({ data }) => {
           api.setAccessToken(data.access_token);
           setAuth(true);
-          onSuccess?.(data);
+          onSuccess?.();
         },
         onError: (error) => {
           api.removeAccessToken();
@@ -26,10 +26,10 @@ export const useAuthMutations = () => {
     const useLogout = ({ onSuccess, onError }: UseLogoutOptions = {}) =>
         useMutation({
           mutationFn: logout,
-          onSuccess: ({ data }) => {
+          onSuccess: () => {
             api.removeAccessToken();
             setAuth(false);
-            onSuccess?.(data);
+            onSuccess?.()
           },
           onError: (error) => {
             api.removeAccessToken();
