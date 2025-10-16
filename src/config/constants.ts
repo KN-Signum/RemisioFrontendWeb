@@ -1,3 +1,6 @@
+
+import { LoggerLvlSchema } from "./schema";
+
 export const API_URL =
   import.meta.env.VITE_PUBLIC_API_URL ?? 'https://remisio.pl/api';
 export const AUTH_URL =
@@ -10,4 +13,4 @@ export const ENABLE_MSW_DEVTOOLS =
 export const IS_DEVELOPMENT = import.meta.env.VITE_PUBLIC_ENV === 'development';
 export const IS_TEST = import.meta.env.VITE_PUBLIC_ENV === 'test';
 export const IS_PRODUCTION = import.meta.env.VITE_PUBLIC_ENV === 'production';
-export const LOGGER_LEVEL = import.meta.env.VITE_PUBLIC_LOGGER_LEVEL
+export const LOGGER_LEVEL = LoggerLvlSchema.parse(Number(import.meta.env.VITE_PUBLIC_LOGGER_LEVEL)) 
