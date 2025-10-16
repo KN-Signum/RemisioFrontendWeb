@@ -23,14 +23,14 @@ export const LoginForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    MyLogger.setType('FORM').debug("Starting login process with provided data:",loginData)
+    MyLogger.debug("FORM","Starting login process with provided data:",loginData)
     const result = schema.safeParse(loginData)
     if (!result.success){
-      MyLogger.setType('FORM').error("Validation failed",result.error.issues)
+      MyLogger.error("FORM","Validation failed",result.error.issues)
       setErrorMessage(result.error.issues[0].message)  
       return;
     }
-    MyLogger.setType('FORM').debug("Validation succeeded, login data and validation result:", loginData, result)
+    MyLogger.debug("FORM","Validation succeeded, login data and validation result:", loginData, result)
     
     login(loginData);
   };
