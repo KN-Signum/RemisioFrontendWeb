@@ -10,3 +10,4 @@ export const ENABLE_MSW_DEVTOOLS =
 export const IS_DEVELOPMENT = import.meta.env.VITE_PUBLIC_ENV === 'development';
 export const IS_TEST = import.meta.env.VITE_PUBLIC_ENV === 'test';
 export const IS_PRODUCTION = import.meta.env.VITE_PUBLIC_ENV === 'production';
+export const LOGGER_LEVEL = import.meta.env.VITE_PUBLIC_LOGGER_LEVEL
