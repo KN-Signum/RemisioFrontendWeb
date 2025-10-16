@@ -1,6 +1,6 @@
 export default {
   '*.{ts,tsx}': [
-    'npm run lint',
-    () => "npm run types:check",
+    'eslint --fix --no-cache',
+    () => 'npm run types:check',
   ],
-};
+}; 

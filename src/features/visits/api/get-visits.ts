@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { apiClient } from '@/lib/api-client';
 import { GetVisitDto } from '../types';
+import { ApiClient } from '@/shared/api/ApiClient';
 
 export const getVisits = async (): Promise<GetVisitDto[]> => {
   console.log('Fetching visits');
-  const response = await apiClient.get('/visits');
+  const api = ApiClient.getInstance()
+  const response = await api.getProtectedClient().get('/visits');
   return response.data.content;
 };
 

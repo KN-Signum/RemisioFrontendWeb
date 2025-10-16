@@ -1,14 +1,14 @@
-import { apiClient } from '@/lib/api-client';
 import { useQuery } from '@tanstack/react-query';
 import { PatientSymptom, PatientSymptomSchema } from '../utils/types';
 import { validArrayResponseData } from '@/features/common';
+import { ApiClient } from '@/shared/api/ApiClient';
 
 export const getSymptomsByPatientId = async (
   patientId: string,
 ): Promise<PatientSymptom[]> => {
   console.log('[API-CLIENT] fetching symptoms for patientId:', patientId);
-
-  const response = await apiClient.get(`/patients/${patientId}/symptoms`);
+  const api = ApiClient.getInstance()
+  const response = await api.getProtectedClient().get(`/patients/${patientId}/symptoms`);
   if (validArrayResponseData(response.data)) {
     return response.data
       .map((patientSymptom: unknown) => {

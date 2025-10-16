@@ -1,7 +1,7 @@
-import { apiClient } from '@/lib/api-client';
 import { CreateVisitDto, GetVisitDto } from '../types';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '@/lib/react-query';
+import { ApiClient } from '@/shared/api/ApiClient';
 
 export const createVisit = (
   createVisitDto: CreateVisitDto,
@@ -9,7 +9,8 @@ export const createVisit = (
   data: GetVisitDto;
 }> => {
   console.log('Creating visit:', createVisitDto);
-  return apiClient.post('/visits', createVisitDto);
+  const api = ApiClient.getInstance()
+  return api.getProtectedClient().post('/visits', createVisitDto);
 };
 
 type UseCreateVisitOptions = {

@@ -1,7 +1,7 @@
-import { apiClient } from '@/lib/api-client';
 import { CreatePatientDto, GetPatientDto } from '../types';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '@/lib/react-query';
+import { ApiClient } from '@/shared/api/ApiClient';
 
 export const createPatient = (
   createPatientDto: CreatePatientDto,
@@ -9,7 +9,8 @@ export const createPatient = (
   data: GetPatientDto;
 }> => {
   console.log('Creating patient:', createPatientDto);
-  return apiClient.post('/api/create_patient', createPatientDto);
+  const api = ApiClient.getInstance()
+  return api.getProtectedClient().post('/api/create_patient', createPatientDto);
 };
 
 type UseCreatePatientrOptions = {

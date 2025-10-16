@@ -6,6 +6,7 @@ export default {
   password: 'Hasło',
   passwordPlaceholder: 'Proszę podać swoje hasło.',
   login: 'Zaloguj',
+  logout: 'Wyloguj się',
   reset: 'Resetuj',
   success: 'Zalogowano pomyślnie',
   failed: 'Logowanie nieudane',

@@ -1,12 +1,13 @@
-import { apiClient } from '@/lib/api-client';
 import { useQuery } from '@tanstack/react-query';
 import { DiagnosticTest, DiagnosticTestSchema } from '../utils/types';
 import { validArrayResponseData } from '@/features/common';
+import { ApiClient } from '@/shared/api/ApiClient';
 
 export const getPatientDiagnosticTests = async (
   patientId: string,
 ): Promise<DiagnosticTest[]> => {
-  const response = await apiClient.get(
+  const api = ApiClient.getInstance()
+  const response = await api.getProtectedClient().get(
     `/patients/${patientId}/diagnostic-tests`,
   );
   console.log('[API-CLIENT] fetching diagnostic tests for patient:', patientId);

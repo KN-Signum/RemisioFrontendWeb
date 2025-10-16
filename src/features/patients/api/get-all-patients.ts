@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { apiClient } from '@/lib/api-client';
 import { GetPatientDto } from '../types';
+import { ApiClient } from '@/shared/api/ApiClient';
 
 export const getPatients = async (): Promise<GetPatientDto[]> => {
   console.log('[API-CLIENT] Fetching all patients');
-  const response = await apiClient.get('/patients');
+  const api = ApiClient.getInstance()
+  const response = await api.getProtectedClient().get('/patients');
   return response.data;
 };
 
