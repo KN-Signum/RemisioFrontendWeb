@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { useNotifications } from '@/stores/notifications';
 import { createPortal } from 'react-dom';
 import { useState } from 'react';
 import { FormInput } from '@/components/ui/form-input';
@@ -8,6 +7,7 @@ import { FormDateInput } from '@/components/ui/form-date-input';
 import { CreatePatientForm } from './create-patient-form';
 import { validateFields } from './validate-fields';
 import { useCreatePatient } from '@/features/patients';
+import { useNotificationsStore } from '@/shared/notifications/store';
 
 interface NewPatientDialogProps {
   onClose: () => void;
@@ -15,7 +15,7 @@ interface NewPatientDialogProps {
 
 export const NewPatientDialog = (props: NewPatientDialogProps) => {
   const { t } = useTranslation();
-  const { showNotification } = useNotifications();
+  const { showNotification } = useNotificationsStore();
   const [formData, setFormData] = useState<CreatePatientForm>({
     firstName: '',
     lastName: '',
