@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { LoginDataType } from '../../types/types';
 import { createLoginDataSchema } from '../../types/schema';
+import { MyLogger } from '@/shared/logger/Logger';
 
 export const LoginForm = () => {
   const [loginData, setLoginData] = useState<LoginDataType>({email:'',password:''})
@@ -22,21 +23,21 @@ export const LoginForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    MyLogger.debug("FORM","Starting login process with provided data:",loginData)
     const result = schema.safeParse(loginData)
-    console.log("rezult walidacji", result)
     if (!result.success){
-      console.log("walidacja nieudana: ",result.error.issues)
+      MyLogger.error("FORM","Validation failed",result.error.issues)
       setErrorMessage(result.error.issues[0].message)  
       return;
     }
-    console.log("Loguje: ",loginData)
+    MyLogger.debug("FORM","Validation succeeded, login data and validation result:", loginData, result)
+    
     login(loginData);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 w-2/3 flex flex-col gap-5">
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-
       <InputField
         id="email"
         label={t('email')}
