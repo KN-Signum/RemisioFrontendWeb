@@ -12,10 +12,10 @@ const BORDER_COLORS: NotificationTypeColorDict = {
   error: 'border-l-red-500',
 } as const;
 const TEXT_COLORS: NotificationTypeColorDict = {
-    info: 'text-blue-500',
-    success: 'text-green-500',
-    warning: 'text-yellow-500',
-    error: 'text-red-500',
+  info: 'text-blue-500',
+  success: 'text-green-500',
+  warning: 'text-yellow-500',
+  error: 'text-red-500',
 } as const;
 
 export const Notifications = () => {
