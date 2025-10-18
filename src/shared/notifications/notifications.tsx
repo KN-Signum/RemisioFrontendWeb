@@ -19,8 +19,8 @@ const TEXT_COLORS: NotificationTypeColorDict = {
 } as const;
 
 export const Notifications = () => {
-  const notifications = useStore(notificationsStore, s=>s.notifications)
-  const dismissNotification = useStore(notificationsStore, s=>s.dismissNotification)
+  const notifications = useStore(notificationsStore, s => s.notifications)
+  const dismissNotification = useStore(notificationsStore, s => s.dismissNotification)
 
   if (notifications.length < 1) return null;
 
