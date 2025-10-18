@@ -16,4 +16,4 @@ export type NotificationToastProps = {
   notification: Omit<NotificationEntity, 'duration'>;
   onDismiss: (id: string) => void;
 };
-export type NotificationTypeColorDict = Record<NotificationType,string>
+export type NotificationTypeColorDict = Record<NotificationType, string>;
