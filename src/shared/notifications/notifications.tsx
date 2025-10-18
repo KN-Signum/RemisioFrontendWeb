@@ -47,7 +47,7 @@ const NotificationToast = ({
   const { t } = useTranslation('notifications');
   const { id, type, message } = notification;
 
-  const handleDismiss = useCallback(()=>{onDismiss(id)},[id,onDismiss])
+  const handleDismiss = useCallback(() => { onDismiss(id) }, [id, onDismiss])
 
   return (
     <div
