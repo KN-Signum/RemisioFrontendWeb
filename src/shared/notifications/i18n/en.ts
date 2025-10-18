@@ -1,4 +1,4 @@
-export default{
+export default {
     notifications: {
     success: 'Success',
     error: 'Error',
