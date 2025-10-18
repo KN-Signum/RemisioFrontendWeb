@@ -6,10 +6,10 @@ import { useCallback } from 'react';
 import { useStore } from 'zustand';
 
 const BORDER_COLORS: NotificationTypeColorDict = {
-    info: 'border-l-blue-500',
-    success: 'border-l-green-500',
-    warning: 'border-l-yellow-500',
-    error: 'border-l-red-500',
+  info: 'border-l-blue-500',
+  success: 'border-l-green-500',
+  warning: 'border-l-yellow-500',
+  error: 'border-l-red-500',
 } as const;
 const TEXT_COLORS: NotificationTypeColorDict = {
     info: 'text-blue-500',
