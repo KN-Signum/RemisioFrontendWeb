@@ -5,7 +5,7 @@ export type NotificationEntity = {
   duration?: number;
   message?: string;
 };
-export type NotificationObject = Omit<NotificationEntity, "id">
+export type NotificationObject = Omit<NotificationEntity, "id">;
 
 export type NotificationsStore = {
   notifications: NotificationEntity[];
