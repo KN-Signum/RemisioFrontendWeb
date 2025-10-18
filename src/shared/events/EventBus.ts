@@ -7,6 +7,7 @@ export class MyEventEmitter<T extends EventsMap> {
     const arr = this.listeners.get(event) ?? [];
     arr.push(listener);
     this.listeners.set(event, arr);
+    return () => this.off(event,listener)
   }
 
   off<K extends keyof T>(event: K, listener: T[K]) {
@@ -23,7 +24,8 @@ export class MyEventEmitter<T extends EventsMap> {
 }
 type MyEvents = {
     refreshTokenSuccess: ()=>void,
-    refreshTokenFailure: ()=>void
+    refreshTokenFailure: ()=>void,
+    showNotification: (msg:string)=>void
 }
 
 export const eventBus = new MyEventEmitter<MyEvents>()
