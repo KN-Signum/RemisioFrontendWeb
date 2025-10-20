@@ -6,14 +6,14 @@ export const useAuthEvents = () => {
   const setAuth = useAuthStore((state) => state.setIsAuthenticated);
 
   useEffect(() => {
-    const onSuccesUnsubscribe = eventBus.on('refreshTokenSuccess', () => {
+    const onSuccessUnsubscribe = eventBus.on('refreshTokenSuccess', () => {
       setAuth(true);
     });
     const onFailureUnsubscribe = eventBus.on('refreshTokenFailure', () => {
       setAuth(false);
     });
     return () => {
-      onSuccesUnsubscribe();
+      onSuccessUnsubscribe();
       onFailureUnsubscribe();
     };
   }, [setAuth]);
