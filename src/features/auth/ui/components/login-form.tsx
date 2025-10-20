@@ -8,13 +8,13 @@ import { LoginDataType } from '../../types/types';
 import { createLoginDataSchema } from '../../types/schema';
 import { MyLogger } from '@/shared/logger/Logger';
 
+
 export const LoginForm = () => {
   const [loginData, setLoginData] = useState<LoginDataType>({email:'',password:''})
   const [errorMessage, setErrorMessage] = useState("")
   const { t } = useTranslation('auth');
   const navigate = useNavigate();
   const schema = createLoginDataSchema(t('errors.emailHelp'),t('errors.passwordHelp'))
-
   const onSuccess = () => {
     navigate('/dashboard');
   };
@@ -27,7 +27,7 @@ export const LoginForm = () => {
     const result = schema.safeParse(loginData)
     if (!result.success){
       MyLogger.error("FORM","Validation failed",result.error.issues)
-      setErrorMessage(result.error.issues[0].message)  
+      setErrorMessage(result.error.issues[0].message)
       return;
     }
     MyLogger.debug("FORM","Validation succeeded, login data and validation result:", loginData, result)

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { BsDash } from 'react-icons/bs';
 import { useCreateVisit } from '../../api/create-visit';
 import { Button } from '@/components/ui/button';
-import { useNotifications } from '@/stores/notifications';
+import { useNotificationsStore } from '@/shared/notifications/store';
 import { FormInput } from '@/components/ui/form-input';
 import { FormDateInput } from '@/components/ui/form-date-input';
 import { NewVisitForm } from './new-visit-form';
@@ -25,7 +25,7 @@ export const NewVisitDialog = ({
 }: NewVisitDialogProps) => {
   const { t: tg } = useTranslation('', { keyPrefix: 'general' });
   const { t } = useTranslation('visits');
-  const { showNotification } = useNotifications();
+  const { showNotification } = useNotificationsStore();
   const timeStartRef = useRef<HTMLInputElement>(null);
   const timeEndRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState<NewVisitForm>({
