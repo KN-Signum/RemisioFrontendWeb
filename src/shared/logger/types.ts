@@ -12,6 +12,6 @@ export const TYPE_OF_LOG = {
   MSW: 1,
   FORM: 2,
   APP: 3,
-  NETWORK: 5,
+  NETWORK: 4,
 } as const;
 export type TypeOfLog = keyof typeof TYPE_OF_LOG;
