@@ -9,7 +9,7 @@ export const notificationsStore = createStore<NotificationsStore>(
     notifications: [],
     showNotification: (notification) => {
       const id = uuidv4();
-      if (get().notifications.length > MAX_NOTIFICATIONS) return;
+      if (get().notifications.length >= MAX_NOTIFICATIONS) return;
       set((state) => ({
         notifications: [...state.notifications, { id, ...notification }],
       }));

@@ -1,26 +1,25 @@
-type ErrorType = 'API' | 'SERVER' | 'VALIDATION' | 'UNKNOWN'
-type MyErrorOptionsType = {
-    status?: number,
-    context?: Record<string,unknown>
-}
-export class MyError extends Error{
-    private errorType: ErrorType;
-    private context?: Record<string,unknown>;
-    private status?: number;
+import { ErrorType, MyErrorOptionsType } from './types';
 
-    constructor(message:string, type: ErrorType, options?: MyErrorOptionsType){
-        super(message)
-        this.errorType = type
-        this.name = `MyError - ${this.errorType}`
-        this.status = options?.status
-        this.context = options?.context
-    }
-    toJSON() {
-        return {
-          message: this.message,
-          type: this.errorType,
-          status: this.status,
-          context: this.context,
-        };
-    }
+export class MyError extends Error {
+  readonly errorType: ErrorType;
+  readonly context?: MyErrorOptionsType['context'];
+  readonly status?: MyErrorOptionsType['status'];
+
+  constructor(message: string, type: ErrorType, options?: MyErrorOptionsType) {
+    super(message);
+    this.errorType = type;
+    this.name = `MyError-${this.errorType}`;
+    this.status = options?.status;
+    this.context = options?.context;
+  }
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      type: this.errorType,
+      status: this.status,
+      context: this.context,
+      stack: this.stack,
+    };
+  }
 }
