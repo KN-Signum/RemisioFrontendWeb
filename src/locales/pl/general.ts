@@ -28,12 +28,6 @@ export default {
   no_results: 'Brak wyników',
   scoreOnly: 'Tylko Wynik',
   error: 'Wystąpił błąd',
-  notifications: {
-    success: 'Sukces',
-    error: 'Błąd',
-    warning: 'Ostrzeżenie',
-    info: 'Informacja',
-  },
   disease: {
     crohn: 'Choroba Leśniowskiego-Crohna',
     ulcerative_colitis: 'Wrzodziejące zapalenie jelita grubego',

@@ -28,12 +28,6 @@ export default {
   no_results: 'No results found',
   scoreOnly: 'Score Only',
   error: 'Error occurred',
-  notifications: {
-    success: 'Success',
-    error: 'Error',
-    warning: 'Warning',
-    info: 'Information',
-  },
   disease: {
     crohn: "Crohn's Disease",
     ulcerative_colitis: 'Ulcerative Colitis',
