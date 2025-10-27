@@ -7,8 +7,8 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from '@/lib/i18n';
 import { API_MOCKING } from '@/config/constants';
 import { Notifications } from '@/shared/notifications/notifications';
-import { useAuth } from './features/auth';
-
+import { useAuthEvents } from './features/auth';
+import { useNotificationsEvents } from './shared/notifications/useNotificationsEvents';
 
 // Only load MSWWrapper if mocks are enabled
 const MSWWrapper = API_MOCKING
@@ -27,7 +27,8 @@ const ReactQueryDevtools = import.meta.env.DEV
   : null;
 
 const App = () => {
-  useAuth(); //Inicjalizuje stan uwierzytelnienia użytkownika
+  useAuthEvents();
+  useNotificationsEvents();
 
   useEffect(() => {
     // Initialize MSW

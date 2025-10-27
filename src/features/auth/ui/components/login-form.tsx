@@ -8,42 +8,61 @@ import { LoginDataType } from '../../types/types';
 import { createLoginDataSchema } from '../../types/schema';
 import { MyLogger } from '@/shared/logger/Logger';
 
-
 export const LoginForm = () => {
-  const [loginData, setLoginData] = useState<LoginDataType>({email:'',password:''})
-  const [errorMessage, setErrorMessage] = useState("")
+  const [loginData, setLoginData] = useState<LoginDataType>({
+    email: '',
+    password: '',
+  });
+  const [errorMessage, setErrorMessage] = useState('');
   const { t } = useTranslation('auth');
   const navigate = useNavigate();
-  const schema = createLoginDataSchema(t('errors.emailHelp'),t('errors.passwordHelp'))
+  const schema = createLoginDataSchema(
+    t('errors.emailHelp'),
+    t('errors.passwordHelp'),
+  );
   const onSuccess = () => {
     navigate('/dashboard');
   };
 
-  const { mutate: login, isPending: isLoading } = useAuthMutations().useLogin({ onSuccess });
+  const { mutate: login, isPending: isLoading } = useAuthMutations().useLogin({
+    onSuccess,
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    MyLogger.debug("FORM","Starting login process with provided data:",loginData)
-    const result = schema.safeParse(loginData)
-    if (!result.success){
-      MyLogger.error("FORM","Validation failed",result.error.issues)
-      setErrorMessage(result.error.issues[0].message)
+    MyLogger.debug(
+      'FORM',
+      'Starting login process with provided data:',
+      loginData,
+    );
+    const result = schema.safeParse(loginData);
+    if (!result.success) {
+      MyLogger.error('FORM', 'Validation failed', result.error.issues);
+      setErrorMessage(result.error.issues[0].message);
       return;
     }
-    MyLogger.debug("FORM","Validation succeeded, login data and validation result:", loginData, result)
-    
+    MyLogger.debug(
+      'FORM',
+      'Validation succeeded, login data and validation result:',
+      loginData,
+      result,
+    );
+
     login(loginData);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 w-2/3 flex flex-col gap-5">
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-2/3 flex-col gap-5 space-y-4"
+    >
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <InputField
         id="email"
         label={t('email')}
         type="email"
         value={loginData.email}
-        onChange={(e) => setLoginData({...loginData , email: e.target.value})}
+        onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
       />
 
       <InputField
@@ -51,16 +70,18 @@ export const LoginForm = () => {
         label={t('password')}
         type="password"
         value={loginData.password}
-        onChange={(e) =>setLoginData({...loginData, password: e.target.value})}
+        onChange={(e) =>
+          setLoginData({ ...loginData, password: e.target.value })
+        }
       />
 
       <Button
         type="submit"
-        className="w-full rounded bg-secondary opacity-90 py-2 text-white hover:opacity-100"
+        className="bg-secondary w-full rounded py-2 text-white opacity-90 hover:opacity-100"
         disabled={isLoading}
         isLoading={isLoading}
       >
-         {t('login')}
+        {t('login')}
       </Button>
     </form>
   );
